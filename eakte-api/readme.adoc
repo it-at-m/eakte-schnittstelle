@@ -1,0 +1,7 @@
+== API Specification and Documentation for the eAkte DMS Interface
+
+This repository contains the API specification and the description of the interface related usecases for the eAkte DMS.
+
+Visit the entry page of the documentation at the followin URL:
+
+https://it-at-m.github.io/eakte-api/[https://it-at-m.github.io/eakte-api/]

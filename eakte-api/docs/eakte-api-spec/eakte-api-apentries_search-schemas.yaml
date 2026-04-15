@@ -1,0 +1,25 @@
+components:
+  schemas:
+
+    SearchApentryDTO:
+      type: object
+      properties:
+        basenr:
+          type: string
+          description: Aktenplankennzeichen
+          example: A1 01 01 01 01
+        subjareaspecreference:
+          type: string
+          description: Ableitung
+          example: Ableitung1
+
+    SearchApentryResponseDTO:
+      type: object
+      properties:
+        giobjecttype:
+          type: array
+          description: |
+            Auflistung aller Objekte, auf die der Suchstring zutrifft.\
+            Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind.
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Objektreferenz'

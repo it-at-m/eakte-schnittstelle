@@ -1,0 +1,54 @@
+components:
+  schemas:
+
+    CreateSubjectAreaUnitAnfrageDTO:
+      required:
+        - basenr
+        - objaddress
+      type: object
+      properties:
+        objaddress:
+          type: string
+          description: Objekt-ID (COO-Adresse) des übergeordneten Aktenplaneintrags
+          example: COO.1.2302.1.8
+        basenr:
+          type: string
+          description: Aktenplankennzeichen der Betreffseinheit
+          example: 0001 B10 000
+        subjareaspecreference:
+          type: string
+          description: Ableitung
+          example: '1'
+        shortterm:
+          type: string
+          description: Kurzbezeichnung
+          example: Betreffseinheit B
+        subjarchiveschedule:
+          type: string
+          description: | 
+            Standardmäßige Transferfrist für alle Objekte unterhalb der Betreffseinheit\
+            Hinweis zur Transferfrist: siehe bei POST /files (Anlegen von Akten)
+          example: 10 Jahre
+        subjschedule:
+          type: string
+          description: Standardmäßige Aufbewahrungsfrist für alle Objekte unterhalb der Betreffseinheit
+          example: 10 Jahre
+        subjdispstate:
+          type: string
+          description: |
+            Gewünschte Aussonderungsart für alle Objete unterhalb der Betreffseinheit
+            * „DISPSTATE_ARCHIVE“ - für „A - Archivwürdig“
+            * „DISPSTATE_DESTROY“ - für „V - Vernichten“
+            * „DISPSTATE_DM_B“ für „B - Bewerten“
+
+            Erläuterungen zu den Aussonderungsarten:
+            * „A - Archivwürdig“ - Vorgänge oder Akten sind nach Ablauf der Aufbewahrungsfrist dem zuständigen Archiv als archivwürdig zu übermitteln.
+            * „V - Vernichten“ - Vorgänge oder Akten werden nach Ablauf der Aufbewahrungsfrist vernichtet.
+            * „B - Bewerten“ - Bewerten von Vorgängen oder Akten, deren Archivwürdigkeit nicht durch eine Vorentscheidung festgelegt ist.
+
+            Die Aussonderungsart wird üblicherweise über die Aussonderungsart im Aktenplaneintrag gesetzt.
+          example: A – Archivwürdig
+        fileaccessdefinition:
+          type: string
+          description: Zugriffsdefinition für untergeordnete Akten
+          example: allgemein bearbeitbar

@@ -1,0 +1,57 @@
+components:
+  schemas:
+
+    ReadContentObjectResponseDTO:
+      type: object
+      properties:
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) des zugehörigen Dokuments
+          example: COO.1.2301.1.1042465
+        giattachmenttype:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/AttachmentType'
+
+    UpdateContentObjectAntwortDTO:
+      type: object
+      properties:
+        contentobjid:
+          type: string
+          description: Objekt-ID (COO-Adresse) des ersetzten Schriftstücks
+          example: COO.1.2301.1.1042466
+        contentobjname:
+          type: string
+          description: Objektname des ersetzten Schriftstücks
+          example: LHM Schreiben Extern vom 11.11.2016 v101
+        objid:
+          type: string
+          description: |
+            Zugehöriges Dokument, Objekt-ID (COO-Adresse) des Dokuments, in dem
+            das Schriftstück ersetzt worden ist.
+          example: COO.1.2301.1.1042465
+        objname:
+          type: string
+          description: |
+            Objektname des Schriftgutobjekts
+            (COOSYSTEM@1.1:objname)
+          example: >-
+            Ausgangsschreiben zum Antrag auf Baugenehmigung Firma Mustermann
+            (0010 A20 011-4-0006-0006)
+    UpdateContentObjectDTO:
+      type: object
+      properties:
+        filesubj:
+          type: array
+          items:
+            type: string
+
+    UpdateContentObjectRequestBodyDTO:
+      required:
+        - giattachmenttype
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/UpdateContentObjectDTO'
+        giattachmenttype:
+          type: string
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument
+          format: binary

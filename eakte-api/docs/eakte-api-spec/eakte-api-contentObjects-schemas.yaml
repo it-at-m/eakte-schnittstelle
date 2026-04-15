@@ -1,0 +1,37 @@
+components:
+  schemas:
+
+    CreateContentObjectAnfrageDTO:
+      type: object
+      properties:
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) des zugehörigen Dokuments
+          example: COO.1.2301.1.1042432
+        filesubj:
+          type: array
+          items:
+            type: string
+      description: 'Parameter, die das  Schriftstück beschreiben'
+
+    CreateContentObjectRequestBodyDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/CreateContentObjectAnfrageDTO'
+        giattachmenttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            type: string
+            format: binary
+
+    CreateContentObjectAntwortDTO:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: Objekt-ID (COO-Adresse) des erzeugten Schriftstückes.
+          example: COO.1.2301.1.1042465

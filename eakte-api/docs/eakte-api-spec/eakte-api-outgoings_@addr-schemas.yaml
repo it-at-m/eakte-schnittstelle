@@ -1,0 +1,135 @@
+components:
+  schemas:
+
+    ReadOutgoingAntwortDTO:
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Betreff'
+        objterms:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Schlagworte'
+        accdef:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Zugriffsdefinition'
+        objname:
+          type: string
+          description: Erledigungskennzeichen
+          example:
+            Ausgangsschreiben zum Antrag auf Baugenehmigung Firma Mustermann
+            (0010 A20011-4-0006-0006)
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) des Vorgangs
+          example: COO.1.2301.1.1042432
+        referredincoming:
+          type: string
+          description: Bezug zum Eingang
+          example: COO.1.2301.1.1042441
+        outgoingdate:
+          type: string
+          description: Versanddatum (Datum/Uhrzeit)
+          format: date-time
+          example: '2016-10-26T18:16:29+01:00'
+        subfiletype:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/subfiletype'
+        incattachments:
+          type: string
+          description: Sonstige Anlagen
+          example: Ausfüllhilfe Antrag auf Baugenehmigung
+        gimetadatatype:
+          type: array
+          description: Datei
+          example:
+            objaddress: COO.1.2301.1.1041875
+            filename: Antrag auf Baugenehmigung
+            fileextension: pdf
+            objclass: PDF-Dokument
+            contsize: '243'
+            objcreatedby:
+              string:
+                - musterfraum
+            objcreatedat: '2018-07-23T08:59:52+01:00'
+            objchangedby:
+              string:
+                - mustermannm
+            objmodifiedat: '2018-07-23T09:23:52+01:00'
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/MetadataReferenz'
+        searchalso:
+          type: string
+          description: Dieser Parameter wird nicht genutzt
+        businessapp:
+          type: string
+          description: |
+            Bezeichnung der Fachanwendung/
+            Dieser Parameter wird nicht weiter unterstützt, sondern über Header-Parameter x-application
+          example: Fachanwendung xyz
+
+    UpdateOutgoingResponseDTO:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: Object-ID
+          example: COO.1.2301.1.1042465
+        objname:
+          type: string
+          description: Objektname des Objekts
+          example:
+            Ausgangsschreiben zum Antrag auf Baugenehmigung Firma Mustermann
+            (0010 A20 011-4-0006-0006)
+        giobjecttype:
+          type: array
+          description: |
+            Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Objektreferenz'
+
+    UpdateOutgoingRequestDTO:
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Betreff'
+        objterms:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Schlagworte'
+        accdef:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Zugriffsdefinition'
+        referredincoming:
+          type: string
+          description: |
+            Bezug zum Eingang\
+            Bei Bedarf kann die COO-Adresse des Eingangs geändert werden,
+            damit ein direkter Bezug zwischen Eingang und Erledigung hergestellt werden kann.
+          example: COO.1.2301.1.1042441
+        outgoingdate:
+          type: string
+          description: Versanddatum (Datum/Uhrzeit)
+          format: date-time
+          example: '2016-10-26T18:48:01+01:00'
+        incattachments:
+          type: string
+          description: sonstige Anlagen
+          example: Ausfüllhilfe Antrag auf Baugenehmigung
+      description: Parameter die den Ausgang spezifizieren
+
+    UpdateOutgoingRequestBodyDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: 'eakte-api-outgoings_@addr-schemas.yaml#/components/schemas/UpdateOutgoingRequestDTO'
+        giattachmenttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument
+          items:
+            type: string
+            format: binary
+

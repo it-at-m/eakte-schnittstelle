@@ -1,0 +1,65 @@
+components:
+  schemas:
+    AddAddresseeRequestDTO:
+      type: object
+      properties:
+        addrdate:
+          type: string
+          description: Briefdatum des Objektes
+          format: date-time
+        addrtransmedia:
+          type: string
+          description: |
+            Versandart für den jeweiligen Adressaten\
+            Folgende Werte sind möglich:
+            * Papier
+            * E-Fax
+            * E-Mail
+            * XML-Dokument
+            * Intern
+            Wenn kein Wert übertragen wird, soll Papier eingetragen werden.
+          example: Papier
+        addrorgname:
+          type: string
+          description: Organisationsname
+          example: Staatskanzlei Bayern
+        addrtitle:
+          type: string
+          description: Titel
+          example: Dr.
+        addrfirstname:
+          type: string
+          description: Vorname
+          example: Thomas
+        addrname:
+          type: string
+          description: Nachname
+          example: Mayer
+        addrstreet:
+          type: string
+          description: Straße
+          example: Maximilianstraße
+        addrstreetnumber:
+          type: string
+          description: Hausnummer
+          example: '3'
+        addrzipcode:
+          type: string
+          description: Postleitzahl
+          example: '80200'
+        addrcity:
+          type: string
+          description: Ort
+          example: München
+        addrcountry:
+          type: string
+          description: Land
+          example: Deutschland
+        addremail:
+          type: string
+          description: E-Mail-Adresse
+          example: staatskanzlei@muenchen.de
+        addradditional5:
+          type: string
+          description: E-Fax
+          example: 00498524885

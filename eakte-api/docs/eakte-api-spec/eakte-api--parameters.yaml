@@ -1,0 +1,128 @@
+
+components:
+  parameters:
+
+    x_anwendung:
+      name: x-anwendung
+      in: header
+      description: |
+        **Aufrufende Fachanwendung**
+        
+        Für jeden Aufruf soll ersichtlich sein, 
+        welche Fachanwendung den Aufruf getätigt hat. 
+        Dies soll es ermöglichen, Requests und Responses den entsprechenden Fachverfahren zuzuordnen. 
+        Für diesen Zweck wird sowohl im Request, 
+        als auch im Response ein Parameter „businessapp“ angegeben.
+        
+        Dieser Parameter ist optional und kann mit einem Namen befüllt werden. 
+        Sofern der Aufruf einen Wert enthält, wird dieser auch im Response zurückgegeben. 
+        Somit ist ein nachträgliches Filtern von Aufrufen möglich.
+      required: false
+      schema:
+        type: string
+      example: SWH
+
+    userlogin:
+      name: userlogin
+      in: header
+      description: |
+        **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\
+        Log-in-Name des Benutzerobjekts
+      required: true
+      schema:
+        type: string
+      example: max.mustermann
+
+    joboe:
+      name: joboe
+      in: header
+      description: |
+        COO-Adresse der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.\
+        \
+        Die OE ist dann wichtig anzugeben, 
+        wenn der Nutzer in mehreren OEs zugeordnet ist.\
+        Über diese OE wird der Mandant zugeordnet und 
+        entsprechend die Berechtigungen geprüft.
+      required: false
+      schema:
+        type: string
+      example: COO.1.2300.1.847
+
+    jobposition:
+      name: jobposition
+      in: header
+      description: |
+        Referenz der Stelle (**Rolle des Nutzers** in der eAkte).
+        * Schriftgutverwaltung - DocumentManager
+        * Sachbearbeitung - OfficialInCharge
+        * Fachadministration - OpAdm
+        * Registratur - Official
+        * Sekretariat - Secretary
+        * Leitung - Head
+        * Archivar - Registrar
+        * Vorlagenadministrator - TemplateAdministrator
+        * Vorlagenverwaltung - TemplateManager
+        
+        Es dürfen ausschließlich die o.g. genannten Stellen der LHM verwendet werden.\
+        Bitte die englische Bezeichnung verwenden.
+        
+        Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt!
+      required: false
+      schema:
+        type: string
+      example: DocumentManager
+
+    objaddress:
+      name: objaddress
+      description:
+        Objekt-ID (COO-Adresse) des Objekts
+      in: path
+      required: true
+      schema:
+        type: string
+      example: "COO.1.2300.1.847"
+
+    propdocstate:
+      name: propdocstate
+      in: header
+      description: |
+        Aktueller Bearbeitungsstatus der darunterliegenden Objekte
+        * 10 = In Bearbeitung
+        * 20 = Suspendiert (kann wieder aufgehoben werden)
+        * 30 = Abgeschlossen
+        * 40 = Storniert (endgültig storniert)
+        * 50 = Archiviert
+      required: false
+      schema:
+        type: integer
+      example: '12'
+
+    propbostate:
+      name: propbostate
+      in: header
+      description: |
+        Bearbeitungsstatus der darunterliegenden Objekte\
+        Es muss die COO-Adresse des Bearbeitungsstatus übergeben werden. 
+        Die Liste kann aus dem jeweiligen System generiert werden (Suche nach Status Komponentenobjekt im Verwaltungswerkzeug)
+        
+        Je nach Bearbeitungsschritt mit dem Objekt können folgende (beispielhafte) Status vorliegen:
+        * Erstellt
+        * Weggelegt
+        * z.A. verfügt
+        * Schlusszeichnung
+        * Schlusszeichnung abgelehnt
+        * Billigung
+        * Billigung abgelehnt
+        * Mitgezeichnet
+        * Mitzeichnung abgelehnt
+        * Versand erzeugt
+        * Versendet
+        * Zu Bewerten
+        * Bewertet
+        * Dem Archiv übermittelt
+        * Vom Archiv zurückgegeben bzw. Übernahme vom Archiv bestätigt
+        * Vernichtet
+      required: false
+      schema:
+        type: string
+      example: COO.1.2301.1.679

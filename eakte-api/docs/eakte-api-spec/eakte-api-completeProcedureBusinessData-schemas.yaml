@@ -1,0 +1,68 @@
+components:
+  schemas:
+
+    CreateCompleteProcedureBusinessDataRequestDTO:
+      required:
+        - "params"
+      type: "object"
+      properties:
+        params:
+          $ref: "#/components/schemas/CreateCompleteProcedureBusinessDataBodyParams"
+        giattachmenttype:
+          type: "array"
+          description: "Liste der Objektadressen und Namen der Schriftstücke im Dokument."
+          items:
+            type: "string"
+            format: "binary"
+
+    CreateCompleteProcedureBusinessDataResponseDTO:
+      type: "object"
+      properties:
+        objidprocedure:
+          type: "string"
+          description: "Objekt-ID des erzeugten/gefundenen Vorgangs"
+          example: "COO.1.2301.1.1042406"
+        objnameprocedure:
+          type: "string"
+          description: "Objektname des erzeugten/gefundenen Vorgangs"
+          example: "0010 A20 011-2016 Anträge Firma XY-4"
+        objiddocument:
+          type: "string"
+          description: "Objekt-ID des erzeugten/gefundenen Dokuments"
+          example: "COO.1.2301.1.1042406"
+        objnamedocument:
+          type: "string"
+          description: "Objektname des erzeugten/gefundenen Dokuments"
+          example: "0010 A20 011-2016 Anträge Frima XY-4"
+        objidcontent:
+          type: "string"
+          description: "Objekt-ID des erzeugten/gefundenen Schriftstücks"
+          example: "COO.1.2301.1.1042406"
+        objnamecontent:
+          type: "string"
+          description: "Objektname des erzeugten/gefundenen Schriftstücks"
+          example: "0010 A20 011-2016 Anträge Firma XY-4"
+
+    CreateCompleteProcedureBusinessDataBodyParams:
+      required:
+        - "businessterm"
+        - "businessvalue"
+      type: "object"
+      properties:
+        businessterm:
+          type: "string"
+          description: "COO-Adresse des Fachdatum"
+          example: "COO.1.2301.1.683"
+        businessvalue:
+          type: "string"
+          description: "Wert des Fachdatum"
+          example: "78541235"
+        shortnameprocedure:
+          type: "string"
+          description: "Vorgangstitel"
+          example: "2016 Anträge Firma XY"
+        shortnamedocument:
+          type: "string"
+          description: "Dokumenttitel"
+          example: "2016 Anträge Firma XY"
+      description: "Parameter, die den kompletten Vorgang spezifizieren"

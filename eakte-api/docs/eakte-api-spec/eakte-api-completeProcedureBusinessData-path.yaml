@@ -1,0 +1,56 @@
+
+post:
+  tags:
+    - "/completeProcedureBusinessData"
+  summary: Ein kompletter Vorgang wird erstellt 
+    (d.h. mit einem Dokument & Schrifstück) bzw. 
+    einzelne Schriftstücke beim Vorgang ergänzt.
+  description: |
+    Sobald eine Sachakte über die Fachdaten gefunden wurde, 
+    (über die Parameter businessterm & businessvalue),
+    wird folgendermaßen vorgegangen:
+    
+    * Eingangsparameter Vorgangstitel (shortnameprocedure):\
+    Das System überprüft ob in der gefundenen Akte 
+    bereits ein Vorgang mit dem Titel exisitiert.
+      - Vorgang existiert bereits\
+    Navigieren in den Vorgang
+      - Vorgang existiert noch nicht\
+    Ein neuer Vorgang mit dem übergebenen Titel wird angelegt & 
+    in den Vorgang navigiert.
+    
+    * Eingangsparameter Dokumenttitel (shortnamedocument):\
+    Das System überprüft, ob in dem gefundenen Vorgang 
+    bereits ein Eingangsdokument mit dem Titel exisitiert.
+      - Eingangsdokument existiert bereits\
+    Navigieren in das Eingangsdokument
+      - Eingangsdokument existiert noch nicht\
+    Ein neues Eingangsdokument mit dem übergebenen Titel wird angelegt & 
+    * Im entsprechenden Eingangsdokument wird das Schriftstück erzeugt.
+    
+    in das Eingangsdokument navigiert.
+  operationId: "CreateCompleteProcedureBusinessData"
+  parameters:
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/userlogin'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/joboe'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/jobposition'
+  requestBody:
+    content:
+      multipart/form-data:
+        schema:
+          $ref: "eakte-api-completeProcedureBusinessData-schemas.yaml#/components/schemas/CreateCompleteProcedureBusinessDataRequestDTO"
+    required: true
+  responses:
+    "200":
+      description: "OK"
+      content:
+        application/json:
+          schema:
+            $ref: "eakte-api-completeProcedureBusinessData-schemas.yaml#/components/schemas/CreateCompleteProcedureBusinessDataResponseDTO"
+    '400':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/400'
+    '401':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/401'
+    '500':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/500'

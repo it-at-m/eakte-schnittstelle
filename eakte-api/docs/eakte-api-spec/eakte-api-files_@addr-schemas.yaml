@@ -1,0 +1,114 @@
+components:
+  schemas:
+
+    ReadFileResponseDTO:
+      required:
+        - apentry
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Betreff'
+        objterms:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Schlagworte'
+        accdef:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Zugriffsdefinition'
+        apentry:
+          type: string
+          description: Aktenplankennzeichen Objekt-ID
+          example: COO.1.2301.1.683
+        fileruntimefrom:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileruntimefrom'
+        fileruntimetill:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileruntimetill'
+        fileouobj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileouobj'
+        procedureaccdef:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/procedureaccdef'
+        objname:
+          type: string
+          description: Aktenzeichen
+          example: 0010 A20 011-2016 Anträge Firma XY-4
+        giobjecttype:
+          type: array
+          description: |
+            Liste aller Vorgänge der Akte
+          example:
+            - name: Beispielname
+              id: COO.2150.9151.1.1206000
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Objektreferenz'
+
+    UpdateFileDTO:
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Betreff'
+        objterms:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Schlagworte'
+        fileruntimefrom:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileruntimefrom'
+        fileruntimetill:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileruntimetill'
+        filearchivetimeOffltdeadline:
+          type: string
+          description: |
+            Transferfrist
+            
+            Die Transferfrist beginnt gleichzeitig mit der Aufbewahrungsfrist, endet aber meist früher. 
+            Während der Transferfrist können Vorgänge wieder aufleben und fortgeführt werden.\
+            Die Vorgänge müssen nach Ende der Arbeiten erneut abgeschlossen werden und 
+            die Aufbewahrungs- und die Transferfrist fangen wieder von Beginn an zu laufen.
+            
+            Häufig werden Akten auf einen internen Langzeitspeicher oder in das Zwischenarchiv des Bundesarchivs ausgelagert.\
+            Bei der LHM wird die Transferfrist nicht eingesetzt, da die Akten bis zur Übergabe an das Stadtarchiv in der eAkte verbleiben!\
+            Die Fabasoft eGov Suite erlaubt auch nach Ablauf der Transferfrist bis zum Ende der Aufbewahrungsfrist "z.A. aufheben", um die Akte wieder bearbeiten zu können.\
+            Daher wird die Transferfrist gleich der Aufbewahrungsfrist gesetzt und im Lebenszyklus nicht beachtet (auch keine Änderung der Zugriffsrechte).
+          example: 10 Jahre
+        filelifetimeOffltdeadline:
+          type: string
+          description: |
+            Aufbewahrungsfrist
+            
+            Die Aufbewahrungsfrist bestimmt den Zeitraum, in dem Vorgänge und Akten nach der Bearbeitung aufzubewahren sind. 
+            Nach Ablauf dieser Frist erfolgt die Aussonderung, 
+            d.h. Vorgänge oder Akten werden entweder vernichtet oder an das zuständige Archiv übermittelt. 
+            Für Vorgänge und Akten, deren Archivwürdigkeit nicht durch eine Vorabentscheidung im Bewertungsverzeichnis festgelegt ist oder für die kein Bewertungsverzeichnis vorliegt, 
+            wird „B - Bewerten“ hinterlegt.
+
+            Hinweis:\
+            In der eAkte wird beim Anlegen einer neuen Akte die definierte Aufbewahrungsfrist verwendet. 
+            Wenn die Frist vom Standard abweichen soll, 
+            muss sie in den Eigenschaften der Akte überschrieben werden (Anwendungsfall "Akte Eigenschaften bearbeiten").
+
+            Folgende Werte sind (beispielhaft) auswählbar:\
+            1 Jahr, 6 Monate, 3 Monate, 1 Monat, 1 Woche, 1 Tag,\
+            3, 5, 6, 7, 8, 10, 15, 20, 25 Jahre,\
+            30, 40, 50, 60, 70, 80, 90, 10, 100, 110 Jahre\
+            Die im System verwendeten Fristen finden Sie in der Suche auf dem Schreibtisch der eAkte, 
+            wenn sie nach der Frist (Komponentenbjekt) suchen
+          example: 5 Jahre
+        offltdispstate:
+          type: string
+          description: |
+            Gewünschte Aussonderungsart
+            * „DISPSTATE_ARCHIVE“ - für „A - Archivwürdig“
+            * „DISPSTATE_DESTROY“ - für „V - Vernichten“
+            * „DISPSTATE_DM_B“ für „B - Bewerten“
+            
+            Ergänzungen zu den Aussonderungsarten:
+            * „A - Archivwürdig“ - Vorgänge oder Akten sind nach Ablauf der Aufbewahrungsfrist dem zuständigen Archiv als archivwürdig zu übermitteln.
+            * „V - Vernichten“ - Vorgänge oder Akten werden nach Ablauf der Aufbewahrungsfrist vernichtet.
+            * „B - Bewerten“ - Bewerten von Vorgängen oder Akten, deren Archivwürdigkeit nicht durch eine Vorentscheidung festgelegt ist.
+            
+            Die Aussonderungsart wird üblicherweise über die Aussonderungsart im Aktenplaneintrag gesetzt.
+          example: DISPSTATE_ARCHIVE
+        procedureaccdef:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/procedureaccdef'

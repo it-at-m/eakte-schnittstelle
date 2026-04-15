@@ -1,0 +1,56 @@
+get:
+  tags:
+    - /files
+  summary: Akte lesen
+  description: Stornierte Objekte können nicht ausgelesen werden. D.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.
+  operationId: ReadFile
+  parameters:
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/userlogin'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/joboe'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/jobposition'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/objaddress'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'eakte-api-files_@addr-schemas.yaml#/components/schemas/ReadFileResponseDTO'
+    '400':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/400'
+    '401':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/401'
+    '500':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/500'
+put:
+  tags:
+    - /files
+  summary: Akte ändern
+  description: Bereits befüllte Eigenschaften werden mit übergebenen Werten überschrieben. Bei keiner Übergabe bleiben die bestehenden Werte erhalten. Bei jeder Änderung über die Schnittstelle wird in der eGov-Suite eine neue Version des Objekts erzeugt.
+  operationId: UpdateFile
+  parameters:
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/userlogin'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/joboe'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/jobposition'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/objaddress'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: 'eakte-api-files_@addr-schemas.yaml#/components/schemas/UpdateFileDTO'
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/DmsObjektResponse'
+    '400':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/400'
+    '401':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/401'
+    '500':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/500'

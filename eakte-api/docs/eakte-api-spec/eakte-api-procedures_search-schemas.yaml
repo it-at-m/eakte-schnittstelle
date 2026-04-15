@@ -1,0 +1,36 @@
+
+components:
+  schemas:
+
+    SearchProcedureRequestDTO:
+      type: "object"
+      properties:
+        referrednumber:
+          type: "string"
+          description: "COO-Adresse der Akte"
+          example: "COO.1.2300.1.847"
+        filereference:
+          type: "string"
+          description: "Geschäftszeichen"
+          example: "A1 01 01 01 01/00010/0001"
+        objmlname:
+          type: "string"
+          description: "Name des Vorgangs"
+          example: "Vorgang Eins Name"
+        filesubj:
+          type: "string"
+          description: "Betreff des Vorgangs"
+          example: "Vorgang Eins"
+
+    SearchProcedureResponseDTO:
+      type: "object"
+      properties:
+        giobjecttype:
+          type: "array"
+          description: "Auflistung aller Objekte, auf die der Suchstring zutrifft.\n\
+            Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind."
+          example:
+            - objname: "Beispielname"
+              objaddress: "COO.2150.9151.1.1206000"
+          items:
+            $ref: "eakte-api--global-schemas.yaml#/components/schemas/Objektreferenz"

@@ -1,0 +1,54 @@
+get:
+  tags:
+    - /contentObjects
+  summary: Schriftstück lesen
+  operationId: ReadContentObject
+  parameters:
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/userlogin'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/joboe'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/jobposition'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/objaddress'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'eakte-api-contentObjects_@addr-schemas.yaml#/components/schemas/ReadContentObjectResponseDTO'
+    '400':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/400'
+    '401':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/401'
+    '500':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/500'
+put:
+  tags:
+    - /contentObjects
+  summary: Schriftstück ändern
+  operationId: UpdateContentObject
+  parameters:
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/userlogin'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/joboe'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/jobposition'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/objaddress'
+  requestBody:
+    content:
+      multipart/form-data:
+        schema:
+          $ref: 'eakte-api-contentObjects_@addr-schemas.yaml#/components/schemas/UpdateContentObjectRequestBodyDTO'
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'eakte-api-contentObjects_@addr-schemas.yaml#/components/schemas/UpdateContentObjectAntwortDTO'
+    '400':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/400'
+    '401':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/401'
+    '500':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/500'

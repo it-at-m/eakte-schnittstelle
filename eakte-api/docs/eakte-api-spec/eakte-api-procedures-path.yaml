@@ -1,0 +1,30 @@
+
+post:
+  tags:
+    - /procedures
+  summary: Vorgang anlegen
+  operationId: CreateProcedure
+  parameters:
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/userlogin'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/joboe'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/jobposition'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: 'eakte-api-procedures-schemas.yaml#/components/schemas/CreateProcedureDTO'
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/DmsObjektResponse'
+    '400':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/400'
+    '401':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/401'
+    '500':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/500'

@@ -1,0 +1,75 @@
+components:
+  schemas:
+
+    CreateCompleteFileBodyParams:
+      type: object
+      properties:
+        apentry:
+          type: string
+          description: Objekt-ID der Betreffseinheit
+          example: COO.1.2301.1.683
+        shortnamefile:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        shortnameprocedure:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        shortnamedocument:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        fileouobj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileouobj'
+      description: 'Parameter, die die komplette Akte beschreiben'
+
+    CreateCompleteFileRequestDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/CreateCompleteFileBodyParams'
+        giattachmenttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument
+          items:
+            type: string
+            format: binary
+
+    CreateCompleteFileResponseDTO:
+      type: object
+      properties:
+        objidfile:
+          type: string
+          description: Objekt-ID der erzeugten/gefundenen Sachakte
+          example: COO.1.2301.1.1042406
+        objnamefile:
+          type: string
+          description: Objektname der erzeugten/gefundenen Sachakte
+          example: 0010 A20 011-2016 Anträge Firma XY-4
+        objidprocedure:
+          type: string
+          description: Objekt-ID des erzeugten/gefundenen Vorgangs
+          example: COO.1.2301.1.1042406
+        objnameprocedure:
+          type: string
+          description: Objektname des erzeugten/gefundenen Vorgangs
+          example: 0010 A20 011-2016 Anträge Firma XY-4
+        objiddocument:
+          type: string
+          description: Objekt-ID des erzeugten/gefundenen Dokuments
+          example: COO.1.2301.1.1042406
+        objnamedocument:
+          type: string
+          description: Objektname des erzeugten/gefundenen Dokuments
+          example: 0010 A20 011-2016 Anträge Firma XY-4
+        objidcontent:
+          type: string
+          description: Objekt-ID des erzeugten/gefundenen Schriftstücks
+          example: COO.1.2301.1.1042406
+        objnamecontent:
+          type: string
+          description: Objektname des erzeugten/gefundenen Schriftstücks
+          example: 0010 A20 011-2016 Anträge Firma XY-4

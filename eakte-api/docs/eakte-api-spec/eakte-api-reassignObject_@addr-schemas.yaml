@@ -1,0 +1,17 @@
+components:
+  schemas:
+
+    ReAssignObjectDTO:
+      required:
+        - newtarget
+      type: object
+      properties:
+        newtarget:
+          type: string
+          description: |
+            COO-Adresse des neuen darüberliegenden Objektes (Betreffseinheit oder Akte)
+          example: COO.1.2302.1.76
+        newoe:
+          type: string
+          description: COO-Adresse der Organisationseinheit
+          example: COO.1.23.10.8854

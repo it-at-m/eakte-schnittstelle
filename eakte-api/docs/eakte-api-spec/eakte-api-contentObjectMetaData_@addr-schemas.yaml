@@ -1,0 +1,12 @@
+components:
+  schemas:
+
+    ReadContentObjectMetaDataAntwortDTO:
+      type: object
+      properties:
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) des zugehörigen Dokuments
+          example: COO.1.2301.1.1042432
+        gimetadatatype:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/MetadataReferenz'

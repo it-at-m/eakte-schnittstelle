@@ -1,0 +1,36 @@
+
+components:
+  schemas:
+
+    SearchFileRequestDTO:
+      type: "object"
+      properties:
+        apentry:
+          type: "string"
+          description: "COO-Adresse des Aktenplankennzeichen"
+          example: "COO.1.2300.1.847"
+        filereference:
+          type: "string"
+          description: "Geschäftszeichen"
+          example: "A1 01 01 01 01/00010"
+        objmlname:
+          type: "string"
+          description: "Name"
+          example: "Akte1"
+        filesubj:
+          type: "string"
+          description: "Betreff"
+          example: "Betreff der Akte"
+
+    SearchFileResponseDTO:
+      type: "object"
+      properties:
+        giobjecttype:
+          type: "array"
+          description: "Auflistung aller Objekte, auf die der Suchstring zutrifft.\n\
+            Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind."
+          example:
+            - objname: "Beispielname"
+              objaddress: "COO.2150.9151.1.1206000"
+          items:
+            $ref: "eakte-api--global-schemas.yaml#/components/schemas/Objektreferenz"

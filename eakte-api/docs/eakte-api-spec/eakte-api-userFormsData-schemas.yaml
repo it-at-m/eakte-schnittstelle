@@ -1,0 +1,29 @@
+
+components:
+  schemas:
+
+    ReadUserFormsDataResponseDTO:
+      type: "object"
+      properties:
+        value:
+          type: "string"
+          description: "Ein Wert"
+          example: "COO.1.2300.1.847"
+
+    UpdateUserFormsDataRequestDTO:
+      type: "object"
+      properties:
+        userformsdata:
+          type: "array"
+          items:
+            $ref: "eakte-api-userFormsData-schemas.yaml#/components/schemas/UserFormsReferenz"
+
+    UserFormsReferenz:
+      type: "object"
+      properties:
+        lhmbai_15_1700_ufreference:
+          type: "string"
+        lhmbai_15_1700_ufvalue:
+          type: "array"
+          items:
+            type: "string"

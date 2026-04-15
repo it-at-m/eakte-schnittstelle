@@ -1,0 +1,53 @@
+components:
+  schemas:
+    CreateFileDTO:
+      required:
+        - apentry
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: |
+            Titel\
+            Der Titel bildet zusammen mit anderen Metadaten wie der aktenführenden Organisationseinheit, dem Aktenplankennzeichen oder der laufenden Nummer den Namen der Akte. In diesem Feld
+            wird der Titel festgelegt.
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Betreff'
+        objterms:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Schlagworte'
+        accdef:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Zugriffsdefinition'
+        apentry:
+          type: string
+          description: |
+            Aktenplankennzeichen (Objekt-ID des APlKz)
+          
+            Ist der übergebene Aktenplaneintrag eine Betreffseinheit (unterstes Element im Aktenplan), 
+            prüft das System, ob die Betreffseinheit noch frei ist (weniger als 10.000 Akten in der Betreffseinheit)
+            * Ist die Betreffseinheit frei, wird die Akte in der Betreffseinheit abgelegt.
+            * Ist die Betreffseinheit nicht frei, prüft das System, ob bereits weitere Betreffseinheiten angelegt wurden und ob diese frei sind.
+            * Ist eine andere bereits angelegte Betreffseinheit frei, wird die Akte in dieser Betreffseinheit abgelegt
+            * Wurde noch keine weitere Betreffseinheit angelegt oder sind alle automatisch angelegten voll, 
+            wird eine neue Betreffseinheit auf der gleichen Ebene mit folgendem Namen angelegt:Aktenplanzeichen: <Name des darüberliegenden Aktenplaneintrags> + „.„ + <Fortlaufende Nummer> 
+            Die Akte wird in der neu erzeugten Betreffseinheit angelegt.
+
+            Ist der übergebene Aktenplaneintrag keine Betreffseinheit, 
+            eruiert das System die Liste der Betreffseinheiten, welche eine Ebene tiefer sind.\
+            Das System prüft, ob eine dieser Betreffseinheiten frei ist.
+            * Wenn eine freie Betreffseinheit gefunden wird, wird die Akte in der freien Betreffseinheit angelegt.
+            * Wenn keine freie Betreffseinheit gefunden wird, wird eine neue Betreffseinheit unterhalb des übergebenen Aktenplaneintrages mit folgendem Namen angelegt:\
+            „Name des darüberliegenden Aktenplaneintrags„ + „.„ + „Fortlaufende Nummer„\
+            Die Akte wird in der neu erzeugten Betreffseinheit erzeugt.
+            
+            Akten können nur in einer Betreffseinheit angelegt werden.
+          example: COO.1.2301.1.683
+        fileruntimefrom:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileruntimefrom'
+        fileruntimetill:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileruntimetill'
+        fileouobj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileouobj'
+        procedureaccdef:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/procedureaccdef'
+

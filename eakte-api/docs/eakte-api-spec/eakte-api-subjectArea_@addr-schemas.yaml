@@ -1,0 +1,22 @@
+
+components:
+  schemas:
+
+    UpdateSubjectAreaRequestDTO:
+      required:
+        - "subjareascope"
+      type: "object"
+      properties:
+        subjareascope:
+          type: "string"
+          description: |
+            Der neue Aktenplaneintragstyp.\
+            Folgende Werte sind möglich:
+            * Hauptgruppe
+            * Obergruppe
+            * Gruppe
+            * Untergruppe
+            * Betreffseinheit.
+            
+            Eine Änderung darf nur erfolgen wenn der Aktenplaneintragstyp leer ist.
+          example: "\"subjareascope\": \"Betreffseinheit\""

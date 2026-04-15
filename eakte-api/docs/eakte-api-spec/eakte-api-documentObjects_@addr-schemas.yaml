@@ -1,0 +1,15 @@
+components:
+  schemas:
+
+    ReadDocumentObjectsAntwortDTO:
+      type: object
+      properties:
+        giobjecttype:
+          type: array
+          description: |
+            Liste aller Schriftstücke eines Dokuments
+          example:
+            - name: Beispielname
+              id: COO.2150.9151.1.1206000
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Objektreferenz'

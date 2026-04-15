@@ -1,0 +1,106 @@
+components:
+  schemas:
+
+    ReadProcedureResponseDTO:
+      required:
+        - referrednumber
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Betreff'
+        objterms:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Schlagworte'
+        accdef:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Zugriffsdefinition'
+        fileruntimefrom:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileruntimefrom'
+        fileruntimetill:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileruntimetill'
+        procremark:
+          type: string
+          description: Bemerkung für Prozessverantwortliche
+          example: Warte auf Rückmeldung
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) der Sachakte
+          example: COO.1.2301.1.1042406
+        filetype:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/filetype'
+        objname:
+          type: string
+          description: Vorgangskennzeichen
+          example: Anfrage Baugenehmigung (0010 A20 011-4-0006)
+        objdocstate:
+          type: string
+          description: Status
+          example: In Bearbeitung
+        bostate:
+          type: string
+          description: Bearbeitungsstatus
+          example: Erstellt
+        objowngroup:
+          type: string
+          description: Objektname der zuständigen OE
+          example: SG A1 0001 (Sachgebiet A1 0001)
+        giobjecttype:
+          type: array
+          description: 'Auflistung aller Objekte, auf die der Suchstring zutrifft.'
+          example:
+            - name: Beispielname
+              id: COO.2150.9151.1.1206000
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Objektreferenz'
+
+    UpdateProcedureDTO:
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Betreff'
+        objterms:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Schlagworte'
+        accdef:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Zugriffsdefinition'
+        fileruntimefrom:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileruntimefrom'
+        fileruntimetill:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileruntimetill'
+        procremark:
+          type: string
+          description: Bemerkung für Prozessverantwortliche
+          example: Warte auf Rückmeldung
+        filetype:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/filetype'
+        filearchivetimeOffltdeadline:
+          type: string
+          description: |
+            Transferfrist/
+            Wird bei der LHM nicht ausgewertet (Beschreibung siehe Lebenszyklus der Akte)
+          example: 10 Jahre
+        filelifetimeOffltdeadline:
+          type: string
+          description: Aufbewahrungsfrist
+          example: 10 Jahre
+        offltdispstate:
+          type: string
+          description: |
+            Folgende Aussonderungsarten sind möglich
+            * „DISPSTATE_ARCHIVE“ - für „ A - Archivwürdig“
+            * „DISPSTATE_DESTROY“ - für „ V - Vernichten“
+            * „DISPSTATE_DM_B“ für „ B - Bewerten“
+            
+            Ergänzende Erläuterungen:
+            * „A - Archivwürdig“ - Dokumente, Vorgänge oder Akten sind nach Ablauf der Aufbewahrungsfrist dem zuständigen Archiv als archivwürdig zu übermitteln.
+            * „V - Vernichten“ - Dokumente, Vorgänge oder Akten können nach Ablauf der Aufbewahrungsfrist vernichtet werden.
+            * „B - Bewerten“ - Bewerten von Dokumenten, Vorgängen oder Akten, deren Archivwürdigkeit nicht durch eine Vorentscheidung festgelegt ist.
+            
+            Hinweis:\
+            Wird nicht beim Anlegen, sondern nur beim Ändern einer Betreffseinheit, Akte oder Vorgang gesetzt.
+          example: DISPSTATE_ARCHIVE

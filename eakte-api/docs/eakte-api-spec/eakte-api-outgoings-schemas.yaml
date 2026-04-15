@@ -1,0 +1,89 @@
+components:
+  schemas:
+
+    CreateOutgoingAnfrageDTO:
+      required:
+        - referrednumber
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Betreff'
+        objterms:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Schlagworte'
+        accdef:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Zugriffsdefinition'
+        referrednumber:
+          type: string
+          description: |
+            Objekt-ID (COO-Adresse) des Vorgangs\
+            Wenn kein Vorgang angegeben wird, soll das erzeugte Erledigungsdokument
+            am Schreibtisch des Benutzers abgelegt werden.
+          example: COO.1.2301.1.1042432
+        referredincoming:
+          type: string
+          description: |
+            Bezug zum Eingang\
+            Bei Bedarf kann die COO-Adresse des Eingangs angegeben werden,
+            damit ein direkter Bezug zwischen Eingang und Erledigung hergestellt
+            werden kann.
+          example: COO.1.2301.1.1042441
+        outgoingdate:
+          type: string
+          description: Versanddatum (Datum/Uhrzeit)
+          format: date-time
+        subfiletype:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/subfiletype'
+        doctemplate:
+          type: string
+          description: |
+            Der Name einer im System vorhandenen Vorlage kann angegeben werden (COOELAK@1.1001:doctemplate).\
+            In dieser Vorlage können beispielsweise Metadaten automatisiert über
+            DocProperty ausgegeben werden.\
+            Die angegebene Vorlage muss im angegebenen Dokumenttyp enthalten
+            sein.
+            Alternativ können finalisierte Schriftstücke auch über GiAttachmentType übertragen werden.
+          example: LHM Schreiben Extern
+        incattachments:
+          type: string
+          description: |
+            Sonstige Anlagen\
+            Freitextfeld, um zusätzliche Anlagen zu benennen, die nicht elektronisch erfasst wurden (z.B. Baupläne)
+          example: Ausfüllhilfe Antrag auf Baugenehmigung
+      description: 'Parameter, die die Erledigung spezifizieren'
+
+    CreateOutgoingRequestBodyDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: 'eakte-api-outgoings-schemas.yaml#/components/schemas/CreateOutgoingAnfrageDTO'
+        giattachmenttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            type: string
+            format: binary
+
+    CreateOutgoingAntwortDTO:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: Objekt-ID (COO-Adresse) der erzeugten Erledigung.
+          example: COO.1.2301.1.1042465
+        objname:
+          type: string
+          description: Objektname des angelegten Erledigungsdokuments
+          example:
+            Ausgangsschreiben zum Antrag auf Baugenehmigung Firma Mustermann
+            (0010 A20 011-4-0006-0006)
+        giobjecttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Objektreferenz'

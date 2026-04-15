@@ -1,0 +1,330 @@
+components:
+  schemas:
+    fileExtension:
+      type: string
+      description: Dateiendung
+      example: txt
+    fileContent:
+      type: string
+      description: |
+        Inhalt der Datei 
+        (Base64 kodierter Inhalt)
+      example: SGFsbG8K (Hallo in Base64)
+    ObjChangedBy:
+      type: object
+      description: Letzte Änderung von (Login-String des Benutzers) (COOSYSTEM@1.1:objchangedby)
+      example: lhm\erika.musterfrau
+      properties:
+        string:
+          type: array
+          items:
+            type: string
+    ArrayOfstring:
+      type: object
+      properties:
+        string:
+          type: array
+          items:
+            type: string
+    AttachmentType:
+      type: object
+      properties:
+        fileName:
+          type: string
+        fileExtention:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileExtension'
+        fileContent:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileContent'
+        fileContsize:
+          type: string
+          description: Größe der Inhalte (in KB)
+          example: 5
+        filesubj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/ArrayOfstring'
+
+    DmsObjektResponse:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: COO-Adresse
+        objname:
+          type: string
+          description: Name des Objekts
+
+    DmsErrorResponse:
+      type: object
+      properties:
+        fehlerQuelle:
+          type: string
+          enum:
+            - INTERN
+            - DMS
+        status:
+          type: integer
+          format: int32
+        text:
+          type: string
+
+    MetadataReferenz:
+      type: object
+      properties:
+        objaddress:
+          type: string
+          description: COO-Adresse des Objekts
+          example: COO.1.2301.1.1041875
+        filename:
+          type: string
+          description: Dateiname
+          example: Brief an Dr. Müller
+        fileextension:
+          type: string
+          description: Dateiendung
+          example: txt
+        objclass:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/objclass'
+        contsize:
+          type: string
+          description: Größe der Inhalte (in KB)
+          example: 5
+        objcreatedby:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/ArrayOfstring'
+        objcreatedat:
+          type: string
+          format: date-time
+          description: |
+            erzeugt am/um
+            
+            Datumsformat: YYYY-MM-DDTHH:MM:SS+HH:MM\
+            - = Trenner zusammengehörende Werte\
+            YYYY = 4 Stellen für das Jahr\
+            MM = 2 Stellen für den Monat\
+            DD = 4 Stellen für das Jahr\
+            T = Trenner Datum und Uhrzeit\
+            HH = 2 Stellen für die Stunden\
+            MM = 2 Stellen für die Minuten\
+            SS = 2 Stellen für die Sekunden\
+            + = Trenner Uhrzeit und Zeitzone\
+            TH = Zeitzone in Stunden\
+            TM = Zeitzone in Minuten
+          example: 2018-07-23T08:59:52+01:00
+        objchangedby:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/ArrayOfstring'
+        objmodifiedat:
+          type: string
+          format: date-time
+          description: Letzte Änderung am/um
+          example: 2018-07-23T10:39:32+01:00
+
+    Zugriffsdefinition:
+      type: string
+      description: |
+        Folgende Zugriffsdefinitionen sind möglich:
+
+        * "Eigene Organisationseinheit und Linienorganisation"
+        * "Eigener Mandant"
+        * "Eigene Organisationseinheit und Vorgesetzte"
+        * "Eigene Organisationseinheit und Vorgesetzte (ohne Zentralregistratur)"
+        * "Eigene Organisationseinheit"
+        * "Persönlich und Vorgesetzte"
+        * "Persönlich" (für Verschlusssachen)
+        * "Aktengebunden" (nur bei Vorgängen)
+
+        Die Zugriffsdefinition wird jeweils auf die darunterliegenden Objekte vererbt, 
+        d.h. 
+        * wenn ein Wert für den Aktenplaneintrag eingetragen wird (empfohlen), 
+        dann gilt dieser automatisch für alle darunter liegenden Akten, 
+        * entsprechend für alle Vorgänge einer Akte, 
+        wenn die Zugriffsdefinition bei der Akte eingetragen wurde und 
+        * entsprechend bei allen Dokumenten eines Vorgangs, 
+        wenn die Zugriffsdefinition bei dem Vorgang eingetragen wurde.
+        
+        Wenn kein Wert übergeben wird, 
+        wird die auf dem jeweils höheren Objekt hinterlegte Zugriffsdefinition initialisiert.
+        Wurde auf dem Aktenplaneintrag keine Zugriffsdefinition festgelegt, 
+        wird die im System eingestellte Definition verwendet - "Eigener Mandant".
+        
+        Wenn Vorgänge die Zugriffsdefinition und zusätzlich berechtigte Organisationseinheiten 
+        aus der übergeordneten Akte übernehmen sollen, 
+        muss "Aktengebunden" beim Vorgang angegeben werden.
+      example: Eigener Mandant
+
+    Schlagworte:
+      type: string
+      description: |
+        Angabe der Schlagworte getrennt mit „;“. Kein Semikola am Ende angeben.
+
+        Hinweis:\
+        Aktuell ist es für Benutzer*innen nicht möglich, Schlagworte über die Schnittstelle anzulegen oder zu ändern.
+        Bereits vorhandene Schlagworte in der eAkte können verwendet werden.\
+        Dazu gibt es einen gemeinsamen Katalog von Schlagworten für Akten, Vorgänge, 
+        die je OE durch Sachbearbeiter in der GUI angelegt werden können.\
+        Wenn übergebene Schlagworte nicht gefunden werden, wird keine Fehlermeldung zurückgegeben.
+        Das Anlegen erfolgt dann ohne die angegebenen Schlagworte.
+        
+        Es ist in der Fachabteilung zu klären, ob und welche Schlagworte im Fachverfahren genutzt werden, 
+        damit sie in der Akte vorab angelegt werden.\
+        Für die Schnittstelle kann eine spezifische Schlagwortliste (Oberbegriff, z.B. "Koi-Schlagworte") 
+        über die generische Suche abgerufen werden und 
+        für die Verschlagwortung von Schriftgutobjekten im Fachverfahren verwendet werden.
+      example: Firma XY; Anträge; Anträge 2016
+    Objektreferenz:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+      description:
+        Name und ID des Schriftgutobjekts
+      example:
+        - name: Beispielname
+          id: COO.2150.9151.1.1206000
+
+    fileruntimefrom:
+      type: string
+      description: |
+        Laufzeitbeginn\
+        Tatsächliches Datum der Anlage der Akte (unabhängig von der Anlage der Akte im eAkte-System).
+        Kann z.B. gesetzt werden, wenn das erste Schriftstück zu der neuen Akte bereits vor der Anlage der Akte im eAkte-System eingegangen ist.
+      
+        Das Datum hat keine Auswirkungen im System, sondern dient nur zur Information.
+      format: date-time
+      example: '2017-01-13T17:09:42.411+01:00'
+
+    fileruntimetill:
+      type: string
+      description: |
+        Laufzeitende\
+        Geplanter Abschluss der Akte.
+      
+        Das Datum hat keine Auswirkungen im System, sondern dient nur zur Information.
+      format: date-time
+      example: '2017-01-13T17:09:42.411+01:00'
+
+    objclass:
+      type: string
+      description: |
+        Name der Objektklasse (COOSYSTEM@1.1:objclass)
+        * Aktenplan (COOELAK@1.1001:Fileplan)
+        * Aktenplaneintrag (COOELAK@1.1001:SubjectArea)
+        * Erledigung (COOELAK@1.1001:Outgoing)
+        * AutoCAD Zeichnung (FSCAUTOCAD@1.1001:Drawing)
+        * Benutzer (COOSYSTEM@1.1:User)
+        * Bericht (FSCAREXT@1.1001:Report)
+        * Bild (FSCWEBCONT@1.1001:ImageObject)
+        * Dokumentkategorie (FSCFOLIO@1.1001:DocumentCategory)
+        * Dokumenttyp (COOELAK@1.1001:Subject)
+        * Dokument (COOELAK@1.1001:SubFileDocument) 
+        (bei Angabe dieser Objektklasse, sollten Eingangs-, und Erledigungsdokumente angezeigt werden)
+        * E-Mail (Microsoft Office Outlook) (COOMAPI@1.1:MailObject)
+        * E-Mail (MIME) FSCMIME(@1.1001:MIMEObject)
+        * Eingangsdokument (COOELAK@1.1001:Incoming)
+        * Freemind Mindmap (CFGMUENCHEN@15.1700:FreemindMindmap)
+        * Frist (ELAKGOV@1.1001:Deadline)
+        * GIF-Objekt (FSCWEBCONT@1.1001:GIFObject)
+        * Hewlett Packard Graphic Language (CFGMUENCHEN@15.1700:HPGraphicLanguage)
+        * Inhalt (erweitert) (CFGMUENCHEN@15.1700:GenericContent)
+        * Inhalt (unbekannter Typ) (GENCONT@1.1:ContentObject)
+        * JPEG-Objekt (FSCWEBCONT@1.1001:JPEGObject)
+        * Kostenstelle (CFGMUENCHEN@15.1700:CostCenter)
+        * Medieninhalt (FSCDIGITALASSET@1.1001:DigitalAsset)
+        * Microsoft Excel-Arbeitsblatt (COOMSOFFICE@1.1:ExcelObject)
+        * Microsoft PowerPoint-Präsentation (COOMSOFFICE@1.1:PowerPointObject)
+        * Microsoft Project-Objekt (COOMSPROJECT@1.1001:MSProject)        t
+        * Microsoft Visio-Zeichnung (VISIO@1.1:VisioObject)
+        * Microsoft Word-Objekt (COOMSOFFICE@1.1:WinWordObject)
+        * OpenDocument Formel (FSCOOFFICE@1.1001:OOorgMathObject)
+        * OpenOffice.org Vorlage (CFGMUENCHEN@15.1700:OOorgTemplateObject)
+        * Ordner (COODESK@1.1:Folder)
+        * Organisation (FSCFOLIO@1.1001:Organisation)
+        * Organisationseinheit (COOSYSTEM@1.1:Group)
+        * PDF-Dokument (FSCACROBAT@1.1:PDFObject)
+        * Person (FSCFOLIO@1.1001:Person)
+        * Personenakte (CFGMUENCHEN@15.1700:PersonalSubjectAreaFile)
+        * PNG-Objekt (FSCWEBCONT@1.1001:PNGObject)
+        * Postkorb (FSCVGOV@1.1001:Inbox)
+        * Präsentation (FSCOOFFICE@1.1001:OOorgPresObject)
+        * Projektordner (COOELAK@1.1001:ProjectFolder)
+        * Rechnungsposition (CFGMUENCHEN@15.1700:InvoiceItem)
+        * Rich Text Format (CFGMUENCHEN@15.1700:RichTextFormat)
+        * Sachakte (DEPRECONFIG@15.1001:SubjectAreaFile)
+        * Schlagwort (FSCTERM@1.1001:Term)
+        * Schmierzettel (ELAKGOV@1.1001:FileMemo)
+        * Schriftstück (COOSYSTEM@1.1:ContentObject)
+        * Serena OpenProj Projekt (CFGMUENCHEN@15.1700:SerenaOpenProj)
+        * Suchordner (COOQBOL@1.1:GenericStoredQBOL)
+        * Tabelle (FSCOOFFICE@1.1001:OOorgCalcObject)
+        * Teamroom (FSCTEAMROOM@1.1001:TeamRoom)
+        * Text-Dokument (NOTE@1.1:NoteObject)
+        * Textbaustein (COOAR@1.1:BasicTextModuleEx_Web)
+        * Textdokument (FSCOOFFICE@1.1001:OOorgTextObject)
+        * TIFF-Objekt (FSCWEBCONT@1.1001:TIFFObject)
+        * Verteiler (COOELAK@1.1001:DistributionList)
+        * Verteilerliste (COOWF@1.1:ParticipantInstance)
+        * Vorgang (DEPRECONFIG@15.1001:Procedure)
+        * Vorlagenkategorie (COOTC@1.1001:TemplateCategory)
+        * XDOMEA Paket (FSCGOVXMLDE@1.1001:XDOMEAPackage)
+        * Zeichnung (FSCOOFFICE@1.1001:OOorgDrawObject)
+        * Zip-Archiv (WINZIP@1.1001:WinZipObject)
+      example: Erledigung
+
+    fileouobj:
+      type: string
+      description: |
+        Objekt-ID (COO-Adresse) der aktenführenden Organisationseinheit.\
+        Als Organisationseinheit der Akte wird die Organisationseinheit des
+        darüber liegenden Aktenplankennzeichens gesetzt.\
+        Sofern keine Organisationseinheit auf dem Aktenplankennzeichen
+        definiert ist, wird die Organisationseinheit der ersten Rolle des
+        Benutzers verwendet.
+      example: COO.1.2300.1.847
+
+    procedureaccdef:
+      type: string
+      description: |
+        Folgende Zugriffsdefinitionen für neue Vorgänge der Akte sind möglich:
+        * "Eigene Organisationseinheit und Linienorganisation"
+        * "Eigener Mandant"
+        * "Eigene Organisationseinheit und Vorgesetzte"
+        * "Eigene Organisationseinheit und Vorgesetzte (ohne Zentralregistratur)"
+        * "Eigene Organisationseinheit"
+        * "Persönlich und Vorgesetzte"
+        * "Persönlich" (für Verschlusssachen)
+        * "Aktengebunden" (nur bei Vorgängen)
+        
+        Wenn kein Wert übergeben wird, wird die auf der Akte hinterlegte Zugriffsdefinition übernommen (empfohlen).
+        Wenn Vorgänge die Zugriffsdefinition und zusätzlich berechtigte Organisationseinheiten
+        aus der übergeordneten Akte übernehmen sollen, muss "Aktengebunden" angegeben werden.
+      example: Eigener Mandant
+
+    subfiletype:
+      type: string
+      description: |
+        Dokumenttyp (COOELAK@1.1001:subfiletyp)\
+        Plausibilitätsprüfung: Der Name eines im System vorhandenen
+        Dokumenttyps muss angegeben werden.\
+        Eine dazugehörige Vorlage (doctemplate) muss nicht verwendet werden.\
+        Es können auch finalisierte Schriftstücke der Fachanwendung 
+        über GiAttachmentType übertragen und verwendet werden.
+      example: Vorlagen
+
+    filetype:
+      type: string
+      description: |
+        Art des originalen Typs des Vorgangs (COOELAK@1.1001:filetype)
+        Einer der drei Typen kann beim Anlegen eines Vorgangs angegeben werden:
+        * Elektronisch
+        * Papier
+        * Hybrid
+        
+        Wird ein falscher Wert angegeben, wird eine Fehlermeldung zurückgegeben:\ 
+        Status -1 und "Art des Vorgangs" enthält einen ungültigen Wert.“\
+        Wenn kein Wert eingetragen wird, wird „Elektronisch“ hinterlegt.
+      example: Elektronisch
+    Betreff:
+      type: string
+      description: |
+        Betreff (mehrzeilig)\
+        Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &#10; in Abfragen unterstützt.
+      example: Alle Anträge der Firma XY aus dem Jahr 2016

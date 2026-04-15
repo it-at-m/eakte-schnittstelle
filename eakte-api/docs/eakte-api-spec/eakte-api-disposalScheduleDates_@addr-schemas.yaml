@@ -1,0 +1,28 @@
+components:
+  schemas:
+
+    SetDisposalScheduleDateAnfrageDTO:
+      required:
+        - offltscheduled
+      type: object
+      properties:
+        offltscheduled:
+          type: string
+          description: |
+            Hier kann das Datum neu gesetzt werden, bis wann die Aufbewahrung dauern soll.\
+            Nach Ablauf dieses Datums startet der Aussonderungsprozess und 
+            die Akte / Vorgang können nicht mehr durch Sachbearbeitungen bearbeitet werden.
+          example: date-time notation as defined by RFC 3339, section 5.6, z.B. 2017-07-21T17:32:28Z
+          format: date-time
+
+    SetDisposalScheduleDateAntwortDTO:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: Objekt-ID (COO-Adresse) des Objekts
+          example: COO.1.2301.1.1042441
+        objname:
+          type: string
+          description: Objektname des Objekts
+          example: Eingangspost vom 21.10.2016 (0010 A20 011-4-0006-0001)

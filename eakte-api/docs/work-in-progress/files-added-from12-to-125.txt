@@ -1,0 +1,10 @@
+eakte-api-completeProcedureBusinessData-path.yaml
+eakte-api-completeProcedureBusinessData-schemas.yaml
+eakte-api-files_search-path.yaml
+eakte-api-files_search-schemas.yaml
+eakte-api-procedures_search-path.yaml
+eakte-api-procedures_search-schemas.yaml
+eakte-api-subjectArea_@addr-path.yaml
+eakte-api-subjectArea_@addr-schemas.yaml
+eakte-api-userFormsData-path.yaml
+eakte-api-userFormsData-schemas.yaml

@@ -1,0 +1,55 @@
+get:
+  tags:
+    - /outgoings
+  summary: Erledigung lesen
+  operationId: ReadOutgoing
+  parameters:
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/userlogin'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/joboe'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/jobposition'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/objaddress'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'eakte-api-outgoings_@addr-schemas.yaml#/components/schemas/ReadOutgoingAntwortDTO'
+    '400':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/400'
+    '401':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/401'
+    '500':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/500'
+
+put:
+  tags:
+    - /outgoings
+  summary: Erledigung ändern
+  operationId: UpdateOutgoing
+  parameters:
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/userlogin'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/joboe'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/jobposition'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/objaddress'
+  requestBody:
+    content:
+      multipart/form-data:
+        schema:
+          $ref: 'eakte-api-outgoings_@addr-schemas.yaml#/components/schemas/UpdateOutgoingRequestBodyDTO'
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'eakte-api-outgoings_@addr-schemas.yaml#/components/schemas/UpdateOutgoingResponseDTO'
+    '400':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/400'
+    '401':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/401'
+    '500':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/500'

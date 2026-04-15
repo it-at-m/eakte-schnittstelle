@@ -1,0 +1,41 @@
+
+post:
+  tags:
+    - /searchObjNames
+  summary: Suche nach Objektnamen
+  description: |
+    Dieser Call wird benötigt, um in der eGov-Suite mittels Namen bzw. Teile 
+    des Namens ein Objekt zu suchen.\
+    \
+    Mit diesem Aufruf ist eine generische Suche möglich, mit dem ein Objekt bzw. 
+    Objekte nur auf Basis des Objektnamens gesucht und zurückgegeben werden können.\
+    Bei Bedarf kann die Suche in einer weiteren Ausbaustufe der Schnittstelle 
+    erweitert werden, sodass beispielsweise die Suche auch auf das Erstellungsdatum 
+    oder das letzte Änderungsdatum von Objekten eingeschränkt werden kann.
+
+  operationId: SearchObjName
+  x-soap-operation: SearchObjNameGI
+  parameters:
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/userlogin'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/joboe'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/jobposition'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: 'eakte-api-searchObjNames_search-schemas.yaml#/components/schemas/SearchObjNameAnfrageDTO'
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'eakte-api-searchObjNames_search-schemas.yaml#/components/schemas/SearchObjNameAntwortDTO'
+    '400':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/400'
+    '401':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/401'
+    '500':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/500'

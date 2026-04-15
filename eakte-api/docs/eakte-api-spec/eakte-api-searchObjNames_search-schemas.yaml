@@ -1,0 +1,139 @@
+components:
+  schemas:
+
+    objclass_in_search:
+      type: string
+      description: |
+        Referenz der Objektklasse
+        * Aktenplan COOELAK@1.1001:Fileplan
+        * Aktenplaneintrag COOELAK@1.1001:SubjectArea
+        * Erledigung COOELAK@1.1001:Outgoing
+        * AutoCAD Zeichnung FSCAUTOCAD@1.1001:Drawing
+        * Benutzer COOSYSTEM@1.1:User
+        * Bericht FSCAREXT@1.1001:Report
+        * Bild FSCWEBCONT@1.1001:ImageObject
+        * Dokumentkategorie FSCFOLIO@1.1001:DocumentCategory
+        * Dokumenttyp COOELAK@1.1001:Subject
+        * Dokument  COOELAK@1.1001:SubFileDocument (bei Angabe dieser Objektklasse, sollten Eingangs-, und
+        Erledigungsdokumente angezeigt werden)
+        * E-Mail (Microsoft Office Outlook) COOMAPI@1.1:MailObject
+        * E-Mail (MIME) FSCMIME@1.1001:MIMEObject
+        * Eingang COOELAK@1.1001:Incoming
+        * Freemind Mindmap CFGMUENCHEN@15.1700:FreemindMindmap
+        * Frist ELAKGOV@1.1001:Deadline
+        * GIF-Objekt FSCWEBCONT@1.1001:GIFObject
+        * Hewlett Packard Graphic Language  CFGMUENCHEN@15.1700:HPGraphicLanguage
+        * Inhalt (erweitert) CFGMUENCHEN@15.1700:GenericContent
+        * Inhalt (unbekannter Typ) GENCONT@1.1:ContentObject
+        * JPEG-Objekt FSCWEBCONT@1.1001:JPEGObject
+        * Kostenstelle CFGMUENCHEN@15.1700:CostCenter
+        * Medieninhalt FSCDIGITALASSET@1.1001:DigitalAsset
+        * Microsoft Excel-Arbeitsblatt COOMSOFFICE@1.1:ExcelObject
+        * Microsoft PowerPoint-Präsentation COOMSOFFICE@1.1:PowerPointObject
+        * Microsoft Project-Objekt COOMSPROJECT@1.1001:MSProject
+        * Microsoft Visio-Zeichnung VISIO@1.1:VisioObject
+        * Microsoft Word-Objekt COOMSOFFICE@1.1:WinWordObject
+        * OpenDocument Formel FSCOOFFICE@1.1001:OOorgMathObject
+        * OpenOffice.org Vorlage CFGMUENCHEN@15.1700:OOorgTemplateObject
+        * Ordner COODESK@1.1:Folder
+        * Organisation FSCFOLIO@1.1001:Organisation
+        * Organisationseinheit COOSYSTEM@1.1:Group
+        * PDF-Dokument FSCACROBAT@1.1:PDFObject
+        * Person FSCFOLIO@1.1001:Person
+        * Personenakte CFGMUENCHEN@15.1700:PersonalSubjectAreaFile
+        * PNG-Objekt FSCWEBCONT@1.1001:PNGObject
+        * Postkorb FSCVGOV@1.1001:Inbox
+        * Präsentation FSCOOFFICE@1.1001:OOorgPresObject
+        * Projektordner COOELAK@1.1001:ProjectFolder
+        * Rechnungsposition CFGMUENCHEN@15.1700:InvoiceItem
+        * Rich Text Format CFGMUENCHEN@15.1700:RichTextFormat
+        * Sachakte DEPRECONFIG@15.1001:SubjectAreaFile
+        * Schlagwort FSCTERM@1.1001:Term
+        * Schmierzettel ELAKGOV@1.1001:FileMemo
+        * Schriftstück COOSYSTEM@1.1:ContentObject
+        * Serena OpenProj Projekt CFGMUENCHEN@15.1700:SerenaOpenProj
+        * Suchordner COOQBOL@1.1:GenericStoredQBOL
+        * Tabelle FSCOOFFICE@1.1001:OOorgCalcObject
+        * Teamroom FSCTEAMROOM@1.1001:TeamRoom
+        * Text-Dokument NOTE@1.1:NoteObject
+        * Textbaustein COOAR@1.1:BasicTextModuleEx_Web
+        * Textdokument FSCOOFFICE@1.1001:OOorgTextObject
+        * TIFF-Objekt FSCWEBCONT@1.1001:TIFFObject
+        * Verteiler COOELAK@1.1001:DistributionList
+        * Verteilerliste COOWF@1.1:ParticipantInstance
+        * Vorgang DEPRECONFIG@15.1001:Procedure
+        * Vorlagenkategorie COOTC@1.1001:TemplateCategory
+        * XDOMEA Paket FSCGOVXMLDE@1.1001:XDOMEAPackage
+        * Zeichnung FSCOOFFICE@1.1001:OOorgDrawObject
+        * Zip-Archiv WINZIP@1.1001:WinZipObject (Alle Objekte von Objektklassen, nach denen ein Sachbearbeiter
+        suchen kann.)
+      example: 'FSCACROBAT@1.1:PDF Object'
+
+    searchstring:
+      type: string
+      description: |
+        Suchstring für Objektname
+        
+        Hinweise zum Suchstring:
+        
+        Der Suchstring kann folgenden Operatoren verwendet werden:
+        * „*“ oder „%“ Der Stern „*“ steht für eine beliebige Zeichenfolge.\
+        Optional zum Zeichen „*“ kann auch das Prozentzeichen „%“ verwendet werden.\
+        Beispiel: \
+        Eine Suche nach „*berg“ liefert Ergebnisse, die eine beliebige 
+        Zeichenfolge gefolgt von der Zeichenfolge „berg“ enthalten – „Eisberg“, „Zauberberg“, „Erzberg“.\
+        Eine Suche nach „Berg*“ liefert Ergebnisse, die „Berg“ gefolgt von einer beliebigen Zeichenfolge enthalten – „Berger“, 
+        „Bergsteiger“, „Berghotel“.\
+        Eine Suche nach „Ber*er“ liefert Ergebnisse, die „Ber“ gefolgt von einer 
+        beliebigen Zeichenfolge sowie gefolgt von „er“ enthalten – „Berger“, „Bergsteiger“, „Berliner“.
+        * „?“ oder „_“\
+        Das Fragezeichen „?“ steht für exakt ein Zeichen.\
+        Optional zum Zeichen „?“ kann auch das Zeichen Unterstrich „_“ verwendet werden.\
+        Beispiel: Eine Suche nach „_atterbauer“ liefert Ergebnisse, die 
+        exakt ein (beliebiges) Zeichen gefolgt von der Zeichenkette „atterbauer“ enthalten – „Katterbauer“, „Patterbauer“, „Natterbauer“.
+        * „~“ Die Tilde „~“ (erreichbar über die Tastenkombination AltGr +)\
+        steht für eine phonetische Suche.\ 
+        Es werden alle Objekte gefunden, bei denen die Aussprache der im Suchkriterium angegebenen Zeichenkette 
+        ähnlich ist. Eine Tilde muss genau am Beginn des Suchkriteriums eingegeben werden.\
+        Beispiel: Eine Suche nach „~Maier“ liefert ähnlich klingende Ergebnisse wie „Maier“ und „Meier“.
+        * „[ ] „ Für mehrere Zeichen, von denen genau eines vorhanden sein muss, können eckige Klammern „[ ]“ 
+        verwendet werden.\
+        Die in Frage kommenden Zeichen werden ohne Leerzeichen und ohne Komma eingegeben\
+        Hinweis: Die genaue Funktionalität hängt von der verwendeten Datenbank ab.\
+        Wenn ein Leerzeichen zwischen Zeichen eingegeben wird, 
+        so wird auch das Leerzeichen als mögliches Zeichen gewertet.\
+        Beispiel: Es werden Word-Objekte gesucht, deren Name entweder „Test-Eingangsstück“, „Tast-Eingangsstück“ oder 
+        „T st-Eingangsstück“ ist. Dazu wird als Suchstring eingegeben: „T[e a]st-Eingangsstück“.
+      example: Test*
+
+    SearchObjNameAnfrageDTO:
+      required:
+        - objclass
+        - searchstring
+      type: object
+      properties:
+        searchstring:
+          $ref: '#/components/schemas/searchstring'
+        objclass:
+          $ref: '#/components/schemas/objclass_in_search'
+        reference:
+          type: string
+          description: Referenz des Fachdatum
+          example: data_dognumber
+        value:
+          type: string
+          description: Wert des Fachdatum
+          example: '458965'
+
+    SearchObjNameAntwortDTO:
+      type: object
+      properties:
+        giobjecttype:
+          type: array
+          description: 'Auflistung aller Objekte, auf die der Suchstring zutrifft.'
+          example:
+            - name: Beispielname
+              id: COO.2150.9151.1.1206000
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Objektreferenz'
+

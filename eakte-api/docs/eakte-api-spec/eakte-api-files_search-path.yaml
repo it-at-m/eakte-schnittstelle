@@ -1,0 +1,30 @@
+
+post:
+  tags:
+    - "/files"
+  summary: "Suche nach Akten über definierte Parameter"
+  operationId: "SearchFile"
+  parameters:
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/userlogin'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/joboe'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/jobposition'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "eakte-api-files_search-schemas.yaml#/components/schemas/SearchFileRequestDTO"
+    required: true
+  responses:
+    '200':
+      description: "OK"
+      content:
+        application/json:
+          schema:
+            $ref: "eakte-api-files_search-schemas.yaml#/components/schemas/SearchFileResponseDTO"
+    '400':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/400'
+    '401':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/401'
+    '500':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/500'

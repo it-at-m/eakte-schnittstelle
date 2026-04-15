@@ -1,0 +1,30 @@
+
+post:
+  tags:
+    - /apentries
+  summary: Suche nach Aktenplaneinträgen
+  operationId: SearchApentry
+  parameters:
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/userlogin'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/joboe'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/jobposition'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: 'eakte-api-apentries_search-schemas.yaml#/components/schemas/SearchApentryDTO'
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'eakte-api-apentries_search-schemas.yaml#/components/schemas/SearchApentryResponseDTO'
+    '400':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/400'
+    '401':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/401'
+    '500':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/500'

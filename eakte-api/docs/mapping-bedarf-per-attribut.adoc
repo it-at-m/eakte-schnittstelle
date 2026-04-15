@@ -1,0 +1,148 @@
+== REST-API-Schnittstellen-Aufrufe, bei denen ein Mapping stattfinden muss
+
+=== PUT /accessDefinitions/{}
+
+* UpdateAccessDefinitionObjectAnfrageDTO
+** Attribut objaccdef
+*** Objektklasse "Zugriffsdefinition" (Mapping von Strings)
+
+=== GET /contentObjectMetaData/{}
+* ReadContentObjectMetaDataAntwortDTO
+** Attribut gimetadatatype (DTO-Objekt 'MetadataReferenz')
+*** im Attribut 'objclass' von MetadataReferenz werden COO-Adressen referenziert
+    von Objektklassen, die Dateitypen beschreiben
+
+ob hier was gemappt werden muss, ist unklar; es gibt COO-Adressen, die
+auf Dateitypen zeigen, die in der Software-Komponente CFGMUENCHEN definiert sind.
+Aber es kann sein, dass das in eAkte26 portiert wurde. => Jenny/Jeanette befragen?
+
+Zu klären: müssen z.B. CFGMUENCHEN@15.1700:FreemindMindmap u.ä auf andere
+Dateitypen im BAY-Standard gemappt werden ???
+
+=== POST files
+* CreateFileDTO
+** Attribut accdef
+*** Objektklasse "Zugriffsdefinition" (Mapping von Strings)
+** Attribut procedureaccdef
+*** Objektklasse "Zugriffsdefinition" (Mapping von Strings)
+
+=== GET files/{}
+* ReadFileResponseDTO
+** Attribut accdef
+*** Objektklasse "Zugriffsdefinition" (Mapping von Strings)
+** Attribut procedureaccdef
+*** Objektklasse "Zugriffsdefinition" (Mapping von Strings)
+
+=== PUT files/{}
+* UpdateFileDTO
+** Attribut procedureaccdef
+*** Objektklasse "Zugriffsdefinition" (Mapping von Strings)
+** Attribut filearchivetimeOffltdeadline ???
+*** Mapping von Strings("1 Jahr", ...)
+** Attribut filelifetimeOffltdeadline ???
+*** Mapping von Strings("1 Jahr", ...)
+
+Warum gibt es bei PUT kein Attribute 'accdef'?
+
+=== POST /incomings
+* CreateIncomingRequestBodyDTO
+** Attribut 'params' mit Typ 'CreateIncomingBasisAnfrageDTO'
+*** CreateIncomingBasisAnfrageDTO
+**** Attribut accdef
+***** Objektklasse "Zugriffsdefinition" (Mapping von Strings)
+
+=== PUT /incomings
+* UpdateIncomingRequestBodyDTO
+** Attribut 'params' mit Typ 'UpdateIncomingAnfrageDTO'
+*** UpdateIncomingAnfrageDTO
+**** Attribut accdef
+***** Objektklasse "Zugriffsdefinition" (Mapping von Strings)
+
+=== POST /internal
+* CreateInternatRequestDTO
+** Attribut 'params' mit Typ 'CreateInternalBodyParams'
+*** CreateInternalBodyParams
+**** Attribut accdef
+***** Objektklasse "Zugriffsdefinition" (Mapping von Strings)
+
+=== POST /objectAndImportToInbox/{}
+* response object: CreateObjectAndImportToInboxResponseDTO
+** Attribut listcontents.items vom Type 'MetadataReferenz'
+*** Attribut 'objclass' (COO-Adressen auf Dateityp-Unterklassen) => zu klären, ob Mapping nötig
+
+=== POST /outgoings
+* CreateOutgoingAnfrageDTO
+** Attribut accdef
+*** Objektklasse "Zugriffsdefinition" (Mapping von Strings)
+** Attribut 'subfiletype'
+  (COO-Adressen auf Dokumenttype/subfiletyp-Unterklassen)
+  => zu klären, ob Mapping nötig
+
+=== GET /outgoings/{}
+* ReadOutgoingAntwortDTO
+** Attribut accdef
+*** Objektklasse "Zugriffsdefinition" (Mapping von Strings)
+** Attribut subfiletype
+  (COO-Adressen auf Dokumenttype/subfiletyp-Unterklassen)
+  => zu klären, ob Mapping nötig
+** Attribut gimetadatatype.items vom Type 'MetadataReferenz'
+*** Attribut 'objclass' (COO-Adressen auf Dateityp-Unterklassen) => zu klären, ob Mapping nötig
+
+=== PUT /outgoings/{}
+* UpdateOutgoingRequestDTO
+** Attribut accdef
+*** Objektklasse "Zugriffsdefinition" (Mapping von Strings)
+
+=== POST /procedures
+* CreateProcedureDTO
+** Attribut accdef
+*** Objektklasse "Zugriffsdefinition" (Mapping von Strings)
+
+=== GET /procedures/{}
+* ReadProcedureResponseDTO
+** Attribut accdef
+*** Objektklasse "Zugriffsdefinition" (Mapping von Strings)
+** Attribut filetype
+*** String-Enumeration: Hier gibt es einen potentiellen Fehler,
+da bei der Rückgabe kein explizites Mapping zwischen $FILETYPE... und den 3 zulässigen Stringwerten im app.ductx-Code erkennbar ist
+==> Klärung mit Hrn. Rabis?
+** Attribut bostate: gibt es hier ein Problem mit Status-Definitionen aus CFGMUENCHEN???
+
+=== PUT /procedures/{}
+* UpdateProcedureDTO
+** Attribut accdef
+*** Objektklasse "Zugriffsdefinition" (Mapping von Strings)
+
+=== GET /readDocumentObjectsMetaData/{}
+* ReadDocumentObjectMetaDataResponseDTO
+** Attribut businessobjecttype.items vom Type BusinessObjectReference
+*** Attribut 'objclass' (COO-Adressen auf Dateityp-Unterklassen) => zu klären, ob Mapping nötig
+
+=== POST /searchObjNames/search
+* SearchObjNameAnfrageDTO
+** Attribut objclass
+*** Frage: muss hier gemappt werden
+
+gefunden:
+* OpenOffice.org Vorlage CFGMUENCHEN@15.1700:OOorgTemplateObject
+* Personenakte CFGMUENCHEN@15.1700:PersonalSubjectAreaFile
+* Rechnungsposition CFGMUENCHEN@15.1700:InvoiceItem
+* Rich Text Format CFGMUENCHEN@15.1700:RichTextFormat
+* Serena OpenProj Projekt CFGMUENCHEN@15.1700:SerenaOpenProj
+
+=> Frage an Jenny/Jeanette
+
+=== PUT /setSignatureObjects/{}
+* SetSignatureRequestDTO
+** Attribut signaturetype
+*** Mapping der Unterschriftenarten
+
+Sind die Unterschriftenarten in der Mapping-Tabelle vollständig?
+Frage: Was sind "Wrapper für Unterschriften"?
+
+=> Klärung mit Jenny/Jeanette
+
+=== POST /subjectAreaUnits
+* CreateSubjectAreaUnitAnfrageDTO
+** Attribut fileaccessdefinition
+*** Objektklasse "Zugriffsdefinition" (Mapping von Strings)

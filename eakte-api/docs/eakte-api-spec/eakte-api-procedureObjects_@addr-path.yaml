@@ -1,0 +1,24 @@
+get:
+  tags:
+    - /procedureObjects
+  summary: Liste von Dokumenten auslesen
+  operationId: ReadProcedureObject
+  parameters:
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/userlogin'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/joboe'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/jobposition'
+    - $ref: 'eakte-api--parameters.yaml#/components/parameters/objaddress'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'eakte-api-procedureObjects_@addr-schemas.yaml#/components/schemas/ReadProcedureObjectsAntwortDTO'
+    '400':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/400'
+    '401':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/401'
+    '500':
+      $ref: 'eakte-api--default-responses.yaml#/components/responses/500'

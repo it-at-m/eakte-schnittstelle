@@ -1,0 +1,63 @@
+components:
+  schemas:
+
+    CreateCompleteProcedureBodyParams:
+      required:
+        - file
+      type: object
+      properties:
+        file:
+          type: string
+          description: Objekt-ID (COO-Adresse) der Sachakte
+          example: COO.1.2301.1.683
+        shortnameprocedure:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        shortnamedocument:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+      description: 'Parameter, die den kompletten Vorgang spezifizieren'
+
+    CreateCompleteProcedureRequestDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/CreateCompleteProcedureBodyParams'
+        giattachmenttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            type: string
+            format: binary
+
+    CreateCompleteProcedureResponseDTO:
+      type: object
+      properties:
+        objidprocedure:
+          type: string
+          description: Objekt-ID (COO-Adresse) des erzeugten/gefundenen Vorgangs
+          example: COO.1.2301.1.1042406
+        objnameprocedure:
+          type: string
+          description: Objektname des erzeugten/gefundenen Vorgangs
+          example: 0010 A20 011-2016 Anträge Firma XY-4
+        objiddocument:
+          type: string
+          description: Objekt-ID (COO-Adresse) des erzeugten/gefundenen Dokuments
+          example: COO.1.2301.1.1042406
+        objnamedocument:
+          type: string
+          description: Objektname des erzeugten/gefundenen
+          example: 0010 A20 011-2016 Anträge Firma XY-4
+        objidcontent:
+          type: string
+          description: Objekt-ID (COO-Adresse) des erzeugten/gefundenen Schrifstücks
+          example: COO.1.2301.1.1042406
+        objnamecontent:
+          type: string
+          description: Objektname des erzeugten/gefundenen Schrifstücks
+          example: 0010 A20 011-2016 Anträge Firma XY-4

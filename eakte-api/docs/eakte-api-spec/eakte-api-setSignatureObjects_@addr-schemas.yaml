@@ -1,0 +1,20 @@
+components:
+  schemas:
+
+    SetSignatureRequestDTO:
+      required:
+        - signaturetype
+      type: object
+      properties:
+        signaturetype:
+          type: string
+          description: |
+            COO-Adresse der Unterschriftenart\
+            Anmerkung:\
+            Titel ist nicht eindeutig, da es im System mehrere
+            Unterschriftenarten mit dem gleichen Namen/Titel gibt.
+          example: COO.1.1001.1.6485
+        remark:
+          type: string
+          description: Bemerkung zur Unterschrift
+          example: String

@@ -1,0 +1,34 @@
+components:
+  schemas:
+
+    CreateProcedureDTO:
+      required:
+        - referrednumber
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: |
+            Titel\
+            Der Titel bildet zusammen mit dem Geschäftszeichen den Namen des Vorgangs.
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Betreff'
+        objterms:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Schlagworte'
+        accdef:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Zugriffsdefinition'
+        fileruntimefrom:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileruntimefrom'
+        fileruntimetill:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileruntimetill'
+        procremark:
+          type: string
+          description: Bemerkung für Prozessverantwortliche
+          example: Warte auf Rückmeldung
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) der Sachakte
+          example: COO.1.2301.1.1042406
+        filetype:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/filetype'

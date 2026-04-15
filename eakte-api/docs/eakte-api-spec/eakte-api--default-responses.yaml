@@ -1,0 +1,19 @@
+
+components:
+  responses:
+
+    '204':
+      description: 'Objekt wurde erfolgreich aktualisiert.'
+
+    '400':
+      description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+      content:
+        application/json:
+          schema:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/DmsErrorResponse'
+
+    '401':
+      description: Falscher oder fehlender technischer Nutzer.
+
+    '500':
+      description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.

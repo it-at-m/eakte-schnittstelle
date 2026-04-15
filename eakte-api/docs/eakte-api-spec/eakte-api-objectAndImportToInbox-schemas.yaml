@@ -1,0 +1,45 @@
+components:
+  schemas:
+
+    CreateObjectAndImportToInboxDTO:
+      required:
+        - objaddress
+      type: object
+      properties:
+        objaddress:
+          type: string
+          description: Objekt-ID (COO-Adresse) des Postkorb
+          example: COO.1.2302.1.8
+        filesubj:
+          type: array
+          description: Betreff für die Datei
+          items:
+            type: array
+            description: Betreff für die Datei
+            items:
+              type: string
+              description: Betreff für die Datei
+      description: 'Parameter, die den Postkorb beschreiben'
+
+    CreateObjectAndImportToInboxResponseDTO:
+      type: object
+      properties:
+        listcontents:
+          type: array
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/MetadataReferenz'
+
+    CreateObjectAndImportToInboxRequestDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: 'eakte-api-objectAndImportToInbox-schemas.yaml#/components/schemas/CreateObjectAndImportToInboxDTO'
+        giattachmenttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            type: string
+            format: binary
+

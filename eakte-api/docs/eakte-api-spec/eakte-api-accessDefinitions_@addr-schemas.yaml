@@ -1,0 +1,35 @@
+
+components:
+  schemas:
+    UpdateAccessDefinitionObjectAnfrageDTO:
+      required:
+        - objaccdef
+      type: object
+      properties:
+        objaccdef:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Zugriffsdefinition'
+        authinheritance:
+          type: integer
+          description: |
+            Rechtevererbung\
+            Mögliche Werte: null,0,1,2
+            
+            0 oder leer (null): Die Rechtevererbung aus dem Standardprodukt wird
+            verwendet.\
+            Der neue Wert wird rekursiv gesetzt in Abhängigkeit von den
+            jeweiligen aktuell gesetzten Werten der untergeordneten Objekte.
+
+            1: Änderung der Zugriffsdefinition auf dem Objekt und rekursive Vererbung 
+            auf alle untergeordneten Objekte
+            unabhängig von den jeweiligen aktuell gesetzten Werten der untergeordneten Objekte.
+
+            2: Änderung der Zugriffsdefinition nur auf dem Objekt
+            
+            Hinweis:\ 
+            Beim übergeben des Werts 1 auf einer Sachakte vererbt sich
+            die Zugriffsdefinition auf alle in der Akte enthaltenen Vorgänge und wieder auf alle Dokumente, 
+            die in den Vorgängen enthalten sind.\
+            Bei einer großen Anzahl von untergeordneten Objekten kann es zu Abbrüchen 
+            aufgrund Objektsperren oder durch Timeouts kommen.
+          format: int32
+          example: 1

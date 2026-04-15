@@ -1,0 +1,91 @@
+== Fragen zur Schnittstellendokumentation an Fabasoft
+
+=== Anmeldedaten
+
+* ERLEDIGT: jobposition: Welche Werte können übergeben werden (z.B. Sachbearbeiter, DocumentManager?)
+* ERLEDIGT: Was genau ist damit gemeint: Den Fachverfahrensanbietern dürfen ausschließlich die
+gewünschten Stellen genannt werden?
+
+siehe Verwaltungswerkzeug Stelle - Referenz
+
+- Sachbearbeitung - OfficialInCharge
+- Registratur - Official
+- Sekretariat - Secretary
+- Leitung - Head
+- Fachadministration - OpAdm
+- Schriftgutverwaltung - DocumentManager
+
+=== ACL's
+* ERLEDIGT: Welche Bedeutung hat procedureaccdef,
+wenn es bereits eine accdef für die Akte und jeden Vorgang gibt?
+- Wird beim ändern nicht auf die Vorgänge vererbt,
+sondern nur für neue Vorgänge.
+- Vorgänge können andere accdef als Akten haben
+
+=== Stornieren von Objekten
+* FABASOFT: früher CancelObjectsGI
+- jetzt setsignatureobjectsGI
+- Was sind die Unterschiede bzw.
+wie kompatibel sind die beiden Aufrufe?
+- Kann CancelObjects abgekündigt werden?
+- CCEA2: wird von Fabasoft getestet, ob der Statuswert (objdocstate = 40-Storniert) bei SetSignature auch gesetzt wird
+
+=== Datentypen
+* ERLEDIGT: objCreateBy, ObjChangeBy - Warum sind das Arrays und keine Strings?
+- Wie ist die Struktur von ArrayOfString?
+z.B. filesubj bei ReadContentObjectResponse
+- Lösung: Werte werden mehrzeilig angezeigt / übergeben (getrent durch '<string>')
+* ERLEDIGT: Woher kennt das Fachverfahren, welche Vorlagen es gibt
+(create outgoing, createInternal: doctemplate) -> wird nur für eGov Suite eigene Vorlagen verwendet (nicht coSys), macht einen Sinn, das bei Fachverfahren zu nutzen
+- Gibt es Referenztabellen mit den festdefinierten Referenzwerten,
+die im FV genutzt werden können (z.b. giattachementtype-fileextension
+bei createcontentobject)?
+- Lösung: COO-Adressen bleiben systemübergreifend gleich.
+Anzeige über Suche nach Objektklasse ContentObject
+- DOKU CCEA2: Beschreiben gemäß Demo von Hr. Rabis, ggf. Mapping in der EAI
+* FABASOFT: Was genau ist das Geschäftszeichen (filereference)
+bei SearchFile und SearchProcedure?
+- Wo ist das in MUCS26 geblieben?
+- Warum wird das Feld nicht bei CreateFile befüllt?
+* FABASOFT: Wie findet man die numerischen Aufzählungstypen zu den Klartextnamen, z.B. EAPL-Typ = Betreffseinheit (subjectareascope)
+
+=== Performance
+* TESTEN: Antwortzeiten und Systemlast testen bei Lesen der Akte mit vielen Vorgängen (GET files)
+* ERLEDIGT: Datentypen im Request-Body: z.B. params bei POST internal -
+- Kann das description Feld einfach nach oben gezogen werden?
+(Achtung RequestBody Type ändert sich von Multipart zu Jason,
+siehe CreateObjectAndImportToInboxDTO)
+- Lösung: Menue TryOut zeigt den RequestBody mit Schema an
+* ERLEDIGT: letzter Parameter (businessapp) in Ausgang lesen (Outgoing) -
+sollte eigentlich Schlagworte lt. DMS Spec sein!
+- Lösung: War ein Missverständnis, hat sich geklört (siehe Ansicht im Swagger)
+* ERLEDIGT: Welche Wertebereiche haben bostate und objdocstate beim Vorgang lesen.
+- Was ist der Unterschied zwischen Status (docstate) und Bearbeitungsstatus
+(bostate) der darunterliegenden Objekte (siehe ReadProcedureResponseDTO)?
+- Sind dieses Felder bei der Listenanzeige von Objekten Filter?
+* FABASOFT: useou bei Vorgang anlegen.
+- Wozu genau wird dieses Feld benutzt, was ist eine Vorschreibung?
+- Der Wert wird nur ausgelesen wenn (referred-number == NULL)
+d.h. keine Vorgangszuordnung stattfindet.
+Wenn true, wird die Aktivität „Neuer Eingang“ an die OE
+(ohne Benutzer vorgeschrieben).
+Wenn kein Wert (oder false) übermittelt wird,
+wird die direkte Vorschreibung an den Benutzer durchgeführt.
+
+=== Fachdaten / Verfahrensdefinitionen
+* FABASOFT: Woher kennt das Fachverfahren bei
+CreateCompleteProcedureBusinessData die COO-Adresse des betreffenden Fachdatums?
+* ERLEDIGT: Wie kann man mehrere Fachdaten übergeben? -> pro Fachdatum ein call
+* VERFAHRENSDEFINITION IN KLÄRUNG MIT FABASOFT: readuserformsdata
+- FABASOFT: liefert aktuelle Beschreibung
+- Was genau bedeutet die Beschreibung:
+Beim Lesen von Verfahrenseigenschaften aus der E-Akte
+(Operation ReadUserFormsData), werden zusätzlich zum Wert der Eigenschaften
+auch alle Schlüsselwerte zurückgegeben.
+Die Operation ReadUserFormsData liefert in ihrer Response
+die Liste von Strings zurück, um zu gewährleisten,
+dass beim Lesen der Verfahrensdaten auch symmetrisch
+der Wert im Format Array übergeben wird.
+- Müsste dann ein Array mit allen Verfahrensdefinitionen
+zurück geliefert werden (nicht String)
+- read ist mit array, aber responsetype ist nur ein string

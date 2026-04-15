@@ -1,0 +1,122 @@
+components:
+  schemas:
+
+    UpdateIncomingAntwortDTO:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: Objekt-ID (COO-Adresse) des Objekts
+          example: COO.1.2301.1.1042441
+        objname:
+          type: string
+          description: Objektname des Objekts
+          example: Eingangspost vom 21.10.2016 (0010 A20 011-4-0006-0001)
+        giobjecttype:
+          type: array
+          description: |
+            Liste der Objektadressen und Namen
+            der Schriftstücke im Dokument.
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Objektreferenz'
+
+    CreateIncomingBasisAnfrageDTO:
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Betreff'
+        objterms:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Schlagworte'
+        accdef:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Zugriffsdefinition'
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) des Vorgangs
+          example: COO.1.2301.1.1042432
+        useou:
+          type: boolean
+          description: |
+            Der Wert wird nur ausgelesen wenn (referrednumber == NULL) d.h.
+            keine Vorgangszuordnung stattfindet.
+            * Wenn true, wird die Aktivität „Neue Erledigung“ an die OE (ohne
+            Benutzer vorgeschrieben).
+            * Wenn kein Wert (oder false) übermittelt wird, wird die direkte
+            Vorschreibung an den Benutzer durchgeführt.
+          example: false
+        delivery:
+          type: string
+          description: Eingangsdatum des Objekts
+          format: date-time
+        foreignnr:
+          type: string
+          description: |
+            Fremdes Geschäftszeichen\
+            In diesem Feld kann - falls erforderlich - das Geschäftszeichen einer anderen Organisation eingetragen werden.
+          example: A2016-10-2016-Landeshauptstadt-München
+        documentremarks:
+          type: string
+          description: Dokumentbezogene Hinweise
+          example: Antrag auf Baugenehmigung
+        incattachments:
+          type: string
+          description: Sonstige Anlagen
+          example: Bebauungsplan
+      description: 'Parameter, die den Eingang spezifizieren'
+
+
+    UpdateIncomingAnfrageDTO:
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Betreff'
+        objterms:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Schlagworte'
+        accdef:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Zugriffsdefinition'
+        foreignnr:
+          type: string
+          description: |
+            Fremdes Geschäftszeichen\
+            In diesem Feld kann - falls erforderlich - das Geschäftszeichen einer anderen Organisation eingetragen werden.
+          example: A2016-10-2016-Landeshauptstadt-München
+        delivery:
+          type: string
+          description: |
+            Eingangsdatum des Objekts\
+            In diesem Feld wird vermerkt, wann das Dokument eingegangen ist.
+          format: date-time
+        documentremarks:
+          type: string
+          description: Dokumentbezogene Hinweise
+          example: Antrag auf Baugenehmigung
+        incattachments:
+          type: string
+          description: Sonstige Anlagen
+          example: Bebauungsplan
+      description: 'Parameter, die den Eingang spezifizieren'
+
+    UpdateIncomingRequestBodyDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: 'eakte-api-incomings_@addr-schemas.yaml#/components/schemas/UpdateIncomingAnfrageDTO'
+        giattachmenttype:
+          type: array
+          description: |
+            Liste der Schriftstücke\
+            Schriftstücke können über diesen Aufruf nicht geändert bzw. ersetzt werden.
+            Neue Schriftstücke können bei Bedarf (zum Beispiel zum nachträglichen Hinzufügen von Anhängen
+            vor dem Postversand) über diesen Aufruf hinzugefügt werden.
+          items:
+            type: string
+            format: binary

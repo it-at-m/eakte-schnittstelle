@@ -1,0 +1,12 @@
+components:
+  securitySchemes:
+
+    basicAuth:
+      type: http
+      scheme: basic
+      description: |
+        This API uses Basic Auth flow. [More info](https://api.example.com/docs/auth)
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: jwt

@@ -1,0 +1,43 @@
+components:
+  schemas:
+
+    CreateIncomingRequestBodyDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: 'eakte-api-incomings_@addr-schemas.yaml#/components/schemas/CreateIncomingBasisAnfrageDTO'
+        giattachmenttype:
+          type: array
+          description: |
+            Liste von Schriftstücken\
+            Array im Format: COO-Adresse, Dateiname, Inhalt der Datei, Dateiendung, Größe der Datei (in KB), Betreff
+            
+            Hinweis:\
+            Schriftstücke können über diesen Aufruf nicht geändert bzw. ersetzt werden.\
+            Neue Schriftstücke können bei Bedarf (zum Beispiel zum nachträglichen Hinzufügen
+            von Anhängen vor dem Postversand) über diesen Aufruf hinzugefügt werden.
+          example:
+          items:
+            type: string
+            format: binary
+
+    CreateIncomingAntwortDTO:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: Objekt-ID (COO-Adresse) des erzeugten Objekts
+        objname:
+          type: string
+          description: Objektname des erzeugten Objekts
+        giobjecttype:
+          type: array
+          description: |
+            Auflistung aller Objekte, auf die der Suchstring zutrifft.\
+            Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind 
+            (Objektname und COO-Adresse)
+          example: LHM-Sitzung 14.10.2016 COO.1.2301.1.1041875
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Objektreferenz'

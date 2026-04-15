@@ -1,0 +1,41 @@
+components:
+  schemas:
+
+    CreateIncomingFromInboxRequestDTO:
+      required:
+        - contentid
+        - inboxid
+      type: object
+      properties:
+        inboxid:
+          type: string
+          description: Objekt-ID (COO-Adresse) des Postkorbs
+          example: COO.1.2301.4.191
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) des Vorgangs
+          example: COO.1.2301.1.1042432
+        contentid:
+          type: string
+          description: COO-Adressse eines Schriftstücks aus dem Postkorb
+          example: COO.1.2301.1.1042446
+        shortname:
+          type: string
+          description: Titel
+          example: Eingangspost vom 21.10.2016
+        foreignnr:
+          type: string
+          description: Fremdes Geschäftszeichen
+          example: A2016-10-2016-Landeshauptstadt-München
+        filesubj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Betreff'
+        documentremarks:
+          type: string
+          description: Dokumentbezogene Hinweise
+          example: Antrag auf Baugenehmigung
+        incattachments:
+          type: string
+          description: Sonstige Anlagen
+          example: Bebauungsplan
+        objterms:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Schlagworte'

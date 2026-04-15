@@ -1,0 +1,80 @@
+components:
+  schemas:
+
+    CreateInternalBodyParams:
+      type: object
+      properties:
+        referrednumber:
+          type: string
+          description: |
+            Objekt-ID (COO-Adresse) des Vorgangs\
+            Zugehöriger Vorgang (COOELAK@1.1001:referrednumber)\
+            Wenn kein Vorgang angegeben wird, soll das erzeugte interne Dokument am Schreibtisch des Benutzers abgelegt werden.
+          example: COO.1.2301.1.1042432
+        shortname:
+          type: string
+          description: Titel
+          example: Ausgangsschreiben zum Antrag auf Baugenehmigung Firma
+        accdef:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Zugriffsdefinition'
+        deliverydate:
+          type: string
+          description: Zustelldatum
+          format: date-time
+        filesubj:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Betreff'
+        subfiletype:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/subfiletype'
+        doctemplate:
+          type: string
+          description: |
+            Vorlage\
+            Der Name einer im System vorhandenen Vorlage kann angegeben werden.\
+            In dieser Vorlage können beispielsweise Metadaten 
+            automatisiert über DocProperty ausgegeben werden.\
+            Die angegebene Vorlage muss im angegebenen Dokumenttyp enthalten
+            sein.
+
+            Alternativ können finalisierte Schriftstücke auch über
+            GiAttachmentType übertragen werden.
+          example: LHM Schreiben Extern
+        incattachments:
+          type: string
+          description: Sonstige Anlagen
+          example: Ausfüllhile Antrag auf Baugenehmigung
+        objterms:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Schlagworte'
+      description: 'Parameter, das Interne Dokument spezifizieren'
+
+    CreateInternatRequestDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: 'eakte-api-internal-schemas.yaml#/components/schemas/CreateInternalBodyParams'
+        giattachmenttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            type: string
+            format: binary
+
+    CreateInternalResponseDTO:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: Objekt-ID (COO-Adresse) des erzeugten internen Dokuments.
+          example: COO.1.2301.1.1042465
+        objname:
+          type: string
+          description: Objektname des erzeugten internen Dokuments
+          example: >-
+            Internes Dokument zum Antrag auf Baugenehmigung Firma Mustermann
+            (0010 A20 011-4-0006-0006)
+        giobjecttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Objektreferenz'

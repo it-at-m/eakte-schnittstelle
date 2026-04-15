@@ -1,0 +1,29 @@
+components:
+  schemas:
+
+    CreateProcedureFromTemplateRequestDTO:
+      required:
+        - referrednumber
+        - template
+      type: object
+      properties:
+        referrednumber:
+          type: string
+          description: COO-Addresse der Akte
+          example: COO.1.2300.1.847
+        template:
+          type: string
+          description: COO-Addresse der Vorlage
+          example: COO.1.2300.1.73641
+
+    CreateProcedureFromTemplateResponseDTO:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: Objekt-ID des erzeugten Vorgangs
+          example: COO.1.2301.1.1042432
+        objname:
+          type: string
+          description: Name des erzeugten Vorgangs
+          example: 2016 Anträge Firma XY
