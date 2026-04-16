@@ -36,8 +36,7 @@ jobs:
         with:
           app-path: ${{ matrix.app-path }}
           java-version: "21"
-      - if: github.ref == 'refs/heads/main'
-        uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@7cb754b2056cebda6c36db344434f85be398c493 # v1.0.25
+      - uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@7cb754b2056cebda6c36db344434f85be398c493 # v1.0.25
         with:
           path: ${{ matrix.app-path }}
           image-name: ${{ matrix.app-path }}
