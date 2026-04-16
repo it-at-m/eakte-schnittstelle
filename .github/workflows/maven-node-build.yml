@@ -20,7 +20,6 @@ jobs:
       matrix:
         include: # hier müssen die Pfade angegeben werden
           - app-path: eakte-eai/eakte-eai
-
     steps:
       - uses: it-at-m/lhm_actions/action-templates/actions/action-checkout@7cb754b2056cebda6c36db344434f85be398c493 # v1.0.25
       - if: ${{ hashFiles(format('./{0}/package.json', matrix.app-path))!=null }}
