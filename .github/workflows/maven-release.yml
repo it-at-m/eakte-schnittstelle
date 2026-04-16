@@ -16,8 +16,8 @@ on:
         description: Service-Name
         required: true
         options:
-          - refarch-backend
-          - refarch-eai
+          - eakte-eai/eakte-eai
+      
 
 jobs:
   release-maven:
