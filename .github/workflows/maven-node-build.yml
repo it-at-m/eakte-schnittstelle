@@ -20,10 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         include: # hier müssen die Pfade angegeben werden
-          - app-path: refarch-backend
-          - app-path: refarch-frontend
-          - app-path: refarch-eai
-          - app-path: refarch-webcomponent
+          - app-path: eakte-eai
 
     steps:
       - uses: it-at-m/lhm_actions/action-templates/actions/action-checkout@7cb754b2056cebda6c36db344434f85be398c493 # v1.0.25
