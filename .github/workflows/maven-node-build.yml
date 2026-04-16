@@ -6,6 +6,7 @@ on:
     branches:
        - '*'
      # - "main"
+     # - "proxy-with-github-image"
 
 jobs:
   build:
@@ -19,7 +20,11 @@ jobs:
       fail-fast: false
       matrix:
         include: # hier müssen die Pfade angegeben werden
-          - app-path: eakte-eai/eakte-eai
+          - app-path: refarch-backend
+          - app-path: refarch-frontend
+          - app-path: refarch-eai
+          - app-path: refarch-webcomponent
+
     steps:
       - uses: it-at-m/lhm_actions/action-templates/actions/action-checkout@7cb754b2056cebda6c36db344434f85be398c493 # v1.0.25
       - if: ${{ hashFiles(format('./{0}/package.json', matrix.app-path))!=null }}
@@ -34,8 +39,8 @@ jobs:
         with:
           app-path: ${{ matrix.app-path }}
           java-version: "21"
-
-      - uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@7cb754b2056cebda6c36db344434f85be398c493 # v1.0.25
+      - if: github.ref == 'refs/heads/main'
+        uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@7cb754b2056cebda6c36db344434f85be398c493 # v1.0.25
         with:
           path: ${{ matrix.app-path }}
           image-name: ${{ matrix.app-path }}
@@ -43,5 +48,4 @@ jobs:
           registry-password: ${{ secrets.GITHUB_TOKEN }}
           registry-username: ${{ github.actor }}
           image-tags: |
-             type=raw,value=${{ github.ref == 'refs/heads/main' && 'dev' || github.ref_name }}
-             # type=raw,value=dev
+            type=raw,value=dev
