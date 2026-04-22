@@ -33,11 +33,9 @@ public class ReadIncomingResponseProcessor extends AbstractResponseProcessor {
         .filesubj(response.getFilesubj())
         .documentremarks(response.getDocumentremarks())
         .incattachments(response.getIncattachments())
-        .searchalso(response.getSearchalso())
         .objterms(response.getObjterms())
         .gimetadatatype(wandleGiMetadataTypeZuMetadataReferenzen(response.getGimetadatatype()))
         .accdef(response.getAccdef())
-        .businessapp(response.getBusinessapp())
         .build();
   }
 
