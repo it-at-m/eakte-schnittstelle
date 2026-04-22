@@ -132,11 +132,9 @@ public class ReadIncomingAntwortDTO extends DMSContainer {
         .filesubj("Anfrage Firma Mustermann bezüglich Baugenehmigung")
         .documentremarks("Antrag auf Baugenehmigung")
         .incattachments("Bebauungsplan")
-        .searchalso("Firma Mustermann Anträge 2015")
         .objterms("Firma XY; Anträge; Anträge 2016")
         .gimetadatatype(erzeugeBeispielMetadataReferenz())
         .accdef("Zugriffsdefinition für Schriftgutobjekte (allgemein lesbar)")
-        .businessapp("Businessapp")
         .build();
   }
 
