@@ -16,8 +16,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class ReadIncomingProcessorTest {
-  static final String DATEINAME_MIT_SONDERZEICHEN = "!@#$%^&*()_+|}{[],><?-~.txt";
-  static final String BEISPIEL_VORGANG_ID = "COO.1.2301.1.1042432";
 
   @Test
   void testProcess() throws Exception {
