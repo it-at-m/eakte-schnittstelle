@@ -29,11 +29,9 @@ public class ReadIncomingAntwortDTO extends DMSContainer {
       String filesubj,
       String documentremarks,
       String incattachments,
-      String searchalso,
       String objterms,
       List<MetadataReferenz> gimetadatatype,
-      String accdef,
-      String businessapp) {
+      String accdef) {
     super(shortname, filesubj, objterms, accdef);
     this.objname = objname;
     this.referrednumber = referrednumber;
@@ -42,15 +40,12 @@ public class ReadIncomingAntwortDTO extends DMSContainer {
     this.documentremarks = documentremarks;
     this.incattachments = incattachments;
     this.gimetadatatype = gimetadatatype;
-    this.searchalso = searchalso;
-    this.businessapp = businessapp;
   }
 
   @Schema(
       requiredMode = Schema.RequiredMode.NOT_REQUIRED,
       description = "Eingangskennzeichen",
-      example =
-          "Eingangspost vom 21.10.2016 (0010 A20 011-4-0006-0001)")
+      example = "Eingangspost vom 21.10.2016 (0010 A20 011-4-0006-0001)")
   private String objname;
 
   @Schema(
@@ -72,9 +67,9 @@ public class ReadIncomingAntwortDTO extends DMSContainer {
   private OffsetDateTime delivery;
 
   @Schema(
-          requiredMode = Schema.RequiredMode.NOT_REQUIRED,
-          description = "Dokumentbezogene Hinweise",
-          example = "Antrag auf Baugenehmigung")
+      requiredMode = Schema.RequiredMode.NOT_REQUIRED,
+      description = "Dokumentbezogene Hinweise",
+      example = "Antrag auf Baugenehmigung")
   private String documentremarks;
 
   @Schema(
@@ -109,22 +104,9 @@ public class ReadIncomingAntwortDTO extends DMSContainer {
                 }""")
   private List<MetadataReferenz> gimetadatatype;
 
-  @Schema(
-      requiredMode = Schema.RequiredMode.NOT_REQUIRED,
-      description = "Keine Funktion",
-      example = "Bescheide Firma Mustermann 2015")
-  private String searchalso;
-
-  @Schema(
-      requiredMode = Schema.RequiredMode.NOT_REQUIRED,
-      description = "Businessapp",
-      example = "businessapp")
-  private String businessapp;
-
   public static ReadIncomingAntwortDTO sample() {
     return ReadIncomingAntwortDTO.builderReadIncoming()
-        .objname(
-            "Eingangspost vom 21.10.2016 (0010 A20 011-4-0006-0001)")
+        .objname("Eingangspost vom 21.10.2016 (0010 A20 011-4-0006-0001)")
         .referrednumber("COO.1.2301.1.1042432")
         .shortname("Eingangspost vom 21.10.2016")
         .foreignnr("A2016-10-2016-Landeshauptstadt-München")
