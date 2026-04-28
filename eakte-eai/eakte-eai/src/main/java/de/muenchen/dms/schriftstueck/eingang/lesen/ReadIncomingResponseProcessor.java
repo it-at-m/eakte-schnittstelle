@@ -18,14 +18,14 @@ public class ReadIncomingResponseProcessor extends AbstractResponseProcessor {
   @Override
   public void process(Exchange exchange) throws Exception {
     final ReadIncomingGIResponse response = exchange.getIn().getBody(ReadIncomingGIResponse.class);
-    final de.muenchen.dms.schriftstueck.eingang.lesen.ReadIncomingAntwortDTO objectResponse =
+    final ReadIncomingAntwortDTO objectResponse =
         wandleReadIncomingGIZuAkteDTO(response);
     checkResponse(exchange, response.getStatus(), response.getErrormessage(), objectResponse);
   }
 
-  public static de.muenchen.dms.schriftstueck.eingang.lesen.ReadIncomingAntwortDTO
+  public static ReadIncomingAntwortDTO
       wandleReadIncomingGIZuAkteDTO(final ReadIncomingGIResponse response) {
-    return de.muenchen.dms.schriftstueck.eingang.lesen.ReadIncomingAntwortDTO.builderReadIncoming()
+    return ReadIncomingAntwortDTO.builderReadIncoming()
         .objname(response.getObjname())
         .referrednumber(response.getReferrednumber())
         .shortname(response.getShortname())

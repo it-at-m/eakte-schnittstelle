@@ -24,7 +24,7 @@ public class ReadIncomingingRouteBuilder extends DmsRouteBuilder {
         .params(RestOperationDefinitionFactory.createAuthentificationHeader())
         .responseMessages(
             RestOperationDefinitionFactory.createBaseResponseMsgDefinition(
-                de.muenchen.dms.schriftstueck.eingang.lesen.ReadIncomingAntwortDTO.class))
+                ReadIncomingAntwortDTO.class))
         .to(RouteConstants.DIRECT_READ_INCOMING);
   }
 }

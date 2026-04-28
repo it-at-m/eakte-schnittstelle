@@ -25,16 +25,16 @@ public class ReadIncomingProcessor extends AbstractDMSSoapProcessor {
 
   private ReadIncomingGI readIncomingGI(
       final String objaddress,
-      final String nutzer,
-      final String organisationseinheit,
-      final String rolle,
-      final String anwendung) {
+      final String userlogin,
+      final String joboe,
+      final String jobposition,
+      final String businessapp) {
     final ReadIncomingGI readIncomingGI = objectFactory.createReadIncomingGI();
-    readIncomingGI.setUserlogin(nutzer);
+    readIncomingGI.setUserlogin(userlogin);
     readIncomingGI.setObjaddress(objaddress);
-    readIncomingGI.setBusinessapp(anwendung);
-    readIncomingGI.setJoboe(organisationseinheit);
-    readIncomingGI.setJobposition(rolle);
+    readIncomingGI.setBusinessapp(businessapp);
+    readIncomingGI.setJoboe(joboe);
+    readIncomingGI.setJobposition(jobposition);
     return readIncomingGI;
   }
 }
