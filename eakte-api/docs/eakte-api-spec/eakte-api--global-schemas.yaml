@@ -181,6 +181,27 @@ components:
         - name: Beispielname
           id: COO.2150.9151.1.1206000
 
+    UserFormsReferenz:
+      description: |
+        Referenz der Verfahrenseigenschaft und der entsprechende Wert.\
+        Folgende Typen für Verfahrenseigenschaft werden unterstützt:
+        * Zeichenkette und Zeichenkettenliste (Textfeld)
+        * Datum (und Zeit), z.B. "01.02.2003 12:00:00"
+        * Boolean ("ja" für true)
+        * Integer und Float (z.B. "3,14")
+        * Währung, z.B. "99,90" ("EUR" wir implizit mitgesetzt)
+        * Aufzählungen (bzw. Optionsfelder) mittels Integer-Wert, wobei geprüft wird, ob der Integer Wert auch vorhanden ist.
+        * Objektzeiger und Objektlisten mittels COO-Adresse
+      type: "object"
+      properties:
+        lhmbai_15_1700_ufreference:
+          description: Programmiername der Verfahrenseigenschaft
+          type: "string"
+        lhmbai_15_1700_ufvalue:
+          type: "array"
+          items:
+            type: "string"
+
     fileruntimefrom:
       type: string
       description: |

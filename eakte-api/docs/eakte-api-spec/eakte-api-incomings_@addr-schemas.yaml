@@ -21,6 +21,7 @@ components:
             $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Objektreferenz'
 
     CreateIncomingBasisAnfrageDTO:
+      description: 'Parameter, die den Eingang spezifizieren'
       type: object
       properties:
         shortname:
@@ -65,8 +66,12 @@ components:
           type: string
           description: Sonstige Anlagen
           example: Bebauungsplan
-      description: 'Parameter, die den Eingang spezifizieren'
-
+        definition:
+          type: string
+        userformsdata:
+          type: array
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/UserFormsReferenz'
 
     UpdateIncomingAnfrageDTO:
       type: object

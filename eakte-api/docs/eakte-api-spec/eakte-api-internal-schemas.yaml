@@ -2,6 +2,7 @@ components:
   schemas:
 
     CreateInternalBodyParams:
+      description: 'Parameter, die das Interne Dokument spezifizieren'
       type: object
       properties:
         referrednumber:
@@ -41,10 +42,15 @@ components:
         incattachments:
           type: string
           description: Sonstige Anlagen
-          example: Ausfüllhile Antrag auf Baugenehmigung
+          example: Ausfüllhilfe Antrag auf Baugenehmigung
         objterms:
           $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Schlagworte'
-      description: 'Parameter, das Interne Dokument spezifizieren'
+        definition:
+          type: string
+        userformsdata:
+          type: array
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/UserFormsReferenz'
 
     CreateInternatRequestDTO:
       required:

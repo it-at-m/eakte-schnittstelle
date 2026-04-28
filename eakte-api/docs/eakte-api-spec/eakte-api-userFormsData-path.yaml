@@ -2,8 +2,13 @@
 get:
   tags:
     - "/userFormsData"
-  summary: Lesen von Verfahrensdaten zu einer Akte, Vorgang oder Dokument
-  description: Zusätzlich zum Wert der Eigenschaften werden auch alle Schlüsselwerte zurückgegeben. Als Ergebnis wird eine Liste von Strings zurück geliefert, um zu gewährleisten, dass beim Lesen der Verfahrensdaten auch symmetrisch der Wert im Format Array übergeben wird.
+  summary: Lesen einer bestimmten Verfahrensdateneigenschaft zu einer Akte, Vorgang oder Dokument
+  description: |
+    Die Verfahrenseigenschaft wird definiert durch die COO-Adresse einer Definition von Verfahren 
+    zzgl. der einfachen Referenz (z.B. DfV_parties anstelle lhmdfvpublic@4711.8800:DfV_parties).\ 
+    Zusätzlich zum Wert der Eigenschaften werden auch alle Schlüsselwerte zurückgegeben. 
+    Als Ergebnis wird eine Liste von Strings zurück geliefert, um zu gewährleisten, 
+    dass beim Lesen der Verfahrensdaten auch symmetrisch der Wert im Format Array übergeben wird.
   operationId: "ReadUserFormsData"
   parameters:
     - name: "reference"

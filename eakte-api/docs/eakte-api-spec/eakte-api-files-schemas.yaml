@@ -50,4 +50,10 @@ components:
           $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileouobj'
         procedureaccdef:
           $ref: 'eakte-api--global-schemas.yaml#/components/schemas/procedureaccdef'
+        definition:
+          type: string
+        userformsdata:
+          type: array
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/UserFormsReferenz'
 
