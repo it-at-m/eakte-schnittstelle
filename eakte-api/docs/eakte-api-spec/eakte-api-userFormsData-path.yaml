@@ -2,9 +2,15 @@
 get:
   tags:
     - "/userFormsData"
-  summary: "Aktenübersicht auslesen"
+  summary: Lesen von Verfahrensdaten zu einer Akte, Vorgang oder Dokument
+  description: Zusätzlich zum Wert der Eigenschaften werden auch alle Schlüsselwerte zurückgegeben. Als Ergebnis wird eine Liste von Strings zurück geliefert, um zu gewährleisten, dass beim Lesen der Verfahrensdaten auch symmetrisch der Wert im Format Array übergeben wird.
   operationId: "ReadUserFormsData"
   parameters:
+    - name: "reference"
+      in: "query"
+      required: true
+      schema:
+        type: "string"
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/userlogin'
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/joboe'
@@ -27,7 +33,8 @@ get:
 put:
   tags:
     - "/userFormsData"
-  summary: "UserFormsData ändern"
+  summary: Verfahrensdaten für Akten, Vorgänge oder Dokumente ändern
+  description: Eine Liste von Referenz-Wert-Paaren von Verfahrenseigenschaften wird ausgewertet und mit Hilfe einer neuen Hilfsaktion SetUserFormData gesetzt. Die Gültigkeit der übergebenen Referenz (= Programmiername) wird anhand der Definition für Verfahren ermittelt und geprüft.
   operationId: "UpdateUserFormsData"
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
