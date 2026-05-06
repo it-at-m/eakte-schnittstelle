@@ -7,7 +7,7 @@
 "Type: Documentation":
   - head-branch: [ '^docs', '-documentation-' ]
   - changed-files:
-    - any-glob-to-any-file: ['docs/**']
+    - any-glob-to-any-file: ['eakte-api/docs/**']
 "Type: Dependency":
   - head-branch: [ '^dep', '-dependency-' ]
 "Type: Security":
