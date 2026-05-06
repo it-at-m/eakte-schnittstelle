@@ -2,6 +2,7 @@ components:
   schemas:
 
     CreateOutgoingAnfrageDTO:
+      description: 'Parameter, die die Erledigung spezifizieren'
       required:
         - referrednumber
       type: object
@@ -53,7 +54,12 @@ components:
             Sonstige Anlagen\
             Freitextfeld, um zusätzliche Anlagen zu benennen, die nicht elektronisch erfasst wurden (z.B. Baupläne)
           example: Ausfüllhilfe Antrag auf Baugenehmigung
-      description: 'Parameter, die die Erledigung spezifizieren'
+        definition:
+          type: string
+        userformsdata:
+          type: array
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/UserFormsReferenz'
 
     CreateOutgoingRequestBodyDTO:
       required:

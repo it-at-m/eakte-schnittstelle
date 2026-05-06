@@ -32,3 +32,9 @@ components:
           example: COO.1.2301.1.1042406
         filetype:
           $ref: 'eakte-api--global-schemas.yaml#/components/schemas/filetype'
+        definition:
+          type: string
+        userformsdata:
+          type: array
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/UserFormsReferenz'

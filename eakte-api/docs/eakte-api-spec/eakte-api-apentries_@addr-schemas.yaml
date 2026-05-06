@@ -7,6 +7,6 @@ components:
         giobjecttype:
           type: array
           description: |
-            Liste der Vorgänge der Akte mit jeweils Bezeichner (Name) und COO-Adresse (ID) des Objekts
+            Liste der untergeordneten Aktenplaneinträge eines Aktenplaneintrags mit jeweils Bezeichner (Name) und COO-Adresse (ID) des Objekts
           items:
             $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Objektreferenz'
