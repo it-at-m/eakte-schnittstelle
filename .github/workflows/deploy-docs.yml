@@ -31,9 +31,6 @@ jobs:
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
         with:
           path: "eakte-api/docs/"
-      #  uses: it-at-m/lhm_actions/action-templates/actions/action-build-docs@7cb754b2056cebda6c36db344434f85be398c493 # v1.0.25
-      #  with:
-      #    node-version: "24"
       - id: deploy_docs
         # Only deploy documentation from the main branch to prevent unauthorized changes
         uses: it-at-m/lhm_actions/action-templates/actions/action-deploy-docs@7cb754b2056cebda6c36db344434f85be398c493 # v1.0.25
