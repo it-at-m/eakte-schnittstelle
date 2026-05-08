@@ -1,0 +1,52 @@
+* {
+    font-family: Segoe UI, serif;
+}
+
+h1, h2, h3, h4 {
+    color: #007aff;
+}
+
+p {
+    margin-block-start: 3px;
+    margin-block-end: 3px;
+}
+
+th, td {
+    vertical-align: top;
+    padding: 3px 4px;
+}
+
+table, th, td {
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+
+div.hierarchy-level1 a {
+    color: white;
+}
+
+a {
+    color: #3D5B96;
+}
+
+a:link {
+    text-decoration: none;
+}
+a:visited {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+}
+a:active {
+    text-decoration: none;
+}
+
+hr {
+    margin-top: 20px;
+}
+
+.label {
+    display: inline-block;
+    width: 300px;
+}
