@@ -1,0 +1,20 @@
+== ADR 02: Einheitliche Behandlung für statische und dynamische Schriftgut-Eigenschaften
+
+=== Fragestellung / Alternativen
+
+=== Auflistung der Vor-/Nachteile
+
+==== Argumente für / Vorteile einer einheitlichen Attributliste
+
+==== Nachteile einer einheitlichen Attributliste
+
+==== Argumente für / Vorteile von separaten JSON-Feldern und DfV-Attributlisten
+
+==== Nachteile von separaten JSON-Feldern und DfV-Attributlisten
+
+* Eigenschaften der Attribute können nicht dynamisch aus der eGov-Suite abgerufen werden, sondern sind fest in der API verankert (z.B. Feldlängen, Pflichtfeld, zulässige Wertemengen)
+
+
+
+=== Design-Entscheidung
+

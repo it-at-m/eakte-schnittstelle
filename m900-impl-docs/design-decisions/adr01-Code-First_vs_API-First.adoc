@@ -29,3 +29,7 @@ Folgende Optionen sind als Vorgehensweise zur Gewinnung dieses Dokumentationsfor
 ** API nicht implementierungsunabhängig definiert (was ist, wenn man den Service als Typescripts/Javascript-Node-Service statt in Java implementiert haben möchte?)
 ** eine spezielle Implementierung wird präferiert und wird der Master; nur durch Entwicklung in diesem Artefakt kann die API weiterentwickelt werden
 * Redundante Teile der API und der Parameter können nicht in einer Single-Source-of-Truth zusammengefasst werden, sondern müssen an jedem Endpunkt erneut hineinkopiert werden
+
+
+=== Design-Entscheidung
+
