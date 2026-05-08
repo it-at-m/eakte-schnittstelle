@@ -1,0 +1,31 @@
+
+== ADR 01: REST-Controller-Entwicklung API-First oder Code-First
+
+=== Fragestellung / Alternativen
+
+Für die eAkte-Schnittstelle muss eine Spezifikation vorliegen, die kommuniziert werden kann und gegen die ein Client-Entwickler seine Software entwickeln kann. Das Mittel der Wahl für REST-Services ist hier der Standard "OpenAPI-Spezifikation" der Linux Foundation (https://www.openapis.org).
+
+Folgende Optionen sind als Vorgehensweise zur Gewinnung dieses Dokumentationsformates denkbar:
+
+* Code-First: Endpunkte und die Struktur von Request und Response werden als Java-Annotationen im Quelltext des REST-Controllers dokumentiert und können zur Laufzeit mittels eines eingebundenen Classpath-Scanners extrahiert und als Swagger-UI angeboten werden
+
+* API-First: Zuerst werden mit einer Interface Description Language (IDL, hier spezifisch: OpenAPI-Spec) die Endpunkte und die Struktur von Request und Response modelliert. Sowohl offline wie auch später in einem deployten Service kann dann Swagger-UI abgerufen werden
+
+=== Auflistung der Vor-/Nachteile
+
+==== Argumente für / Vorteile von API-First
+
+* API ist unabhängiges Artifakt mit eigenem Lifecycle, keine Kopplung zwischen Spezifikation und Implementierungen der Spezifikation (Separation of Concerns)
+* die API ist *implementierungs-unabhängig* definiert und dokumentiert
+* die API kann durch Schnittstellen-Spezialisten, die keine Programmier-Spezialisten sind, entwickelt und gepflegt und dokumentiert werden
+* gegen die API kann schon Client-seitig entwickelt werden, bevor eine Service-Implementierung vorliegt
+* zentrale redundantzfreie Spezifikation des API-Datenmodells
+
+==== Nachteile von Code-First
+
+* Spezifikation und Dokumentation der Schnittstelle tief eingebettet in Software-Entwicklungs-Artefakte (Quellcode)
+** nur von Entwickler zu pflegen
+** erfordert einen Software-Entwicklungs-Lifecycle für die Änderunge oder Erweiterung der Dokumentation
+** API nicht implementierungsunabhängig definiert (was ist, wenn man den Service als Typescripts/Javascript-Node-Service statt in Java implementiert haben möchte?)
+** eine spezielle Implementierung wird präferiert und wird der Master; nur durch Entwicklung in diesem Artefakt kann die API weiterentwickelt werden
+* Redundante Teile der API und der Parameter können nicht in einer Single-Source-of-Truth zusammengefasst werden, sondern müssen an jedem Endpunkt erneut hineinkopiert werden
