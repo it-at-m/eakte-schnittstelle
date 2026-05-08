@@ -21,6 +21,12 @@ jobs:
       pages: write
       id-token: write
     steps:
+      - id: Checkout_repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - id: list_files
+        run: |
+          echo "Listing files in eakte-api/docs/"
+          ls -la eakte-api/docs/
       - id: upload_artifact
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
         with:
