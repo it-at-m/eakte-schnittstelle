@@ -18,3 +18,4 @@
 
 === Design-Entscheidung
 
+Gemeinsam haben wir entschieden, den ersten Call für die generische Suche einer Akte mit beiden Parametern (statisch und dynamisch) aufzubauen und besprechen dieses Vorgehen im Nachhinein noch einmal
