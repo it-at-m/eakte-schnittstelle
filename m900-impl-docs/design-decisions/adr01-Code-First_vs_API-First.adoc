@@ -32,4 +32,4 @@ Folgende Optionen sind als Vorgehensweise zur Gewinnung dieses Dokumentationsfor
 
 
 === Design-Entscheidung
-
+Gemeinsam sind wir zu der Entscheidung gekommen, dass wir den Ansatzes des API-First-Designs fortführen werden
