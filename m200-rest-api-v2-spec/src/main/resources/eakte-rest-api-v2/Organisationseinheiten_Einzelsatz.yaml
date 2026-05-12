@@ -1,0 +1,24 @@
+get:
+  tags:
+    - Organisationseinheiten
+  summary: Organisationseinheit lesen
+  operationId: LeseOrganisationseinheiten
+  parameters:
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/FachverfahrensID'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+    - $ref: 'Akten_Datentypen.yaml#/components/parameters/aktenId'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'Organisationseinheiten_Datentypen.yaml#/components/schemas/Organisationseinheit'
+    '400':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/400'
+    '401':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/401'
+    '500':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/500'

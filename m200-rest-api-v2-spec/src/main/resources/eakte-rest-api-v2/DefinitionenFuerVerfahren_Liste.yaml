@@ -1,0 +1,38 @@
+
+get:
+  tags:
+    - DefinitionenFuerVerfahren
+  summary: DfV-Metadaten abrufen
+  description: |
+    Mit diesem Aufruf können die Metadaten con DfVs abgerufen werden.
+  operationId: leseDefinitionenFuerVerfahren
+  parameters:
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/FachverfahrensID'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'DefinitionenFuerVerfahren_Datentypen.yaml#/components/schemas/DefinitionenFuerVerfahrenListeResponse'
+    '400':
+      description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+      content:
+        application/json:
+          schema:
+            $ref: 'DefinitionenFuerVerfahren_Datentypen.yaml#/components/schemas/DefinitionenFuerVerfahrenListeResponse'
+    '401':
+      description: Falscher oder fehlender technischer Nutzer.
+      content:
+        application/json:
+          schema:
+            $ref: 'DefinitionenFuerVerfahren_Datentypen.yaml#/components/schemas/DefinitionenFuerVerfahrenListeResponse'
+    '500':
+      description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+      content:
+        application/json:
+          schema:
+            $ref: 'DefinitionenFuerVerfahren_Datentypen.yaml#/components/schemas/DefinitionenFuerVerfahrenListeResponse'

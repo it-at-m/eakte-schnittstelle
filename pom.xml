@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.muenchen.dms</groupId>
+  <artifactId>eakte-rest-api</artifactId>
+  <version>NO_GLOBAL_VERSION</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project-local-version>${project.version}</project-local-version>
+  </properties>
+
+  <modules>
+    <!--
+    <module>m100-rest-api-v1-api-specification</module>
+    <module>m150-rest-api-v1-eai</module>
+    -->
+    <module>m200-rest-api-v2-spec</module>
+    <module>m210-rest-api-v2-spec-single-file</module>
+    <module>m250-rest-api-v2-spring-boot-server-stubs</module>
+    <module>m300-egov-suite-fscgovxml-java-client</module>
+  </modules>
+
+</project>

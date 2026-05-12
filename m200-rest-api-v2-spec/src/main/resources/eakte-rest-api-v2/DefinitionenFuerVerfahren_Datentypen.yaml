@@ -1,0 +1,56 @@
+components:
+
+  parameters:
+
+    definitionFuerVerfahrenInterneId:
+      name: definitionFuerVerfahrenInterneId
+      description:
+        Interne Id der Definition fuer Verfahren (nicht interpretierbar, "opaque")
+      in: path
+      required: true
+      schema:
+        type: string
+      example: "<grmblfix>"
+
+  schemas:
+
+    DefinitionFuerVerfahren:
+      type: object
+      description: beschreibt die Metadaten einer Definition fuer Verfahren
+      required:
+        - name
+      properties:
+        eigeneUrl:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/URI'
+        name:
+          type: string
+          description: |
+            xxx
+          example: "Akte"
+        istEntwurf:
+          type: boolean
+          description: |
+            kennzeichnet, ob es sich um die Entwurtfsversion des Formulars handelt
+          example: false
+        attributURIs:
+          type: array
+          items:
+            type: string
+
+    DefinitionenFuerVerfahrenListeResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        error:
+          $ref: "_GlobaleDatentypen.yaml#/components/schemas/EAkteSchnittstelleError"
+        anzahlDefinitionenFuerVerfahren:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/AnzahlListenElemente'
+        definitionenFuerVerfahrenListe:
+          type: array
+          description: |
+            List von Verfahrensdefinitionen
+          items:
+            $ref: 'DefinitionenFuerVerfahren_Datentypen.yaml#/components/schemas/DefinitionFuerVerfahren'

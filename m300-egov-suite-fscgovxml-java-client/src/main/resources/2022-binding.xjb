@@ -1,0 +1,9 @@
+<jaxb:bindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <jaxb:globalBindings>
+        <jaxb:javaType name="java.math.BigDecimal" xmlType="xs:float"
+                       parseMethod="javax.xml.bind.DatatypeConverter.parseDecimal"
+                       printMethod="javax.xml.bind.DatatypeConverter.printDecimal"
+        />
+
+    </jaxb:globalBindings>
+</jaxb:bindings>

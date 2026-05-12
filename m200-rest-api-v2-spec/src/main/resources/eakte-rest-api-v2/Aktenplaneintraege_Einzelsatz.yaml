@@ -1,0 +1,51 @@
+get:
+  tags:
+    - Aktenplaneintraege
+  summary: Aktenplaneintrag lesen
+  operationId: LeseAktenplaneintrag
+  parameters:
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/FachverfahrensID'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+    - $ref: 'Aktenplaneintraege_Datentypen.yaml#/components/parameters/aktenplaneintragsId'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'Aktenplaneintraege_Datentypen.yaml#/components/schemas/Aktenplaneintrag'
+    '400':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/400'
+    '401':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/401'
+    '500':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/500'
+
+put:
+  tags:
+    - Aktenplaneintraege
+  summary: Aktenplaneintrag bearbeiten (nur Betreffseinheit)
+  operationId: BearbeiteAktenplaneintrag
+  parameters:
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/FachverfahrensID'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+    - $ref: 'Aktenplaneintraege_Datentypen.yaml#/components/parameters/aktenplaneintragsId'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: 'Aktenplaneintraege_Datentypen.yaml#/components/schemas/Aktenplaneintrag'
+    required: true
+  responses:
+    '204':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/204'
+    '400':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/400'
+    '401':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/401'
+    '500':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/500'
