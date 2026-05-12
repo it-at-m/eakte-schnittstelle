@@ -1,63 +1,51 @@
-<!-- General project links -->
-[open-issues]: https://github.com/it-at-m/refarch-templates/issues
-[new-issue]: https://github.com/it-at-m/refarch-templates/issues/new/choose
-[milestones]: https://github.com/it-at-m/refarch-templates/milestones
-[project-board]: https://github.com/orgs/it-at-m/projects/16
-[documentation]: https://refarch.oss.muenchen.de/templates
-[contribution-documentation]: https://refarch.oss.muenchen.de/contribute
-[itm-opensource]: https://opensource.muenchen.de/
-[license]: ../LICENSE
-[code-of-conduct]: ./CODE_OF_CONDUCT.md
+# eakte-eai
 
-<!-- Project specific links -->
-[refarch-documentation]: https://refarch.oss.muenchen.de/
-[refarch-code]: https://github.com/it-at-m/refarch
-[spring-documentation]: https://spring.io/ 
-[vuejs-documentation]:  https://vuejs.org/
-[getting-started-documentation]: https://refarch.oss.muenchen.de/templates/getting-started
-[develop-documentation]: https://refarch.oss.muenchen.de/templates/develop
-[document-documentation]: https://refarch.oss.muenchen.de/templates/document
-[organize-documentation]: https://refarch.oss.muenchen.de/templates/organize
+Die EAkte EAI ist die Schnittstelle für Fachanwendungen der EAkte zum DMS über REST.
 
-<!-- Shields.io links -->
-[documentation-shield]: https://img.shields.io/badge/documentation-blue?style=for-the-badge
-[new-issue-shield]: https://img.shields.io/badge/new%20issue-blue?style=for-the-badge
-[made-with-love-shield]: https://img.shields.io/badge/made%20with%20%E2%9D%A4%20by-it%40M-yellow?style=for-the-badge
-[license-shield]: https://img.shields.io/github/license/it-at-m/refarch-templates?style=for-the-badge
+Eine aktuelle übersicht über alle Schnittstelle kann über Swagger bezogen werden: TODO Link auf Swagger URL in der CAP
 
-# RefArch Templates
 
-[![Documentation][documentation-shield]][documentation]
-[![New issue][new-issue-shield]][new-issue]
-[![Made with love by it@M][made-with-love-shield]][itm-opensource]
-[![GitHub license][license-shield]][license]
+### Built With
 
-This project acts as a template and provides starter files for web application projects based on the RefArch (reference architecture) of it@M.
+This project is built with the following technologies:
 
-To learn more about the architecture itself, checkout its [documentation][refarch-documentation] or [code][refarch-code].
-
-The templates are based on [Spring][spring-documentation] and [Vue.js][vuejs-documentation].
-
-## Usage
-
-To get set up and learn more about the templates, please check out the [Getting Started][getting-started-documentation] page.
-Also check the respective pages with suggestions on how to [develop][develop-documentation], [document][document-documentation] and [organize][organize-documentation] your project.
+* Java
+* Spring Boot
+* Maven
 
 ## Roadmap
 
-See the [open issues][open-issues] for a full list of proposed features (and known issues).
-To get a better overview on what's currently being worked on, check out our [project board][project-board].
-We often also plan our issues in [milestones][milestones].
+*This project is currently being developed.*
+
+## Set up
+
+### Running locally
+
+Build the application by using `mvn install`
+
+The resulting JAR-File can be run using `java -jar <path_to_the_jar_file>`
+
+### Running with podman
+
+Create the Dir: eakte-eai/eakte-external-config
+Put here the file the application.yml file with the correct data.
+Start a console in the dir: eakte-eai
+call "podman compose up"
+Now the container should start.
+Test this with in you browser with: http://localhost:8080/swagger-ui/index.html
 
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-To learn more about how you can contribute, please read our [contribution documentation][contribution-documentation].
+If you have a suggestion that would make this better, please open an issue with the tag "enhancement", fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+More about this in the [CODE_OF_CONDUCT](/CODE_OF_CONDUCT.md) file.
 
 ## License
 
-Distributed under the MIT License. See [LICENSE][license] file for more information.
+Distributed under the MIT License. See [LICENSE](LICENSE) file for more information.
 
 ## Contact
 
