@@ -1,13 +1,13 @@
-# eakte-eai
+# eAkte EAI
 
-Die EAkte EAI ist die Schnittstelle für Fachanwendungen der EAkte zum DMS über REST.
+The eAkte EAI provides a RESTful API to connect specialized applications (Fachanwendungen) to the eAkte electronic records management. 
 
-Eine aktuelle übersicht über alle Schnittstelle kann über Swagger bezogen werden: TODO Link auf Swagger URL in der CAP
+## API Documentation
 
+The current API specification and endpoints can be explored via Swagger UI:
+* [Swagger API Documentation](TODO: Insert Swagger URL)
 
-### Built With
-
-This project is built with the following technologies:
+## Tech Stack
 
 * Java
 * Spring Boot
@@ -15,38 +15,43 @@ This project is built with the following technologies:
 
 ## Roadmap
 
-*This project is currently being developed.*
+*This project is currently under active development.*
 
-## Set up
+## Setup
 
-### Running locally
+### Running Locally
 
-Build the application by using `mvn install`
+1. Build the application:
 
-The resulting JAR-File can be run using `java -jar <path_to_the_jar_file>`
+   `mvn install`
+   
+3. Run the resulting JAR file:
 
-### Running with podman
+    `java -jar <path_to_the_jar_file>.jar`
 
-Create the Dir: eakte-eai/eakte-external-config
-Put here the file the application.yml file with the correct data.
-Start a console in the dir: eakte-eai
-call "podman compose up"
-Now the container should start.
-Test this with in you browser with: http://localhost:8080/swagger-ui/index.html
+### Running in podman
 
-## Contributing
+1. Create a directory for external configuration:
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+    `mkdir eakte-external-config`
+  
+2. Place your application.yml with the correct environment data into the eakte-external-config directory.
 
-If you have a suggestion that would make this better, please open an issue with the tag "enhancement", fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+3. Start the container using Podman Compose from the project root:
 
-More about this in the [CODE_OF_CONDUCT](/CODE_OF_CONDUCT.md) file.
+    `podman compose up`
+  
+4. Verify the deployment by accessing the Swagger UI in your browser:
 
-## License
+    http://localhost:8080/swagger-ui/index.html
 
-Distributed under the MIT License. See [LICENSE](LICENSE) file for more information.
+### Contributing
+Contributions are welcome. If you have a suggestion for an enhancement, please open an issue with the tag enhancement, fork the repository, and create a pull request.
 
-## Contact
+Please review our CODE_OF_CONDUCT before contributing.
 
+### License
+Distributed under the MIT License. See the LICENSE file for more information.
+
+### Contact
 it@M - opensource@muenchen.de
