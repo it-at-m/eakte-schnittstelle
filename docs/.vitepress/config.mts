@@ -41,6 +41,7 @@ const vitepressConfig = defineConfig({
         text: "V1",
         link: "/v1",
         items: [
+          { text: "Use Cases", link: "/v1/usecases" },
           { text: "Swagger-UI", link: "/v1/swagger-ui" },
         ],
       },
