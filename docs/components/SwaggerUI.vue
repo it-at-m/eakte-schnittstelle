@@ -3,16 +3,17 @@
 </template>
 
 <script setup>
-import { onMounted, defineProps } from 'vue'
-import SwaggerUI from 'swagger-ui-dist/swagger-ui-es-bundle.js'
-import 'swagger-ui-dist/swagger-ui.css'
+import SwaggerUI from "swagger-ui-dist/swagger-ui-es-bundle.js";
+import { defineProps, onMounted } from "vue";
 
-const props = defineProps(["specUrl"])
+import "swagger-ui-dist/swagger-ui.css";
+
+const props = defineProps(["specUrl"]);
 
 onMounted(() => {
   SwaggerUI({
-    dom_id: '#swagger-ui',
+    dom_id: "#swagger-ui",
     url: props.specUrl,
-  })
-})
+  });
+});
 </script>

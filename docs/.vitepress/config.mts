@@ -48,13 +48,14 @@ const vitepressConfig = defineConfig({
       {
         text: "V2",
         link: "/v2",
-        items: [
-          { text: "Swagger-UI", link: "/v2/swagger-ui" },
-        ],
+        items: [{ text: "Swagger-UI", link: "/v2/swagger-ui" }],
       },
     ],
     socialLinks: [
-      { icon: "github", link: "https://github.com/it-at-m/eakte-schnittstelle" },
+      {
+        icon: "github",
+        link: "https://github.com/it-at-m/eakte-schnittstelle",
+      },
     ],
     editLink: {
       pattern:
