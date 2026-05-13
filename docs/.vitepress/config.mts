@@ -16,6 +16,7 @@ const vitepressConfig = defineConfig({
     ],
   ],
   lastUpdated: true,
+  appearance: false,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -23,26 +24,40 @@ const vitepressConfig = defineConfig({
       {
         text: "V1",
         items: [
+          { text: "Index", link: "/v1" },
           { text: "Swagger-UI", link: "/v1/swagger-ui" },
         ],
       },
       {
         text: "V2",
         items: [
+          { text: "Index", link: "/v2" },
           { text: "Swagger-UI", link: "/v2/swagger-ui" },
         ],
       },
     ],
     sidebar: [
-      { text: "Example", link: "/example" },
-      { text: "External link", link: "https://refarch.oss.muenchen.de" },
+      {
+        text: "V1",
+        link: "/v1",
+        items: [
+          { text: "Swagger-UI", link: "/v1/swagger-ui" },
+        ],
+      },
+      {
+        text: "V2",
+        link: "/v2",
+        items: [
+          { text: "Swagger-UI", link: "/v2/swagger-ui" },
+        ],
+      },
     ],
     socialLinks: [
-      { icon: "github", link: "https://github.com/it-at-m/refarch-templates" },
+      { icon: "github", link: "https://github.com/it-at-m/eakte-schnittstelle" },
     ],
     editLink: {
       pattern:
-        "https://github.com/it-at-m/refarch-templates/blob/main/docs/:path",
+        "https://github.com/it-at-m/eakte-schnittstelle/blob/main/docs/:path",
       text: "View this page on GitHub",
     },
     footer: {
