@@ -1,0 +1,65 @@
+import { defineConfig } from "vitepress";
+import { withMermaid } from "vitepress-plugin-mermaid";
+
+// https://vitepress.dev/reference/site-config
+const vitepressConfig = defineConfig({
+  base: "/", // needs to be changed if delivered via sub path (e.g. "/docs/" for example.com/docs)
+  title: "E-Akte SST Doku",
+  description: "Dokumentation der E-Akte Schnittstelle",
+  head: [
+    [
+      "link",
+      {
+        rel: "icon",
+        href: `https://assets.muenchen.de/logos/lhm/icon-lhm-muenchen-32.png`,
+      },
+    ],
+  ],
+  lastUpdated: true,
+  themeConfig: {
+    // https://vitepress.dev/reference/default-theme-config
+    nav: [
+      { text: "Home", link: "/" },
+      {
+        text: "V1",
+        items: [
+          { text: "Swagger-UI", link: "/v1/swagger-ui" },
+        ],
+      },
+      {
+        text: "V2",
+        items: [
+          { text: "Swagger-UI", link: "/v2/swagger-ui" },
+        ],
+      },
+    ],
+    sidebar: [
+      { text: "Example", link: "/example" },
+      { text: "External link", link: "https://refarch.oss.muenchen.de" },
+    ],
+    socialLinks: [
+      { icon: "github", link: "https://github.com/it-at-m/refarch-templates" },
+    ],
+    editLink: {
+      pattern:
+        "https://github.com/it-at-m/refarch-templates/blob/main/docs/:path",
+      text: "View this page on GitHub",
+    },
+    footer: {
+      message: `<a href="https://opensource.muenchen.de/impress.html">Impress and Contact</a>`,
+    },
+    outline: {
+      level: "deep",
+    },
+    search: {
+      provider: "local",
+    },
+  },
+  markdown: {
+    image: {
+      lazyLoading: true,
+    },
+  },
+});
+
+export default withMermaid(vitepressConfig);
