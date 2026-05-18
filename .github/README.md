@@ -31,6 +31,9 @@ The current API specification and endpoints can be explored via Swagger UI:
 
 ### Running in podman
 
+For a complete description how to set up a podman container please read this document:
+[Documentation](https://github.com/it-at-m/eakte-schnittstelle/blob/main/eakte-eai/eakte-eai/README.md)
+
 1. Create a directory for external configuration:
 
     `mkdir eakte-external-config`
