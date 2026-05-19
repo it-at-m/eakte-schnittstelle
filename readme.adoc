@@ -1,7 +1,0 @@
-== Spezifikationen und Implementierungen für die eAkte-Schnittstellen
-
-Dieses Repository beinhaltet die Schnittstellen-Spezifikationen und die Implemntierungen für Schnittstellen-Adapter für die REST-Schnittstelle zur eAkte (Fabasoft eGov-Suite).
-
-Die Einstiegsseite für die Schnittstellen-Dokumentation und Entwickler-Informationen:
-
-https://it-at-m.github.io/eakte-schnittstelle/[https://it-at-m.github.io/eakte-schnittstelle/]
