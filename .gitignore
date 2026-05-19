@@ -26,7 +26,7 @@ replay_pid*
 #Taken from rest-eai
 /${catalina.home}/
 /eakte-eai/docs/LHM_COSYS_DMS_REST_EAI.postman_collection.json
-/eakte-eai/eakte-eai/src/main/resources/secrets.yml
+/v1/eakte-eai/src/main/resources/secrets.yml
 
 
 
@@ -193,4 +193,4 @@ nbdist/
 *.njsproj
 *.sln
 *.sw?
-eakte-eai/eakte-eai/eakte-external-config/application.yml
+v1/eakte-eai/eakte-external-config/application.yml
