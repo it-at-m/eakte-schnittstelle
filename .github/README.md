@@ -30,8 +30,8 @@ The current API specification and endpoints can be explored via Swagger UI:
     `java -jar <path_to_the_jar_file>.jar`
 
 ### Running in podman
-+For a complete description of how to set up a Podman container, see:
-+[Documentation](../eakte-eai/eakte-eai/README.md)
+For a complete description of how to set up a Podman container, see:
+[Documentation](../eakte-eai/eakte-eai/README.md)
 
 1. Create a directory for external configuration:
 
