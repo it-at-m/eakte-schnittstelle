@@ -3,7 +3,7 @@
 ## API-Spezifikation (gemäß OpenAPI-Standard)
 
 - **aktuelle Version:** 1.2.5
-- **Zip-Archiv mit yaml files:** [eakte-api-spec-1.2.5.zip](./snapshots/eakte-api-spec-1.2.5.zip)
+- **Source Code der Spec:** [v1/eakte-api](https://github.com/it-at-m/eakte-schnittstelle/tree/main/v1/eakte-api)
 - **Swagger-UI zur interaktiven Erkundung:** [SwaggerUI](./swagger-ui.md)
 
 ## Beschreibung der Schnittstellen-Anwendungsfälle
@@ -14,5 +14,5 @@
 
 Quelltext und lauffähiges Image des eAkte-EAI-Adapters:
 
-- **Source Code:** [https://github.com/it-at-m/eakte-schnittstelle/eakte-eai](https://github.com/it-at-m/eakte-schnittstelle/v1/eakte-eai)
-- **Container Image:** [https://github.com/it-at-m/eakte-schnittstelle/eakte-eai/pkgs/container/eakte-eai%2Feakte-eai](https://github.com/it-at-m/eakte-schnittstelle/eakte-eai/pkgs/container/eakte-eai%2Feakte-eai)
+- **Source Code:** [v1/eakte-eai](https://github.com/it-at-m/eakte-schnittstelle/tree/main/v1/eakte-eai])
+- **Container Image:** [ghcr.io/it-at-m/eakte-schnittstelle/v1/eakte-eai](https://github.com/it-at-m/eakte-schnittstelle/pkgs/container/eakte-schnittstelle%2Fv1%2Feakte-eai)

@@ -1,7 +1,6 @@
 <!-- General project links -->
 [open-issues]: https://github.com/it-at-m/eakte-schnittstelle/issues
 [new-issue]: https://github.com/it-at-m/eakte-schnittstelle/issues/new/choose
-[milestones]: https://github.com/it-at-m/eakte-schnittstelle/milestones
 [documentation]: https://it-at-m.github.io/eakte-schnittstelle
 [itm-opensource]: https://opensource.muenchen.de/
 [license]: ../LICENSE
@@ -22,7 +21,7 @@
 
 This project provides different components to connect specialized applications (Fachanwendungen) to the electronic record management (eAkte).
 
-See the [docs][documentation] and the following component list for further informations.
+See the [docs][documentation] and the following component list for further information.
 
 ## Components
 

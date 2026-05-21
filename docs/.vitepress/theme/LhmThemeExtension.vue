@@ -5,6 +5,7 @@
         <a
           href="https://www.muenchen.de/"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <img
             src="https://assets.muenchen.de/logos/lhm/logo-lhm-muenchen.svg"
