@@ -53,7 +53,7 @@ services:
   eakte-eai-adapter:
     # start with image built within GiHub build pipeline:
     # The image should be the right one. For more information check: https://github.com/it-at-m/eakte-eai/pkgs/container/eakte-eai%2Feakte-eai
-    image: ghcr.io/it-at-m/eakte-eai/eakte-eai:dev
+    image: ghcr.io/it-at-m/eakte-schnittstelle/v1/eakte-eai:dev
     hostname: eakte-eai-adapter
     ports:
       - 8080:8080
