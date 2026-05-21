@@ -1,0 +1,59 @@
+components:
+
+  parameters:
+
+    aktenId:
+      name: aktenId
+      description:
+        Interne Id der Akte (nicht interpretierbar, "opaque")
+      in: path
+      required: true
+      schema:
+        type: string
+      example: "<grmblfix>"
+
+  schemas:
+
+    Akte:
+      type: object
+      description: |
+        Repräsentation einer Akte.\
+        Aufgrund der Konfigurierbarkeit der Attribute (verfahrensabhängige Metadaten, siehe
+        Fabasoft eGov-Suite "Definition von Verfahren") werden diese in einer dynamisch 
+        aufgebauten Liste geführt und nichts als Felder in einer fixen (JSON-) Datenstruktur.
+        Um eine einheitliche Behandlung von Standard- und Custom-Attributen zu ermöglichen, 
+        werden auch die Standard-Attribute in der 'attributListe' zurückgegeben.\
+        \
+        Beachte, dass für alle gespeicherten Akten das Attribut 'eigeneUrl' garantiert 
+        zurückgeliefert wird. Es ist nur deshalb nicht als Pflichtattribut deklariert, damit
+        diese Ressourcendefinition auch für das Anlegen einer neuen Akte verwendet werden
+        kann, wenn noch keine URL vom System vergeben wurde. 
+        \
+        Um die innerhalb einer bestimmten Betreffseinheit verfügbaren Custom-Attribute auf
+        Aktenebene sowie die Standard-Attribute der Akte zu erfahren, kann über den Endpunkt
+        '/v2/Attribute' eine Abfrage (GET-Methode) getätigt werden (s. Spezifikation dieses
+        Endpunktes, in diesem Fall die Verwendung des Filters 'Schriftgutebene=Akte').
+      required:
+        - attributListe
+      properties:
+        eigeneUrl:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/URI'
+        attributListe:
+          $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributListe'
+
+    AktenListe:
+      type: array
+      description: Liste von Akten
+      items:
+        $ref: 'Akten_Datentypen.yaml#/components/schemas/Akte'
+
+    AktenListeWrapper:
+      type: object
+      required:
+        - anzahlAkten
+        - aktenListe
+      properties:
+        anzahlAkten:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/AnzahlListenElemente'
+        aktenListe:
+          $ref: 'Akten_Datentypen.yaml#/components/schemas/AktenListe'

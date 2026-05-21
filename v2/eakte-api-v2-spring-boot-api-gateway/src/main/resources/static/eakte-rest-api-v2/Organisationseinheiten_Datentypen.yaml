@@ -1,0 +1,48 @@
+components:
+
+  parameters:
+
+    organisationseinheitenId:
+      name: organisationseinheitenId
+      description:
+        Interne Id der Organisationseinheit (nicht interpretierbar, "opaque")
+      in: path
+      required: true
+      schema:
+        type: string
+      example: "<grmblfix>"
+
+  schemas:
+
+    Organisationseinheit:
+      type: object
+      required:
+        - attributListe
+      properties:
+        eigeneUrl:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/URI'
+        attributListe:
+          $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributListe'
+
+    OrganisationseinheitenListe:
+      type: array
+      description: Liste von Organisationseinheiten
+      items:
+        $ref: '#/components/schemas/Organisationseinheit'
+
+    OrganisationseinheitenListeWrapper:
+      type: object
+      required:
+        - anzahlOrganisationseinheiten
+        - organisationseinheitenListe
+      properties:
+        anzahlAkten:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/AnzahlListenElemente'
+        aktenListe:
+          $ref: '#/components/schemas/OrganisationseinheitenListe'
+
+    OrganisationseinheitenMetadaten:
+      type: object
+      properties:
+        attributMetadaten:
+          $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributbeschreibungenListe'

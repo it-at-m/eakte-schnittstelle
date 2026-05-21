@@ -1,0 +1,17 @@
+
+
+Address:
+
+https://eakte23-k2-authldap.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+
+    HttpMethod:   POST
+    Content-Type: text/xml
+    ServiceName:  FSCGOVXML11001DefaultWebServiceDefinitionSoapService
+    PortName:     FSCGOVXML_1_1001_DefaultWebServiceDefinitionSoapPort
+    PortTypeName: FSCGOVXML_1_1001_DefaultWebServiceDefinitionSoap
+    Headers: {
+      Authorization=Basic ***,
+      SOAPAction="http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPSearch", Accept=*/*
+    }
+
+

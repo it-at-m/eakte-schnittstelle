@@ -1,0 +1,182 @@
+components:
+
+  parameters:
+
+    attributbeschreibungsId:
+      name: attributbeschreibungsId
+      description:
+        Interne Id der Attributbeschreibung (nicht interpretierbar, "opaque")
+      in: path
+      required: true
+      schema:
+        type: string
+      example: "<grmblfix>"
+
+  schemas:
+
+    AttributName:
+      type: string
+      example: "Stadtrats-Fraktion"
+
+    AttributReferenz:
+      type: string
+      example: "Stadtrats-Fraktion"
+
+    AttributDatenTyp:
+      type: string
+      enum:
+        - Zeichenkette
+        - Zahl
+        - Datum
+        - DatumMitUhrzeit
+        - RessourcenReferenz
+        - ListeVonRessourcenReferenzen
+        - Aufzählungstyp
+
+    Attributwert_Zeichenkette:
+      type: string
+
+    Attributwert_Zahl:
+      type: number
+
+    Attributwert_Datum:
+      type: string
+      format: date
+
+    Attributwert_DatumMitUhrzeit:
+      type: string
+      format: datetime
+
+    Attributwert_RessourcenReferenz:
+      type: string
+
+    Attributwert_ListeVonRessourcenReferenzen:
+      type: array
+      items:
+        $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/Attributwert_RessourcenReferenz'
+
+    AttributTypUndWert:
+      type: object
+      description: |
+        Beinhaltet den Wert eines Attributs und den Datentyp.
+      properties:
+        attributName:
+          $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributName'
+        attributTyp:
+          $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributDatenTyp'
+        attributLänge:
+          type: integer
+          description: zulässige Länge bei String-Datentypen (in UTF-8 Zeichen, nicht in Bytes!)
+        pflichtFeld:
+          type: boolean
+          description: notwendiges Attribut
+        attributWert:
+          title: attributWert
+          oneOf:
+            - $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/Attributwert_Zeichenkette'
+            - $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/Attributwert_Zahl'
+            - $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/Attributwert_Datum'
+            - $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/Attributwert_DatumMitUhrzeit'
+            - $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/Attributwert_RessourcenReferenz'
+            - $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/Attributwert_ListeVonRessourcenReferenzen'
+
+    Attributbeschreibung:
+      type: object
+      description: beschreibt die Metadaten eines Attributs
+      properties:
+        betreffseinheit:
+          $ref: 'Aktenplaneintraege_Datentypen.yaml#/components/schemas/BetreffseinheitId'
+        nameDerDefinitionFürVerfahren:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/URI'
+        referenzDerDefinitionFürVerfahren:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/ReferenzDerDefinitionFürVerfahren'
+        attributName:
+          $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributName'
+        attributReferenz:
+          $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributReferenz'
+        attributTyp:
+          $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributDatenTyp'
+        aufzählungswerte:
+          $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AufzählungstypElementliste'
+        pflichtFeld:
+          type: boolean
+          description: notwendiges Attribut
+        attributLänge:
+          type: integer
+          description: zulässige Länge bei String-Datentypen (in UTF-8 Zeichen, nicht in Bytes!)
+
+    AufzählungstypElement:
+      type: object
+      description: |
+        beachte, dass Aufzählungswerte im Fachverfahren nur angezeigt und per Schlüssel selektiert werden müssen, 
+        jedoch nie der Wert dort erzeugt wird, sondern nur per Schlüssel aus der vorgegebenenWertemenge selektiert wrd
+      example: 1 -> "SPD"
+      properties:
+        schlüssel:
+          type: string
+          description: xxx
+        kurzbezeichnungDesWerts:
+          type: string
+          description: |
+            Kurzbezeichnung des Wertes.\
+            Der Wert kann in der eAkte ein komplexer (zusammengesetzter) Wert sein, also ein Objekt.
+            Für die Selektion reicht aber auf Fachverfahrensseite aus, eine Kurzbezeichnung zu sehen.
+
+    AufzählungstypElementliste:
+      type: array
+      description: Liste von zugelassenen Elementen (Werteliste) für einen Aufzählungstyp
+      items:
+        - $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AufzählungstypElement'
+
+    AttributbeschreibungenListe:
+      type: array
+      items:
+        - $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/Attributbeschreibung'
+
+    AttributbeschreibungenListeWrapper:
+      type: object
+      description: |
+        Container mit der Liste von Attribut-Metadaten sowie der Anzahl (Listenlänge).
+        Dieser Wrapper existiert, weil Arrays 
+        nicht als Datentyp von Response-Bodies zurückgeliefert werden sollen (wg. Erweiterbarkeit)
+      readOnly: false   # Swagger unterdrückt dieses Element im Request-Body-Objekt, wenn readOnly=true !!!???
+      required:
+        - anzahlAttributMetadaten
+        - attributMetadatenListe
+      properties:
+        anzahlAttributbeschreibungen:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/AnzahlListenElemente'
+        attributbeschreibungenListe:
+          $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributbeschreibungenListe'
+
+    AttributListe:
+      type: array
+      items:
+        $ref: "Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributTypUndWert"
+
+    AttributListeWrapper:
+      type: object
+      description: |
+        Container mit der Liste von Attribut-Werten sowie der Anzahl (Listenlänge).
+        Dieser Wrapper existiert, weil Arrays 
+        nicht als Datentyp von Response-Bodies zurückgeliefert werden soll (wg. Erweiterbarkeit)
+      readOnly: false   # Swagger unterdrückt dieses Element im Request-Body-Objekt, wenn readOnly=true !!!???
+      required:
+        - anzahlAttribute
+        - attributListe
+      properties:
+        anzahlAttribute:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/AnzahlListenElemente'
+        attributListe:
+          $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributListe'
+
+    Formular:
+      type: object
+      description: |
+        Formularbeschreibung
+      properties:
+        formularName:
+          type: string
+          required: true
+        attributMetadaten:
+          $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributbeschreibungenListe'

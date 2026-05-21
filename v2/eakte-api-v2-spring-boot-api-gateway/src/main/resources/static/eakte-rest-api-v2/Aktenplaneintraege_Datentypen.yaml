@@ -1,0 +1,70 @@
+components:
+
+  parameters:
+
+    aktenplaneintragsId:
+      name: aktenplaneintragsId
+      description:
+        Interne Id des Aktenplaneintrags (nicht interpretierbar, "opaque")
+      in: path
+      required: true
+      schema:
+        type: string
+      example: "<grmblfix>"
+
+  schemas:
+
+    BetreffseinheitId:
+      type: string
+      description: |
+        Aktenplankennzeichen einer Betreffseinheit.\
+        \
+        Das Aktenplankennzeichen ist ein im gesamten Aktenplan eindeutiges Attribut, z.B.
+        "0150" für die Betreffseinheit mit der Kurzbezeichnung "Landratswahlen".\
+        \
+        Das Aktenplankennzeichen kann bzw. muss im Fachverfahren als Konfigurationsdatum hinterlegt
+        werden, um zu definieren, unter welcher Betreffseinheit Akten (bzw. indirekt dann Vorgänge,
+        Dokumente und Schriftstücke) angelegt werden sollen. Dementsprechend gelten dann für diese
+        Schriftgutobjekte auch die in der Betreffseinheit hinterlegten Fach-Attribut (Formulare,
+        "Definition für Verfahren")
+      example: "0150"
+
+    Aktenplaneintrag:
+      type: object
+      description: |
+        Repräsentation eines Aktenplaneintrags.\
+        \
+        Aufgrund der Konfigurierbarkeit der Attribute (verfahrensabhängige Metadaten, siehe
+        Fabasoft eGov-Suite "Definition von Verfahren") werden diese in einer dynamisch 
+        aufgebauten Liste geführt und nichts als Felder in einer fixen (JSON-) Datenstruktur.
+        Um eine einheitliche Behandlung von Standard- und Custom-Attributen zu ermöglichen, 
+        werden auch die Standard-Attribute in der 'attributListe' zurückgegeben.\
+        \
+        Beachte, dass für alle gespeicherten Akten das Attribut 'eigeneUrl' garantiert 
+        zurückgeliefert wird. Es ist nur deshalb nicht als Pflichtattribut deklariert, damit
+        diese Ressourcendefinition auch für das Anlegen einer neuen Akte verwendet werden
+        kann, wenn noch keine URL vom System vergeben wurde. 
+      required:
+        - attributListe
+      properties:
+        eigeneUrl:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/URI'
+        attributListe:
+          $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributListe'
+
+    AktenplaneintraegeListe:
+      type: array
+      description: Liste von Akten
+      items:
+        $ref: 'Aktenplaneintraege_Datentypen.yaml#/components/schemas/Aktenplaneintrag'
+
+    AktenplaneintraegeListeWrapper:
+      type: object
+      required:
+        - anzahlAkten
+        - aktenListe
+      properties:
+        anzahlAkten:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/AnzahlListenElemente'
+        aktenListe:
+          $ref: 'Aktenplaneintraege_Datentypen.yaml#/components/schemas/AktenplaneintraegeListe'

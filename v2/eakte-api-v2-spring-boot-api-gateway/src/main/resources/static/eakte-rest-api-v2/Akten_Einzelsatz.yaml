@@ -1,0 +1,51 @@
+get:
+  tags:
+    - Akten
+  summary: Akte lesen
+  operationId: LeseAkte
+  parameters:
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/FachverfahrensID'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+    - $ref: 'Akten_Datentypen.yaml#/components/parameters/aktenId'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'Akten_Datentypen.yaml#/components/schemas/Akte'
+    '400':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/400'
+    '401':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/401'
+    '500':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/500'
+
+put:
+  tags:
+    - Akten
+  summary: Akte bearbeiten
+  operationId: BearbeiteAkte
+  parameters:
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/FachverfahrensID'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+    - $ref: 'Akten_Datentypen.yaml#/components/parameters/aktenId'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: 'Akten_Datentypen.yaml#/components/schemas/Akte'
+    required: true
+  responses:
+    '204':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/204'
+    '400':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/400'
+    '401':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/401'
+    '500':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/500'

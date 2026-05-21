@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.muenchen.eai</groupId>
+  <artifactId>eakte-schnittstelle-v2</artifactId>
+  <version>2.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project-local-version>${project.version}</project-local-version>
+  </properties>
+
+  <modules>
+    <!--
+    <module>m100-rest-api-v1-api-specification</module>
+    <module>m150-rest-api-v1-eai</module>
+    -->
+    <module>eakte-api-v2-spec</module>
+    <module>eakte-api-v2-spec-single-file</module>
+    <module>eakte-api-v2-spring-boot-server-stubs</module>
+    <module>eakte-fscgovxml-java-client</module>
+    <module>eakte-api-v2-spring-boot-api-gateway</module>
+  </modules>
+
+</project>

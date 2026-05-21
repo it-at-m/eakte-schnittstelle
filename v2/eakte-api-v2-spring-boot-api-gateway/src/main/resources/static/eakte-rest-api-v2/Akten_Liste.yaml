@@ -1,0 +1,65 @@
+
+post:
+  tags:
+    - Akten
+  summary: Akte erstellen
+  description: >
+    Erstelle eine neue Akte.
+    
+    Beachte dass das Ergebnis des POST-Aufrufs nur die URL des neu erzeugten Objekts zurückliefert und nicht
+    das ganze Objekt mit all seinen Attributen erneut zurücküberträgt. Falls die automatisch beim Erstellungvorgang 
+    erzeugte Felder (ErzeugtAm, ErzeugtVon, automatisch generiertes Betreffs-Feld etc.) benötigt werden, muss das
+    vollständige Objekt explizit mit einem nachfolgenden GET-Aufruf abgerufen werden. Für die nachfolgende Erstellung
+    eines Vorgangs reicht es aber, die mit dem 'Location'-Header zurückgegebene URL der neu angelegten Akte zur 
+    Verfügung zu haben.
+  operationId: ErstelleAkte
+  parameters:
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/FachverfahrensID'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: 'Akten_Datentypen.yaml#/components/schemas/Akte'
+    required: true
+  responses:
+    '201':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/201'
+    '400':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/400'
+    '401':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/401'
+    '500':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/500'
+
+get:
+  tags:
+    - Akten
+  summary: Akten suchen
+  description: |
+    Mit diesem Aufruf können Akten gesucht werden auf Basis von Bedingungen, die sich auf beliebige
+    Attribute der Akte beziehen (Standard-Metadaten der eGov-Suite oder auch Attribute aus der 
+    "Definition von Verfahren").
+
+  operationId: SucheAkten
+  parameters:
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/FachverfahrensID'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Bedingungen'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'Akten_Datentypen.yaml#/components/schemas/AktenListeWrapper'
+    '400':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/400'
+    '401':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/401'
+    '500':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/500'

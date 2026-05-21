@@ -1,0 +1,46 @@
+components:
+  schemas:
+
+    EAkteSchnittstelleErrorTyp:
+      type: object
+      description: >
+        Container für konkrete Fehlermeldungen, die während der Kommunikation von
+        eAkte-Interface zu Fabasoft eGov-Suite auftreten können.
+      required:
+        - easFehlercode
+        - easFehler
+      properties:
+        easFehlercode:
+          type: integer
+          format: int32
+        easFehler:
+          type: string
+        easDetail:
+          type: string
+
+    AnzahlListenElemente:
+      type: integer
+      description: |
+        Anzahl der Elemente in einer Liste von Ressourcen
+      example: 3
+
+    URI:
+      type: string
+      description: |
+        Eigene URI einer Ressource (Zeiger auf sich selbst) oder 
+        URI einer referenzierten Ressource.\
+        \
+        URI = "Uniform Resource Locator" (siehe z.B. https://de.wikipedia.org/wiki/Uniform_Resource_Identifier)\
+        \
+        URIs sollen auf Seite des Service-Clients nicht interpretiert und auch nicht konstruiert werden.
+        Sie werden so wie sie in einer vorhergehenden Service-Antwort enthalten waren unverändert 
+        in einer neuen Service-Anfrage verwendet (als Request-URL oder in den Daten als Referenz-URI)
+      example: "/v2/Ressourcen/ressourcenId"
+
+    NameDerDefinitionFürVerfahren:
+      type: string
+      example: "Definition für Verfahren A"
+
+    ReferenzDerDefinitionFürVerfahren:
+      type: string
+      example: "COO.2150.8801.2.1046473"

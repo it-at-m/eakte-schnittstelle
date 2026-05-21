@@ -1,0 +1,64 @@
+
+post:
+  tags:
+    - Aktenplaneintraege
+  summary: Aktenplaneintrag erstellen (nur Betreffseinheit)
+  description: >
+    Erstelle eine neue Betreffseinheit (Aktenplaneintrag mit 'Ebene=Betreffseinheit').
+    
+    Beachte dass das Ergebnis des POST-Aufrufs nur die URL des neu erzeugten Objekts zurückliefert und nicht
+    das ganze Objekt mit all seinen Attributen erneut zurücküberträgt. Falls die automatisch beim Erstellungvorgang 
+    erzeugte Felder (ErzeugtAm, ErzeugtVon, automatisch generiertes Betreffs-Feld etc.) benötigt werden, muss das
+    vollständige Objekt explizit mit einem nachfolgenden GET-Aufruf abgerufen werden. Für die nachfolgende Erstellung
+    eines Vorgangs reicht es aber, die mit dem 'Location'-Header zurückgegebene URL der neu angelegten Akte zur 
+    Verfügung zu haben.
+  operationId: ErstelleAktenplaneintrag
+  parameters:
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/FachverfahrensID'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: 'Aktenplaneintraege_Datentypen.yaml#/components/schemas/Aktenplaneintrag'
+    required: true
+  responses:
+    '201':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/201'
+    '400':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/400'
+    '401':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/401'
+    '500':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/500'
+
+get:
+  tags:
+    - Aktenplaneintraege
+  summary: Aktenplaneintraege suchen
+  description: |
+    Mit diesem Aufruf können Aktenplaneintraege gesucht werden auf Basis von Bedingungen, die sich auf beliebige
+    Attribute des Aktenplaneintrags beziehen (Standard-Metadaten der eGov-Suite oder auch Attribute aus der 
+    "Definition von Verfahren").
+  operationId: SucheAktenplaneintraege
+  parameters:
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/FachverfahrensID'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Bedingungen'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'Aktenplaneintraege_Datentypen.yaml#/components/schemas/AktenplaneintraegeListeWrapper'
+    '400':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/400'
+    '401':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/401'
+    '500':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/500'
