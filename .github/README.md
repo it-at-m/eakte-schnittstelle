@@ -1,64 +1,57 @@
-<!-- General project links -->
-[open-issues]: https://github.com/it-at-m/refarch-templates/issues
-[new-issue]: https://github.com/it-at-m/refarch-templates/issues/new/choose
-[milestones]: https://github.com/it-at-m/refarch-templates/milestones
-[project-board]: https://github.com/orgs/it-at-m/projects/16
-[documentation]: https://refarch.oss.muenchen.de/templates
-[contribution-documentation]: https://refarch.oss.muenchen.de/contribute
-[itm-opensource]: https://opensource.muenchen.de/
-[license]: ../LICENSE
-[code-of-conduct]: ./CODE_OF_CONDUCT.md
+# eAkte EAI
 
-<!-- Project specific links -->
-[refarch-documentation]: https://refarch.oss.muenchen.de/
-[refarch-code]: https://github.com/it-at-m/refarch
-[spring-documentation]: https://spring.io/ 
-[vuejs-documentation]:  https://vuejs.org/
-[getting-started-documentation]: https://refarch.oss.muenchen.de/templates/getting-started
-[develop-documentation]: https://refarch.oss.muenchen.de/templates/develop
-[document-documentation]: https://refarch.oss.muenchen.de/templates/document
-[organize-documentation]: https://refarch.oss.muenchen.de/templates/organize
+The eAkte EAI provides a RESTful API to connect specialized applications (Fachanwendungen) to the eAkte electronic records management. 
 
-<!-- Shields.io links -->
-[documentation-shield]: https://img.shields.io/badge/documentation-blue?style=for-the-badge
-[new-issue-shield]: https://img.shields.io/badge/new%20issue-blue?style=for-the-badge
-[made-with-love-shield]: https://img.shields.io/badge/made%20with%20%E2%9D%A4%20by-it%40M-yellow?style=for-the-badge
-[license-shield]: https://img.shields.io/github/license/it-at-m/refarch-templates?style=for-the-badge
+## API Documentation
 
-# RefArch Templates
+The current API specification and endpoints can be explored via Swagger UI:
+* [Swagger API Documentation](TODO: Insert Swagger URL)
 
-[![Documentation][documentation-shield]][documentation]
-[![New issue][new-issue-shield]][new-issue]
-[![Made with love by it@M][made-with-love-shield]][itm-opensource]
-[![GitHub license][license-shield]][license]
+## Tech Stack
 
-This project acts as a template and provides starter files for web application projects based on the RefArch (reference architecture) of it@M.
-
-To learn more about the architecture itself, checkout its [documentation][refarch-documentation] or [code][refarch-code].
-
-The templates are based on [Spring][spring-documentation] and [Vue.js][vuejs-documentation].
-
-## Usage
-
-To get set up and learn more about the templates, please check out the [Getting Started][getting-started-documentation] page.
-Also check the respective pages with suggestions on how to [develop][develop-documentation], [document][document-documentation] and [organize][organize-documentation] your project.
+* Java
+* Spring Boot
+* Maven
 
 ## Roadmap
 
-See the [open issues][open-issues] for a full list of proposed features (and known issues).
-To get a better overview on what's currently being worked on, check out our [project board][project-board].
-We often also plan our issues in [milestones][milestones].
+*This project is currently under active development.*
 
-## Contributing
+## Setup
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+### Running Locally
 
-To learn more about how you can contribute, please read our [contribution documentation][contribution-documentation].
+1. Build the application:
 
-## License
+   `mvn install`
+   
+3. Run the resulting JAR file:
 
-Distributed under the MIT License. See [LICENSE][license] file for more information.
+    `java -jar <path_to_the_jar_file>.jar`
 
-## Contact
+### Running in podman
 
+1. Create a directory for external configuration:
+
+    `mkdir eakte-external-config`
+  
+2. Place your application.yml with the correct environment data into the eakte-external-config directory.
+
+3. Start the container using Podman Compose from the project root:
+
+    `podman compose up`
+  
+4. Verify the deployment by accessing the Swagger UI in your browser:
+
+    http://localhost:8080/swagger-ui/index.html
+
+### Contributing
+Contributions are welcome. If you have a suggestion for an enhancement, please open an issue with the tag enhancement, fork the repository, and create a pull request.
+
+Please review our CODE_OF_CONDUCT before contributing.
+
+### License
+Distributed under the MIT License. See the LICENSE file for more information.
+
+### Contact
 it@M - opensource@muenchen.de
