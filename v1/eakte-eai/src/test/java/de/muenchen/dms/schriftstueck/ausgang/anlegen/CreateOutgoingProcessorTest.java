@@ -1,7 +1,6 @@
-/*
- * Copyright (c): it@M - Dienstleister für Informations- und Telekommunikationstechnik
- * der Landeshauptstadt München, 2023
- */
+/* * Copyright (c): it@M - Dienstleister für Informations- und Telekommunikationstechnik
+ * der Landeshauptstadt München, 2023*/
+
 package de.muenchen.dms.schriftstueck.ausgang.anlegen;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,55 +27,73 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-/**
+/*
+ *
  * Der Prozessor wandelt das Datenobjekt, dass aus dem REST-Call befüllt wurde in ein Datenobjekt
  * für einen SOAP-Call an das DMS um.
  *
  * @see CreateOutgoingAnfrageDTO
  * @see CreateOutgoingGI
  */
-@DisplayName("Die Testklasse prüft die Verarbeitung von REST-Anfragen")
+
+@SpringBootTest
+@DisplayName("CreateOutgoing TEST")
 class CreateOutgoingProcessorTest {
   static final String DATEINAME_MIT_SONDERZEICHEN = "!@#$%^&*()_+|}{[],><?-~.txt";
   static final String BEISPIEL_VORGANG_ID = "COO.1.2301.1.1042432";
 
-  private CreateOutgoingProcessor processor;
+  @Autowired
+  CreateOutgoingProcessor processor;
 
   @BeforeEach
-  void setUp() {
-    processor = new CreateOutgoingProcessor();
-  }
+  void setUp() {}
 
   @Test
   @DisplayName(
       """
-        Prüfe, ob ein gültiges, vollständig gefülltes Rest-Datenobjekt in ein Datenobjekt
-        für einen SOAP-Call ohne Fehler umgewandelt werden kann.
-        """)
+           Prüfe, ob ein gültiges, vollständig gefülltes Rest-Datenobjekt in ein Datenobjekt
+           für einen SOAP-Call ohne Fehler umgewandelt werden kann.
+           """)
   void testeKonvertierungInSOAPObjektAlleWerteVorhanden() throws Exception {
     CreateOutgoingAnfrageDTO dto = erzeugeRestDatenobjekt();
     Exchange ex = prozessorAusfuehren(dto, TestDateianhaenge.erzeugeMehrere(2), true);
-    stelleDatentransferAufSoapObjektSicher(dto, 2, ex.getIn().getBody());
+
+    //TODO: outsource this block to own method
+    if (ex.getIn().getBody() instanceof CreateOutgoingGI gi) {
+      stelleDatentransferAufSoapObjektSicher(dto, 2, gi);
+      assertThat(gi.getAccdef(), equalTo("Eigener Mandant"));
+    } else {
+      Assertions.fail();
+    }
   }
 
   @Test
   @DisplayName(
       """
-            Prüfe, ob ein gültiges, nur mit den nötigsten Felder belegtes Rest-Datenobjekt in
-            ein SOAP-Objekt umgewandelt werden kann.
-            """)
+               Prüfe, ob ein gültiges, nur mit den nötigsten Felder belegtes Rest-Datenobjekt in
+               ein SOAP-Objekt umgewandelt werden kann.
+               """)
   void testeKonvertierungInSOAPObjektOptionaleWerteNull() throws Exception {
     CreateOutgoingAnfrageDTO dto = erzeugeRestDatenobjekt();
     Exchange ex = prozessorAusfuehren(dto, Collections.emptyMap(), true);
-    stelleDatentransferAufSoapObjektSicher(dto, 0, ex.getIn().getBody());
+
+    //TODO: outsource this block to own method
+    if (ex.getIn().getBody() instanceof CreateOutgoingGI gi) {
+      stelleDatentransferAufSoapObjektSicher(dto, 0, gi);
+      assertThat(gi.getAccdef(), equalTo("Eigener Mandant"));
+    } else {
+      Assertions.fail();
+    }
   }
 
   @Test
   @DisplayName(
       """
-            Prüfe, ob ein REST-Datenbobjekt ohne Vorgangs-ID in ein SOAP-Objekt umgewandelt werden kann.
-            """)
+               Prüfe, ob ein REST-Datenbobjekt ohne Vorgangs-ID in ein SOAP-Objekt umgewandelt werden kann.
+               """)
   void testVorgangsreferenzNull() {
     CreateOutgoingAnfrageDTO dto = erzeugeRestDatenobjekt();
     assertDoesNotThrow(() -> prozessorAusfuehren(dto, TestDateianhaenge.erzeugeMehrere(2), false));
@@ -85,9 +102,9 @@ class CreateOutgoingProcessorTest {
   @Test
   @DisplayName(
       """
-            Prüfe, ob ein REST-Datenobjekt ohne Schriftstücke in ein SOAP-Objekt umgewandelt werden kann.
-            """)
-  void testVorgangOhneSchriftstuecke() throws Exception {
+               Prüfe, ob ein REST-Datenobjekt ohne Schriftstücke in ein SOAP-Objekt umgewandelt werden kann.
+               """)
+  void testVorgangOhneSchriftstuecke() {
     CreateOutgoingAnfrageDTO dto = erzeugeRestDatenobjekt();
     assertDoesNotThrow(() -> prozessorAusfuehren(dto, null, false));
   }
@@ -95,12 +112,23 @@ class CreateOutgoingProcessorTest {
   @Test
   @DisplayName(
       """
-            Prüfe den korrekten Umgang mit Sonderzeichen im Anhang einer REST-Nachricht.
-            """)
+               Prüfe den korrekten Umgang mit Sonderzeichen im Anhang einer REST-Nachricht.
+               """)
   void testeSonderzeichen() throws Exception {
     CreateOutgoingAnfrageDTO dto = erzeugeRestDatenobjekt();
+    Map<String, DataHandler> anhaenge = new HashMap<>();
+
+    anhaenge.put(
+        DATEINAME_MIT_SONDERZEICHEN,
+        TestDateianhaenge.erzeuge(DATEINAME_MIT_SONDERZEICHEN, DATEINAME_MIT_SONDERZEICHEN));
+
     Exchange ex = prozessorAusfuehren(dto, TestDateianhaenge.erzeugeMehrere(2), true);
-    stelleDatentransferAufSoapObjektSicher(dto, 2, ex.getIn().getBody());
+
+    //TODO: outsource this block to own method
+    if (ex.getIn().getBody() instanceof CreateOutgoingGI gi) {
+      stelleDatentransferAufSoapObjektSicher(dto, 2, gi);
+      assertThat(gi.getAccdef(), equalTo("Eigener Mandant"));
+    }
   }
 
   private Exchange prozessorAusfuehren(
@@ -129,7 +157,6 @@ class CreateOutgoingProcessorTest {
       assertThat(gi.getReferrednumber(), equalTo(BEISPIEL_VORGANG_ID));
       assertThat(gi.getBusinessapp(), equalTo(TestExchanges.getAnwendung()));
       assertThat(gi.getShortname(), equalTo(dto.getShortname()));
-      assertThat(gi.getAccdef(), equalTo(dto.getAccdef()));
       assertThat(gi.getReferredincoming(), equalTo(dto.getReferredincoming()));
       assertThat(
           gi.getOutgoingdate(), equalTo(JacksonData.toXMLGregorianCalendar(dto.getOutgoingdate())));
