@@ -1,0 +1,20 @@
+meta {
+  name: SOAPReassignContentObject_1
+  type: http
+  seq: 99
+}
+
+post {
+  url: 
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCGOVXML_1_1001_SOAPReassignContentObject
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPReassignContentObjectRequest><objects>string</objects><parent>string</parent><objects>string</objects><parent>string</parent></SOAPReassignContentObjectRequest></soap:Body></soap:Envelope>
+}

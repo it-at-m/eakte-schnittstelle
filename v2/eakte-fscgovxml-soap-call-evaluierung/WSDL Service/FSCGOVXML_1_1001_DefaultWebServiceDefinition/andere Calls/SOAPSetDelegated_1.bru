@@ -1,0 +1,20 @@
+meta {
+  name: SOAPSetDelegated_1
+  type: http
+  seq: 88
+}
+
+post {
+  url: 
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAIWF_1_1001_SOAPSetDelegated
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPSetDelegatedRequest><obj-id><id-ref>string</id-ref><id-ref>string</id-ref></obj-id><participant><meta-participant>0</meta-participant><user-id><id-ref>string</id-ref><id-ref>string</id-ref></user-id><position-id><id-ref>string</id-ref><id-ref>string</id-ref></position-id><group-id><id-ref>string</id-ref><id-ref>string</id-ref></group-id><orgunit-id><id-ref>string</id-ref><id-ref>string</id-ref></orgunit-id><partner-id><id-ref>string</id-ref><id-ref>string</id-ref></partner-id></participant><partmansubst><meta-participant>0</meta-participant><user-id><id-ref>string</id-ref><id-ref>string</id-ref></user-id><position-id><id-ref>string</id-ref><id-ref>string</id-ref></position-id><group-id><id-ref>string</id-ref><id-ref>string</id-ref></group-id><orgunit-id><id-ref>string</id-ref><id-ref>string</id-ref></orgunit-id><partner-id><id-ref>string</id-ref><id-ref>string</id-ref></partner-id></partmansubst><remark>string</remark><submit-deadline>2024-01-01T00:00:00Z</submit-deadline><start-deadline>2024-01-01T00:00:00Z</start-deadline><end-deadline>2024-01-01T00:00:00Z</end-deadline><obj-id><id-ref>string</id-ref><id-ref>string</id-ref></obj-id><participant><meta-participant>0</meta-participant><user-id><id-ref>string</id-ref><id-ref>string</id-ref></user-id><position-id><id-ref>string</id-ref><id-ref>string</id-ref></position-id><group-id><id-ref>string</id-ref><id-ref>string</id-ref></group-id><orgunit-id><id-ref>string</id-ref><id-ref>string</id-ref></orgunit-id><partner-id><id-ref>string</id-ref><id-ref>string</id-ref></partner-id></participant><partmansubst><meta-participant>0</meta-participant><user-id><id-ref>string</id-ref><id-ref>string</id-ref></user-id><position-id><id-ref>string</id-ref><id-ref>string</id-ref></position-id><group-id><id-ref>string</id-ref><id-ref>string</id-ref></group-id><orgunit-id><id-ref>string</id-ref><id-ref>string</id-ref></orgunit-id><partner-id><id-ref>string</id-ref><id-ref>string</id-ref></partner-id></partmansubst><remark>string</remark><submit-deadline>2024-01-01T00:00:00Z</submit-deadline><start-deadline>2024-01-01T00:00:00Z</start-deadline><end-deadline>2024-01-01T00:00:00Z</end-deadline></SOAPSetDelegatedRequest></soap:Body></soap:Envelope>
+}

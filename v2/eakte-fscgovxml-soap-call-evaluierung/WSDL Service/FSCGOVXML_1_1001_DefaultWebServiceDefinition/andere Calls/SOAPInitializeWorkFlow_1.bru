@@ -1,0 +1,20 @@
+meta {
+  name: SOAPInitializeWorkFlow_1
+  type: http
+  seq: 78
+}
+
+post {
+  url: 
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAIWF_1_1001_SOAPInitializeWorkFlow
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPInitializeWorkFlowRequest><obj-id><id-ref>string</id-ref><id-ref>string</id-ref></obj-id><procdef-ids><!--1 or more repetitions--><obj-id>string</obj-id><!--1 or more repetitions--><obj-id>string</obj-id></procdef-ids><add>true</add><additionalobj-ids><!--1 or more repetitions--><obj-id>string</obj-id><!--1 or more repetitions--><obj-id>string</obj-id></additionalobj-ids><submit-deadline>2024-01-01T00:00:00Z</submit-deadline><obj-id><id-ref>string</id-ref><id-ref>string</id-ref></obj-id><procdef-ids><!--1 or more repetitions--><obj-id>string</obj-id><!--1 or more repetitions--><obj-id>string</obj-id></procdef-ids><add>true</add><additionalobj-ids><!--1 or more repetitions--><obj-id>string</obj-id><!--1 or more repetitions--><obj-id>string</obj-id></additionalobj-ids><submit-deadline>2024-01-01T00:00:00Z</submit-deadline></SOAPInitializeWorkFlowRequest></soap:Body></soap:Envelope>
+}

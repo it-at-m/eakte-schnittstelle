@@ -1,0 +1,20 @@
+meta {
+  name: SOAPCheckOut
+  type: http
+  seq: 15
+}
+
+post {
+  url: https://eakte26-k2.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPCheckOut
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPCheckOutRequest><id>string</id><lock>true</lock><lockpropagate>true</lockpropagate><dept>string</dept><id>string</id><lock>true</lock><lockpropagate>true</lockpropagate><dept>string</dept></SOAPCheckOutRequest></soap:Body></soap:Envelope>
+}

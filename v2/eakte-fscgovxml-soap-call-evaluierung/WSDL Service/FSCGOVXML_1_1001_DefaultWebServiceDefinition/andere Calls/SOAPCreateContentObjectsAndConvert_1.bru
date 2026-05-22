@@ -1,0 +1,20 @@
+meta {
+  name: SOAPCreateContentObjectsAndConvert_1
+  type: http
+  seq: 50
+}
+
+post {
+  url: 
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCGOVXML_1_1001_SOAPCreateContentObjectsAndConvert
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><CreateContentObjectsAndConvertRequest><!--1 or more repetitions--><contentobj><objclass>string</objclass><context>string</context><container>string</container><contname>string</contname><contextension>string</contextension><content>?</content><finalform>string</finalform><data></data></contentobj><!--1 or more repetitions--><contentobj><objclass>string</objclass><context>string</context><container>string</container><contname>string</contname><contextension>string</contextension><content>?</content><finalform>string</finalform><data></data></contentobj></CreateContentObjectsAndConvertRequest></soap:Body></soap:Envelope>
+}

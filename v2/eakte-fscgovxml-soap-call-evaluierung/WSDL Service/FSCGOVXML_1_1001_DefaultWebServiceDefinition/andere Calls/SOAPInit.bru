@@ -1,0 +1,20 @@
+meta {
+  name: SOAPInit
+  type: http
+  seq: 38
+}
+
+post {
+  url: https://eakte26-k2.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBA_1_1001_SOAPInit
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPInitRequest><objaddress>string</objaddress><deptref>string</deptref><objname>string</objname><objclass>string</objclass><objaddress>string</objaddress><deptref>string</deptref><objname>string</objname><objclass>string</objclass></SOAPInitRequest></soap:Body></soap:Envelope>
+}

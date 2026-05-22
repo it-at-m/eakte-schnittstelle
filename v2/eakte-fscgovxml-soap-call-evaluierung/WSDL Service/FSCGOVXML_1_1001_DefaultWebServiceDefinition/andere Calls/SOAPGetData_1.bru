@@ -1,0 +1,20 @@
+meta {
+  name: SOAPGetData_1
+  type: http
+  seq: 77
+}
+
+post {
+  url: 
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPGetData
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPGetDataRequest><objaddress>string</objaddress><dept>string</dept><xpath>string</xpath><objaddress>string</objaddress><dept>string</dept><xpath>string</xpath></SOAPGetDataRequest></soap:Body></soap:Envelope>
+}
