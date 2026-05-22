@@ -66,6 +66,8 @@ class CreateOutgoingResponseProcessorTest {
   }
 
   private CreateOutgoingGIResponse erzeugeDmsAntwortOhneFehler() {
+    ObjectFactory objectFactory = new ObjectFactory();
+
     CreateOutgoingGIResponse response = new CreateOutgoingGIResponse();
     response.setStatus(NO_ERROR_CODE);
     response.setErrormessage(null);
