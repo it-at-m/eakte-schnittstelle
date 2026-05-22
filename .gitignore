@@ -193,4 +193,6 @@ nbdist/
 *.njsproj
 *.sln
 *.sw?
+
 v1/eakte-eai/eakte-external-config/application.yml
+**/application-test-credentials.yaml
