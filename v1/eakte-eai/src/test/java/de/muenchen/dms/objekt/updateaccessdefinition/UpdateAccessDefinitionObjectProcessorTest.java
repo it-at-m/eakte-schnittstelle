@@ -10,21 +10,34 @@ import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-public class UpdateAccessDefinitionObjectProcessorTest {
-  private UpdateAccessDefinitionObjectProcessor processor;
+@SpringBootTest
+@DisplayName("UpdateAccessDefinitonObjectProcessor TEST")
+class UpdateAccessDefinitionObjectProcessorTest {
+
+  @Autowired
+  UpdateAccessDefinitionObjectProcessor processor;
 
   @BeforeEach
   void setUp() {
-    processor = new UpdateAccessDefinitionObjectProcessor();
   }
 
   @Test
   void testProcessor1() throws Exception {
     UpdateAccessDefinitionObjectAnfrageDTO dto = createSampleDTO();
     Exchange exchange = prozessorAusfuehren(dto);
-    stelleDatentransferAufSoapObjektSicher(dto, exchange.getIn().getBody());
+
+    //TODO: outsource this block to own method
+    if (exchange.getIn().getBody() instanceof UpdateAccessDefinitionObjectGI gi) {
+      stelleDatentransferAufSoapObjektSicher(dto, exchange.getIn().getBody());
+      assertThat(gi.getObjaccdef(), equalTo("Persönlich und Vorgesetzte"));
+    } else {
+      Assertions.fail();
+    }
   }
 
   @Test
@@ -53,7 +66,6 @@ public class UpdateAccessDefinitionObjectProcessorTest {
       assertThat(gi.getBusinessapp(), equalTo(TestExchanges.getAnwendung()));
       assertThat(gi.getJobposition(), equalTo(TestExchanges.getStelle()));
       assertThat(gi.getJoboe(), equalTo(TestExchanges.getOrganisationseinheit()));
-      assertThat(gi.getObjaccdef(), equalTo(dto.getObjaccdef()));
       assertThat(gi.getAuthinheritance(), equalTo(dto.getAuthinheritance()));
     } else {
       Assertions.fail();

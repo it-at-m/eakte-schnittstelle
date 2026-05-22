@@ -22,17 +22,21 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.Assert;
 
+@SpringBootTest
 @DisplayName("Die Testklasse prüft die Verarbeitung von REST-Anfrage")
 public class UpdateIncomingProcessorTest {
+
   static final String BEISPIEL_INCOMING_ID = "COO.1.2345.6.7891012";
 
+  @Autowired
   private UpdateIncomingProcessor processor;
 
   @BeforeEach
-  void setUp() {
-    processor = new UpdateIncomingProcessor();
-  }
+  void setUp() {}
 
   @Test
   @DisplayName(
@@ -43,7 +47,13 @@ public class UpdateIncomingProcessorTest {
   void testeKonvertierungInSoapObjectAlleWerteVorhanden() throws Exception {
     UpdateIncomingAnfrageDTO dto = erzeugeRestDatenobjekt();
     Exchange ex = prozessorAusfuehren(dto, Collections.emptyMap(), true);
-    stelleDatentransferAufSoapObjektSicher(dto, 0, ex.getIn().getBody());
+
+    if (ex.getIn().getBody() instanceof UpdateIncomingGI gi) {
+      stelleDatentransferAufSoapObjektSicher(dto, 0, gi);
+      assertThat(gi.getAccdef(), equalTo("Eigener Mandant"));
+    } else {
+      Assertions.fail();
+    }
   }
 
   @Test
@@ -55,7 +65,13 @@ public class UpdateIncomingProcessorTest {
   void testeKonvertierungInSOAPObjektOptionaleWerteNull() throws Exception {
     UpdateIncomingAnfrageDTO dto = erzeugeRestDatenobjekt();
     Exchange ex = prozessorAusfuehren(dto, Collections.emptyMap(), true);
-    stelleDatentransferAufSoapObjektSicher(dto, 0, ex.getIn().getBody());
+
+    if (ex.getIn().getBody() instanceof UpdateIncomingGI gi) {
+      stelleDatentransferAufSoapObjektSicher(dto, 0, gi);
+      assertThat(gi.getAccdef(), equalTo("Eigener Mandant"));
+    } else {
+      Assertions.fail();
+    }
   }
 
   @Test
@@ -87,7 +103,13 @@ public class UpdateIncomingProcessorTest {
     UpdateIncomingAnfrageDTO dto = erzeugeRestDatenobjekt();
 
     Exchange ex = prozessorAusfuehren(dto, TestDateianhaenge.erzeugeMehrere(2), true);
-    stelleDatentransferAufSoapObjektSicher(dto, 2, ex.getIn().getBody());
+
+    if (ex.getIn().getBody() instanceof UpdateIncomingGI gi) {
+      stelleDatentransferAufSoapObjektSicher(dto, 2, gi);
+      assertThat(gi.getAccdef(), equalTo("Eigener Mandant"));
+    } else {
+      Assertions.fail();
+    }
   }
 
   private <T extends DMSContainerBase> T erzeugeRestDatenobjekt() {
@@ -116,7 +138,6 @@ public class UpdateIncomingProcessorTest {
       assertThat(gi.getObjaddress(), equalTo(BEISPIEL_INCOMING_ID));
       assertThat(gi.getBusinessapp(), equalTo(TestExchanges.getAnwendung()));
       assertThat(gi.getShortname(), equalTo(dto.getShortname()));
-      assertThat(gi.getAccdef(), equalTo(dto.getAccdef()));
       assertThat(gi.getForeignnr(), equalTo(dto.getForeignnr()));
       assertThat(gi.getFilesubj(), equalTo(dto.getFilesubj()));
 

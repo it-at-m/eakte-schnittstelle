@@ -1,6 +1,7 @@
 package de.muenchen.dms.objekt.updateaccessdefinition;
 
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.UpdateAccessDefinitionObjectGI;
+import de.muenchen.dms.common.mapper.FieldValueMappingService;
 import de.muenchen.dms.common.processor.AbstractDMSSoapProcessor;
 import de.muenchen.dms.common.route.RouteConstants;
 import org.apache.camel.Exchange;
@@ -8,7 +9,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UpdateAccessDefinitionObjectProcessor extends AbstractDMSSoapProcessor {
-  @Override
+
+  private final FieldValueMappingService mappingService;
+
+    public UpdateAccessDefinitionObjectProcessor(FieldValueMappingService mappingService) {
+        this.mappingService = mappingService;
+    }
+
+    @Override
   public void process(Exchange exchange) throws Exception {
     final UpdateAccessDefinitionObjectAnfrageDTO anfrage =
         exchange.getIn().getBody(UpdateAccessDefinitionObjectAnfrageDTO.class);
@@ -32,6 +40,9 @@ public class UpdateAccessDefinitionObjectProcessor extends AbstractDMSSoapProces
       final String organisationseinheit,
       final String rolle,
       final String anwendung) {
+
+      String mappedObjacced = mappingService.map(
+              "accdef", anfrage.getObjaccdef());
     UpdateAccessDefinitionObjectGI updateAccessDefinitionObjectGI =
         new UpdateAccessDefinitionObjectGI();
     updateAccessDefinitionObjectGI.setUserlogin(nutzer);
@@ -39,7 +50,7 @@ public class UpdateAccessDefinitionObjectProcessor extends AbstractDMSSoapProces
     updateAccessDefinitionObjectGI.setObjaddress(objaddress);
     updateAccessDefinitionObjectGI.setJoboe(organisationseinheit);
     updateAccessDefinitionObjectGI.setJobposition(rolle);
-    updateAccessDefinitionObjectGI.setObjaccdef(anfrage.getObjaccdef());
+    updateAccessDefinitionObjectGI.setObjaccdef(mappedObjacced);
     updateAccessDefinitionObjectGI.setAuthinheritance(anfrage.getAuthinheritance());
     return updateAccessDefinitionObjectGI;
   }
