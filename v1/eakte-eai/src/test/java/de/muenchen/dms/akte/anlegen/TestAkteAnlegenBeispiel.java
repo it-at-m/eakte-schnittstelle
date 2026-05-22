@@ -15,7 +15,7 @@ public class TestAkteAnlegenBeispiel {
         .shortname("2016 Anträge Firma XY")
         .fileouobj("COO.1232.3453.2.8473824")
         .filesubj("Testdurchführung erfolgt")
-        .accdef("Zugriffsdefinition für Vorgangsdaten (allgemein lesbar)")
+        .accdef("Zugriffsdefinition für Schriftgutobjekte (allgemein lesbar)")
         .procedureaccdef("Zugriffsdefinition für Vorgangsdaten (allgemein lesbar)")
         .objterms("Testschlagwort")
         .fileruntimefrom(OffsetDateTime.of(2023, 1, 1, 12, 17, 0, 0, ZoneOffset.ofHours(1)))
