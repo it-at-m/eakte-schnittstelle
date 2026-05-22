@@ -22,7 +22,7 @@
 
 	<cxf.version>4.1.0</cxf.version>
 	<dms-eai.version>1.9</dms-eai.version>
-	<wsdl.version>1.10</wsdl.version>
+	<wsdl.version>1.11</wsdl.version>
 	<api.version>1.2.5</api.version>
 	<spotless.version>2.43.0</spotless.version>
 	<api.path>/api</api.path>
