@@ -6,6 +6,7 @@ package de.muenchen.dms.vorgang.aendern;
 
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.UpdateProcedureGI;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import de.muenchen.dms.common.mapper.FieldValueMappingService;
 import de.muenchen.dms.common.processor.AbstractDMSSoapProcessor;
 import de.muenchen.dms.common.route.RouteConstants;
 import de.muenchen.dms.common.util.JacksonData;
@@ -16,7 +17,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class UpdateProcedureProcessor extends AbstractDMSSoapProcessor {
 
-  @Override
+  private final FieldValueMappingService mappingService;
+
+  public UpdateProcedureProcessor(FieldValueMappingService mappingService) {
+      this.mappingService = mappingService;
+  }
+
+
+    @Override
   public void process(Exchange exchange)
       throws JsonProcessingException, DatatypeConfigurationException {
     final UpdateProcedureDTO anfrage = exchange.getIn().getBody(UpdateProcedureDTO.class);
@@ -42,13 +50,16 @@ public class UpdateProcedureProcessor extends AbstractDMSSoapProcessor {
       final String rolle,
       final String anwendung)
       throws DatatypeConfigurationException {
+    String mappedAccdef = mappingService.map(
+            "accdef", anfrage.getAccdef()
+    );
     final UpdateProcedureGI updateProcedureGI = objectFactory.createUpdateProcedureGI();
     updateProcedureGI.setUserlogin(nutzer);
     updateProcedureGI.setBusinessapp(anwendung);
     updateProcedureGI.setObjaddress(procedureaddress);
     updateProcedureGI.setShortname(anfrage.getShortname());
     updateProcedureGI.setFilesubj(anfrage.getFilesubj());
-    updateProcedureGI.setAccdef(anfrage.getAccdef());
+    updateProcedureGI.setAccdef(mappedAccdef);
     updateProcedureGI.setProcremark(anfrage.getProcremark());
     updateProcedureGI.setFiletype(anfrage.getFiletype());
     updateProcedureGI.setObjterms(anfrage.getObjterms());

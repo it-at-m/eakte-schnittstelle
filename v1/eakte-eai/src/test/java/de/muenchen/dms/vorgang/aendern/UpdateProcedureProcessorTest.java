@@ -19,17 +19,19 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 @DisplayName(
     "[Vorgang aendern] Diese Testklasse prüft die Entgegennahme von REST-Anfragen zur Anlage von Vorgängen")
 class UpdateProcedureProcessorTest {
 
-  private UpdateProcedureProcessor processor;
+  @Autowired
+  UpdateProcedureProcessor processor;
 
   @BeforeEach
-  void setUp() {
-    processor = new UpdateProcedureProcessor();
-  }
+  void setUp() {}
 
   @Test
   @DisplayName(
@@ -40,7 +42,14 @@ class UpdateProcedureProcessorTest {
   void testeKonvertierungInSOAPObjektAlleWerteVorhanden() throws Exception {
     UpdateProcedureDTO dto = TestUpdateProcedureExample.erzeugeFehlerlosMitUmlauten();
     Exchange ex = prozessorAusfuehren(dto);
-    stelleDatentransferAufSoapObjektSicher(dto, ex.getIn().getBody());
+
+    //TODO: outsource this block to own method
+    if (ex.getIn().getBody() instanceof UpdateProcedureGI gi) {
+      stelleDatentransferAufSoapObjektSicher(dto, gi);
+      assertThat(gi.getAccdef(), equalTo("Eigener Mandant"));
+    } else {
+      Assertions.fail();
+    }
   }
 
   @Test
@@ -52,7 +61,14 @@ class UpdateProcedureProcessorTest {
   void testeKonvertierungInSOAPObjektOptionaleWerteNull() throws Exception {
     UpdateProcedureDTO dto = new UpdateProcedureDTO();
     Exchange ex = prozessorAusfuehren(dto);
-    stelleDatentransferAufSoapObjektSicher(dto, ex.getIn().getBody());
+
+    //TODO: outsource this block to own method
+    if (ex.getIn().getBody() instanceof UpdateProcedureGI gi) {
+      stelleDatentransferAufSoapObjektSicher(dto, gi);
+      assertThat(gi.getAccdef(), equalTo(null));
+    } else {
+      Assertions.fail();
+    }
   }
 
   private Exchange prozessorAusfuehren(UpdateProcedureDTO dto) throws Exception {
@@ -78,7 +94,6 @@ class UpdateProcedureProcessorTest {
           gi.getFileruntimetill(),
           equalTo(JacksonData.toXMLGregorianCalendar(dto.getFileruntimetill())));
       assertThat(gi.getProcremark(), equalTo(dto.getProcremark()));
-      assertThat(gi.getAccdef(), equalTo(dto.getAccdef()));
       assertThat(
           gi.getFilearchivetimeOffltdeadline(), equalTo(dto.getFilearchivetimeOffltdeadline()));
       assertThat(gi.getFilelifetimeOffltdeadline(), equalTo(dto.getFilelifetimeOffltdeadline()));
