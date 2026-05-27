@@ -11,7 +11,7 @@ public class PayloadLoggerRouteBuilder extends RouteBuilder {
   public void configure() throws Exception {
     from(RouteConstants.DIRECT_PAYLOAD_LOGGING_ENDPOINT)
         .routeId(RouteConstants.ROUTE_ID_PAYLOAD_LOGGING)
-        .process(new PayloadLogger(RouteConstants.REQ_IN))
+        .process(new PayloadLogger(RouteConstants.REQ_OUT))
         .toD(RouteConstants.PRODUCER_URL)
         .process(new PayloadLogger(RouteConstants.RESP_IN));
   }
