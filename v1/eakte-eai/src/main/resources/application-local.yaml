@@ -1,0 +1,9 @@
+logging:
+  include-application-group: false
+  structured:
+    format:
+      console:
+  level:
+    de.muenchen.dms: debug
+    org.springframework.cache: trace
+    org.springframework.web: debug
