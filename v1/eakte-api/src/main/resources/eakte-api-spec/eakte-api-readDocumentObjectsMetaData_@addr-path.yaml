@@ -1,7 +1,11 @@
 get:
   tags:
     - /readDocumentObjectsMetaData
-  summary: Liste von Schriftstücken mit Metadaten auslesen
+  summary: Liste aller Schriftstücke eines Dokuments mit Metadaten auslesen
+  description: |
+    Stornierte Objekte können nicht ausgelesen werden, 
+    d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.\
+    Über die optionalen Parameter können Schriftstücke zur Anzeige gemäß der gewählten Kriterien ausgewäht werden.
   operationId: ReadDocumentMetaData
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

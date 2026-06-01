@@ -24,8 +24,10 @@ components:
           example: "COO.1.2301.1.1042406"
         objnameprocedure:
           type: "string"
-          description: "Objektname des erzeugten/gefundenen Vorgangs"
-          example: "0010 A20 011-2016 Anträge Firma XY-4"
+          description: | 
+            Objektname des erzeugten/gefundenen Vorgangs\
+            Der Name wird in der eAkte gebildet aus dem Titel des Vorgangs - eindeutige Nummer des Aktenplankennzeichens - lfdNr der Akte - lfdNr des Vorgangs
+          example: "2026-05-28 Anträge Firma XY-4 (2002-10-0004)"
         objiddocument:
           type: "string"
           description: "Objekt-ID des erzeugten/gefundenen Dokuments"

@@ -2,16 +2,17 @@
 get:
   tags:
     - "/userFormsData"
-  summary: Lesen einer bestimmten Verfahrensdateneigenschaft zu einer Akte, Vorgang oder Dokument
+  summary: Lesen von Verfahrensdaten zu einer Akte, Vorgang oder Dokument
   description: |
-    Die Verfahrenseigenschaft wird definiert durch die COO-Adresse einer Definition von Verfahren 
-    zzgl. der einfachen Referenz (z.B. DfV_parties anstelle lhmdfvpublic@4711.8800:DfV_parties).\ 
-    Zusätzlich zum Wert der Eigenschaften werden auch alle Schlüsselwerte zurückgegeben. 
-    Als Ergebnis wird eine Liste von Strings zurück geliefert, um zu gewährleisten, 
-    dass beim Lesen der Verfahrensdaten auch symmetrisch der Wert im Format Array übergeben wird.
+    Beim Lesen von Verfahrenseigenschaften werden zusätzlich zum Wert der Eigenschaften auch alle Schlüsselwerte zurückgegeben.
   operationId: "ReadUserFormsData"
   parameters:
     - name: "reference"
+      description: |
+        Programmiername der Verfahrensdaten\
+        Kann in der GUI angezeigt werden, wenn man in den Eigenschaften eines Vorgangs 
+        die Verfahrensdefinition anzeigen lässt.\
+        Mit SHIFT-CONTROL-# kann man den Programmiernamen der Verfahrensdaten anzeigen lassen.
       in: "query"
       required: true
       schema:

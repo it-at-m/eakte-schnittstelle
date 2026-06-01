@@ -42,7 +42,10 @@ components:
         Die OE ist dann wichtig anzugeben, 
         wenn der Nutzer in mehreren OEs zugeordnet ist.\
         Über diese OE wird der Mandant zugeordnet und 
-        entsprechend die Berechtigungen geprüft.
+        entsprechend die Berechtigungen geprüft.\
+        Ohne Angabe der joboe und jobposition 
+        wird die eingestellte Standardrolle und OE des Nutzers in der eAkte verwendet.\
+        Wenn die jobposition angegeben wird, muss auch die entsprechende joboe des Nutzers mit angegeben werden unter der er die Rolle hat.
       required: false
       schema:
         type: string
@@ -64,7 +67,7 @@ components:
         * Vorlagenverwaltung - TemplateManager
         
         Es dürfen ausschließlich die o.g. genannten Stellen der LHM verwendet werden.\
-        Bitte die englische Bezeichnung verwenden.
+        Bitte verwenden Sie die englische Bezeichnung.
         
         Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt!
       required: false

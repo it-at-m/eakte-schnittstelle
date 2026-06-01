@@ -7,7 +7,7 @@ components:
       properties:
         value:
           type: "string"
-          description: "Ein Wert"
+          description: Wert der Verfahrensdaten als String
           example: "COO.1.2300.1.847"
 
     UpdateUserFormsDataRequestDTO:

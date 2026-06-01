@@ -10,16 +10,16 @@ components:
           example: COO.1.2301.1.683
         shortnamefile:
           type: string
-          description: Titel
+          description: Titel der Akte
           example: 2016 Anträge Firma XY
         shortnameprocedure:
           type: string
-          description: Titel
-          example: 2016 Anträge Firma XY
+          description: Titel des Vorgangs
+          example: Bauantrag Seestraße
         shortnamedocument:
           type: string
-          description: Titel
-          example: 2016 Anträge Firma XY
+          description: Titel des Dokuments
+          example: Antragsformular mit Anlagen
         fileouobj:
           $ref: 'eakte-api--global-schemas.yaml#/components/schemas/fileouobj'
       description: 'Parameter, die die komplette Akte beschreiben'

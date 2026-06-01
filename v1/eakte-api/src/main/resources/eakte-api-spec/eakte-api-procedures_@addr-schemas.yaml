@@ -36,11 +36,11 @@ components:
           example: Anfrage Baugenehmigung (0010 A20 011-4-0006)
         objdocstate:
           type: string
-          description: Status
+          description: Aktueller Bearbeitungsstatus (z.B. in Bearbeitung, Suspendiert, Abgeschlossen, Storniert)
           example: In Bearbeitung
         bostate:
           type: string
-          description: Bearbeitungsstatus
+          description: Zu jedem Bearbeitungsstatus können weitere Status definiert sein (z.B. erstellt, erledigt, weggelegt, z.A. verfügt)
           example: Erstellt
         objowngroup:
           type: string

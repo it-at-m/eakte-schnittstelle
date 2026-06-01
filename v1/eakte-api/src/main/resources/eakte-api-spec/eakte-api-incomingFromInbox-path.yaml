@@ -3,6 +3,9 @@ post:
   tags:
     - /incomingFromInbox
   summary: Erfassen eines Eingangs aus dem Postkorb
+  description: |
+    Schriftstücke eines Postkorbs werden als Eingangsdokument erfasst.\ 
+    Eingänge können nur in bereits bestehenden Vorgängen angelegt werden.
   operationId: CreateIncomingFromInbox
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

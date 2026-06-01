@@ -10,8 +10,7 @@ put:
     da stornierte Objekte über die Schnittstelle nicht gelesen werden können.
     
     Der Status [FSCFOLIO@1.1001:objdocstate] des Objekts wird auf „Storniert“ gesetzt. 
-    Zudem erfolgt gemäß dem Berechtigungskonzept ein Access Control List (ACL) Übergang 
-    (ACL für abgeschlossene Schriftgutobjekte).\
+    Zudem erfolgt gemäß dem Berechtigungskonzept ein Access Control List (ACL) Übergang.\
     Welcher ACL-Übergang beim Stornieren erfolgt, ist im Berechtigungskonzept definiert und 
     ist abhängig von der hinterlegten ACL des zu stornierenden Objekts.\
     Beispiel: Eine Akte hat die ACL für Schriftgutobjekte des Eigentümers. 

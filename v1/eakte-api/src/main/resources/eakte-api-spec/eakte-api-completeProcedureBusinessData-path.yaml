@@ -2,33 +2,29 @@
 post:
   tags:
     - "/completeProcedureBusinessData"
-  summary: Ein kompletter Vorgang wird erstellt 
-    (d.h. mit einem Dokument & Schrifstück) bzw. 
-    einzelne Schriftstücke beim Vorgang ergänzt.
+  summary: Anlegen eines kompletten Vorgangs mit Dokument und Schrifstücken bzw. 
+    Ergänzung einzelner Schriftstücke beim Vorgang
   description: |
     Sobald eine Sachakte über die Fachdaten gefunden wurde, 
-    (über die Parameter businessterm & businessvalue),
+    (über die Parameter businessterm und businessvalue),
     wird folgendermaßen vorgegangen:
     
     * Eingangsparameter Vorgangstitel (shortnameprocedure):\
     Das System überprüft ob in der gefundenen Akte 
-    bereits ein Vorgang mit dem Titel exisitiert.
+    bereits ein Vorgang mit dem Titel existiert.
       - Vorgang existiert bereits\
     Navigieren in den Vorgang
       - Vorgang existiert noch nicht\
-    Ein neuer Vorgang mit dem übergebenen Titel wird angelegt & 
-    in den Vorgang navigiert.
+    Ein neuer Vorgang mit dem übergebenen Titel wird angelegt und in den Vorgang navigiert.
     
     * Eingangsparameter Dokumenttitel (shortnamedocument):\
     Das System überprüft, ob in dem gefundenen Vorgang 
-    bereits ein Eingangsdokument mit dem Titel exisitiert.
+    bereits ein Eingangsdokument mit dem Titel existiert.
       - Eingangsdokument existiert bereits\
     Navigieren in das Eingangsdokument
       - Eingangsdokument existiert noch nicht\
     Ein neues Eingangsdokument mit dem übergebenen Titel wird angelegt & 
-    * Im entsprechenden Eingangsdokument wird das Schriftstück erzeugt.
-    
-    in das Eingangsdokument navigiert.
+    * Im entsprechenden Eingangsdokument wird das Schriftstück erzeugt und in das Eingangsdokument navigiert.
   operationId: "CreateCompleteProcedureBusinessData"
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

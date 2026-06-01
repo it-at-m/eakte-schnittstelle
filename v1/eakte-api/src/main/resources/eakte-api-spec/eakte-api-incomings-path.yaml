@@ -2,6 +2,11 @@ post:
   tags:
     - /incomings
   summary: Eingangsdokument anlegen
+  description: |
+    Neues Eingangsdokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).\
+    Wenn das Eingangsdokument keinem Vorgang zugeordnet ist (referrednumber == NULL), 
+    wird eine neue Aktivität „Neues Eingangsdokument“ erzeugt.\
+    Beim Anlegen von neuen Dokumenten wird die auf dem Vorgang gesetzte Zugriffsdefinition verwendet.
   operationId: CreateIncoming
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

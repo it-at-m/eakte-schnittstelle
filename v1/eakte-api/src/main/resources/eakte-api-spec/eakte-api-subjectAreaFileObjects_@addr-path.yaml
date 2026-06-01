@@ -1,7 +1,13 @@
 get:
   tags:
     - /subjectAreaFileObjects
-  summary: Liste von Vorgängen auslesen
+  summary: Liste von Vorgängen einer Akte auslesen
+  description: |
+    Stornierte Objekte können nicht ausgelesen werden, 
+    d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] 
+    werden gefiltert und nicht zurückgegeben.\
+    Über die optionalen Parameter kann die Liste vorgefiltert werden, 
+    d.h. es werden lediglich die Objekte übermittelt, auf welche die optionalen Parameter zutreffen.
   # falsche OperationId (synonym zu SOAP-Operation): muss sein "ReadSubjectAreaFileObjects"
   operationId: ReadSubjectAreaFile
   parameters:

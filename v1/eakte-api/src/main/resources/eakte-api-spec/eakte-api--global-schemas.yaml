@@ -128,7 +128,7 @@ components:
         * "Eigene Organisationseinheit"
         * "Persönlich und Vorgesetzte"
         * "Persönlich" (für Verschlusssachen)
-        * "Aktengebunden" (nur bei Vorgängen)
+        * "Aktengebunden" (nur für untergeordnete Vorgänge einer Akte)
 
         Die Zugriffsdefinition wird jeweils auf die darunterliegenden Objekte vererbt, 
         d.h. 
@@ -146,7 +146,7 @@ components:
         
         Wenn Vorgänge die Zugriffsdefinition und zusätzlich berechtigte Organisationseinheiten 
         aus der übergeordneten Akte übernehmen sollen, 
-        muss "Aktengebunden" beim Vorgang angegeben werden.
+        muss "Aktengebunden" für Vorgänge bei der Akte angegeben werden (procaccdef).
       example: Eigener Mandant
 
     Schlagworte:
@@ -176,7 +176,7 @@ components:
         id:
           type: string
       description:
-        Name und ID des Schriftgutobjekts
+        Name und ID (COO-Adresse) des Schriftgutobjekts
       example:
         - name: Beispielname
           id: COO.2150.9151.1.1206000
@@ -195,9 +195,10 @@ components:
       type: "object"
       properties:
         lhmbai_15_1700_ufreference:
-          description: Programmiername der Verfahrenseigenschaft
+          description: Programmiername des Verfahrenseigenschaft
           type: "string"
         lhmbai_15_1700_ufvalue:
+          description: Wert(e) der Verfahrenseigenschaft
           type: "array"
           items:
             type: "string"
@@ -317,7 +318,7 @@ components:
         Wenn kein Wert übergeben wird, wird die auf der Akte hinterlegte Zugriffsdefinition übernommen (empfohlen).
         Wenn Vorgänge die Zugriffsdefinition und zusätzlich berechtigte Organisationseinheiten
         aus der übergeordneten Akte übernehmen sollen, muss "Aktengebunden" angegeben werden.
-      example: Eigener Mandant
+      example: Aktengebunden
 
     subfiletype:
       type: string
