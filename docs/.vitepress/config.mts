@@ -1,10 +1,6 @@
 import { defineConfig } from "vitepress";
 import { withMermaid } from "vitepress-plugin-mermaid";
 
-
-
-
-
 // https://vitepress.dev/reference/site-config
 const vitepressConfig = defineConfig({
   base: "/eakte-schnittstelle/", // needs to be changed if delivered via sub path (e.g. "/docs/" for example.com/docs)
