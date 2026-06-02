@@ -1,6 +1,6 @@
 # Architecture Decision Records
 
-Documentation of key architectural decisions records through the application.
+Documentation of key architectural decision records throughout the application.
 
 Each ADR describes the context, decision and consequences to make all decisions comprehensible.
 

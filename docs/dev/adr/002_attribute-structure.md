@@ -25,7 +25,7 @@ TBD
 
 - Cons of treating all attributes as variable
   - The API specification does not reveal which fields are guaranteed or required (but there are also cases where variable fields are conditionally required in specific contexts).
-  - Static fields must be documented outside the API specification, which requires reading additional docs also for the simplest cases.
+  - Static fields must be documented outside the API specification, which requires reading additional documentation even for the simplest cases.
   - Typical Spring Bean Validation mechanisms cannot be leveraged for static fields. Validation must be implemented as custom runtime logic.
   - Strong typing has to be handled dynamically even for conceptually static attributes.
   - Parsing and mapping of request and response payloads is more complex, even for static attributes, because application code must perform it instead of relying on generated code and compile-time types.
