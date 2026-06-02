@@ -44,8 +44,8 @@ public class PayloadLogger implements Processor {
       final List<String> params = getParamsFromQuery(uri.getQuery());
       final Object body = exchange.getIn().getBody();
       final List<String> bodyFields = getKeysFromPojo(body);
-      final String username =
-          exchange.getProperty(QueryProperties.PROPERTY_AUTH_USER, String.class);
+      final String authUser =
+          exchange.getProperty("AuthenticatedUser", String.class);
       final String application =
           exchange.getProperty(QueryProperties.PROPERTY_ANWENDUNG, String.class);
       log.atInfo()
@@ -53,7 +53,7 @@ public class PayloadLogger implements Processor {
           .addKeyValue("uri", uriString)
           .addKeyValue("params", params)
           .addKeyValue("bodyFields", bodyFields)
-          .addKeyValue("username", username)
+          .addKeyValue("authUser", authUser)
           .addKeyValue("application", application)
           .log();
     } catch (final RuntimeException | URISyntaxException e) {
@@ -85,8 +85,8 @@ public class PayloadLogger implements Processor {
   private void logHeaders(Exchange exchange) {
     Map<String, Object> headers = exchange.getMessage().getHeaders();
     if (headers != null) {
-      if (RouteConstants.REQ_IN.equals(type)) {
-        log.info("REQ_IN: ");
+      if (RouteConstants.REQ_OUT.equals(type)) {
+        log.info("REQ_OUT: ");
         for (Map.Entry<String, Object> entry : headers.entrySet()) {
           log.info("{}: {}", entry.getKey(), entry.getValue());
         }
@@ -116,7 +116,7 @@ public class PayloadLogger implements Processor {
 
   private void logBody(Exchange exchange) {
     Object body = exchange.getIn().getBody();
-    if (RouteConstants.REQ_IN.equals(type)) {
+    if (RouteConstants.REQ_OUT.equals(type)) {
       logAllFromPojo(body);
     } else if (RouteConstants.RESP_IN.equals(type)) {
       logMessageContentsList((MessageContentsList) body);
