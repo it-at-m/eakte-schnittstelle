@@ -12,7 +12,8 @@ components:
           type: string
           description: |
             Objektname des erzeugten/gefundenen Vorgangs\
-            Der Name wird in der eAkte gebildet aus dem "Titel des Vorgangs" ("Aktenplankennzeichen"-"lfdNr der Akte"/"lfdNr des Vorgangs"-"lfdNr des Dokuments"
+            Der Name wird in der eAkte gebildet 
+            aus dem "Titel des Vorgangs" ("Aktenplankennzeichen"-"lfdNr der Akte"/"lfdNr des Vorgangs"-"lfdNr des Dokuments")
           example: Eingangspost vom 28.05.2026 (0010-11/2-0006)
         giobjecttype:
           type: array

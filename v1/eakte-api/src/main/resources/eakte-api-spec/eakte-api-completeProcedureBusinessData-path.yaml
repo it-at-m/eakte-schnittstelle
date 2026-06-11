@@ -2,7 +2,7 @@
 post:
   tags:
     - "/completeProcedureBusinessData"
-  summary: Anlegen eines kompletten Vorgangs mit Dokument und Schrifstücken bzw. 
+  summary: Anlegen eines kompletten Vorgangs mit Dokument und Schriftstücken bzw. 
     Ergänzung einzelner Schriftstücke beim Vorgang
   description: |
     Sobald eine Sachakte über die Fachdaten gefunden wurde, 

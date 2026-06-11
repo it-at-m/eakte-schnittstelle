@@ -19,8 +19,19 @@ components:
           type: array
           items:
             type: string
+    ArrayOfint:
+      type: object
+      description: Liste von Nummern
+      properties:
+        int:
+          type: array
+          items:
+            type: integer
+            format: int32
+      example: 1
     ArrayOfstring:
       type: object
+      description: Liste von Werten im Textformat
       properties:
         string:
           type: array
@@ -195,7 +206,7 @@ components:
       type: "object"
       properties:
         lhmbai_15_1700_ufreference:
-          description: Programmiername des Verfahrenseigenschaft
+          description: Programmiername der Verfahrenseigenschaft
           type: "string"
         lhmbai_15_1700_ufvalue:
           description: Wert(e) der Verfahrenseigenschaft

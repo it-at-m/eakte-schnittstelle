@@ -28,7 +28,7 @@ post:
     „?“ oder „_“ Das Fragezeichen „?“ steht für exakt ein Zeichen.
     * Optional zum Zeichen „?“ kann auch das Zeichen Unterstrich „_“ verwendet werden.
     * Beispiel: Eine Suche nach „_atterbauer“ liefert Ergebnisse, 
-    die exakt ein (beliebiges) Zeichen gefolgt von der Zeichenkette „atter-bauer“ enthalten – 
+    die exakt ein (beliebiges) Zeichen gefolgt von der Zeichenkette „atterbauer“ enthalten – 
     „Katterbauer“, „Patterbauer“, „Natterbauer“.
     
     „~“ Die Tilde „~“ (erreichbar über die Tastenkombination AltGr +) steht für eine phonetische Suche.

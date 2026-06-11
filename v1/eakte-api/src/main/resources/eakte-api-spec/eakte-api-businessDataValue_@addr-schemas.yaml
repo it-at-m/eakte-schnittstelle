@@ -20,7 +20,7 @@ components:
             
             Diese Funktion soll bei neuen Schnittstellen nicht mehr benutzt werden.\
             Dafür gibt es die neue Funktion /userFormsData, mit der Verfahrensdaten abgespeichert werden.\
-            Für vorhandene Schnittstellen weredn ab MUCS26 Fachdaten automatisch in den Verfahrensdaten abgespeichert.
+            Für vorhandene Schnittstellen werden ab MUCS26 Fachdaten automatisch in den Verfahrensdaten abgespeichert.
           example: data_dognumber
         value:
           type: string

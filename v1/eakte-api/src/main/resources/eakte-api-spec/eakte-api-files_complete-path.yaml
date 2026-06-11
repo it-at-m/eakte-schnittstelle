@@ -3,7 +3,7 @@ post:
     - /files
   summary: Anlegen einer kompletten Akte mit Vorgängen, Dokumenten und Schriftstücken
   description:
-    Es wird eine komplete Sachakte erstellt mit einem Vorgang, Dokument & Schrifstück) 
+    Es wird eine komplette Sachakte erstellt mit einem Vorgang, Dokument & Schrifstück) 
     bzw. man kann auch einzelne Schriftstücke bei der Akte ergänzen.\
     Bitte beachten Sie die Bedingungen beim Anlegen von einfachen Akten (POST /files)
   operationId: CreateCompleteFile

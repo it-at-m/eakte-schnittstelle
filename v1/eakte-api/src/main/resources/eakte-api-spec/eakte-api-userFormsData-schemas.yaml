@@ -9,6 +9,10 @@ components:
           type: "string"
           description: Wert der Verfahrensdaten als String
           example: "COO.1.2300.1.847"
+        enuminteger:
+          $ref: "eakte-api--global-schemas.yaml#/components/schemas/ArrayOfint"
+        enumreference:
+          $ref: "eakte-api--global-schemas.yaml#/components/schemas/ArrayOfstring"
 
     UpdateUserFormsDataRequestDTO:
       type: "object"

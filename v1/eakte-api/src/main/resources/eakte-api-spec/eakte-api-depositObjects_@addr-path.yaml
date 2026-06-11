@@ -12,7 +12,7 @@ put:
     * Das Transfer- und Aussonderungsdatum für Vorgänge wird 
     auf Basis von Aufbewahrungsfrist und Aussonderungsart berechnet und gesetzt.
     * Eine Akte kann lediglich dann z.A. geschrieben werden, 
-    wenn bei keinem der darunterliegenden Vorgänge ein offener Prozesse/Laufwege vorliegt.
+    wenn bei keinem der darunterliegenden Vorgänge ein offener Prozess/Laufweg vorliegt.
   operationId: DepositObject
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

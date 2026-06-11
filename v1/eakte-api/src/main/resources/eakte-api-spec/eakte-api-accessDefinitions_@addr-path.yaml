@@ -54,7 +54,7 @@ put:
     da das Dokument die gleiche Zugriffsdefinition wie der Vorgang hat. 
     Es ändern sich alle Dokumente des Vorgangs mit der gleichen Zugriffsdefinition!
     
-    Beispiel 5: Der Vorgang und das Dokument haben unterschiedliche Zugriffsdefinitionen.
+    Szenario 5: Der Vorgang und das Dokument haben unterschiedliche Zugriffsdefinitionen.
     Beim Setzen einer neuen Zugriffsdefinition auf dem Vorgang 
     ändert sich die Zugriffsdefinition des Dokumentes nicht, 
     da das Dokument eine andere Zugriffsdefinition als der Vorgang hat.

@@ -2,6 +2,16 @@ put:
   tags:
     - /setSignatureObjects
   summary: Unterschrift setzen auf Objekten
+  description: |
+    Bei dem Schriftgutobjekt (parameter: objaddress) wird eine definierte Unterschriftenart gesetzt (parameter: signaturetype). 
+    Dabei wird die in der Domäne/Mandanten gültige Unterschriftenregelung beachtet. 
+    Die Vorbedingungen werden jedoch nicht ausgewertet.\ 
+    Bitte beachten Sie, dass beim Anbringen der Unterschrift 
+    auch Folge-Aktivitäten ausgeführt werden 
+    (wie z.B. der Bearbeitungsstatus wird korrekt gesetzt).\
+    Unterschriften, in denen weitere GUI-Masken angezeigt werden (wie z.B. bei Umschreibungen), 
+    können über diese Soap-Aktion natürlich nicht angebracht werden. 
+    Für entsprechende Aktionen müssen bei Bedarf spezielle Soap-Aktionen entwickelt werden.
   operationId: SetSignature
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
