@@ -6,17 +6,12 @@
 
   <parent>
     <groupId>de.muenchen.eai</groupId>
-    <artifactId>eakte-schnittstelle-v2</artifactId>
+    <artifactId>eakte-api-v2</artifactId>
     <version>2.0.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>eakte-api-v2-spec</artifactId>
-  <packaging>jar</packaging>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
 
   <build>
     <plugins>

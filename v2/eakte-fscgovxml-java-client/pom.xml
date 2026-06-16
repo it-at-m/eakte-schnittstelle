@@ -40,7 +40,6 @@
               <goal>wsdl2java</goal>
             </goals>
             <configuration>
-              <sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot>
               <wsdlOptions>
 
                 <wsdlOption>

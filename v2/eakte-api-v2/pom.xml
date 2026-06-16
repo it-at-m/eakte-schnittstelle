@@ -5,14 +5,18 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>de.muenchen.eai</groupId>
-  <artifactId>eakte-schnittstelle-v2</artifactId>
+  <artifactId>eakte-api-v2</artifactId>
   <version>2.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
   <modules>
-    <module>eakte-api-v2</module>
-    <module>eakte-fscgovxml-java-client</module>
-    <module>eakte-api-v2-spring-boot-api-gateway</module>
+    <module>eakte-api-v2-spec</module>
+    <module>eakte-api-v2-spec-single-file</module>
+    <module>eakte-api-v2-spring-boot-server-stubs</module>
   </modules>
 
 </project>
