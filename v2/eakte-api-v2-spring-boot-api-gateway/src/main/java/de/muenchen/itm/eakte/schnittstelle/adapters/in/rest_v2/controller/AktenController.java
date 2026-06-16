@@ -1,4 +1,4 @@
-package de.muenchen.itm.eakte.schnittstelle.adapters.in.rest_v2.controller;
+package de.muenchen.oss.eakte.schnittstelle.adapters.in.rest_v2.controller;
 
 import de.muenchen.itm.eakte.schnittstelle.adapters.out.eakte_soap_client.FabasoftObjectClass;
 import de.muenchen.itm.eakte.schnittstelle.adapters.out.eakte_soap_client.resultset_mapper.MapperFactory;
