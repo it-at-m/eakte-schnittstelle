@@ -12,9 +12,8 @@ import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.EAkteSchni
 import io.vavr.control.Try;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,17 +24,16 @@ import java.util.Optional;
 @Component
 @AllArgsConstructor
 @RestController
+@Slf4j
 public class AktenController
   implements AktenApi {
-
-  private static final Logger logger = LoggerFactory.getLogger(AktenController.class);
 
   private final SearchServiceImpl searchService;
   private final AttributbeschreibungenStore attributbeschreibungenStore;
 
 
   @Override
-  public ResponseEntity<@NotNull AktenListeResponse> sucheAkten(Optional<String> fachverfahrensID,
+  public ResponseEntity<@NonNull AktenListeResponse> sucheAkten(Optional<String> fachverfahrensID,
                                                                 Optional<String> loginName,
                                                                 Optional<String> stelle,
                                                                 Optional<String> organisationseinheit,
@@ -44,7 +42,7 @@ public class AktenController
 
     RequestContext requestContext = new RequestContext(fachverfahrensID, loginName, stelle, organisationseinheit,
         Optional.ofNullable(servletRequest.getHeader("Authorization")));
-    logger.info("request context: {}", requestContext);
+    log.trace("request context: {}", requestContext);
     Optional<String> zusatzBedingungen = Optional.of(".${Eigentuemer} = 'COO.2150.8800.1.230497'");   // ,,,fh muss diskutiert werden (Einschränkung auf Mandanten, ...)
     Try<List<Akte>> trefferListe = searchService.search(requestContext, FabasoftObjectClass.AKTE, bedingungen, zusatzBedingungen, MapperFactory.getAkteMapper(), Optional.of(100), true);
     if (trefferListe.isSuccess()) {

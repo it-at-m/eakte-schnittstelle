@@ -10,16 +10,14 @@ import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.AttributUr
 import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.AttributZeichenkette;
 import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.Attributbeschreibung;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;
 
 @AllArgsConstructor
+@Slf4j
 public class FSObjectType2Attributbeschreibung
   implements ResultsetMapper<Attributbeschreibung> {
-
-  private static final Logger logger = LoggerFactory.getLogger(FSObjectType2Attributbeschreibung.class);
 
   private static Optional<AttributUriUndWert> findAttribute(AttributeCollector attributeCollector, String attributUrl) {
     return attributeCollector.getAttributes().stream()
@@ -43,7 +41,7 @@ public class FSObjectType2Attributbeschreibung
         String fabasoftWert = ((AttributZeichenkette) bezeichnung.get()).getAttributWert();
         attributbeschreibung.setBezeichnung(fabasoftWert);
       } else {
-        logger.error("Metadaten-Attribut nicht gefunden: {}", fabasoftAttrPath);
+        log.error("Metadaten-Attribut nicht gefunden: {}", fabasoftAttrPath);
       }
     }
 
@@ -61,11 +59,11 @@ public class FSObjectType2Attributbeschreibung
             attributbeschreibung.setDatentyp(AttributDatenTyp.ZEICHENKETTE);
             break;
           default:
-            logger.error("unrecognized Fabasoft datatype: {}", fabasoftWert);
+            log.error("unrecognized Fabasoft datatype: {}", fabasoftWert);
             break;
         }
       } else {
-        logger.error("Metadaten-Attribut nicht gefunden: {}", fabasoftAttrPath);
+        log.error("Metadaten-Attribut nicht gefunden: {}", fabasoftAttrPath);
       }
     }
 
@@ -77,7 +75,7 @@ public class FSObjectType2Attributbeschreibung
         int wert = ((AttributGanzzahl) attrLength.get()).getAttributWert();
         attributbeschreibung.setMaximaleTextLaenge(wert);
       } else {
-        logger.error("Metadaten-Attribut nicht gefunden: {}", fabasoftAttrPath);
+        log.error("Metadaten-Attribut nicht gefunden: {}", fabasoftAttrPath);
       }
     }
 
@@ -89,7 +87,7 @@ public class FSObjectType2Attributbeschreibung
         boolean wert = ((AttributBoolescherWert) mandatory.get()).getAttributWert();
         attributbeschreibung.setPflichtFeld(wert);
       } else {
-        logger.error("Metadaten-Attribut nicht gefunden: {}", fabasoftAttrPath);
+        log.error("Metadaten-Attribut nicht gefunden: {}", fabasoftAttrPath);
       }
     }
 
@@ -101,7 +99,7 @@ public class FSObjectType2Attributbeschreibung
         String wert = ((AttributZeichenkette) attrReference.get()).getAttributWert();
         attributbeschreibung.setReferenzAttribut(wert);
       } else {
-        logger.error("Metadaten-Attribut nicht gefunden: {}", fabasoftAttrPath);
+        log.error("Metadaten-Attribut nicht gefunden: {}", fabasoftAttrPath);
       }
     }
 
@@ -113,7 +111,7 @@ public class FSObjectType2Attributbeschreibung
         String wert = ((AttributZeichenkette) formReference.get()).getAttributWert();
         attributbeschreibung.setReferenzSchriftgutObjektklasseOderFormular(wert);
       } else {
-        logger.error("Metadaten-Attribut nicht gefunden: {}", fabasoftAttrPath);
+        log.error("Metadaten-Attribut nicht gefunden: {}", fabasoftAttrPath);
       }
     }
 
@@ -125,7 +123,7 @@ public class FSObjectType2Attributbeschreibung
         String wert = ((AttributZeichenkette) cooAddress.get()).getAttributWert();
         attributbeschreibung.setEigeneUrl(Optional.of("/Attributbescheibungen/" + wert));  // COO-Adressen sind "gutmütig", müssen niht URLEcoded werden
       } else {
-        logger.error("Metadaten-Attribut nicht gefunden: {}", fabasoftAttrPath);
+        log.error("Metadaten-Attribut nicht gefunden: {}", fabasoftAttrPath);
       }
     }
 

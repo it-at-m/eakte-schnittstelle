@@ -5,7 +5,7 @@ import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.controllers.Attr
 import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +20,7 @@ public class AttributbeschreibungenController
   private final AttributbeschreibungenStore attributbeschreibungenStore;
 
   @Override
-  public ResponseEntity<@NotNull AttributbeschreibungenListeResponse> leseAttributebeschreibungen(Optional<String> fachverfahrensID,
+  public ResponseEntity<@NonNull AttributbeschreibungenListeResponse> leseAttributebeschreibungen(Optional<String> fachverfahrensID,
                                                                                                   Optional<String> loginName,
                                                                                                   Optional<String> stelle,
                                                                                                   Optional<String> organisationseinheit,

@@ -2,8 +2,7 @@ package de.muenchen.itm.eakte.schnittstelle;
 
 import de.muenchen.itm.eakte.schnittstelle.config.PredefinedAppDataConfig;
 import de.muenchen.itm.eakte.schnittstelle.adapters.in.rest_v2.logging.EndpointDescriptor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -18,9 +17,8 @@ import java.util.Map;
 
 @SpringBootApplication(scanBasePackages = {"de.muenchen.itm.eakte.schnittstelle"})
 @EnableConfigurationProperties(PredefinedAppDataConfig.class)
+@Slf4j
 public class ApiGatewayApplication {
-
-  Logger logger = LoggerFactory.getLogger(ApiGatewayApplication.class);
 
   public static void main(String[] args) {
     SpringApplication.run(ApiGatewayApplication.class, args);
@@ -33,7 +31,7 @@ public class ApiGatewayApplication {
       .getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class);
     Map<RequestMappingInfo, HandlerMethod> springEndPointMap = requestMappingHandlerMapping
       .getHandlerMethods();
-    logger.info("------- endpoints detected: -------");
+    log.trace("------- endpoints detected: -------");
     springEndPointMap.entrySet().stream()
       .map(e -> new EndpointDescriptor(e.getKey(), e.getValue()))
       .sorted()

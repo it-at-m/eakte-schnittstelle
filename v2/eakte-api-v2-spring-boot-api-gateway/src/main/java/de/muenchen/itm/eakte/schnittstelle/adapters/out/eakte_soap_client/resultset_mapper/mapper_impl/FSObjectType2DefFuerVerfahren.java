@@ -7,16 +7,14 @@ import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.AttributUr
 import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.AttributZeichenkette;
 import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.DefinitionFuerVerfahren;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;
 
 @AllArgsConstructor
+@Slf4j
 public class FSObjectType2DefFuerVerfahren
   implements ResultsetMapper<DefinitionFuerVerfahren> {
-
-  private static final Logger logger = LoggerFactory.getLogger(FSObjectType2DefFuerVerfahren.class);
 
   private static Optional<AttributUriUndWert> findAttribute(AttributeCollector attributeCollector, String attributUrl) {
     return attributeCollector.getAttributes().stream()
@@ -40,7 +38,7 @@ public class FSObjectType2DefFuerVerfahren
         String fabasoftWert = ((AttributZeichenkette) bezeichnung.get()).getAttributWert();
         definitionFuerVerfahren.name(fabasoftWert);
       } else {
-        logger.error("Metadaten-Attribut nicht gefunden: {}", fabasoftAttrPath);
+        log.error("Metadaten-Attribut nicht gefunden: {}", fabasoftAttrPath);
       }
     }
 

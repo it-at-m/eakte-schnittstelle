@@ -88,21 +88,6 @@
             "cookieParamNamingConvention": "CamelCase"
           -->
         </configuration>
-        <!-- do we really need this?
-        <dependencies>
-          <dependency>
-            <groupId>org.openapitools.empoa</groupId>
-            <artifactId>empoa-swagger-core</artifactId>
-            <version>2.1.0</version>
-            <exclusions>
-              <exclusion>
-                <groupId>io.swagger.core.v3</groupId>
-                <artifactId>swagger-models</artifactId>
-              </exclusion>
-            </exclusions>
-          </dependency>
-        </dependencies>
-        -->
       </plugin>
 
     </plugins>

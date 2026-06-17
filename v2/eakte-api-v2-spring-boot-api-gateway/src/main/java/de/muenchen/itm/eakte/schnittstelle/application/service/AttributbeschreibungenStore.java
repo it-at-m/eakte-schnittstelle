@@ -6,8 +6,7 @@ import de.muenchen.itm.eakte.schnittstelle.domain.AttributeDefinitionQuery;
 import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.Attributbeschreibung;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +15,8 @@ import java.util.TreeMap;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class AttributbeschreibungenStore {
-
-  private static final Logger logger = LoggerFactory.getLogger(AttributbeschreibungenStore.class);
 
   private final TreeMap<String, Attributbeschreibung> allAttributes = new TreeMap<>();
 
@@ -41,12 +39,12 @@ public class AttributbeschreibungenStore {
       // add static attributes:
       addToMap(config.getAttributbeschreibungen());
       // add dynamic attributes:
-      logger.info("Number of dynamic attributes: " + dynamicAttributes.get().size());
-      dynamicAttributes.get().forEach(da -> logger.info(da.toString()));
+      log.trace("Number of dynamic attributes: " + dynamicAttributes.get().size());
+      dynamicAttributes.get().forEach(da -> log.trace(da.toString()));
       addToMap(dynamicAttributes.get());
     } else {
       // im Fehlerfalle: bisherigen Stand belassen, nur Fehler loggen (Gefahr exzessiver Retries)
-      logger.error(dynamicAttributes.failed().get().getMessage());
+      log.error(dynamicAttributes.failed().get().getMessage());
       throw new RuntimeException(dynamicAttributes.failed().get());
     }
     lastUpdateTimeStamp = Optional.of(System.currentTimeMillis()/1000);
