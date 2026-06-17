@@ -7,11 +7,11 @@ package de.muenchen.dms.schriftstueck.ausgang.anlegen;
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.ArrayOfLHMBAI151700GIAttachmentType;
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.ArrayOfLHMBAI151700GIUserFormsType;
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.CreateOutgoingGI;
+import de.muenchen.dms.common.mapper.FieldValueMappingService;
 import de.muenchen.dms.common.processor.AbstractDMSSoapProcessor;
 import de.muenchen.dms.common.util.JacksonData;
-import javax.xml.datatype.DatatypeConfigurationException;
-
 import de.muenchen.dms.common.util.Umwandlungen;
+import javax.xml.datatype.DatatypeConfigurationException;
 import org.apache.camel.Exchange;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +21,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CreateOutgoingProcessor extends AbstractDMSSoapProcessor {
-  @Override
+
+  private final FieldValueMappingService mappingService;
+
+  public CreateOutgoingProcessor(FieldValueMappingService mappingService) {
+      this.mappingService = mappingService;
+  }
+
+    @Override
   public void process(Exchange exchange) throws Exception {
     CreateOutgoingAnfrageDTO dto = getMessageBody(exchange);
 
@@ -56,6 +63,7 @@ public class CreateOutgoingProcessor extends AbstractDMSSoapProcessor {
       final ArrayOfLHMBAI151700GIAttachmentType lhmbai151700GIAttachments,
       final ArrayOfLHMBAI151700GIUserFormsType userFormsType)
       throws DatatypeConfigurationException {
+    String mappedAccdef = mappingService.map("accdef", anfrage.getAccdef());
     final CreateOutgoingGI createOutgoingGI = objectFactory.createCreateOutgoingGI();
     createOutgoingGI.setUserlogin(nutzer);
     createOutgoingGI.setBusinessapp(anwendung);
@@ -65,7 +73,7 @@ public class CreateOutgoingProcessor extends AbstractDMSSoapProcessor {
     createOutgoingGI.setDoctemplate(anfrage.getDoctemplate());
     createOutgoingGI.setShortname(anfrage.getShortname());
     createOutgoingGI.setFilesubj(anfrage.getFilesubj());
-    createOutgoingGI.setAccdef(anfrage.getAccdef());
+    createOutgoingGI.setAccdef(mappedAccdef);
     createOutgoingGI.setIncattachments(anfrage.getIncattachments());
     createOutgoingGI.setObjterms(anfrage.getObjterms());
     createOutgoingGI.setOutgoingdate(JacksonData.toXMLGregorianCalendar(anfrage.getOutgoingdate()));

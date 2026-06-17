@@ -45,10 +45,7 @@ public class UpdateIncomingAntwortDTO {
                 Arrays.asList(
                     Objektreferenz.builder().objaddress("COO.1").objname("Schreibstück 1.").build(),
                     Objektreferenz.builder().objaddress("COO.2").objname("Schreibstück 2.").build(),
-                    Objektreferenz.builder()
-                        .objaddress("COO.3")
-                        .objname("Schreibstück 3.")
-                        .build()))
+                    Objektreferenz.builder().objaddress("COO.3").objname("Schreibstück 3.").build()))
             .build();
     dto.setObjname("Dokument 1");
     dto.setObjid("COO.1");

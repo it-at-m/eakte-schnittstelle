@@ -92,6 +92,7 @@ class CreateIncomingResponseProcessorTest {
 
   private <T> List<T> erzeugeObjektReferenzen(
       BiFunction<String, String, T> objektReferenzFunktion) {
+    List<Objektreferenz> result = new ArrayList<>();
     return LongStream.rangeClosed(1, 3)
         .mapToObj(i -> objektReferenzFunktion.apply(erstelleObjektId(i), getDokumentName(i)))
         .toList();

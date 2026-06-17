@@ -1,13 +1,21 @@
 package de.muenchen.dms.aktenplaneintrag.anlegen;
 
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.CreateSubjectAreaUnitGI;
+import de.muenchen.dms.common.mapper.FieldValueMappingService;
 import de.muenchen.dms.common.processor.AbstractDMSSoapProcessor;
 import org.apache.camel.Exchange;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CreateSubjectAreaUnitProcessor extends AbstractDMSSoapProcessor {
-  @Override
+
+  private final FieldValueMappingService mappingService;
+
+    public CreateSubjectAreaUnitProcessor(FieldValueMappingService mappingService) {
+        this.mappingService = mappingService;
+    }
+
+    @Override
   public void process(Exchange exchange) throws Exception {
     final CreateSubjectAreaUnitAnfrageDTO anfrage =
         exchange.getIn().getBody(CreateSubjectAreaUnitAnfrageDTO.class);
@@ -28,6 +36,10 @@ public class CreateSubjectAreaUnitProcessor extends AbstractDMSSoapProcessor {
       final String organisationseinheit,
       final String rolle,
       final String anwendung) {
+
+      String mappedFileaccessdefinition = mappingService.map(
+              "accdef", anfrage.getFileaccessdefinition()
+      );
     CreateSubjectAreaUnitGI createSubjectAreaUnitGI = new CreateSubjectAreaUnitGI();
     createSubjectAreaUnitGI.setUserlogin(nutzer);
     createSubjectAreaUnitGI.setBusinessapp(anwendung);
@@ -40,7 +52,7 @@ public class CreateSubjectAreaUnitProcessor extends AbstractDMSSoapProcessor {
     createSubjectAreaUnitGI.setSubjarchiveschedule(anfrage.getSubjarchiveschedule());
     createSubjectAreaUnitGI.setSubjschedule(anfrage.getSubjschedule());
     createSubjectAreaUnitGI.setSubjdispstate(anfrage.getSubjdispstate());
-    createSubjectAreaUnitGI.setFileaccessdefinition(anfrage.getFileaccessdefinition());
+    createSubjectAreaUnitGI.setFileaccessdefinition(mappedFileaccessdefinition);
 
     return createSubjectAreaUnitGI;
   }

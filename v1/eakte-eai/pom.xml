@@ -11,7 +11,7 @@
 -->
 <groupId>de.muenchen.eai</groupId>
 <artifactId>dms-rest-eai</artifactId>
-<version>1.2.5</version>
+<version>1.2.6</version>
 <name>dms-rest-eai</name>
 <description>This application provides a REST interface for external applications to the DMS</description>
 
@@ -21,9 +21,9 @@
 	<spring-boot-version>3.4.4</spring-boot-version>
 
 	<cxf.version>4.1.0</cxf.version>
-	<dms-eai.version>1.9</dms-eai.version>
-	<wsdl.version>1.10</wsdl.version>
-	<api.version>1.2.5</api.version>
+	<dms-eai.version>1.10</dms-eai.version>
+	<wsdl.version>1.11</wsdl.version>
+	<api.version>1.2.6</api.version>
 	<spotless.version>2.43.0</spotless.version>
 	<api.path>/api</api.path>
 	<!-- Rückschritte im Pfad um die Angabe im api.path wieder rückwärts zu überspringen -->
@@ -42,6 +42,7 @@
 	<!-- TestCoverage -->
 	<jacoco.version>0.8.7</jacoco.version>
 	<maven.javadoc.skip>true</maven.javadoc.skip>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 </properties>
 
 <scm>

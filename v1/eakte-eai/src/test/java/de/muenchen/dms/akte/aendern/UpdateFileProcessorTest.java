@@ -14,19 +14,19 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultCamelContext;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 @DisplayName("Diese Testklasse prüft die Entgegennahme von REST-Anfragen zur Anlage von Akten")
 class UpdateFileProcessorTest {
 
+  @Autowired
   private UpdateFileProcessor processor;
 
   @BeforeEach
   void setUp() {
-    processor = new UpdateFileProcessor();
   }
 
   @Test
