@@ -46,9 +46,9 @@ public interface AttributbeschreibungenApi {
         return Optional.empty();
     }
 
-    String PATH_LESE_ATTRIBUTEBESCHREIBUNGEN = "/api/v2/Attributbeschreibungen";
+    String PATH_LESE_ATTRIBUTEBESCHREIBUNGEN = "/api/v2/attribut-beschreibungen";
     /**
-     * GET /api/v2/Attributbeschreibungen : Attribut-Metadaten abrufen
+     * GET /api/v2/attribut-beschreibungen : Attribut-Metadaten abrufen
      * Mit diesem Aufruf können die verwendbaren Attribute abgerufen werden.\\ \\ Diese Metadaten enthalten auch Referenzen auf den Kontext der Attribute, also ob es sich um ein Standard-Metadatum der eGov-Suite handelt, für welchen Schriftguttyp es gilt (Akte, Vorgang, Dokument) und welche Definition für Verfahren bzw. welches Formular die Definition des Attributs beinhaltet. 
      *
      * @param fachverfahrensID **Aufrufende Fachanwendung**  Die FachverfahrensID identifziert ein Fachverfahren behördenunabhängig und wird vom Betrieb eAkte vergeben  Der mitgegebene Wert wird auch als Http-Header in der Antwort zurückgegeben.  Somit ist ein Filtern der Antworten nach Fachverfahren möglich.  (optional)

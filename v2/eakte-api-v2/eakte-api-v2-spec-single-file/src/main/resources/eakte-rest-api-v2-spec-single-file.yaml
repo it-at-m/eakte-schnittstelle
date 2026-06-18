@@ -15,7 +15,7 @@ servers:
 security:
   - basicAuth: []
 paths:
-  /api/v2/Akten:
+  /api/v2/akten:
     post:
       tags:
         - Akten
@@ -103,7 +103,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AktenListeResponse'
-  /api/v2/Akten/{aktenId}:
+  /api/v2/akten/{aktenId}:
     get:
       tags:
         - Akten
@@ -182,7 +182,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NoContentResponse'
-  /api/v2/Attributbeschreibungen:
+  /api/v2/attribut-beschreibungen:
     get:
       tags:
         - Attributbeschreibungen
@@ -224,7 +224,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AttributbeschreibungenListeResponse'
-  /api/v2/DefinitionenFuerVerfahren:
+  /api/v2/definitionen-fuer-verfahren:
     get:
       tags:
         - DefinitionenFuerVerfahren

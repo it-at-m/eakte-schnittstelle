@@ -29,33 +29,33 @@ security:
 
 paths:
 
-#  '/':
+#  '/api/v2/':
 #    $ref: 'Ressourcenbeschreibungen_Liste.yaml'
 
   # besser lower-case-kebab für Pfade?
-#  '/Aktenplaneintraege':
+#  '/api/v2/aktenplaneintraege':
 #    $ref: 'Aktenplaneintraege_Liste.yaml'
 #
-#  '/Aktenplaneintraege/{aktenplaneintragsId}':
+#  '/api/v2/aktenplaneintraege/{aktenplaneintragsId}':
 #    $ref: 'Aktenplaneintraege_Einzelsatz.yaml'
 
-  '/api/v2/Akten':
+  '/api/v2/akten':
     $ref: 'Akten_Liste.yaml'
 
-  '/api/v2/Akten/{aktenId}':
+  '/api/v2/akten/{aktenId}':
     $ref: 'Akten_Einzelsatz.yaml'
 
-  '/api/v2/Attributbeschreibungen':
+  '/api/v2/attribut-beschreibungen':
     $ref: 'Attributbeschreibungen_Liste.yaml'
 
-  '/api/v2/DefinitionenFuerVerfahren':
+  '/api/v2/definitionen-fuer-verfahren':
     $ref: 'DefinitionenFuerVerfahren_Liste.yaml'
 
-#  '/Attributbeschreibungen/{attributbeschreibungsId}':
+#  '/api/v2/attribut-beschreibungen/{attributbeschreibungsId}':
 #    $ref: 'Attributbeschreibungen_Einzelsatz.yaml'
 
-#  '/Organisationseinheiten':
+#  '/api/v2/organisationseinheiten':
 #    $ref: 'Organisationseinheiten_Liste.yaml'
 #
-#  '/Organisationseinheiten/{organisationseinheitenId}':
+#  '/api/v2/organisationseinheiten/{organisationseinheitenId}':
 #    $ref: 'Organisationseinheiten_Einzelsatz.yaml'

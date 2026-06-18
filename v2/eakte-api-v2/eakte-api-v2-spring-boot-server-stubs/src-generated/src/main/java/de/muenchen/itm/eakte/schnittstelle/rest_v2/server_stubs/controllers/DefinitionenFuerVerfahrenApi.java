@@ -46,9 +46,9 @@ public interface DefinitionenFuerVerfahrenApi {
         return Optional.empty();
     }
 
-    String PATH_LESE_DEFINITIONEN_FUER_VERFAHREN = "/api/v2/DefinitionenFuerVerfahren";
+    String PATH_LESE_DEFINITIONEN_FUER_VERFAHREN = "/api/v2/definitionen-fuer-verfahren";
     /**
-     * GET /api/v2/DefinitionenFuerVerfahren : DfV-Metadaten abrufen
+     * GET /api/v2/definitionen-fuer-verfahren : DfV-Metadaten abrufen
      * Mit diesem Aufruf können die Metadaten con DfVs abgerufen werden. 
      *
      * @param fachverfahrensID **Aufrufende Fachanwendung**  Die FachverfahrensID identifziert ein Fachverfahren behördenunabhängig und wird vom Betrieb eAkte vergeben  Der mitgegebene Wert wird auch als Http-Header in der Antwort zurückgegeben.  Somit ist ein Filtern der Antworten nach Fachverfahren möglich.  (optional)

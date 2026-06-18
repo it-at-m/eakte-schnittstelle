@@ -49,9 +49,9 @@ public interface AktenApi {
         return Optional.empty();
     }
 
-    String PATH_BEARBEITE_AKTE = "/api/v2/Akten/{aktenId}";
+    String PATH_BEARBEITE_AKTE = "/api/v2/akten/{aktenId}";
     /**
-     * PUT /api/v2/Akten/{aktenId} : Akte bearbeiten
+     * PUT /api/v2/akten/{aktenId} : Akte bearbeiten
      *
      * @param aktenId Interne Id der Akte (nicht interpretierbar, \&quot;opaque\&quot;) (required)
      * @param akte  (required)
@@ -130,9 +130,9 @@ public interface AktenApi {
     }
 
 
-    String PATH_ERSTELLE_AKTE = "/api/v2/Akten";
+    String PATH_ERSTELLE_AKTE = "/api/v2/akten";
     /**
-     * POST /api/v2/Akten : Akte erstellen
+     * POST /api/v2/akten : Akte erstellen
      * Erstelle eine neue Akte. Beachte dass das Ergebnis des POST-Aufrufs nur die URL des neu erzeugten Objekts zurückliefert und nicht das ganze Objekt mit all seinen Attributen erneut zurücküberträgt. Falls die automatisch beim Erstellungvorgang  erzeugte Felder (ErzeugtAm, ErzeugtVon, automatisch generiertes Betreffs-Feld etc.) benötigt werden, muss das vollständige Objekt explizit mit einem nachfolgenden GET-Aufruf abgerufen werden. Für die nachfolgende Erstellung eines Vorgangs reicht es aber, die mit dem &#39;Location&#39;-Header zurückgegebene URL der neu angelegten Akte zur  Verfügung zu haben. 
      *
      * @param akte  (required)
@@ -211,9 +211,9 @@ public interface AktenApi {
     }
 
 
-    String PATH_LESE_AKTE = "/api/v2/Akten/{aktenId}";
+    String PATH_LESE_AKTE = "/api/v2/akten/{aktenId}";
     /**
-     * GET /api/v2/Akten/{aktenId} : Akte lesen
+     * GET /api/v2/akten/{aktenId} : Akte lesen
      *
      * @param aktenId Interne Id der Akte (nicht interpretierbar, \&quot;opaque\&quot;) (required)
      * @param fachverfahrensID **Aufrufende Fachanwendung**  Die FachverfahrensID identifziert ein Fachverfahren behördenunabhängig und wird vom Betrieb eAkte vergeben  Der mitgegebene Wert wird auch als Http-Header in der Antwort zurückgegeben.  Somit ist ein Filtern der Antworten nach Fachverfahren möglich.  (optional)
@@ -289,9 +289,9 @@ public interface AktenApi {
     }
 
 
-    String PATH_SUCHE_AKTEN = "/api/v2/Akten";
+    String PATH_SUCHE_AKTEN = "/api/v2/akten";
     /**
-     * GET /api/v2/Akten : Akten suchen
+     * GET /api/v2/akten : Akten suchen
      * Mit diesem Aufruf können Akten gesucht werden auf Basis von Bedingungen, die sich auf beliebige Attribute der Akte beziehen (Standard-Metadaten der eGov-Suite oder auch Attribute aus der  \&quot;Definition von Verfahren\&quot;). 
      *
      * @param fachverfahrensID **Aufrufende Fachanwendung**  Die FachverfahrensID identifziert ein Fachverfahren behördenunabhängig und wird vom Betrieb eAkte vergeben  Der mitgegebene Wert wird auch als Http-Header in der Antwort zurückgegeben.  Somit ist ein Filtern der Antworten nach Fachverfahren möglich.  (optional)
