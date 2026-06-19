@@ -8,8 +8,8 @@ info:
     url: https://it-at-m.github.io/eakte-api
     email: schnittstelle.eakte@muenchen.de
   license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    name: MIT
+    url: https://opensource.org/license/mit
 servers:
   - url: http://localhost:8080
 security:
