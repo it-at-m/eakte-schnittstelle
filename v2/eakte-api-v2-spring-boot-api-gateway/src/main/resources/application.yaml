@@ -14,8 +14,9 @@ logging:
     org.springframework.web: WARN
     org.springframework.boot: WARN
     org.apache.cxf: WARN
-    de.muenchen.itm.eakte.schnittstelle: INFO
-    de.muenchen.itm.eakte.schnittstelle.web.helper.de.muenchen.itm.eakte.schnittstelle.adapter.web.helper.EndpointDescriptor: INFO
+    de.muenchen.itm.eakte.schnittstelle: TRACE
+    # specifically this provides the endpoint listing at startup: (might be wanted even when other tracing is off)
+    de.muenchen.itm.eakte.schnittstelle.web.helper.de.muenchen.itm.eakte.schnittstelle.adapter.web.helper.EndpointDescriptor: TRACE
   pattern:
     #console: "%d{yyyy-MM-dd HH:mm:ss} %-5level %80.80logger - %msg%n"
     console: "%d{yyyy-MM-dd HH:mm:ss} %-5level %-80.80logger - %msg%n"

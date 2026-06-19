@@ -10,8 +10,7 @@ import de.muenchen.itm.eakte.schnittstelle.identity_propagation.RequestContext;
 import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.Attributbeschreibung;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +19,9 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class SearchServiceImpl
   implements SearchService {
-
-  private static final Logger log =  LoggerFactory.getLogger(SearchServiceImpl.class);
 
   @Autowired
   private final SoapSearchWrapper soapSearchWrapper;
@@ -46,13 +44,13 @@ public class SearchServiceImpl
                                  Optional<Integer> limit,
                                  boolean nocheck) {
 
-    log.info("building query");
-    log.info("bedingungen: {}", bedingungen);
+    log.trace("building query");
+    log.trace("bedingungen: {}", bedingungen);
     List<Attributbeschreibung> attributes = attributbeschreibungenStore.getAttributesForObjectClass(fabasoftObjectClass);
     FabasoftQueryLanguageBuilder fabasoftQueryLanguageBuilder = new FabasoftQueryLanguageBuilder(attributes);
     String fabasoftQLQuery = fabasoftQueryLanguageBuilder.createQueryString(fabasoftObjectClass, bedingungen, zusatzBedingungen, limit, nocheck);
     List<String> fabasoftQLAttrList = attributes.stream().map(Attributbeschreibung::getReferenzAttribut).toList();
-    log.info("submitting SOAP query:\n{}", fabasoftQueryLanguageBuilder.createFullSoapRequest(fabasoftQLQuery, fabasoftQLAttrList));
+    log.trace("submitting SOAP query:\n{}", fabasoftQueryLanguageBuilder.createFullSoapRequest(fabasoftQLQuery, fabasoftQLAttrList));
     return soapSearchWrapper.search(requestContext, fabasoftQLQuery, fabasoftQLAttrList, resourceCreationMapper);
   }
 

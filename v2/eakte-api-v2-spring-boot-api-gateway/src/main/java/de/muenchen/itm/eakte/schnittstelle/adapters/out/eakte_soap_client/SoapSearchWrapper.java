@@ -12,8 +12,7 @@ import de.muenchen.itm.eakte.schnittstelle.identity_propagation.RequestContext;
 import io.vavr.control.Try;
 import jakarta.xml.ws.Holder;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,10 +21,9 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class SoapSearchWrapper
 implements DmsSearchService {
-
-  private static final Logger logger =  LoggerFactory.getLogger(SoapSearchWrapper.class);
 
   private final EgovClientProxyPool proxyPool;
 
@@ -61,7 +59,7 @@ implements DmsSearchService {
     Holder<TXContext> holder = new Holder<>(txContext);
 
     // mache den Call:
-    logger.info("sending request to: {}", proxyPool.getWsdlUrl());
+    log.trace("sending request to: {}", proxyPool.getWsdlUrl());
     try {
       SOAPSearchResponseType response = webService4User.soapSearch(request, holder);
 

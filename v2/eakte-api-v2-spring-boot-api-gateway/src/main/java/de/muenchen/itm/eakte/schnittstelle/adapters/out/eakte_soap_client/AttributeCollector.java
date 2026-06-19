@@ -31,8 +31,8 @@ import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.AttributUr
 import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.AttributVorgangsURI;
 import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.AttributZeichenkette;
 import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.AttributZugriffsdefinitionsURI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -41,11 +41,11 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
+@Slf4j
+@Getter
 public class AttributeCollector {
 
-  private static final Logger logger = LoggerFactory.getLogger(AttributeCollector.class);
-
-  private final ArrayList<AttributUriUndWert> attributeList = new ArrayList<>();
+  private final ArrayList<AttributUriUndWert> attributes = new ArrayList<>();
 
   private static String createAttributURI(String id) {
     return "/Attributbeschreibungen/" + id;
@@ -68,8 +68,8 @@ public class AttributeCollector {
   }
 
   private void logOneAttribute(AttributUriUndWert attributUriUndWert) {
-    logger.info("  - uri: " + attributUriUndWert.getAttributURI());
-    logger.info("    typ: " + attributUriUndWert.getDatenTyp());
+    log.trace("  - uri: " + attributUriUndWert.getAttributURI());
+    log.trace("    typ: " + attributUriUndWert.getDatenTyp());
 
     // nicht sehr schön und vielleicht geht es auch anders - OpenAPI Generator generiert keine Sealed interfaces,
     // aber it der parallel gepflegten enum haben wir check auf exhaustiveness
@@ -77,78 +77,74 @@ public class AttributeCollector {
     AttributDatenTyp attributDatenTyp = AttributDatenTyp.fromValue(attributUriUndWert.getDatenTyp());
     switch (attributDatenTyp) {
       case AttributDatenTyp.AGGREGATSTYP:
-        logger.info("    wert: ");
+        log.trace("    wert: ");
         ((AttributAggregatstyp) attributUriUndWert).getAttributWert().forEach(this::logOneAttribute);
         break;
       case AttributDatenTyp.AKTENPLANEINTRAGS_URI:
-        logger.info("    wert: " + ((AttributAktenplaneintragsURI) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributAktenplaneintragsURI) attributUriUndWert).getAttributWert());
         break;
       case AttributDatenTyp.AKTEN_URI:
-        logger.info("    wert: " + ((AttributAktenURI) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributAktenURI) attributUriUndWert).getAttributWert());
         break;
       case AttributDatenTyp.AUFZAEHLUNGSTYP:
-        logger.info("    wert: " + ((AttributAufzaehlungstyp) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributAufzaehlungstyp) attributUriUndWert).getAttributWert());
         break;
       case AttributDatenTyp.BASE64_ENCODED_CONTENT:
-        logger.info("    wert: " + ((AttributBase64EncodedContent) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributBase64EncodedContent) attributUriUndWert).getAttributWert());
         break;
       case AttributDatenTyp.BENUTZER_URI:
-        logger.info("    wert: " + ((AttributBenutzerURI) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributBenutzerURI) attributUriUndWert).getAttributWert());
         break;
       case AttributDatenTyp.BOOLESCHER_WERT:
-        logger.info("    wert: " + ((AttributBoolescherWert) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributBoolescherWert) attributUriUndWert).getAttributWert());
         break;
       case AttributDatenTyp.DATUM:
-        logger.info("    wert: " + ((AttributDatum) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributDatum) attributUriUndWert).getAttributWert());
         break;
       case AttributDatenTyp.DATUM_MIT_UHRZEIT:
-        logger.info("    wert: " + ((AttributDatumMitUhrzeit) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributDatumMitUhrzeit) attributUriUndWert).getAttributWert());
         break;
       case AttributDatenTyp.FLIESSKOMMAZAHL:
-        logger.info("    wert: " + ((AttributFliesskommazahl) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributFliesskommazahl) attributUriUndWert).getAttributWert());
         break;
       case AttributDatenTyp.GANZZAHL:
-        logger.info("    wert: " + ((AttributGanzzahl) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributGanzzahl) attributUriUndWert).getAttributWert());
         break;
       case AttributDatenTyp.ORGANISATIONSEINHEITS_URI:
-        logger.info("    wert: " + ((AttributOrganisationseinheitsURI) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributOrganisationseinheitsURI) attributUriUndWert).getAttributWert());
         break;
       case AttributDatenTyp.SCHRIFTSTUECK_URI:
-        logger.info("    wert: " + ((AttributSchriftstueckURI) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributSchriftstueckURI) attributUriUndWert).getAttributWert());
         break;
       case AttributDatenTyp.SPRACHEN_URI:
-        logger.info("    wert: " + ((AttributSprachenURI) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributSprachenURI) attributUriUndWert).getAttributWert());
         break;
       case AttributDatenTyp.UNSPEZIFISCHE_RESSOURCEN_URI:
-        logger.info("    wert: " + ((AttributUnspezifischeRessourcenURI) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributUnspezifischeRessourcenURI) attributUriUndWert).getAttributWert());
         break;
       case AttributDatenTyp.VORGANGS_URI:
-        logger.info("    wert: " + ((AttributVorgangsURI) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributVorgangsURI) attributUriUndWert).getAttributWert());
         break;
       case AttributDatenTyp.ZEICHENKETTE:
-        logger.info("    wert: " + ((AttributZeichenkette) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributZeichenkette) attributUriUndWert).getAttributWert());
         break;
       case AttributDatenTyp.ZUGRIFFSDEFINITIONS_URI:
-        logger.info("    wert: " + ((AttributZugriffsdefinitionsURI) attributUriUndWert).getAttributWert());
+        log.trace("    wert: " + ((AttributZugriffsdefinitionsURI) attributUriUndWert).getAttributWert());
         break;
     }
   }
 
   public AttributeCollector logAllAttributes() {
-    logger.info("logAllAttributes:");
-    attributeList.forEach(this::logOneAttribute);
+    log.trace("logAllAttributes:");
+    attributes.forEach(this::logOneAttribute);
     return this;
   }
 
   private AttributeCollector addAttribute(AttributUriUndWert attributUriUndWert) {
-    ///logger.info("addAttribute");
+    ///log.trace("addAttribute");
     //logOneAttribute(attributUriUndWert);
-    attributeList.add(attributUriUndWert);
+    attributes.add(attributUriUndWert);
     return this;
-  }
-
-  public List<AttributUriUndWert> getAttributes() {
-    return this.attributeList;
   }
 
   public AttributeCollector processObjectType(ObjectType element) {
@@ -175,7 +171,7 @@ public class AttributeCollector {
         new AttributAggregatstyp()
           .attributURI(createAttributURI(element.getReference()))
           .datenTyp(AttributDatenTyp.AGGREGATSTYP.getValue())
-          .attributWert(aggregatsAttributKollektor.attributeList)
+          .attributWert(aggregatsAttributKollektor.attributes)
       );
     }
     return this;

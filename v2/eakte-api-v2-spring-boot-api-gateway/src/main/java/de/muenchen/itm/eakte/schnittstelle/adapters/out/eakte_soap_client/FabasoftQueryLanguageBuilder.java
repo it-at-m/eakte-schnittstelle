@@ -3,8 +3,7 @@ package de.muenchen.itm.eakte.schnittstelle.adapters.out.eakte_soap_client;
 import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.Attributbeschreibung;
 import io.vavr.Function1;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,9 +13,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
+@Slf4j
 public class FabasoftQueryLanguageBuilder {
-
-  private static final Logger logger = LoggerFactory.getLogger(FabasoftQueryLanguageBuilder.class);
 
   private final List<Attributbeschreibung> attributbeschreibungen;
 
@@ -39,7 +37,7 @@ public class FabasoftQueryLanguageBuilder {
       )
       .map(Attributbeschreibung::getReferenzAttribut)
       .findFirst();
-    logger.info("Resolved makro specifier \"" + makroSpecifier + "\" to \"" + value + "\"");
+    log.trace("Resolved makro specifier \"" + makroSpecifier + "\" to \"" + value + "\"");
     if (value.isEmpty()) {
       throw new RuntimeException("Platzhalter-Text \"" + makroSpecifier + "\" konnte nicht in Attributbeschreibungen aufgelöst werden. Verfügbare Platzhalter-Texte:" +
         attributbeschreibungen.stream().map(Attributbeschreibung::getBezeichnung).collect(Collectors.joining(",")));

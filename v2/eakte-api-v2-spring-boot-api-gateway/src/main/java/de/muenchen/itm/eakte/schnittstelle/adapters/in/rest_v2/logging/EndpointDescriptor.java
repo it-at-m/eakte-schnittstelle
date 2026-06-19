@@ -1,9 +1,8 @@
 package de.muenchen.itm.eakte.schnittstelle.adapters.in.rest_v2.logging;
 
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import lombok.NonNull;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.condition.PathPatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -13,10 +12,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Getter
+@Slf4j
 public class EndpointDescriptor
   implements Comparable<EndpointDescriptor> {
-
-  Logger logger = LoggerFactory.getLogger(EndpointDescriptor.class);
 
   private final String fullInfo;
   private final String requestPath;
@@ -37,16 +35,16 @@ public class EndpointDescriptor
   }
 
   public void logToInfo() {
-    logger.info(this.toString());
+    log.trace(this.toString());
   }
 
   @Override
-  public @NotNull String toString() {
+  public @NonNull String toString() {
     return String.format("%-35s %-4s %-30s: %s", requestPath, httpMethod, contentTypeServed, controllerMethod);
   }
 
   @Override
-  public int compareTo(@NotNull EndpointDescriptor o) {
+  public int compareTo(@NonNull EndpointDescriptor o) {
     return Comparator
       .comparing((EndpointDescriptor epd) -> epd.requestPath)
       .thenComparing(epd -> epd.httpMethod)

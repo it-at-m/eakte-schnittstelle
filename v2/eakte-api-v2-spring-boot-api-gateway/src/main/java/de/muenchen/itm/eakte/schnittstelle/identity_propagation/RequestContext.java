@@ -1,16 +1,12 @@
 package de.muenchen.itm.eakte.schnittstelle.identity_propagation;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import java.util.Optional;
 import java.util.Base64;
 import com.nimbusds.jwt.SignedJWT;
-import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.NonNull;
 
-@AllArgsConstructor
 @Getter
 @Builder
 public class RequestContext {
@@ -24,22 +20,20 @@ public class RequestContext {
 
   public record BasicAuthCredentials(String username, String password) implements AuthCredentials {
     @Override
-    public @NotNull String toString() {
+    public @NonNull String toString() {
       return "Basic Auth credentials{username: " + username + "}";
     }
   }
 
   public record BearerAuthCredentials(String username, String parsedString) implements AuthCredentials {
     @Override
-    public @NotNull String toString() {
+    public @NonNull String toString() {
       return "Bearer Auth credentials{username: " + username + ", parsedString: " + parsedString + "}";
     }
   }
 
   private static final String BearerPrefix = "Bearer ";
   private static final String BasicPrefix = "Basic ";
-
-  Logger logger = LoggerFactory.getLogger(RequestContext.class);
 
   public RequestContext(Optional<String> fachverfahrensID,
                         Optional<String> loginName,

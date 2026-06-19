@@ -5,8 +5,7 @@ import de.muenchen.itm.eakte.schnittstelle.domain.DfVQuery;
 import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.DefinitionFuerVerfahren;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,9 +14,8 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class DfVStore {
-
-  private static final Logger logger = LoggerFactory.getLogger(DfVStore.class);
 
   private final List<DefinitionFuerVerfahren> allDfVs = new ArrayList<>();
 
@@ -37,12 +35,12 @@ public class DfVStore {
     Try<List<DefinitionFuerVerfahren>> dfvs = dfvQuery.queryDfVs(config.getFunktionsUsername(), config.getFunktionsPassword());
     if (dfvs.isSuccess()) {
       this.allDfVs.clear();
-      logger.info("Number of dfvs found: " + dfvs.get().size());
-      dfvs.get().forEach(dfv -> logger.info(dfv.toString()));
+      log.trace("Number of dfvs found: " + dfvs.get().size());
+      dfvs.get().forEach(dfv -> log.trace(dfv.toString()));
       allDfVs.addAll(dfvs.get());
     } else {
       // im Fehlerfalle: bisherigen Stand belassen, nur Fehler loggen (Achtung: möglicherweise Gefahr exzessiver Retries)
-      logger.error(dfvs.failed().get().getMessage());
+      log.error(dfvs.failed().get().getMessage());
       throw new RuntimeException(dfvs.failed().get());
     }
     lastUpdateTimeStamp = Optional.of(System.currentTimeMillis()/1000);

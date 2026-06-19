@@ -9,7 +9,7 @@ import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.EAkteSchni
 import io.vavr.control.Try;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +25,7 @@ public class DefinitionenFuerVerfahrenController
   private final DfVQuery dfvQuery;
 
   @Override
-  public ResponseEntity<@NotNull DefinitionenFuerVerfahrenListeResponse> leseDefinitionenFuerVerfahren(Optional<String> fachverfahrensID,
+  public ResponseEntity<@NonNull DefinitionenFuerVerfahrenListeResponse> leseDefinitionenFuerVerfahren(Optional<String> fachverfahrensID,
                                                                                                        Optional<String> loginName,
                                                                                                        Optional<String> stelle,
                                                                                                        Optional<String> organisationseinheit,

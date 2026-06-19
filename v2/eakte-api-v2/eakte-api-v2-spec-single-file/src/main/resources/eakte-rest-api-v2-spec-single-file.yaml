@@ -1,0 +1,908 @@
+openapi: 3.0.1
+info:
+  title: eAkte REST-API Spezifikation
+  description: Spezifikation für die REST-Schnittstelle der eAkte
+  version: 2.0.0
+  contact:
+    name: Competence Center eAkte
+    url: https://it-at-m.github.io/eakte-schnittstelle
+    email: schnittstelle.eakte@muenchen.de
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit
+servers:
+  - url: http://localhost:8080
+security:
+  - basicAuth: []
+paths:
+  /api/v2/akten:
+    post:
+      tags:
+        - Akten
+      summary: Akte erstellen
+      description: |
+        Erstelle eine neue Akte.
+        Beachte dass das Ergebnis des POST-Aufrufs nur die URL des neu erzeugten Objekts zurückliefert und nicht das ganze Objekt mit all seinen Attributen erneut zurücküberträgt. Falls die automatisch beim Erstellungvorgang  erzeugte Felder (ErzeugtAm, ErzeugtVon, automatisch generiertes Betreffs-Feld etc.) benötigt werden, muss das vollständige Objekt explizit mit einem nachfolgenden GET-Aufruf abgerufen werden. Für die nachfolgende Erstellung eines Vorgangs reicht es aber, die mit dem 'Location'-Header zurückgegebene URL der neu angelegten Akte zur  Verfügung zu haben.
+      operationId: ErstelleAkte
+      parameters:
+        - $ref: '#/components/parameters/FachverfahrensID'
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Akte'
+        required: true
+      responses:
+        '201':
+          description: Neue Akte wurde erzeugt
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContentResponse'
+          headers:
+            Location:
+              $ref: '#/components/headers/Location'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContentResponse'
+        '401':
+          description: Falscher oder fehlender technischer Nutzer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContentResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContentResponse'
+    get:
+      tags:
+        - Akten
+      summary: Akten suchen
+      description: |
+        Mit diesem Aufruf können Akten gesucht werden auf Basis von Bedingungen, die sich auf beliebige
+        Attribute der Akte beziehen (Standard-Metadaten der eGov-Suite oder auch Attribute aus der 
+        "Definition von Verfahren").
+      operationId: SucheAkten
+      parameters:
+        - $ref: '#/components/parameters/FachverfahrensID'
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/Bedingungen'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AktenListeResponse'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AktenListeResponse'
+        '401':
+          description: Falscher oder fehlender technischer Nutzer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AktenListeResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AktenListeResponse'
+  /api/v2/akten/{aktenId}:
+    get:
+      tags:
+        - Akten
+      summary: Akte lesen
+      operationId: LeseAkte
+      parameters:
+        - $ref: '#/components/parameters/FachverfahrensID'
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/aktenId'
+      responses:
+        '200':
+          description: Akte wurde gelesen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AkteResponse'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AkteResponse'
+        '401':
+          description: Falscher oder fehlender technischer Nutzer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AkteResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AkteResponse'
+    put:
+      tags:
+        - Akten
+      summary: Akte bearbeiten
+      operationId: BearbeiteAkte
+      parameters:
+        - $ref: '#/components/parameters/FachverfahrensID'
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/aktenId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Akte'
+        required: true
+      responses:
+        '204':
+          description: Akte wurde geändert
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContentResponse'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContentResponse'
+        '401':
+          description: Falscher oder fehlender technischer Nutzer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContentResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContentResponse'
+  /api/v2/attribut-beschreibungen:
+    get:
+      tags:
+        - Attributbeschreibungen
+      summary: Attribut-Metadaten abrufen
+      description: |
+        Mit diesem Aufruf können die verwendbaren Attribute abgerufen werden.\
+        \
+        Diese Metadaten enthalten auch Referenzen auf den Kontext der Attribute, also ob es sich um ein Standard-Metadatum der eGov-Suite handelt,
+        für welchen Schriftguttyp es gilt (Akte, Vorgang, Dokument) und welche Definition für Verfahren bzw. welches Formular die Definition
+        des Attributs beinhaltet.
+      operationId: leseAttributebeschreibungen
+      parameters:
+        - $ref: '#/components/parameters/FachverfahrensID'
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttributbeschreibungenListeResponse'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttributbeschreibungenListeResponse'
+        '401':
+          description: Falscher oder fehlender technischer Nutzer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttributbeschreibungenListeResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttributbeschreibungenListeResponse'
+  /api/v2/definitionen-fuer-verfahren:
+    get:
+      tags:
+        - DefinitionenFuerVerfahren
+      summary: DfV-Metadaten abrufen
+      description: |
+        Mit diesem Aufruf können die Metadaten con DfVs abgerufen werden.
+      operationId: leseDefinitionenFuerVerfahren
+      parameters:
+        - $ref: '#/components/parameters/FachverfahrensID'
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefinitionenFuerVerfahrenListeResponse'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefinitionenFuerVerfahrenListeResponse'
+        '401':
+          description: Falscher oder fehlender technischer Nutzer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefinitionenFuerVerfahrenListeResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefinitionenFuerVerfahrenListeResponse'
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: |
+        Diese API erlaubt die Authentisierung mittels des HTTP-Headers
+        'Autthorization' und der Variante 'Basic' 
+        [Weitere Information siehe https://api.example.com/docs/auth](https://api.example.com/docs/auth)
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: jwt
+  parameters:
+    FachverfahrensID:
+      name: FachverfahrensID
+      in: header
+      description: |
+        **Aufrufende Fachanwendung**
+
+        Die FachverfahrensID identifziert ein Fachverfahren behördenunabhängig und wird vom Betrieb eAkte vergeben
+
+        Der mitgegebene Wert wird auch als Http-Header in der Antwort zurückgegeben. 
+        Somit ist ein Filtern der Antworten nach Fachverfahren möglich.
+      required: false
+      schema:
+        type: string
+      example: SWH
+    LoginName:
+      name: LoginName
+      in: header
+      description: |
+        **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\
+        Log-in-Name des Benutzerobjekts
+      required: false
+      schema:
+        type: string
+      example: max.mustermann
+    Stelle:
+      name: Stelle
+      in: header
+      description: |
+        Referenz der Stelle (**Stelle des Nutzers** in der eAkte).
+        * Sachbearbeitung - OfficialInCharge
+        * Registratur - Official
+        * Sekretariat - Secretary
+        * Leitung - Head
+        * Fachadministration - OpAdm
+        * Schriftgutverwaltung - DocumentManager
+
+        Es dürfen ausschließlich die Stellen genannt werden, 
+        die bei der LHM genutzt werden.\
+        Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt!
+      required: false
+      schema:
+        type: string
+      example: DocumentManager
+    Organisationseinheit:
+      name: Organisationseinheit
+      in: header
+      description: |
+        URI der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.\
+        \
+        Die OE ist dann wichtig anzugeben, 
+        wenn der Nutzer in mehreren OEs zugeordnet ist.\
+        Über diese OE wird der Mandant zugeordnet und 
+        entsprechend die Berechtigungen geprüft.
+      required: false
+      schema:
+        type: string
+      example: COO.1.2300.1.847
+    Bedingungen:
+      name: bedingungen
+      in: query
+      required: false
+      schema:
+        type: string
+      description: |
+        Bedingungen (Suchkriterien, Restriktionen) für die Suche nach Schriftgutobjekten 
+        (Betreffseinheiten, Akten, Vorgänge und Dokumente)
+
+        Die Bedingungen werden als Query-Parameter "bedingungen" als Teil der URL 
+        übertragen (nach dem Fragezeichen, also "/v1/Akten?bedingungen=...").
+        Dadurch können diese Suchen als einfache Strings konfiguriert bzw. im Browser als Bookmark gespeichert
+        werden.
+
+        Der Wert dieses URL-Parameters muss "URL-Encoded" sein (siehe z.B. https://en.wikipedia.org/wiki/Percent-encoding).
+        Diese Kodierung wird in der Regel durch die Client-Frameworks vorgenommen. Nur wenn man z.B. über den Browser
+        manuell eine URL mit Bedingung eingeben will, muss ggf. der Query-Parameter z.B. mit dem Linux-Tool "urlencode"
+        umgewandelt werden.
+
+        Die 'bedingungen' werden als WHERE-Klausel der Fabasoft-Query-Language intepretiert, mit folgenden Abweichungen:
+
+        * Attributreferenzen werden als URI angegeben und nicht mit der Fabasoft-internen kryptischenSchreibweise. Diese URIs
+        sind als Makros der Form "${...}" zu schreiben (zu klammern). Die in den geschweiften Klammern angegebenen URIs
+        können unter dem Endpunkt "/Attributbeschreibungen" zusammen mit Meta-Informationen zu allen verfügbaren Attributen
+        abgerufen werden. Statt ".COOSYSTEM@1.1:objowner" wird also ".${Eigentümer}" geschrieben. Man beachte den notwendigen 
+        Punkt ('.') vor der Attributbenennung, was in der Fabasoft Query Language anzeigt, dass es sich um eine
+        Attributbenennung im Kontext der abgefrakten Objektklasse handelt.
+
+        * Anstelle von COO-Adressen in den WHERE-Bedingungen (z.B. ".${Eigentümer} = 'COO.2150.8800.1.230497'" kan bzw.
+        soll eie andere Art von Makro benutzt werden: "#{...}". Dieses enthält in den geschweiften Klammern nicht die
+        Fabasoft COO-Adresse, sondern die jedem Schnittstellen-Objekt zueigene URI, z.B. "#{/Akten/COO.1.2.3.4}". Damit 
+        wird grundsätzlich nur mit "opaquen" (nicht zu interpretierenden) URIs hantiert und nicht mit Primärschlüsseln
+        oder Objekt-Ids aus dem Zielsystem.
+      example: |
+        ${/Attributbeschreibungen/lhmdfvpublic-fh_attr_auf_Formularebene}="Orangen"
+    aktenId:
+      name: aktenId
+      description: Interne Id der Akte (nicht interpretierbar, "opaque")
+      in: path
+      required: true
+      schema:
+        type: string
+      example: <grmblfix>
+  schemas:
+    EAkteSchnittstelleError:
+      type: object
+      description: |
+        Container für konkrete Fehlermeldungen, die während der Kommunikation von eAkte-Interface zu Fabasoft eGov-Suite auftreten können.
+      required:
+        - easFehlercode
+        - easFehler
+      properties:
+        easFehlercode:
+          type: integer
+          format: int32
+        easFehler:
+          type: string
+        easDetail:
+          type: string
+    AnzahlListenElemente:
+      type: integer
+      description: |
+        Anzahl der Elemente in einer Liste von Ressourcen
+      example: 3
+    URI:
+      type: string
+      description: |
+        Eigene URI einer Ressource (Zeiger auf sich selbst) oder 
+        URI einer referenzierten Ressource.\
+        \
+        URI = "Uniform Resource Locator" (siehe z.B. https://de.wikipedia.org/wiki/Uniform_Resource_Identifier)\
+        \
+        URIs sollen auf Seite des Service-Clients nicht interpretiert und auch nicht konstruiert werden.
+        Sie werden so wie sie in einer vorhergehenden Service-Antwort enthalten waren unverändert 
+        in einer neuen Service-Anfrage verwendet (als Request-URL oder in den Daten als Referenz-URI)
+      example: /v2/Ressourcen/ressourcenId
+    AttributUriUndWert:
+      type: object
+      required:
+        - attributURI
+        - datenTyp
+      properties:
+        attributURI:
+          type: string
+        datenTyp:
+          type: string
+      discriminator:
+        propertyName: datenTyp
+        mapping:
+          Zeichenkette: '#/components/schemas/Attribut_Zeichenkette'
+          Ganzzahl: '#/components/schemas/Attribut_Ganzzahl'
+          Fliesskommazahl: '#/components/schemas/Attribut_Fliesskommazahl'
+          BoolescherWert: '#/components/schemas/Attribut_BoolescherWert'
+          Datum: '#/components/schemas/Attribut_Datum'
+          DatumMitUhrzeit: '#/components/schemas/Attribut_DatumMitUhrzeit'
+          Aufzaehlungstyp: '#/components/schemas/Attribut_Aufzaehlungstyp'
+          Aggregatstyp: '#/components/schemas/Attribut_Aggregatstyp'
+          Base64EncodedContent: '#/components/schemas/Attribut_Base64EncodedContent'
+          UnspezifischeRessourcenURI: '#/components/schemas/Attribut_UnspezifischeRessourcenURI'
+          AktenplaneintragsURI: '#/components/schemas/Attribut_AktenplaneintragsURI'
+          AktenURI: '#/components/schemas/Attribut_AktenURI'
+          VorgangsURI: '#/components/schemas/Attribut_VorgangsURI'
+          DokumentURI: '#/components/schemas/Attribut_DokumentURI'
+          SchriftstueckURI: '#/components/schemas/Attribut_SchriftstueckURI'
+          OrganisationseinheitsURI: '#/components/schemas/Attribut_OrganisationseinheitsURI'
+          BenutzerURI: '#/components/schemas/Attribut_BenutzerURI'
+          SprachenURI: '#/components/schemas/Attribut_SprachenURI'
+          ZugriffsdefinitionsURI: '#/components/schemas/Attribut_ZugriffsdefinitionsURI'
+    Attribut_Zeichenkette:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+    Attribut_Ganzzahl:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: integer
+    Attribut_Fliesskommazahl:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: number
+    Attribut_BoolescherWert:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: boolean
+    Attribut_Datum:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              format: date
+    Attribut_DatumMitUhrzeit:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              format: date-time
+    Attribut_Aufzaehlungstyp:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI zu einer Ressource vom Typ 'AufzaehlungstypElement'
+    Attribut_Aggregatstyp:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: array
+              items:
+                $ref: '#/components/schemas/AttributUriUndWert'
+    Attribut_Base64EncodedContent:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das sind Binärdaten, die Base64-kodiert sind.
+    Attribut_UnspezifischeRessourcenURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf eine Ressource unbekannten Typs
+
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+    Attribut_AktenplaneintragsURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf einen Aktenplaneintrag
+
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+    Attribut_AktenURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf eine Akte
+
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+    Attribut_VorgangsURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf einen Vorgang
+
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+    Attribut_DokumentURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf ein Dokument
+
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+    Attribut_SchriftstueckURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf ein Schriftstück
+
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+    Attribut_OrganisationseinheitsURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf eine Organisationseinheit
+
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+    Attribut_BenutzerURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf einem eAkte-Benutzer
+
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+    Attribut_SprachenURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf eine Sprache
+
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+    Attribut_ZugriffsdefinitionsURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf eine Zugriffsdefinition
+
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+    Akte:
+      type: object
+      description: |
+        Repräsentation einer Akte.\
+        Aufgrund der Konfigurierbarkeit der Attribute (verfahrensabhängige Metadaten, siehe
+        Fabasoft eGov-Suite "Definition von Verfahren") werden diese in einer dynamisch 
+        aufgebauten Liste geführt und nichts als Felder in einer fixen (JSON-) Datenstruktur.
+        Um eine einheitliche Behandlung von Standard- und Custom-Attributen zu ermöglichen, 
+        werden auch die Standard-Attribute in der 'attributListe' zurückgegeben.\
+        \
+        Beachte, dass für alle gespeicherten Akten das Attribut 'eigeneUrl' garantiert 
+        zurückgeliefert wird. Es ist nur deshalb nicht als Pflichtattribut deklariert, damit
+        diese Ressourcendefinition auch für das Anlegen einer neuen Akte verwendet werden
+        kann, wenn noch keine URL vom System vergeben wurde. 
+        \
+        Um die innerhalb einer bestimmten Betreffseinheit verfügbaren Custom-Attribute auf
+        Aktenebene sowie die Standard-Attribute der Akte zu erfahren, kann über den Endpunkt
+        '/v2/Attribute' eine Abfrage (GET-Methode) getätigt werden (s. Spezifikation dieses
+        Endpunktes, in diesem Fall die Verwendung des Filters 'Schriftgutebene=Akte').
+      required:
+        - attributListe
+      properties:
+        eigeneUrl:
+          $ref: '#/components/schemas/URI'
+        attributListe:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributUriUndWert'
+    AktenListeResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        error:
+          $ref: '#/components/schemas/EAkteSchnittstelleError'
+        anzahlAkten:
+          $ref: '#/components/schemas/AnzahlListenElemente'
+        aktenListe:
+          type: array
+          description: Liste von Akten
+          items:
+            $ref: '#/components/schemas/Akte'
+    NoContentResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        error:
+          $ref: '#/components/schemas/EAkteSchnittstelleError'
+    AkteResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        error:
+          $ref: '#/components/schemas/EAkteSchnittstelleError'
+        akte:
+          $ref: '#/components/schemas/Akte'
+    AttributDatenTyp:
+      type: string
+      enum:
+        - Zeichenkette
+        - Ganzzahl
+        - Fliesskommazahl
+        - BoolescherWert
+        - Datum
+        - DatumMitUhrzeit
+        - Aufzaehlungstyp
+        - Base64EncodedContent
+        - Aggregatstyp
+        - UnspezifischeRessourcenURI
+        - AktenplaneintragsURI
+        - AktenURI
+        - VorgangsURI
+        - SchriftstueckURI
+        - OrganisationseinheitsURI
+        - BenutzerURI
+        - SprachenURI
+        - ZugriffsdefinitionsURI
+    AufzaehlungstypElement:
+      type: object
+      description: |
+        beachte, dass Aufzählungswerte im Fachverfahren nur angezeigt und per Schlüssel selektiert werden müssen,
+        jedoch nie der Wert dort erzeugt wird, sondern nur per Schlüssel aus der vorgegebenenWertemenge selektiert wrd
+      properties:
+        schluessel:
+          type: string
+          description: |
+            alphanumerischer Schlüssel, der als Attributwert verwendet wird und den (ggf. komplexen) Aufzählungswert
+            eindeutig identifiziert
+          example: '4711'
+        kurzbezeichnungDesWerts:
+          type: string
+          description: |
+            Kurzbezeichnung des Wertes.\
+            Der Wert kann in der eAkte ein komplexer (zusammengesetzter) Wert sein, also ein Objekt.
+            Für die Selektion reicht aber auf Fachverfahrensseite aus, eine Kurzbezeichnung zu sehen.
+          example: Pizza Napoli
+    Attributbeschreibung:
+      type: object
+      description: beschreibt die Metadaten eines Attributs
+      required:
+        - referenzSchriftgutObjektklasseOderFormular
+        - referenzAttribut
+        - bezeichnung
+        - datentyp
+        - pflichtFeld
+        - maximaleTextLaenge
+      properties:
+        eigeneUrl:
+          $ref: '#/components/schemas/URI'
+        referenzSchriftgutObjektklasseOderFormular:
+          type: string
+          description: |
+            Referenz auf dir Stelle, wo das Attribut definiert bzw. zugeordnet wurde.
+            Entweder eines aus { "Aktenplaneintrag", "Akte", "Vorgang", "Dokument", Schriftstück" } oder 
+            die COO-Adresse eines Formulars ("category" in Fabasoft-Terminologie) aus einer Definition für Verfahren
+          example: Akte
+        referenzAttribut:
+          type: string
+          description: |
+            Referenz des Attributs in der eGov-Suite
+          example: COOELAK@1.1001:fielouobj
+        bezeichnung:
+          type: string
+          description: |
+            Deutsche Bezeichnung des Attributs
+          example: Aktenführenden Organisationseinheit
+        beschreibung:
+          type: string
+          description: |
+            Beschreibung des Attributs
+          example: Beschreibung der Semantik des Attributs (umfänglich, ggf. mehrzeilig).
+        datentyp:
+          $ref: '#/components/schemas/AttributDatenTyp'
+        pflichtFeld:
+          type: boolean
+          description: notwendiges Attribut
+        maximaleTextLaenge:
+          type: integer
+          default: 0
+          description: |
+            zulässige Länge bei String-Datentypen (in UTF-8 Zeichen, nicht in Bytes!)
+        aufzaehlungswerte:
+          type: array
+          items:
+            $ref: '#/components/schemas/AufzaehlungstypElement'
+    AttributbeschreibungenListeResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        error:
+          $ref: '#/components/schemas/EAkteSchnittstelleError'
+        anzahlAttributbeschreibungen:
+          $ref: '#/components/schemas/AnzahlListenElemente'
+        attributbeschreibungenListe:
+          type: array
+          description: |
+            List von Attributbeschreibungen
+          items:
+            $ref: '#/components/schemas/Attributbeschreibung'
+    DefinitionFuerVerfahren:
+      type: object
+      description: beschreibt die Metadaten einer Definition fuer Verfahren
+      required:
+        - name
+      properties:
+        eigeneUrl:
+          $ref: '#/components/schemas/URI'
+        name:
+          type: string
+          description: |
+            xxx
+          example: Akte
+        istEntwurf:
+          type: boolean
+          description: |
+            kennzeichnet, ob es sich um die Entwurtfsversion des Formulars handelt
+          example: false
+        attributURIs:
+          type: array
+          items:
+            type: string
+    DefinitionenFuerVerfahrenListeResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        error:
+          $ref: '#/components/schemas/EAkteSchnittstelleError'
+        anzahlDefinitionenFuerVerfahren:
+          $ref: '#/components/schemas/AnzahlListenElemente'
+        definitionenFuerVerfahrenListe:
+          type: array
+          description: |
+            List von Verfahrensdefinitionen
+          items:
+            $ref: '#/components/schemas/DefinitionFuerVerfahren'
+  headers:
+    Location:
+      description: URL der neu angelegten Ressource
+      schema:
+        type: string
+      example: /v2/Akten/COO.1.2.3.4
