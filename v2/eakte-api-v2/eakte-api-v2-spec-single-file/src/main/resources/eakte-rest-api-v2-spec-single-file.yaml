@@ -5,11 +5,11 @@ info:
   version: 2.0.0
   contact:
     name: Competence Center eAkte
-    url: https://it-at-m.github.io/eakte-schnittstelle
+    url: https://it-at-m.github.io/eakte-api
     email: schnittstelle.eakte@muenchen.de
   license:
-    name: MIT
-    url: https://opensource.org/license/mit
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
 servers:
   - url: http://localhost:8080
 security:
