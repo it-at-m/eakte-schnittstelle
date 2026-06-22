@@ -11,7 +11,6 @@ import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.ObjectFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.muenchen.dms.common.model.Objektreferenz;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.LongStream;
@@ -92,7 +91,6 @@ class CreateIncomingResponseProcessorTest {
 
   private <T> List<T> erzeugeObjektReferenzen(
       BiFunction<String, String, T> objektReferenzFunktion) {
-    List<Objektreferenz> result = new ArrayList<>();
     return LongStream.rangeClosed(1, 3)
         .mapToObj(i -> objektReferenzFunktion.apply(erstelleObjektId(i), getDokumentName(i)))
         .toList();
