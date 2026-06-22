@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.CreateOutgoingGIResponse;
-import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.ObjectFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import org.apache.camel.CamelContext;
@@ -66,8 +65,6 @@ class CreateOutgoingResponseProcessorTest {
   }
 
   private CreateOutgoingGIResponse erzeugeDmsAntwortOhneFehler() {
-    ObjectFactory objectFactory = new ObjectFactory();
-
     CreateOutgoingGIResponse response = new CreateOutgoingGIResponse();
     response.setStatus(NO_ERROR_CODE);
     response.setErrormessage(null);
