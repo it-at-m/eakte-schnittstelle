@@ -1,4 +1,4 @@
-package de.muenchen.dms.schriftstueck.eingang_lesen;
+package de.muenchen.dms.schriftstueck.eingang.lesen;
 
 import static de.muenchen.dms.common.TestBeispielErzeuger.erzeugeBeispielListMetadatareferenz;
 import static de.muenchen.dms.common.TestBeispielErzeuger.erzeugeBeispielMetadatareferenz;
@@ -10,8 +10,6 @@ import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.ArrayOfLHMBAI151700GIMet
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.ReadIncomingGIResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.muenchen.dms.common.model.MetadataReferenz;
-import de.muenchen.dms.schriftstueck.eingang.lesen.ReadIncomingAntwortDTO;
-import de.muenchen.dms.schriftstueck.eingang.lesen.ReadIncomingResponseProcessor;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;

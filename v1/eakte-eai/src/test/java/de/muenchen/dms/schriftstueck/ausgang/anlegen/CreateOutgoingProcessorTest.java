@@ -17,7 +17,6 @@ import de.muenchen.dms.test.TestDateianhaenge;
 import de.muenchen.dms.test.TestExchanges;
 import jakarta.activation.DataHandler;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import javax.xml.datatype.DatatypeConfigurationException;
 import org.apache.camel.CamelContext;
@@ -116,12 +115,6 @@ class CreateOutgoingProcessorTest {
                """)
   void testeSonderzeichen() throws Exception {
     CreateOutgoingAnfrageDTO dto = erzeugeRestDatenobjekt();
-    Map<String, DataHandler> anhaenge = new HashMap<>();
-
-    anhaenge.put(
-        DATEINAME_MIT_SONDERZEICHEN,
-        TestDateianhaenge.erzeuge(DATEINAME_MIT_SONDERZEICHEN, DATEINAME_MIT_SONDERZEICHEN));
-
     Exchange ex = prozessorAusfuehren(dto, TestDateianhaenge.erzeugeMehrere(2), true);
 
     //TODO: outsource this block to own method
