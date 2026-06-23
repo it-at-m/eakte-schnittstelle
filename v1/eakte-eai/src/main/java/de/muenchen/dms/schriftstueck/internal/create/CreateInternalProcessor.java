@@ -3,18 +3,25 @@ package de.muenchen.dms.schriftstueck.internal.create;
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.ArrayOfLHMBAI151700GIAttachmentType;
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.ArrayOfLHMBAI151700GIUserFormsType;
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.CreateInternalGI;
+import de.muenchen.dms.common.mapper.FieldValueMappingService;
 import de.muenchen.dms.common.processor.AbstractDMSSoapProcessor;
 import de.muenchen.dms.common.util.JacksonData;
-import javax.xml.datatype.DatatypeConfigurationException;
-
 import de.muenchen.dms.common.util.Umwandlungen;
+import javax.xml.datatype.DatatypeConfigurationException;
 import org.apache.camel.Exchange;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CreateInternalProcessor extends AbstractDMSSoapProcessor {
 
-  @Override
+  private final FieldValueMappingService mappingService;
+
+  public CreateInternalProcessor(FieldValueMappingService mappingService) {
+      this.mappingService = mappingService;
+  }
+
+
+    @Override
   public void process(Exchange exchange) throws Exception {
     CreateInternalBodyParams dto = exchange.getIn().getBody(CreateInternalBodyParams.class);
 
@@ -45,6 +52,9 @@ public class CreateInternalProcessor extends AbstractDMSSoapProcessor {
       final ArrayOfLHMBAI151700GIAttachmentType giAttachmentType,
       final ArrayOfLHMBAI151700GIUserFormsType userFormsType)
       throws DatatypeConfigurationException {
+    String mappedAccdef = mappingService.map(
+            "accdef", anfrage.getAccdef()
+    );
     CreateInternalGI createInternalGI = objectFactory.createCreateInternalGI();
     createInternalGI.setUserlogin(userlogin);
     createInternalGI.setJobposition(jobposition);
@@ -52,7 +62,7 @@ public class CreateInternalProcessor extends AbstractDMSSoapProcessor {
     createInternalGI.setBusinessapp(businessapp);
     createInternalGI.setReferrednumber(anfrage.getReferrednumber());
     createInternalGI.setShortname(anfrage.getShortname());
-    createInternalGI.setAccdef(anfrage.getAccdef());
+    createInternalGI.setAccdef(mappedAccdef);
     createInternalGI.setDeliverydate(JacksonData.toXMLGregorianCalendar(anfrage.getDeliverydate()));
     createInternalGI.setFilesubj(anfrage.getFilesubj());
     createInternalGI.setSubfiletype(anfrage.getSubfiletype());

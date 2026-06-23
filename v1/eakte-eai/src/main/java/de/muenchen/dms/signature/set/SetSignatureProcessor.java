@@ -2,6 +2,7 @@ package de.muenchen.dms.signature.set;
 
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.SetSignatureObjectGI;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import de.muenchen.dms.common.mapper.FieldValueMappingService;
 import de.muenchen.dms.common.processor.AbstractDMSSoapProcessor;
 import de.muenchen.dms.common.route.RouteConstants;
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -10,7 +11,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SetSignatureProcessor extends AbstractDMSSoapProcessor {
-  @Override
+
+  private final FieldValueMappingService mappingService;
+
+  public SetSignatureProcessor(FieldValueMappingService mappingService) {
+      this.mappingService = mappingService;
+  }
+
+    @Override
   public void process(Exchange exchange)
       throws JsonProcessingException, DatatypeConfigurationException {
     final String objaddress =
@@ -36,10 +44,11 @@ public class SetSignatureProcessor extends AbstractDMSSoapProcessor {
       final String organisationseinheit,
       final String rolle,
       final String anwendung) {
+    String mappedSignatureType = mappingService.map("signaturetype", anfrage.getSignaturetype());
     final SetSignatureObjectGI setSignature = objectFactory.createSetSignatureObjectGI();
     setSignature.setUserlogin(nutzer);
     setSignature.setObjaddress(objaddress);
-    setSignature.setSignaturetype(anfrage.getSignaturetype());
+    setSignature.setSignaturetype(mappedSignatureType);
     setSignature.setRemark(anfrage.getRemark());
     setSignature.setJobposition(rolle);
     setSignature.setJoboe(organisationseinheit);

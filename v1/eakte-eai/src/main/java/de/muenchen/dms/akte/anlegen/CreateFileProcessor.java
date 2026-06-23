@@ -7,18 +7,25 @@ package de.muenchen.dms.akte.anlegen;
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.ArrayOfLHMBAI151700GIUserFormsType;
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.CreateFileGI;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import de.muenchen.dms.common.mapper.FieldValueMappingService;
 import de.muenchen.dms.common.processor.AbstractDMSSoapProcessor;
 import de.muenchen.dms.common.util.JacksonData;
-import javax.xml.datatype.DatatypeConfigurationException;
-
 import de.muenchen.dms.common.util.Umwandlungen;
+import javax.xml.datatype.DatatypeConfigurationException;
 import org.apache.camel.Exchange;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CreateFileProcessor extends AbstractDMSSoapProcessor {
 
-  @Override
+  private final FieldValueMappingService mappingService;
+
+    public CreateFileProcessor(FieldValueMappingService mappingService) {
+        this.mappingService = mappingService;
+    }
+
+
+    @Override
   public void process(Exchange exchange)
       throws JsonProcessingException, DatatypeConfigurationException {
     final CreateFileDTO anfrage = exchange.getIn().getBody(CreateFileDTO.class);
@@ -46,16 +53,22 @@ public class CreateFileProcessor extends AbstractDMSSoapProcessor {
       final String anwendung,
       final ArrayOfLHMBAI151700GIUserFormsType userFormsType)
       throws DatatypeConfigurationException {
+    String mappedAccdef = mappingService.map(
+            "accdef", anfrage.getAccdef()
+    );
+    String mappedProcedureaccdef = mappingService.map(
+            "accdef", anfrage.getProcedureaccdef()
+    );
     final CreateFileGI createFileGI = objectFactory.createCreateFileGI();
     createFileGI.setUserlogin(nutzer);
     createFileGI.setBusinessapp(anwendung);
     createFileGI.setApentry(anfrage.getApentry());
     createFileGI.setShortname(anfrage.getShortname());
     createFileGI.setFilesubj(anfrage.getFilesubj());
-    createFileGI.setAccdef(anfrage.getAccdef());
+    createFileGI.setAccdef(mappedAccdef);
     createFileGI.setObjterms(anfrage.getObjterms());
     createFileGI.setFileouobj(anfrage.getFileouobj());
-    createFileGI.setProcedureaccdef(anfrage.getProcedureaccdef());
+    createFileGI.setProcedureaccdef(mappedProcedureaccdef);
     createFileGI.setFileruntimefrom(
         JacksonData.toXMLGregorianCalendar(anfrage.getFileruntimefrom()));
     createFileGI.setFileruntimetill(
@@ -64,7 +77,6 @@ public class CreateFileProcessor extends AbstractDMSSoapProcessor {
     createFileGI.setJobposition(rolle);
     createFileGI.setDefinition(anfrage.getDefinition());
     createFileGI.setUserformsdata(userFormsType);
-
     return createFileGI;
   }
 }

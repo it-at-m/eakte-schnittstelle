@@ -7,18 +7,24 @@ package de.muenchen.dms.vorgang.anlegen;
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.ArrayOfLHMBAI151700GIUserFormsType;
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.CreateProcedureGI;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import de.muenchen.dms.common.mapper.FieldValueMappingService;
 import de.muenchen.dms.common.processor.AbstractDMSSoapProcessor;
 import de.muenchen.dms.common.util.JacksonData;
-import javax.xml.datatype.DatatypeConfigurationException;
-
 import de.muenchen.dms.common.util.Umwandlungen;
+import javax.xml.datatype.DatatypeConfigurationException;
 import org.apache.camel.Exchange;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CreateProcedureProcessor extends AbstractDMSSoapProcessor {
 
-  @Override
+  private final FieldValueMappingService mappingService;
+
+  public CreateProcedureProcessor(FieldValueMappingService mappingService) {
+      this.mappingService = mappingService;
+  }
+
+    @Override
   public void process(Exchange exchange)
       throws JsonProcessingException, DatatypeConfigurationException {
     final CreateProcedureDTO anfrage = exchange.getIn().getBody(CreateProcedureDTO.class);
@@ -46,6 +52,9 @@ public class CreateProcedureProcessor extends AbstractDMSSoapProcessor {
       final String anwendung,
       final ArrayOfLHMBAI151700GIUserFormsType userFormsType)
       throws DatatypeConfigurationException {
+    String mappedAccdef = mappingService.map(
+            "accdef", anfrage.getAccdef()
+    );
     final CreateProcedureGI createProcedureGI = objectFactory.createCreateProcedureGI();
     createProcedureGI.setUserlogin(userlogin);
     createProcedureGI.setBusinessapp(anwendung);
@@ -57,7 +66,7 @@ public class CreateProcedureProcessor extends AbstractDMSSoapProcessor {
     createProcedureGI.setJobposition(jobposition);
     createProcedureGI.setFiletype(anfrage.getFiletype());
     createProcedureGI.setObjterms(anfrage.getObjterms());
-    createProcedureGI.setAccdef(anfrage.getAccdef());
+    createProcedureGI.setAccdef(mappedAccdef);
     createProcedureGI.setFileruntimefrom(
         JacksonData.toXMLGregorianCalendar(anfrage.getFileruntimefrom()));
     createProcedureGI.setFileruntimetill(

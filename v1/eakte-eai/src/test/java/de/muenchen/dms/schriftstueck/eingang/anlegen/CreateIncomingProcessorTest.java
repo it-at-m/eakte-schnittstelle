@@ -1,7 +1,7 @@
-/*
- * Copyright (c): it@M - Dienstleister für Informations- und Telekommunikationstechnik
+/* * Copyright (c): it@M - Dienstleister für Informations- und Telekommunikationstechnik
  * der Landeshauptstadt München, 2023
  */
+
 package de.muenchen.dms.schriftstueck.eingang.anlegen;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,26 +25,31 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-/**
+/*
+*
  * Der Prozessor wandelt das Datenobjekt, dass aus dem REST-Call befüllt wurde in ein Datenobjekt
  * für einen SOAP-Call an das DMS um.
  *
  * @see CreateIncomingBasisAnfrageDTO
  * @see CreateIncomingGI
- */
+
+*/
+
+@SpringBootTest
 @DisplayName(
     "Die Testklasse prüft die Verarbeitung von REST-Anfragen zur Anlage von Eingangsdokumenten zu einem Vorgang")
 class CreateIncomingProcessorTest {
   static final String DATEINAME_MIT_SONDERZEICHEN = "!@#$%^&*()_+|}{[],><?-~.txt";
   static final String BEISPIEL_VORGANG_COOID = "COO.1";
 
+  @Autowired
   private CreateIncomingBasisProcessor processor;
 
   @BeforeEach
-  void setUp() {
-    processor = new CreateIncomingBasisProcessor();
-  }
+  void setUp() {}
 
   @Test
   @DisplayName(
@@ -55,7 +60,14 @@ class CreateIncomingProcessorTest {
   void testeKonvertierungInSOAPObjektAlleWerteVorhanden() throws Exception {
     CreateIncomingBasisAnfrageDTO dto = erzeugeRestDatenobjekt();
     Exchange ex = prozessorAusfuehren(dto, TestDateianhaenge.erzeugeMehrere(2));
-    stelleDatentransferAufSoapObjektSicher(dto, 2, ex.getIn().getBody());
+
+    //TODO: make own method for that Assertion
+    if (ex.getIn().getBody() instanceof CreateIncomingGI gi) {
+      stelleDatentransferAufSoapObjektSicher(dto, 2, gi);
+      assertThat(gi.getAccdef(), equalTo("Eigener Mandant"));
+    } else {
+      Assertions.fail();
+    }
   }
 
   @Test
@@ -101,7 +113,14 @@ class CreateIncomingProcessorTest {
         DATEINAME_MIT_SONDERZEICHEN, TestDateianhaenge.erzeuge(DATEINAME_MIT_SONDERZEICHEN, ""));
 
     Exchange ex = prozessorAusfuehren(dto, anhaenge);
-    stelleDatentransferAufSoapObjektSicher(dto, 1, ex.getIn().getBody());
+
+    //TODO: outsource this block to own method
+    if (ex.getIn().getBody() instanceof CreateIncomingGI gi) {
+      stelleDatentransferAufSoapObjektSicher(dto, 1, gi);
+      assertThat(gi.getAccdef(), equalTo("Eigener Mandant"));
+    } else {
+      Assertions.fail();
+    }
   }
 
   private Exchange prozessorAusfuehren(
@@ -126,7 +145,6 @@ class CreateIncomingProcessorTest {
       assertThat(gi.getUserlogin(), equalTo(TestExchanges.getNutzer()));
       assertThat(gi.getBusinessapp(), equalTo(TestExchanges.getAnwendung()));
       assertThat(gi.getShortname(), equalTo(dto.getShortname()));
-      assertThat(gi.getAccdef(), equalTo(dto.getAccdef()));
       assertThat(gi.getForeignnr(), equalTo(dto.getForeignnr()));
       assertThat(gi.getFilesubj(), equalTo(dto.getFilesubj()));
       assertThat(gi.getDocumentremarks(), equalTo(dto.getDocumentremarks()));

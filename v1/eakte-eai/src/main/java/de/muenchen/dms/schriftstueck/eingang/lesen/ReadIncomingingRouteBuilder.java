@@ -1,32 +1,30 @@
-package de.muenchen.dms.disposalschedule.aendern;
+package de.muenchen.dms.schriftstueck.eingang.lesen;
 
 import static de.muenchen.dms.common.route.RouteConstants.BASIC_AUTH_SECURITY_DEFINITION;
-import static de.muenchen.dms.common.route.RouteConstants.DIRECT_DISPOSAL_SCHEDULE_DATE;
 import static de.muenchen.dms.common.route.RouteConstants.PATH_PARAM_OBJADDRESS;
-import static de.muenchen.dms.common.route.RouteConstants.ROUTE_ID_DISPOSAL_SCHEDULE_DATE;
+import static de.muenchen.dms.common.route.RouteConstants.ROUTE_ID_READ_INCOMING;
 
 import de.muenchen.dms.common.route.DmsRouteBuilder;
 import de.muenchen.dms.common.route.RestOperationDefinitionFactory;
+import de.muenchen.dms.common.route.RouteConstants;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SetDisposalScheduleDateRouteBuilder extends DmsRouteBuilder {
+public class ReadIncomingingRouteBuilder extends DmsRouteBuilder {
   @Override
   public void route() throws Exception {
-
-    rest("/disposalScheduleDates")
-        .put("/{" + PATH_PARAM_OBJADDRESS + "}")
-        .id(ROUTE_ID_DISPOSAL_SCHEDULE_DATE)
-        .description("Aufbewahrungsdatum setzen")
+    rest("/incomings")
+        .get("/{" + PATH_PARAM_OBJADDRESS + "}")
+        .id(ROUTE_ID_READ_INCOMING)
+        .description("Eingang lesen")
         .security(BASIC_AUTH_SECURITY_DEFINITION)
         .consumes(MediaType.APPLICATION_JSON_VALUE)
         .produces(MediaType.APPLICATION_JSON_VALUE)
-        .type(SetDisposalScheduleDateAnfrageDTO.class)
         .params(RestOperationDefinitionFactory.createAuthentificationHeader())
         .responseMessages(
             RestOperationDefinitionFactory.createBaseResponseMsgDefinition(
-                SetDisposalScheduleDateAntwortDTO.class))
-        .to(DIRECT_DISPOSAL_SCHEDULE_DATE);
+                ReadIncomingAntwortDTO.class))
+        .to(RouteConstants.DIRECT_READ_INCOMING);
   }
 }

@@ -14,16 +14,19 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
+@DisplayName("Test the Request Processor for CreateSubjectAreaUnit")
 class CreateSubjectAreaUnitProcessorTest {
   static final String UEBERGEORDNETEN_AKTENPLANEINTRAGS_COOID = "COO.1.2302.1.8";
 
-  private CreateSubjectAreaUnitProcessor processor;
+  @Autowired
+  CreateSubjectAreaUnitProcessor processor;
 
   @BeforeEach
-  void setUp() {
-    processor = new CreateSubjectAreaUnitProcessor();
-  }
+  void setUp() {}
 
   @Test
   @DisplayName(
