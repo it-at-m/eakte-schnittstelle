@@ -2,6 +2,8 @@ package de.muenchen.itm.eakte.schnittstelle.identity_propagation;
 
 import lombok.Builder;
 import lombok.Getter;
+
+import java.text.ParseException;
 import java.util.Optional;
 import java.util.Base64;
 import com.nimbusds.jwt.SignedJWT;
@@ -48,30 +50,37 @@ public class RequestContext {
   }
 
   public Optional<AuthCredentials> getAuthCredentials() {
-    Optional<AuthCredentials> bearerAuthCredentials = authHeader.filter(h -> h.startsWith(BearerPrefix)).map(this::extractBearerAuthCredentails);
+    Optional<AuthCredentials> bearerAuthCredentials = authHeader
+      .filter(h -> h.startsWith(BearerPrefix))
+      .map(this::extractBearerAuthCredentials);
     if (bearerAuthCredentials.isPresent()) {
       return bearerAuthCredentials;
     } else {
-      return authHeader.filter(h -> h.startsWith(BasicPrefix)).map(this::extractBasicAuthCredentials);
+      return authHeader
+        .filter(h -> h.startsWith(BasicPrefix))
+        .map(this::extractBasicAuthCredentials);
     }
   }
 
-  private BearerAuthCredentials extractBearerAuthCredentails(String bearerAuthHeader) {
-    String headerValue = bearerAuthHeader.substring(BearerPrefix.length());
-    // separate parts of the JWT
-    String[] parts = headerValue.split("\\.");
-    if (parts.length != 3) {
-      throw new RuntimeException("JWT corrupted, parts count != 3!");
+  private BearerAuthCredentials extractBearerAuthCredentials(String bearerAuthHeader) {
+    if (bearerAuthHeader == null || !bearerAuthHeader.startsWith(BearerPrefix)) {
+      throw new IllegalArgumentException("Missing or invalid Authorization Bearer header");
     }
-    // Decode payload
-    String payloadJson = new String(Base64.getUrlDecoder().decode(parts[1]));
-    // Standard claim
+
+    String token = bearerAuthHeader.substring(BearerPrefix.length()).trim();
+
     try {
-      SignedJWT jwt = SignedJWT.parse(payloadJson);
-      return new BearerAuthCredentials(jwt.getJWTClaimsSet().getSubject(), jwt.getParsedString()); // "sub"
+      SignedJWT jwt = SignedJWT.parse(token);
+
+      String subject = jwt.getJWTClaimsSet().getSubject();
+      if (subject == null || subject.isBlank()) {
+        throw new IllegalArgumentException("JWT does not contain subject claim");
+      }
+
+      return new BearerAuthCredentials(subject, token);
     }
-    catch (Exception exc) {
-      throw new RuntimeException("JWT corrupted, parse error!", exc);
+    catch (ParseException exc) {
+      throw new IllegalArgumentException("Invalid JWT format", exc);
     }
   }
 
