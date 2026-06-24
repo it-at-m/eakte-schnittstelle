@@ -21,6 +21,9 @@ public class ReadUserFormsDataResponseProcessor extends AbstractResponseProcesso
 
   private ReadUserFormsDataResponseDTO wandleReadUserFormsDataGIToReadUserFormsDataResponseDTO(
       ReadUserFormsDataGIResponse response) {
-    return ReadUserFormsDataResponseDTO.builder().value(response.getValue()).build();
+    return ReadUserFormsDataResponseDTO.builder()
+            .value(response.getValue())
+            .enuminteger(response.getEnuminteger())
+            .enumreference(response.getEnumreference()).build();
   }
 }

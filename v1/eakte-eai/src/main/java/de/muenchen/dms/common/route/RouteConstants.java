@@ -326,19 +326,19 @@ public final class RouteConstants {
   public static final String ROUTE_ID_UPDATE_USER_FORMS_DATA = "UpdateUserFormsData";
 
   public static final String DIRECT_UPDATE_USER_FORMS_DATA =
-          DIRECT_PREFIX + ROUTE_ID_UPDATE_USER_FORMS_DATA;
+      DIRECT_PREFIX + ROUTE_ID_UPDATE_USER_FORMS_DATA;
 
   public static final String ROUTE_ID_UPDATE_USER_FORMS_DATA_VERARBEITUNG =
-          "UpdateUserFormsDataVerarbeitung";
+      "UpdateUserFormsDataVerarbeitung";
 
   /***************************************************************************************************
    * ReadUserFormsData
-  ***************************************************************************************************/
+   ***************************************************************************************************/
 
   public static final String ROUTE_ID_READ_USER_FORMS_DATA = "ReadUserFormsData";
 
   public static final String DIRECT_READ_USER_FORMS_DATA =
-          DIRECT_PREFIX + ROUTE_ID_READ_USER_FORMS_DATA;
+      DIRECT_PREFIX + ROUTE_ID_READ_USER_FORMS_DATA;
 
   /***************************************************************************************************
    * CreateContentObject
@@ -370,6 +370,14 @@ public final class RouteConstants {
   public static final String ROUTE_ID_CREATE_INCOMING_VERARBEITUNG = "CreateIncomingVerarbeitung";
 
   public static final String DIRECT_CREATE_INCOMING = DIRECT_PREFIX + ROUTE_ID_CREATE_INCOMING;
+
+  /***************************************************************************************************
+   *ReadIncoming
+   **************************************************************************************************/
+
+  public static final String ROUTE_ID_READ_INCOMING = "ReadIncoming";
+
+  public static final String DIRECT_READ_INCOMING = DIRECT_PREFIX + ROUTE_ID_READ_INCOMING;
 
   /***************************************************************************************************
    * UpdateIncoming

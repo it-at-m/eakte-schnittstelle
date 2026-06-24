@@ -127,3 +127,24 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: 1m
 
+eakte:
+  mappings:
+    accdef:
+      "Zugriffsdefinition_für_Schriftgutobjekte_(allgemein_bearbeitbar)": 'Eigene Organisationseinheit und Linienorganisation'
+      'Zugriffsdefinition_für_Schriftgutobjekte_(allgemein_lesbar)': 'Eigener Mandant'
+      'Zugriffsdefinition_für_Schriftgutobjekte_der_Organisation_(nicht_veränderbar)': 'Eigene Organisationseinheit und Vorgesetzte (ohne Zentralregistratur)'
+      'Zugriffsdefinition_für_Schriftgutobjekte_der_Organisationseinheit': 'Eigene Organisationseinheit und Vorgesetzte (ohne Zentralregistratur)'
+      'Zugriffsdefinition_für_Schriftgutobjekte_der_Organisationseinheit_und_Zentralregistratur': 'Eigene Organisationseinheit und Vorgesetzte'
+      'Zugriffsdefinition_für_Schriftgutobjekte_des_Eigentümers': 'Persönlich und Vorgesetzte'
+      'Zugriffsdefinition_für_Schriftgutobjekte_des_Eigentümers_(ohne_Partner)': 'Persönlich'
+      'Zugriffsdefinition_für_Verschlusssachen': 'Eigene Organisationseinheit und Vorgesetzte (ohne Zentralregistratur)'
+    signaturetype:
+      'COO.15.1700.1.64522': 'COO.15.1400.1.28131'
+      'COO.15.1700.1.64525': 'COO.1.1.1.7064'
+      'COO.15.1700.1.175929': 'COO.15.1001.1.100629'
+      'COO.15.1700.1.175898': 'COO.15.1001.1.100629'
+      'COO.15.1700.1.64521': 'COO.15.1400.1.28127'
+      'COO.15.1700.1.64519': 'COO.15.1400.1.28126'
+      'COO.15.1700.1.64520': 'COO.15.1400.1.28130'
+
+

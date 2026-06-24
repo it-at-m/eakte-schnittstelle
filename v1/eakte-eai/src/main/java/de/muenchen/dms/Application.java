@@ -25,6 +25,7 @@ package de.muenchen.dms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 /**
  * Spring boot - Anwendung
@@ -32,6 +33,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author ext.dl.wenger
  */
 @SpringBootApplication
+@ConfigurationPropertiesScan
 public class Application {
   /**
    * Einstiegspunkt für die Spring-Boot-Anwendung

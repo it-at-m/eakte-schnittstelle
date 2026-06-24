@@ -1,7 +1,7 @@
-/*
- * Copyright (c): it@M - Dienstleister für Informations- und Telekommunikationstechnik
+/* * Copyright (c): it@M - Dienstleister für Informations- und Telekommunikationstechnik
  * der Landeshauptstadt München, 2023
  */
+
 package de.muenchen.dms.vorgang.anlegen;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,39 +18,52 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@DisplayName("Diese Testklasse prüft die Entgegennahme von REST-Anfragen zur Anlage von Vorgängen")
+@SpringBootTest
+@DisplayName("CreateProcedureProcessor TEST")
 class CreateProcedureProcessorTest {
 
+  @Autowired
   private CreateProcedureProcessor processor;
 
   @BeforeEach
-  void setUp() {
-    processor = new CreateProcedureProcessor();
-  }
+  void setUp() {}
 
   @Test
   @DisplayName(
       """
-        Prüfe, ob ein gültiges, vollständig gefülltes Rest-Datenobjekt in ein Datenobjekt
-        für einen SOAP-Call ohne Fehler umgewandelt werden kann.
-        """)
+           Prüfe, ob ein gültiges, vollständig gefülltes Rest-Datenobjekt in ein Datenobjekt
+           für einen SOAP-Call ohne Fehler umgewandelt werden kann.
+           """)
   void testeKonvertierungInSOAPObjektAlleWerteVorhanden() throws Exception {
     CreateProcedureDTO dto = TestCreateProcedureBeispiel.erzeugeFehlerlosMitUmlauten();
     Exchange ex = prozessorAusfuehren(dto);
-    stelleDatentransferAufSoapObjektSicher(dto, ex.getIn().getBody());
+
+    if (ex.getIn().getBody() instanceof CreateProcedureGI gi) {
+      stelleDatentransferAufSoapObjektSicher(dto, gi);
+      assertThat(gi.getAccdef(), equalTo("Eigener Mandant"));
+    } else {
+      Assertions.fail();
+    }
   }
 
   @Test
   @DisplayName(
       """
-            Prüfe, ob ein gültiges, nur mit den nötigsten Felder belegtes Rest-Datenobjekt in
-            ein SOAP-Objekt umgewandelt werden kann.
-            """)
+               Prüfe, ob ein gültiges, nur mit den nötigsten Felder belegtes Rest-Datenobjekt in
+               ein SOAP-Objekt umgewandelt werden kann.
+               """)
   void testeKonvertierungInSOAPObjektOptionaleWerteNull() throws Exception {
     CreateProcedureDTO dto = new CreateProcedureDTO();
     Exchange ex = prozessorAusfuehren(dto);
-    stelleDatentransferAufSoapObjektSicher(dto, ex.getIn().getBody());
+    if (ex.getIn().getBody() instanceof CreateProcedureGI gi) {
+      stelleDatentransferAufSoapObjektSicher(dto, gi);
+      assertThat(gi.getAccdef(), equalTo(null));
+    } else {
+      Assertions.fail();
+    }
   }
 
   private Exchange prozessorAusfuehren(CreateProcedureDTO dto) throws Exception {
@@ -70,7 +83,6 @@ class CreateProcedureProcessorTest {
       assertThat(gi.getShortname(), equalTo(dto.getShortname()));
       assertThat(gi.getProcremark(), equalTo(dto.getProcremark()));
       assertThat(gi.getFilesubj(), equalTo(dto.getFilesubj()));
-      assertThat(gi.getAccdef(), equalTo(dto.getAccdef()));
       assertThat(gi.getObjterms(), equalTo(dto.getObjterms()));
       assertThat(
           gi.getFileruntimefrom(),
