@@ -35,6 +35,13 @@ const vitepressConfig = defineConfig({
           { text: "Swagger-UI", link: "/v2/swagger-ui" },
         ],
       },
+      {
+        text: "Development",
+        items: [
+          { text: "Index", link: "/dev" },
+          { text: "ADRs", link: "/dev/adr" },
+        ],
+      },
     ],
     sidebar: [
       {
@@ -49,6 +56,11 @@ const vitepressConfig = defineConfig({
         text: "V2",
         link: "/v2",
         items: [{ text: "Swagger-UI", link: "/v2/swagger-ui" }],
+      },
+      {
+        text: "Development",
+        link: "/dev",
+        items: [{ text: "ADRs", link: "/dev/adr" }],
       },
     ],
     socialLinks: [
