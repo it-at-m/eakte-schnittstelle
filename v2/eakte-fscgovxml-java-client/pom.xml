@@ -8,6 +8,14 @@
   <artifactId>eakte-fscgovxml-java-client</artifactId>
   <version>2.0.1-SNAPSHOT</version>
 
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
   <properties>
     <java.version>21</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,7 +27,7 @@
     <dependency>
       <groupId>com.sun.xml.ws</groupId>
       <artifactId>jaxws-rt</artifactId>
-      <version>4.0.0</version>
+      <version>4.0.5</version>
     </dependency>
 
   </dependencies>
