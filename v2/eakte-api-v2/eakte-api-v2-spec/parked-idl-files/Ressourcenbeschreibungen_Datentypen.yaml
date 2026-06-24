@@ -1,0 +1,36 @@
+components:
+
+  schemas:
+
+    Ressourcenbeschreibung:
+      type: object
+      description: |
+        Ressourcenbeschreibung.
+      required:
+        - ressourcenURI
+        - name
+        - beschreibung
+      properties:
+        ressourcenURI:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/URI'
+        name:
+          type: string
+        beschreibung:
+          type: string
+
+    RessourcenbeschreibungenListe:
+      type: array
+      description: Liste von Ressourcenbeschreibungen
+      items:
+        $ref: 'Ressourcenbeschreibungen_Datentypen.yaml#/components/schemas/Ressourcenbeschreibung'
+
+    RessourcenbeschreibungenListeWrapper:
+      type: object
+      required:
+        - anzahlRessourcenbeschreibungen
+        - ressourcenbeschreibungenListe
+      properties:
+        anzahlRessourcenbeschreibungen:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/AnzahlListenElemente'
+        ressourcenbeschreibungenListe:
+          $ref: 'Ressourcenbeschreibungen_Datentypen.yaml#/components/schemas/RessourcenbeschreibungenListe'

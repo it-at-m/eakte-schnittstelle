@@ -1,0 +1,43 @@
+
+get:
+  tags:
+    - Attributbeschreibungen
+  summary: Attribut-Metadaten abrufen
+  description: |
+    Mit diesem Aufruf können die verwendbaren Attribute abgerufen werden.\
+    \
+    Diese Metadaten enthalten auch Referenzen auf den Kontext der Attribute, also ob es sich um ein Standard-Metadatum der eGov-Suite handelt,
+    für welchen Schriftguttyp es gilt (Akte, Vorgang, Dokument) und welche Definition für Verfahren bzw. welches Formular die Definition
+    des Attributs beinhaltet.
+
+  operationId: leseAttributebeschreibungen
+  parameters:
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/FachverfahrensID'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributbeschreibungenListeResponse'
+    '400':
+      description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+      content:
+        application/json:
+          schema:
+            $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributbeschreibungenListeResponse'
+    '401':
+      description: Falscher oder fehlender technischer Nutzer.
+      content:
+        application/json:
+          schema:
+            $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributbeschreibungenListeResponse'
+    '500':
+      description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+      content:
+        application/json:
+          schema:
+            $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributbeschreibungenListeResponse'

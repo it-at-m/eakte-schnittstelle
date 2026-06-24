@@ -1,0 +1,61 @@
+openapi: 3.0.1
+
+info:
+  title: eAkte REST-API Spezifikation
+  description: Spezifikation für die REST-Schnittstelle der eAkte
+  version: '2.0.0'
+
+  contact:
+    name: Competence Center eAkte
+    url: https://it-at-m.github.io/eakte-api
+    email: schnittstelle.eakte@muenchen.de
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+servers:
+  - url: http://localhost:8080
+
+components:
+  securitySchemes:
+    basicAuth:
+      $ref: '_SicherheitsSchemata.yaml#/components/securitySchemes/basicAuth'
+    bearerAuth:
+      $ref: '_SicherheitsSchemata.yaml#/components/securitySchemes/bearerAuth'
+
+security:
+  - basicAuth: []
+
+paths:
+
+#  '/api/v2/':
+#    $ref: 'Ressourcenbeschreibungen_Liste.yaml'
+
+  # besser lower-case-kebab für Pfade?
+#  '/api/v2/aktenplaneintraege':
+#    $ref: 'Aktenplaneintraege_Liste.yaml'
+#
+#  '/api/v2/aktenplaneintraege/{aktenplaneintragsId}':
+#    $ref: 'Aktenplaneintraege_Einzelsatz.yaml'
+
+  '/api/v2/akten':
+    $ref: 'Akten_Liste.yaml'
+
+  '/api/v2/akten/{aktenId}':
+    $ref: 'Akten_Einzelsatz.yaml'
+
+  '/api/v2/attribut-beschreibungen':
+    $ref: 'Attributbeschreibungen_Liste.yaml'
+
+  '/api/v2/definitionen-fuer-verfahren':
+    $ref: 'DefinitionenFuerVerfahren_Liste.yaml'
+
+#  '/api/v2/attribut-beschreibungen/{attributbeschreibungsId}':
+#    $ref: 'Attributbeschreibungen_Einzelsatz.yaml'
+
+#  '/api/v2/organisationseinheiten':
+#    $ref: 'Organisationseinheiten_Liste.yaml'
+#
+#  '/api/v2/organisationseinheiten/{organisationseinheitenId}':
+#    $ref: 'Organisationseinheiten_Einzelsatz.yaml'

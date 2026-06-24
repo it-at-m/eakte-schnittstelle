@@ -1,0 +1,21 @@
+
+get:
+  tags:
+    - Ressourcenbeschreibungen
+  summary: Ressourcenbeschreibungen lesen
+  description: |
+    Auflistung und Beschreibung der verfügbaren Ressourcen / Endpunkte
+  operationId: LeseRessourcenbeschreibungen
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'Ressourcenbeschreibungen_Datentypen.yaml#/components/schemas/RessourcenbeschreibungenListeWrapper'
+    '400':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/400'
+    '401':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/401'
+    '500':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/500'

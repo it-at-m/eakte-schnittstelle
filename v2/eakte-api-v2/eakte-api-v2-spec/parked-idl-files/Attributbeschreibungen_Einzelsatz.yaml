@@ -1,0 +1,24 @@
+get:
+  tags:
+    - Attributbeschreibungen
+  summary: Attributbeschreibung lesen
+  operationId: LeseAttributbeschreibung
+  parameters:
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/FachverfahrensID'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+    - $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/parameters/attributbeschreibungsId'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/Attributbeschreibung'
+    '400':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/400'
+    '401':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/401'
+    '500':
+      $ref: '_HttpStandardAntworten.yaml#/components/responses/500'
