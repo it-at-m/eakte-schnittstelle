@@ -1,0 +1,20 @@
+meta {
+  name: SOAPUnShareObject_1
+  type: http
+  seq: 94
+}
+
+post {
+  url: 
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCGOVXML_1_1001_SOAPUnShareObject
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPUnShareObjectRequest><!--1 or more repetitions--><object>string</object><parent>string</parent><view>string</view><!--1 or more repetitions--><object>string</object><parent>string</parent><view>string</view></SOAPUnShareObjectRequest></soap:Body></soap:Envelope>
+}

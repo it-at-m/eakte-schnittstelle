@@ -1,0 +1,20 @@
+meta {
+  name: SOAPCreateObject_1
+  type: http
+  seq: 69
+}
+
+post {
+  url: 
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPCreateObject
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPCreateObjectRequest><objclass>string</objclass><coostdom>string</coostdom><objname>string</objname><aclobj>string</aclobj><containerlist><!--1 or more repetitions--><container><contaddress>string</contaddress><contattr>string</contattr></container></containerlist><initialization><mapping>string</mapping><dept>string</dept><data></data></initialization><objclass>string</objclass><coostdom>string</coostdom><objname>string</objname><aclobj>string</aclobj><containerlist><!--1 or more repetitions--><container><contaddress>string</contaddress><contattr>string</contattr></container></containerlist><initialization><mapping>string</mapping><dept>string</dept><data></data></initialization></SOAPCreateObjectRequest></soap:Body></soap:Envelope>
+}

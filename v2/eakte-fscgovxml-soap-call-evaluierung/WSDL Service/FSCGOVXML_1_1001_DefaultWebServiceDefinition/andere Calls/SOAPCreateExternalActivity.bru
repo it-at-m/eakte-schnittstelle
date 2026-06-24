@@ -1,0 +1,20 @@
+meta {
+  name: SOAPCreateExternalActivity
+  type: http
+  seq: 17
+}
+
+post {
+  url: https://eakte26-k2.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAIWF_1_1001_SOAPCreateExternalActivity
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPCreateExternalActivityRequest><actinst-title>string</actinst-title><actinst-participant><meta-participant>0</meta-participant><user-id><id-ref>string</id-ref></user-id><position-id><id-ref>string</id-ref></position-id><group-id><id-ref>string</id-ref></group-id><orgunit-id><id-ref>string</id-ref></orgunit-id><partner-id><id-ref>string</id-ref></partner-id></actinst-participant><actinst-receivedat>2024-01-01T00:00:00Z</actinst-receivedat><actinst-startedat>2024-01-01T00:00:00Z</actinst-startedat><actinst-completedat>2024-01-01T00:00:00Z</actinst-completedat><actinst-title>string</actinst-title><actinst-participant><meta-participant>0</meta-participant><user-id><id-ref>string</id-ref></user-id><position-id><id-ref>string</id-ref></position-id><group-id><id-ref>string</id-ref></group-id><orgunit-id><id-ref>string</id-ref></orgunit-id><partner-id><id-ref>string</id-ref></partner-id></actinst-participant><actinst-receivedat>2024-01-01T00:00:00Z</actinst-receivedat><actinst-startedat>2024-01-01T00:00:00Z</actinst-startedat><actinst-completedat>2024-01-01T00:00:00Z</actinst-completedat></SOAPCreateExternalActivityRequest></soap:Body></soap:Envelope>
+}

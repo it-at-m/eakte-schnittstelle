@@ -1,0 +1,20 @@
+meta {
+  name: SOAPRestoreVersion_1
+  type: http
+  seq: 83
+}
+
+post {
+  url: 
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPRestoreVersion
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPRestoreVersionRequest><objid>string</objid><date>2024-01-01T00:00:00Z</date><objid>string</objid><date>2024-01-01T00:00:00Z</date></SOAPRestoreVersionRequest></soap:Body></soap:Envelope>
+}

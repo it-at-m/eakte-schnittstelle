@@ -1,0 +1,20 @@
+meta {
+  name: SOAPAbort_1
+  type: http
+  seq: 100
+}
+
+post {
+  url: 
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCOWS_1_1001_SOAPAbort
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><!-- Element SOAPAbort not found --></soap:Body></soap:Envelope>
+}

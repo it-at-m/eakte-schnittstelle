@@ -1,0 +1,20 @@
+meta {
+  name: SOAPCreateVersion_1
+  type: http
+  seq: 70
+}
+
+post {
+  url: 
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPCreateVersion
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPCreateVersionRequest><objid>string</objid><autofixed>true</autofixed><description>string</description><convertfinalform>true</convertfinalform><finalform>string</finalform><noautopurge>true</noautopurge><objid>string</objid><autofixed>true</autofixed><description>string</description><convertfinalform>true</convertfinalform><finalform>string</finalform><noautopurge>true</noautopurge></SOAPCreateVersionRequest></soap:Body></soap:Envelope>
+}
