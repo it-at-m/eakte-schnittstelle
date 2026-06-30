@@ -1,0 +1,20 @@
+meta {
+  name: SOAPGetUserInformation_1
+  type: http
+  seq: 59
+}
+
+post {
+  url: 
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCGOVXML_1_1001_SOAPGetUserInformation
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><GetUserInformationRequest><user><objaddress>string</objaddress><login>string</login></user><user><objaddress>string</objaddress><login>string</login></user></GetUserInformationRequest></soap:Body></soap:Envelope>
+}
