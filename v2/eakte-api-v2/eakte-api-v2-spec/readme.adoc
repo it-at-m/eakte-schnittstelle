@@ -1,6 +1,0 @@
-IN diesem Unterverzeichnis befindet sich die Schnittstellendefinition der eAKte-API-V2, basierend auf der Schnittstellenbeschreibungssprache "OpenAPI" (V3).
-
-Die Einstiegsdatei ist
-----
-src/main/resources/eakte-rest-api-v2/__ServiceDefinition.yaml
-----
