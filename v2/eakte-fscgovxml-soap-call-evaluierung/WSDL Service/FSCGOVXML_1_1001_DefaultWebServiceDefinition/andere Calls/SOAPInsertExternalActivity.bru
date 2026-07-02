@@ -1,0 +1,20 @@
+meta {
+  name: SOAPInsertExternalActivity
+  type: http
+  seq: 28
+}
+
+post {
+  url: https://eakte26-k2.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAIWF_1_1001_SOAPInsertExternalActivity
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPInsertExternalActivityRequest><obj-id><id-ref>string</id-ref><id-ref>string</id-ref></obj-id><extinst-id><id-ref>string</id-ref><id-ref>string</id-ref></extinst-id><ext-complete>true</ext-complete><obj-id><id-ref>string</id-ref><id-ref>string</id-ref></obj-id><extinst-id><id-ref>string</id-ref><id-ref>string</id-ref></extinst-id><ext-complete>true</ext-complete></SOAPInsertExternalActivityRequest></soap:Body></soap:Envelope>
+}

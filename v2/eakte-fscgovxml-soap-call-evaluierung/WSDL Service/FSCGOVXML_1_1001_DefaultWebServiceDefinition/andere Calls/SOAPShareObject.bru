@@ -1,0 +1,20 @@
+meta {
+  name: SOAPShareObject
+  type: http
+  seq: 41
+}
+
+post {
+  url: https://eakte26-k2.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCGOVXML_1_1001_SOAPShareObject
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPShareObjectRequest><!--1 or more repetitions--><object>string</object><parent>string</parent><view>string</view><unique>true</unique><!--1 or more repetitions--><object>string</object><parent>string</parent><view>string</view><unique>true</unique></SOAPShareObjectRequest></soap:Body></soap:Envelope>
+}

@@ -1,0 +1,52 @@
+meta {
+  name: SOAPSearch - Suche DfV in Aktenplan
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://eakte26-k2-authldap.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: inherit
+}
+
+params:query {
+  WEBSVC: FSCGOVXML_1_1001_DefaultWebServiceDefinition
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPSearch
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fsc="http://schemas.fabasoft.com/websvc/FSCGOVXML_1_1001_DefaultWebServiceDefinition/" xmlns:urn="urn:schemas-fabasoft-com:bai:search">
+     <soapenv:Body>
+        <urn:SOAPSearchRequest>
+        <!--  WHERE
+  	           .COOSYSTEM@1.1:objaddress = "COO.2150.8801.2.1053759"
+  	           -->
+            <urn:query>
+                
+                LIMIT 100
+  	         SELECT *
+  	         FROM COOELAK@1.1001:SubjectArea 
+  	         WHERE .COOELAK@1.1001:basenr like '02%' AND EGOVTEMPLATE@15.1001:availabledefinitions is not null
+           </urn:query>
+           <!-- where aktenplankennzeichen like '1023%'
+              oder "über Grundzahl"
+              -->
+           <urn:attrlist>
+              <urn:attr>COOSYSTEM@1.1:objname</urn:attr>
+   
+              <urn:attr>EGOVTEMPLATE@15.1001:availabledefinitions[0].COOSYSTEM@1.1:objname</urn:attr>
+              <urn:attr>EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:definitionuseform.FSCUSERFORMS@1.1001:releasecategory.COOTC@1.1001:categoryattributes.COOSYSTEM@1.1:objname</urn:attr>
+              <urn:attr>EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:definitionuseform.FSCUSERFORMS@1.1001:releasecategory.COOTC@1.1001:categoryattributes.COOSYSTEM@1.1:objaddress</urn:attr>
+              <urn:attr>EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:definitionuseform.FSCUSERFORMS@1.1001:releasecategory.COOTC@1.1001:categoryattributes.COOSYSTEM@1.1:attrtype.COOSYSTEM@1.1:objname</urn:attr>
+                                                               
+              
+           </urn:attrlist>
+        </urn:SOAPSearchRequest>
+     </soapenv:Body>
+  </soapenv:Envelope>
+}
