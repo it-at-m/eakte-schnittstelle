@@ -80,7 +80,7 @@ A broadly usable search functionality should support:
 * use the search functionality of BAY-eAS (pattern matching, single pattern per attribute), but extend it somehow to cover DfV attributes as well
 * create a new search method, that uses the SOAPSearch call of the FSCGOVXML software component (a.k.a. "standard library"), but in a more flexible way as BAY-eAS
 
-## Design Considerations and Decisions
+## Design Considerations and pending Decisions
 
 [DRAFT!]
 
@@ -100,8 +100,8 @@ A broadly usable search functionality should support:
 * The search API would include a flexible way to specify restrictions ("WHERE" clause of the Fabasoft QL), allowing for multiple conditions, comparison operators and boolean combinators.
 
 * As syntax of the query specification there are at least two possibilities:
-  * create an own suitable syntax and translate this into the internal Fabasoft Query Language
-  * use the Fabasoft Query Language
+   * create an own suitable syntax and translate this into the internal Fabasoft Query Language
+   * use the Fabasoft Query Language (in a restricted/controlled manner)
 
 * The use of the Fabasoft QL is to be preferred with respect to the effort and to provide a consistent mechanism between ths eGov-Suite GUI and our API. Thus a developer can evaluate a query in the GUI and then translate this into an API call.
 
@@ -111,8 +111,43 @@ A broadly usable search functionality should support:
 
 * Contrary to the assumption of Herrn Rabis (Fabasoft) it seems that using the query functionality to retrieve single resources or the children of a parent resource is feasable and not necessarily connected with a relevant performance penalty. An internal call of the kernel 'getProperties' would probably do exactly what the explicit query does: perfrom a search where the reference (parent object) is the single restriction.
 
+* To enable the developers of API clients to create correct queries they need to know, which attributes are available in the context of a specific subject area (Aktenplaneintrag/Betreffseinheit), what their type is and how to reference them in the query (i.e. which identifier to use). 
 
+  There are two general options to cover this:
+  * looking all that up in the eGov-Suite GUI
+  * provide a specific endpoint (REST resource) with the attribute metadata 
+ The latter seems to be more appropriate, as the structure for the "Definition für Verfahren" in the Fabasoft object model (and in the GUI) is quite complex and should not "spill over" to the development of API clients.
 
+* The query specification should be put into the "query parameter" part of the REST API. This allows 
+  * bookmarking queries
+  * simple GET requests (executable via browser)
+  * putting the whole query request into a JSON field (URL + necessary payload), thus enabling a single string-typed reference to point to a whole collection defined by the query
 
+* API-First strategy: The Query functionality (as well as the whole eAkte API-v2) will be defined and documented as OpenAPI Specification as given in
+   * https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md
+   * https://spec.openapis.org/oas/v3.1.0.html 
+  
+  Additional norms in that context are
+   * OpenAPI Overlay Specification: 
+     
+     https://github.com/OAI/Overlay-Specification/blob/main/versions/1.0.0.md
+
+  * Specific Markup language supported by OpenAPI in description fields:
+
+     https://spec.commonmark.org/0.27/
+
+* The basic framework for the eAKte-API-v2 will be Spring-Boot v4
+
+* The Spring Boot server stubs will be generated from the OpenAPI specification. The specific generator used can be found in
+  https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/java.md
+
+* To verify that the designed API is easily understandable, practically usable and meets the standards and best practices of current client development (simplicity, robustness, etc.) we should implement and provide client libraries. Suggested manifestations: Java (preferably Spring Boot Starter), JavaScript/TypeScript, maybe Python.
+
+* The provided client libraries should be accompanied by some examples and a "getting started" documentation, thus providing a good starting point for newcomers to create new connectivity to the eAkte system. We should be aware that there is a whole spectrum of API users with different focus:
+  * manufactururs and external service providers who create and/or sell "Fachverfahren"
+  * it@M-internal service owners who need to implement EAI adapters and need to operate and monitor them as well as the connected Fachverfahren
+  * it@M software implementers who need to connect to the eAkte (Input management, KOI, internally implemented Fachverfahren)
+  * implementers of batch tools (e.g. for import of documents)
+  * light-weight Fachverfahren: using the REST API a simple Web page or Single Page Application ("SPA") page can already implement a valuable interactive business support tool without the need to contract expensive external service providers.
 
 
