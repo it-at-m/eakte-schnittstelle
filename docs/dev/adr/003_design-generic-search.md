@@ -34,7 +34,7 @@
 ### Deficiencies of the existing Search Calls in LHMBAI
 
 * Only very limited set of object properties is searchable
-* Criteria matching only by pattern matching for strings, no real comparison operators. e.g. for date ranges
+* Criteria matching works only by exakt or pattern matching for strings, no real comparison operators. e.g. for date ranges, numbers of enumeration types
 * Only simple matching with one pattern per property (no boolean operators like AND/OR/NOT)
 * No search for object class 'Document'
 * "Definition für Verfahren" not supported at all
@@ -150,4 +150,53 @@ A broadly usable search functionality should support:
   * implementers of batch tools (e.g. for import of documents)
   * light-weight Fachverfahren: using the REST API a simple Web page or Single Page Application ("SPA") page can already implement a valuable interactive business support tool without the need to contract expensive external service providers.
 
+* The api endpoints should be prefixed with '/api'. Though there are recommendations to not do this (e.g. because all endpoints are part of the api), it seems comfortable and intuitive to do this for the following reasons:
+  * there are resources that are human readable and should be accessed without certain privileges (Swagger-UI, monitoring endpoints). These can reside outside of the '/api' path.
+  * it is easy to specify security constraints and request filtering for the api itself as it is all beneath this specific prefix.
+  * in an upstream service (e.g. SPA with Web-UI) it is easy to define '/api' as a proxy path that is forwarded to the eAkte API downstream, thus using only a single endpoint in the browser and avoiding fiddling with CORS issues.
 
+* The query specification should be included in a single query parameter, as it can be a considerably complex arithmetic expression and is in text form.
+
+* The query parameter value needs to be encoded with the UUEncode standard. This unfortunately makes the URLs much harder to read, but cannot be avoided because the query language and the restriction values respectively can contain reserved character that mey not be used on a URL unescaped. With the freely available linux tool 'uuencode' this can be mitigated in the practical development work.
+
+## Examples for the suggested Query API
+
+Based on the preliminary assumption that the Fabasoft Query Language WHERE clause is used as a syntax to define query restriction in the API, here a few examples how the URLs for such queries might look. 
+
+It is additionally assumed, that the labels of the attributes are used as identifiers as to avoid the cryptic internal names of the Fabasoft eGov-Suite. It still needs to be investigated whether this can lead to ambiguities. Identical names should be avoided anyway, as those ambiguities would also lead to confusion in the maintenance of the DfV attributes in the Fabasoft Web interface. Coordination with the Workstream "Produkt" should be conducted as the introduction of DfV attributes is not only a interface topic but has a wider scope of documentation, consultancy and implementation procedures.
+
+### Search for all files ("Akten")
+
+No condition given, the collection resource of files (Akten) retrieves just all files, limited by the inherent maximum size of the result set. Note that paging is generally not supported by Fabasoft (no OFFSET parameter, only LIMIT).
+
+http://localhost:8080/api/v2/akten
+
+### Search files by means of a DfV attribute:
+
+The condition in clear text would be:
+
+`${/api/v2/attribut-beschreibungen/lhmdfvpublic-fh_attr_auf_Formularebene}="Orangen"`
+
+The resulting URL with the uuencoded query parameter is then:
+
+http://localhost:8080/api/v2/akten?bedingungen=%24%7B%2FAttributbeschreibungen%2Flhmdfvpublic-fh_attr_auf_Formularebene%7D%3D%22Orangen%22
+
+### inverted condition (files not matching a certain attribute value)
+
+The condition in clear text would be:
+
+`${/api/v2/attribut-beschreibungen/lhmdfvpublic-fh_attr_auf_Formularebene}!="Orangen"`
+
+The resulting URL with the uuencoded query parameter is then:
+
+http://localhost:8080/api/v2/akten?bedingungen=%24%7B%2FAttributbeschreibungen%2Flhmdfvpublic-fh_attr_auf_Formularebene%7D%21%3D%22Orangen%22
+
+### empty result set - no file matches the condition
+
+The condition in clear text would be:
+
+`${/api/v2/attribut-beschreibungen/lhmdfvpublic-fh_attr_auf_Formularebene}="Apfel"`
+
+The resulting URL with the uuencoded query parameter is then:
+
+http://localhost:8080/Akten?bedingungen=%24%7B%2FAttributbeschreibungen%2Flhmdfvpublic-fh_attr_auf_Formularebene%7D%3D%22Orange%22
