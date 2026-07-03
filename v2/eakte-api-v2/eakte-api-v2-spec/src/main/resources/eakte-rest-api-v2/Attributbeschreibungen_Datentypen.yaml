@@ -1,0 +1,141 @@
+components:
+
+  parameters:
+
+    attributbeschreibungsId:
+      name: attributbeschreibungsId
+      description:
+        Interne Id der Attributbeschreibung (nicht interpretierbar, "opaque")
+      in: path
+      required: true
+      schema:
+        type: string
+      example: "<grmblfix>"
+
+  schemas:
+
+    AttributName:
+      type: string
+      example: "Stadtrats-Fraktion"
+
+#    AttributReferenz:
+#      type: string
+#      description: |
+#        Referenz im eGov-System
+#      example: "FSCUSERFORMS@1.1001:releasecategory"
+#
+    AttributDatenTyp:
+      type: string
+      enum:
+        - Zeichenkette
+        - Ganzzahl
+        - Fliesskommazahl
+        - BoolescherWert
+        - Datum
+        - DatumMitUhrzeit
+        - Aufzaehlungstyp
+        - Base64EncodedContent
+        - Aggregatstyp
+        - UnspezifischeRessourcenURI
+        - AktenplaneintragsURI
+        - AktenURI
+        - VorgangsURI
+        - SchriftstueckURI
+        - OrganisationseinheitsURI
+        - BenutzerURI
+        - SprachenURI
+        - ZugriffsdefinitionsURI
+
+    AufzaehlungstypElement:
+      type: object
+      description: |
+        beachte, dass Aufzählungswerte im Fachverfahren nur angezeigt und per Schlüssel selektiert werden müssen,
+        jedoch nie der Wert dort erzeugt wird, sondern nur per Schlüssel aus der vorgegebenenWertemenge selektiert wrd
+      properties:
+        schluessel:
+          type: string
+          description: |
+            alphanumerischer Schlüssel, der als Attributwert verwendet wird und den (ggf. komplexen) Aufzählungswert
+            eindeutig identifiziert
+          example: "4711"
+        kurzbezeichnungDesWerts:
+          type: string
+          description: |
+            Kurzbezeichnung des Wertes.\
+            Der Wert kann in der eAkte ein komplexer (zusammengesetzter) Wert sein, also ein Objekt.
+            Für die Selektion reicht aber auf Fachverfahrensseite aus, eine Kurzbezeichnung zu sehen.
+          example: "Pizza Napoli"
+
+    Attributbeschreibung:
+      type: object
+      description: beschreibt die Metadaten eines Attributs
+      required:
+        - referenzSchriftgutObjektklasseOderFormular
+        - referenzAttribut
+        - bezeichnung
+        - datentyp
+        - pflichtFeld
+        - maximaleTextLaenge
+      properties:
+        eigeneUrl:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/URI'
+        referenzSchriftgutObjektklasseOderFormular:
+          type: string
+          description: |
+            Referenz auf dir Stelle, wo das Attribut definiert bzw. zugeordnet wurde.
+            Entweder eines aus { "Aktenplaneintrag", "Akte", "Vorgang", "Dokument", Schriftstück" } oder 
+            die COO-Adresse eines Formulars ("category" in Fabasoft-Terminologie) aus einer Definition für Verfahren
+          example: "Akte"
+        referenzAttribut:
+          type: string
+          description: |
+            Referenz des Attributs in der eGov-Suite
+          example: "COOELAK@1.1001:fielouobj"
+        bezeichnung:
+          type: string
+          description: |
+            Deutsche Bezeichnung des Attributs
+          example: "Aktenführenden Organisationseinheit"
+        beschreibung:
+          type: string
+          description: |
+            Beschreibung des Attributs
+          example: "Beschreibung der Semantik des Attributs (umfänglich, ggf. mehrzeilig)."
+        datentyp:
+          $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AttributDatenTyp'
+        pflichtFeld:
+          type: boolean
+          description: notwendiges Attribut
+        maximaleTextLaenge:
+          type: integer
+          default: 0
+          description: |
+            zulässige Länge bei String-Datentypen (in UTF-8 Zeichen, nicht in Bytes!)
+        aufzaehlungswerte:
+          type: array
+          items:
+            $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/AufzaehlungstypElement'
+#        betreffseinheit:
+#          $ref: 'Aktenplaneintraege_Datentypen.yaml#/components/schemas/BetreffseinheitId'
+#        nameDerDefinitionFuerVerfahren:
+#          $ref: '_GlobaleDatentypen.yaml#/components/schemas/URI'
+#        referenzDerDefinitionFuerVerfahren:
+#          $ref: '_GlobaleDatentypen.yaml#/components/schemas/ReferenzDerDefinitionFuerVerfahren'
+
+    AttributbeschreibungenListeResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        error:
+          $ref: "_GlobaleDatentypen.yaml#/components/schemas/EAkteSchnittstelleError"
+        anzahlAttributbeschreibungen:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/AnzahlListenElemente'
+        attributbeschreibungenListe:
+          type: array
+          description: |
+            List von Attributbeschreibungen
+          items:
+            $ref: 'Attributbeschreibungen_Datentypen.yaml#/components/schemas/Attributbeschreibung'

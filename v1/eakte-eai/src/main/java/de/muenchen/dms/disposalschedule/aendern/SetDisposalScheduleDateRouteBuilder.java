@@ -20,6 +20,7 @@ public class SetDisposalScheduleDateRouteBuilder extends DmsRouteBuilder {
         .id(ROUTE_ID_DISPOSAL_SCHEDULE_DATE)
         .description("Aufbewahrungsdatum setzen")
         .security(BASIC_AUTH_SECURITY_DEFINITION)
+        .consumes(MediaType.APPLICATION_JSON_VALUE)
         .produces(MediaType.APPLICATION_JSON_VALUE)
         .type(SetDisposalScheduleDateAnfrageDTO.class)
         .params(RestOperationDefinitionFactory.createAuthentificationHeader())

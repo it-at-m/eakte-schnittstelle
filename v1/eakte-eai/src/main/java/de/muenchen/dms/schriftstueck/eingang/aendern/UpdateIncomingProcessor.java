@@ -2,6 +2,7 @@ package de.muenchen.dms.schriftstueck.eingang.aendern;
 
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.ArrayOfLHMBAI151700GIAttachmentType;
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.UpdateIncomingGI;
+import de.muenchen.dms.common.mapper.FieldValueMappingService;
 import de.muenchen.dms.common.processor.AbstractDMSSoapProcessor;
 import de.muenchen.dms.common.route.RouteConstants;
 import de.muenchen.dms.common.util.JacksonData;
@@ -11,7 +12,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UpdateIncomingProcessor extends AbstractDMSSoapProcessor {
-  @Override
+
+  private final FieldValueMappingService mappingService;
+
+  public UpdateIncomingProcessor(FieldValueMappingService mappingService) {
+      this.mappingService = mappingService;
+  }
+
+    @Override
   public void process(Exchange exchange) throws Exception {
     UpdateIncomingAnfrageDTO dto = exchange.getIn().getBody(UpdateIncomingAnfrageDTO.class);
 
@@ -42,6 +50,9 @@ public class UpdateIncomingProcessor extends AbstractDMSSoapProcessor {
       final String anwendung,
       final ArrayOfLHMBAI151700GIAttachmentType lhmbai151700GIAttachmentType)
       throws DatatypeConfigurationException {
+    String mappedAccdef = mappingService.map(
+            "accdef", anfrage.getAccdef()
+    );
     final UpdateIncomingGI updateOutgoingGI = objectFactory.createUpdateIncomingGI();
     updateOutgoingGI.setObjaddress(objectId);
     updateOutgoingGI.setUserlogin(nutzer);
@@ -50,7 +61,7 @@ public class UpdateIncomingProcessor extends AbstractDMSSoapProcessor {
     updateOutgoingGI.setBusinessapp(anwendung);
     updateOutgoingGI.setGiattachmenttype(lhmbai151700GIAttachmentType);
     updateOutgoingGI.setShortname(anfrage.getShortname());
-    updateOutgoingGI.setAccdef(anfrage.getAccdef());
+    updateOutgoingGI.setAccdef(mappedAccdef);
     updateOutgoingGI.setForeignnr(anfrage.getForeignnr());
     updateOutgoingGI.setFilesubj(anfrage.getFilesubj());
     updateOutgoingGI.setDelivery(JacksonData.toXMLGregorianCalendar(anfrage.getDelivery()));

@@ -1,0 +1,360 @@
+components:
+  schemas:
+
+    EAkteSchnittstelleError:
+      type: object
+      description: >
+        Container für konkrete Fehlermeldungen, die während der Kommunikation von
+        eAkte-Interface zu Fabasoft eGov-Suite auftreten können.
+      required:
+        - easFehlercode
+        - easFehler
+      properties:
+        easFehlercode:
+          type: integer
+          format: int32
+        easFehler:
+          type: string
+        easDetail:
+          type: string
+
+    NoContentResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        error:
+          $ref: "_GlobaleDatentypen.yaml#/components/schemas/EAkteSchnittstelleError"
+
+    AnzahlListenElemente:
+      type: integer
+      description: |
+        Anzahl der Elemente in einer Liste von Ressourcen
+      example: 3
+
+    URI:
+      type: string
+      description: |
+        Eigene URI einer Ressource (Zeiger auf sich selbst) oder 
+        URI einer referenzierten Ressource.\
+        \
+        URI = "Uniform Resource Locator" (siehe z.B. https://de.wikipedia.org/wiki/Uniform_Resource_Identifier)\
+        \
+        URIs sollen auf Seite des Service-Clients nicht interpretiert und auch nicht konstruiert werden.
+        Sie werden so wie sie in einer vorhergehenden Service-Antwort enthalten waren unverändert 
+        in einer neuen Service-Anfrage verwendet (als Request-URL oder in den Daten als Referenz-URI)
+      example: "/v2/Ressourcen/ressourcenId"
+
+    NameDerDefinitionFuerVerfahren:
+      type: string
+      example: "Definition für Verfahren A"
+
+    ReferenzDerDefinitionFuerVerfahren:
+      type: string
+      example: "COO.2150.8801.2.1046473"
+
+    AttributUriUndWert:
+      type: object
+      required:
+        - attributURI
+        - datenTyp
+      properties:
+        attributURI:
+          type: string
+        datenTyp:
+          type: string
+      discriminator:
+        propertyName: datenTyp
+        # these 'mapping' values are redundant to the enum type 'AttributDatenTyp'
+        # can this be unified?
+        mapping:
+          Zeichenkette: '#/components/schemas/Attribut_Zeichenkette'
+          Ganzzahl: '#/components/schemas/Attribut_Ganzzahl'
+          Fliesskommazahl: '#/components/schemas/Attribut_Fliesskommazahl'
+          BoolescherWert: '#/components/schemas/Attribut_BoolescherWert'
+          Datum: '#/components/schemas/Attribut_Datum'
+          DatumMitUhrzeit: '#/components/schemas/Attribut_DatumMitUhrzeit'
+          Aufzaehlungstyp: '#/components/schemas/Attribut_Aufzaehlungstyp'
+          Aggregatstyp: '#/components/schemas/Attribut_Aggregatstyp'
+          Base64EncodedContent: '#/components/schemas/Attribut_Base64EncodedContent'
+          UnspezifischeRessourcenURI: '#/components/schemas/Attribut_UnspezifischeRessourcenURI'
+          AktenplaneintragsURI: '#/components/schemas/Attribut_AktenplaneintragsURI'
+          AktenURI: '#/components/schemas/Attribut_AktenURI'
+          VorgangsURI: '#/components/schemas/Attribut_VorgangsURI'
+          DokumentURI: '#/components/schemas/Attribut_DokumentURI'
+          SchriftstueckURI: '#/components/schemas/Attribut_SchriftstueckURI'
+          OrganisationseinheitsURI: '#/components/schemas/Attribut_OrganisationseinheitsURI'
+          BenutzerURI: '#/components/schemas/Attribut_BenutzerURI'
+          SprachenURI: '#/components/schemas/Attribut_SprachenURI'
+          ZugriffsdefinitionsURI: '#/components/schemas/Attribut_ZugriffsdefinitionsURI'
+
+    Attribut_Zeichenkette:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+
+    Attribut_Ganzzahl:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: integer
+
+    Attribut_Fliesskommazahl:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: number
+
+    Attribut_BoolescherWert:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: boolean
+
+    Attribut_Datum:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              format: date
+
+    Attribut_DatumMitUhrzeit:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              format: date-time
+
+    Attribut_Aufzaehlungstyp:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI zu einer Ressource vom Typ 'AufzaehlungstypElement'
+
+    Attribut_Base64EncodedContent:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das sind Binärdaten, die Base64-kodiert sind.
+
+    Attribut_Aggregatstyp:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: array
+              items:
+                $ref: '#/components/schemas/AttributUriUndWert'
+
+    Attribut_UnspezifischeRessourcenURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf eine Ressource unbekannten Typs
+                
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+
+    Attribut_AktenplaneintragsURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf einen Aktenplaneintrag
+                
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+
+    Attribut_AktenURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf eine Akte
+                
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+
+    Attribut_VorgangsURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf einen Vorgang
+                
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+
+    Attribut_DokumentURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf ein Dokument
+                
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+
+    Attribut_SchriftstueckURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf ein Schriftstück
+                
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+
+    Attribut_OrganisationseinheitsURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf eine Organisationseinheit
+                
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+
+    Attribut_BenutzerURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf einem eAkte-Benutzer
+                
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+
+    Attribut_SprachenURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf eine Sprache
+                
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+
+    Attribut_ZugriffsdefinitionsURI:
+      allOf:
+        - $ref: '#/components/schemas/AttributUriUndWert'
+        - type: object
+          required:
+            - attributWert
+          properties:
+            attributWert:
+              type: string
+              description: |
+                Das ist die URI für den Verweis auf eine Zugriffsdefinition
+                
+                Dies kann auch einen Query-Parameter 'bedingungen' enthalten und auf diese
+                Weise auf eine dynamische Ergebnisliste einer bestimmten Ressourcenklasse
+                verweisen (z.B. alle Vorgänge, deren Parent eine bestimmte Akte ist - dadurch
+                kann auf eine ganze Liste von Ressourcen mit einer URI verwiesen werden).
+

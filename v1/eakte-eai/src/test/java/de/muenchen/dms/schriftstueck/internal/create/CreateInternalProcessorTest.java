@@ -23,18 +23,21 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
+@DisplayName("Tests the request processor for the endpoint CreateInternal")
 class CreateInternalProcessorTest {
 
   static final String DATEINAME_MIT_SONDERZEICHEN = "!@#$%^&*()_+|}{[],><?-~.txt";
   static final String BEISPIEL_VORGANG_COOID = "COO.1";
 
+  @Autowired
   private CreateInternalProcessor processor;
 
   @BeforeEach
-  void setUp() {
-    processor = new CreateInternalProcessor();
-  }
+  void setUp() {}
 
   @Test
   @DisplayName(

@@ -7,18 +7,25 @@ package de.muenchen.dms.schriftstueck.eingang.anlegen;
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.ArrayOfLHMBAI151700GIAttachmentType;
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.ArrayOfLHMBAI151700GIUserFormsType;
 import com.fabasoft.schemas.websvc.lhmbai_15_1700_giwsd.CreateIncomingGI;
+import de.muenchen.dms.common.mapper.FieldValueMappingService;
 import de.muenchen.dms.common.processor.AbstractDMSSoapProcessor;
 import de.muenchen.dms.common.util.JacksonData;
-import javax.xml.datatype.DatatypeConfigurationException;
-
 import de.muenchen.dms.common.util.Umwandlungen;
+import javax.xml.datatype.DatatypeConfigurationException;
 import org.apache.camel.Exchange;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CreateIncomingBasisProcessor extends AbstractDMSSoapProcessor {
 
-  @Override
+  private final FieldValueMappingService mappingService;
+
+  public CreateIncomingBasisProcessor(FieldValueMappingService mappingService) {
+      this.mappingService = mappingService;
+  }
+
+
+    @Override
   public void process(Exchange exchange) throws Exception {
     CreateIncomingBasisAnfrageDTO dto = getMessageBody(exchange);
 
@@ -53,6 +60,9 @@ public class CreateIncomingBasisProcessor extends AbstractDMSSoapProcessor {
       final ArrayOfLHMBAI151700GIAttachmentType lhmbai151700GIAttachments,
       final ArrayOfLHMBAI151700GIUserFormsType userFormsType)
       throws DatatypeConfigurationException {
+    String mappedAccdef = mappingService.map(
+            "accdef", anfrage.getAccdef()
+    );
     final CreateIncomingGI createIncomingGI = objectFactory.createCreateIncomingGI();
     createIncomingGI.setUserlogin(nutzer);
     createIncomingGI.setReferrednumber(anfrage.getReferrednumber());
@@ -61,7 +71,7 @@ public class CreateIncomingBasisProcessor extends AbstractDMSSoapProcessor {
     createIncomingGI.setBusinessapp(anwendung);
     createIncomingGI.setShortname(anfrage.getShortname());
     createIncomingGI.setFilesubj(anfrage.getFilesubj());
-    createIncomingGI.setAccdef(anfrage.getAccdef());
+    createIncomingGI.setAccdef(mappedAccdef);
     createIncomingGI.setForeignnr(anfrage.getForeignnr());
     createIncomingGI.setDocumentremarks(anfrage.getDocumentremarks());
     createIncomingGI.setIncattachments(anfrage.getIncattachments());

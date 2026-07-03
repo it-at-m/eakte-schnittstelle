@@ -1,0 +1,28 @@
+package de.muenchen.itm.eakte.schnittstelle.rest_v2.controller;
+
+import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.controllers.DefaultApi;
+import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.Ressourcenbeschreibung;
+import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.RessourcenbeschreibungenListeWrapper;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+
+@Component
+@AllArgsConstructor
+@Slf4j
+public class RootController implements DefaultApi {
+
+  @Autowired
+  private HttpServletRequest request;
+
+  @Override
+  public ResponseEntity<RessourcenbeschreibungenListeWrapper> leseRessourcenbeschreibungen() {
+    RessourcenbeschreibungenListeWrapper ressourceBeschreibungsAntwort = new RessourcenbeschreibungenListeWrapper();
+    ressourceBeschreibungsAntwort.addRessourcenbeschreibungenListeItem(new Ressourcenbeschreibung("/Akten", "Akten", "Ressource für das Erzeugen, Lesen und Modifizieren von Akten"));
+    ressourceBeschreibungsAntwort.addRessourcenbeschreibungenListeItem(new Ressourcenbeschreibung("/Vorgaenge", "Vorgänge", "Ressource für das Erzeugen, Lesen und Modifizieren von Vorgängen"));
+    ressourceBeschreibungsAntwort.setAnzahlRessourcenbeschreibungen(ressourceBeschreibungsAntwort.getRessourcenbeschreibungenListe().size());
+    return ResponseEntity.ok(ressourceBeschreibungsAntwort);
+  }
+}

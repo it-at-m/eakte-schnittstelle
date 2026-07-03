@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>de.muenchen.eai</groupId>
+    <artifactId>eakte-api-v2</artifactId>
+    <version>2.0.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>eakte-api-v2-spec</artifactId>
+
+  <build>
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.3.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <appendAssemblyId>false</appendAssemblyId>
+              <descriptors>
+                <descriptor>${project.basedir}/apispec-zipfile-assembly.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.1</version>
+        <configuration>
+          <archive>
+             <addMavenDescriptor>false</addMavenDescriptor>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.openapitools.openapistylevalidator</groupId>
+        <artifactId>openapi-style-validator-maven-plugin</artifactId>
+        <version>1.11</version>
+        <configuration>
+          <inputFile>${project.basedir}/src/main/resources/eakte-rest-api-v2/__ServiceDefinition.yaml</inputFile>
+
+          <!-- options what to validate: -->
+          <pathNamingConvention>CamelCase</pathNamingConvention>
+          <validateNaming>false</validateNaming>
+          <validateModelPropertiesDescription>false</validateModelPropertiesDescription>
+          <validateOperationDescription>false</validateOperationDescription>
+          <validateModelPropertiesExample>false</validateModelPropertiesExample>
+
+          <!-- all available options from config file template:
+            "validateInfoLicense": true,
+            "validateInfoDescription": true,
+            "validateInfoContact": true,
+
+            "validateOperationOperationId": true,
+            "validateOperationDescription": true,
+            "validateOperationTag": true,
+            "validateOperationSummary": true,
+
+            "validateModelPropertiesExample": false,
+            "validateModelPropertiesDescription": true,
+            "validateModelRequiredProperties": true,
+            "validateModelNoLocalDef": true,
+
+            "validateNaming": true,
+            "ignoreHeaderXNaming": true,
+            "pathNamingConvention": "CamelCase",
+            "parameterNamingConvention": "CamelCase",
+            "schemaNamingConvention": "PascalCase",
+            "propertyNamingConvention": "CamelCase",
+            "enumNamingConvention": "AnyCase",
+            "queryParamNamingConvention": "CamelCase",
+            "pathParamNamingConvention": "HyphenCase",
+            "cookieParamNamingConvention": "CamelCase"
+          -->
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+
+</project>

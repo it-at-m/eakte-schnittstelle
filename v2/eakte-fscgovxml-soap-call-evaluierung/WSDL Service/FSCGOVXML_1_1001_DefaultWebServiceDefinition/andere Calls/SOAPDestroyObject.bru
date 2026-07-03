@@ -1,0 +1,20 @@
+meta {
+  name: SOAPDestroyObject
+  type: http
+  seq: 21
+}
+
+post {
+  url: https://eakte26-k2.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPDestroyObject
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPDestroyObjectRequest><objaddress>string</objaddress><destroycontainer><!--1 or more repetitions--><container><contaddress>string</contaddress><contattr>string</contattr></container><!--1 or more repetitions--><container><contaddress>string</contaddress><contattr>string</contattr></container></destroycontainer><objaddress>string</objaddress><destroycontainer><!--1 or more repetitions--><container><contaddress>string</contaddress><contattr>string</contattr></container><!--1 or more repetitions--><container><contaddress>string</contaddress><contattr>string</contattr></container></destroycontainer></SOAPDestroyObjectRequest></soap:Body></soap:Envelope>
+}

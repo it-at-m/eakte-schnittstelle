@@ -1,0 +1,20 @@
+meta {
+  name: SOAPRemovePointer
+  type: http
+  seq: 31
+}
+
+post {
+  url: https://eakte26-k2.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPRemovePointer
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPRemovePointerRequest><objaddress>string</objaddress><removepointercontainer><!--1 or more repetitions--><container><contaddress>string</contaddress><contattr>string</contattr></container><!--1 or more repetitions--><container><contaddress>string</contaddress><contattr>string</contattr></container></removepointercontainer><objaddress>string</objaddress><removepointercontainer><!--1 or more repetitions--><container><contaddress>string</contaddress><contattr>string</contattr></container><!--1 or more repetitions--><container><contaddress>string</contaddress><contattr>string</contattr></container></removepointercontainer></SOAPRemovePointerRequest></soap:Body></soap:Envelope>
+}

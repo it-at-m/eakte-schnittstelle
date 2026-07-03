@@ -24,17 +24,19 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 @DisplayName("Die Testklasse prüft die Verarbeitung von REST-Anfrage")
 class UpdateOutgoingProcessorTest {
   static final String BEISPIEL_OUTGOING_ID = "COO.1.2345.6.7891012";
 
-  private UpdateOutgoingProcessor processor;
+  @Autowired
+  UpdateOutgoingProcessor processor;
 
   @BeforeEach
-  void setUp() {
-    processor = new UpdateOutgoingProcessor();
-  }
+  void setUp() {}
 
   @Test
   @DisplayName(
@@ -45,7 +47,14 @@ class UpdateOutgoingProcessorTest {
   void testeKonvertierungInSoapObjectAlleWerteVorhanden() throws Exception {
     UpdateOutgoingRequestDTO dto = erzeugeRestDatenobjekt();
     Exchange ex = prozessorAusfuehren(dto, Collections.emptyMap(), true);
-    stelleDatentransferAufSoapObjektSicher(dto, 0, ex.getIn().getBody());
+
+    //TODO: outsource this block to own method
+    if (ex.getIn().getBody() instanceof UpdateOutgoingGI gi){
+      stelleDatentransferAufSoapObjektSicher(dto, 0, gi);
+      assertThat(gi.getAccdef(), equalTo("Eigener Mandant"));
+    } else {
+      Assertions.fail();
+    }
   }
 
   @Test
@@ -57,7 +66,14 @@ class UpdateOutgoingProcessorTest {
   void testeKonvertierungInSOAPObjektOptionaleWerteNull() throws Exception {
     UpdateOutgoingRequestDTO dto = erzeugeRestDatenobjekt();
     Exchange ex = prozessorAusfuehren(dto, Collections.emptyMap(), true);
-    stelleDatentransferAufSoapObjektSicher(dto, 0, ex.getIn().getBody());
+
+    //TODO: outsource this block to own method
+    if (ex.getIn().getBody() instanceof UpdateOutgoingGI gi){
+      stelleDatentransferAufSoapObjektSicher(dto, 0, gi);
+      assertThat(gi.getAccdef(), equalTo("Eigener Mandant"));
+    } else {
+      Assertions.fail();
+    }
   }
 
   @Test
@@ -89,7 +105,14 @@ class UpdateOutgoingProcessorTest {
     UpdateOutgoingRequestDTO dto = erzeugeRestDatenobjekt();
 
     Exchange ex = prozessorAusfuehren(dto, TestDateianhaenge.erzeugeMehrere(2), true);
-    stelleDatentransferAufSoapObjektSicher(dto, 2, ex.getIn().getBody());
+
+    //TODO: outsource this block to own method
+    if (ex.getIn().getBody() instanceof UpdateOutgoingGI gi){
+      stelleDatentransferAufSoapObjektSicher(dto, 2, gi);
+      assertThat(gi.getAccdef(), equalTo("Eigener Mandant"));
+    } else {
+      Assertions.fail();
+    }
   }
 
   private <T extends DMSContainerBase> T erzeugeRestDatenobjekt() {
@@ -118,7 +141,6 @@ class UpdateOutgoingProcessorTest {
       assertThat(gi.getObjaddress(), equalTo(BEISPIEL_OUTGOING_ID));
       assertThat(gi.getBusinessapp(), equalTo(TestExchanges.getAnwendung()));
       assertThat(gi.getShortname(), equalTo(dto.getShortname()));
-      assertThat(gi.getAccdef(), equalTo(dto.getAccdef()));
       assertThat(gi.getReferredincoming(), equalTo(dto.getReferredincoming()));
       assertThat(
           gi.getOutgoingdate(), equalTo(JacksonData.toXMLGregorianCalendar(dto.getOutgoingdate())));

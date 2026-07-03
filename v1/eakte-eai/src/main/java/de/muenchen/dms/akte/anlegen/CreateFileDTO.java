@@ -5,12 +5,15 @@
 package de.muenchen.dms.akte.anlegen;
 
 import de.muenchen.dms.akte.AkteBasisDTO;
-import java.time.OffsetDateTime;
-import java.util.List;
-
 import de.muenchen.dms.common.model.UserFormsReferenz;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import java.time.OffsetDateTime;
+import java.util.List;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter

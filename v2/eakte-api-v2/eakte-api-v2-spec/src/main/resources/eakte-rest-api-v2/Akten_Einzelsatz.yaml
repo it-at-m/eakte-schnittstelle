@@ -1,0 +1,79 @@
+get:
+  tags:
+    - Akten
+  summary: Akte lesen
+  operationId: LeseAkte
+  parameters:
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/FachverfahrensID'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+    - $ref: 'Akten_Datentypen.yaml#/components/parameters/aktenId'
+  responses:
+    '200':
+      description: Akte wurde gelesen
+      content:
+        application/json:
+          schema:
+            $ref: "Akten_Datentypen.yaml#/components/schemas/AkteResponse"
+    '400':
+      description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+      content:
+        application/json:
+          schema:
+            $ref: "Akten_Datentypen.yaml#/components/schemas/AkteResponse"
+    '401':
+      description: Falscher oder fehlender technischer Nutzer.
+      content:
+        application/json:
+          schema:
+            $ref: "Akten_Datentypen.yaml#/components/schemas/AkteResponse"
+    '500':
+      description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+      content:
+        application/json:
+          schema:
+            $ref: "Akten_Datentypen.yaml#/components/schemas/AkteResponse"
+
+put:
+  tags:
+    - Akten
+  summary: Akte bearbeiten
+  operationId: BearbeiteAkte
+  parameters:
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/FachverfahrensID'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+    - $ref: 'Akten_Datentypen.yaml#/components/parameters/aktenId'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: 'Akten_Datentypen.yaml#/components/schemas/Akte'
+    required: true
+  responses:
+    '204':
+      description: Akte wurde geändert
+      content:
+        application/json:
+          schema:
+            $ref: "_GlobaleDatentypen.yaml#/components/schemas/NoContentResponse"
+    '400':
+      description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+      content:
+        application/json:
+          schema:
+            $ref: "_GlobaleDatentypen.yaml#/components/schemas/NoContentResponse"
+    '401':
+      description: Falscher oder fehlender technischer Nutzer.
+      content:
+        application/json:
+          schema:
+            $ref: "_GlobaleDatentypen.yaml#/components/schemas/NoContentResponse"
+    '500':
+      description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+      content:
+        application/json:
+          schema:
+            $ref: "_GlobaleDatentypen.yaml#/components/schemas/NoContentResponse"
