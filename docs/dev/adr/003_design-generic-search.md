@@ -7,8 +7,8 @@
 
 #### SearchObjNameGI: Searchable Properties
 
-* searchstring "Suchstring für Objektname"
-* objclass "Objektklasse" COOSYSTEM@1.1:objclass
+* searchstring "Suchstring für Objektname" (property reference not documented, probably COOSYSTEM@1.1:objname)
+* objclass "Objektklasse" (COOSYSTEM@1.1:objclass)
 * reference "Referenz des Fachdatum" (COOSYSTEM@1.1:reference)
 * value "Wert des Fachdatum" (COOELAK@1.1001:value)
 
@@ -34,7 +34,7 @@
 ### Deficiencies of the existing Search Calls in LHMBAI
 
 * Only very limited set of object properties is searchable
-* Criteria matching works only by exakt or pattern matching for strings, no real comparison operators. e.g. for date ranges, numbers of enumeration types
+* Criteria matching works only by exakt or pattern matching for strings, no real comparison operators. e.g. for date ranges, numbers or enumeration types
 * Only simple matching with one pattern per property (no boolean operators like AND/OR/NOT)
 * No search for object class 'Document'
 * "Definition für Verfahren" not supported at all
