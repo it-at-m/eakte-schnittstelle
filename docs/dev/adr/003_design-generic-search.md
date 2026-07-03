@@ -68,12 +68,49 @@ de.bayern.itdlz.eakte.eas.egovclient.EgovClientCxf#buildQueryString
 ## Overall Design of a true Generic Search
 
 A broadly usable search functionality should support:
+
 * all object properties with the appropriate datatypes thus supporting the related comparison operators (<, >, ...), especially for numbers (including currencies) and dates
 * arbitrary boolean combinations of criteria (AND, OR, NOT, parentheses)
 * especially supporting dynamic attributes from 'Definition für Verfahren'
 * speaking attribute names (not cryptic references or COO-adresses) 
-* attribute names that are retained between differens systems / release stages
-* 
+* attribute names (and thus query strings / where conditions) that are retained between differens systems / release stages
+
+## Possible Solutions
+
+* use the search functionality of BAY-eAS (pattern matching, single pattern per attribute), but extend it somehow to cover DfV attributes as well
+* create a new search method, that uses the SOAPSearch call of the FSCGOVXML software component (a.k.a. "standard library"), but in a more flexible way as BAY-eAS
+
+## Design Considerations and Decisions
+
+[DRAFT!]
+
+* Searching is done in the context of a certain object class, specifically one of:
+  * Aktenplaneinträge
+  * Akten
+  * Vorgänge
+  * Dokumente
+  * (Schriftstücke?)
+  * Organisationseinheiten
+  * Benutzer
+  
+  Thus the result set is homogenous and (except for the dynamic nature of the DfV attributes) can be processed straight forward without having to check for unknown object classes or unknown attributes.
+
+* Implementation note: As a result of separate class-confined searches, the "FROM" clause of the Fabasoft query string (specifying the object classes to consider in the search) would be constant. The attribute list would be partially constant, if we want to return at least the static set of the previously available attributes (extended by the DfV attributes).
+
+* The search API would include a flexible way to specify restrictions ("WHERE" clause of the Fabasoft QL), allowing for multiple conditions, comparison operators and boolean combinators.
+
+* As syntax of the query specification there are at least two possibilities:
+  * create an own suitable syntax and translate this into the internal Fabasoft Query Language
+  * use the Fabasoft Query Language
+
+* The use of the Fabasoft QL is to be preferred with respect to the effort and to provide a consistent mechanism between ths eGov-Suite GUI and our API. Thus a developer can evaluate a query in the GUI and then translate this into an API call.
+
+* Security considerations when using Fabasoft QL: it's uncritical because we only allow the WHERE clause to be specified, we only allow read access and all query results are filtered by the Fabasoft kernel according to the roles and permissions of the user context. As far as the Fabasoft documentation (app-ducx manual) goes is no possibility of an equivalent of "SQL injection". The resulting Fabasoft QL will be parsed, translated and executed by the eGov-Suite kernel in a safe manner.
+
+* To shield the external world (the Fachverfahren / API) from the internal workings of the DMS it is recommendable to **not** use internal IDs (COO addresses, 'programming name') of the eGov-Suite, but to use neutral identifiers for the attribute references. These should be (as we are in the context of a RESTful API) the URLs of the attributes, or (maybe more user friendly) the labels of those attributes as they are seen on the Web interface.
+
+* Contrary to the assumption of Herrn Rabis (Fabasoft) it seems that using the query functionality to retrieve single resources or the children of a parent resource is feasable and not necessarily connected with a relevant performance penalty. An internal call of the kernel 'getProperties' would probably do exactly what the explicit query does: perfrom a search where the reference (parent object) is the single restriction.
+
 
 
 
