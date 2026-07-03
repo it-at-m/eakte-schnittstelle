@@ -39,6 +39,7 @@ public class PayloadLogger implements Processor {
   private void logRequest(final Exchange exchange) {
     try {
       // request
+      final String camelUri = exchange.getIn().getHeader("CamelServletContextPath", String.class);
       final String uriString = exchange.getIn().getHeader(Exchange.HTTP_URI, String.class);
       final URI uri = new URI(uriString);
       final String method = exchange.getIn().getHeader(Exchange.HTTP_METHOD, String.class);
@@ -56,7 +57,7 @@ public class PayloadLogger implements Processor {
       final String jobPosition = exchange.getProperty(QueryProperties.PROPERTY_ROLLE, String.class);
       log.atInfo()
           .addKeyValue("method", method)
-          .addKeyValue("uri", uriString)
+          .addKeyValue("uri", camelUri)
           .addKeyValue("params", params)
           .addKeyValue("bodyFields", bodyFields)
           .addKeyValue("authUser", authUser)
