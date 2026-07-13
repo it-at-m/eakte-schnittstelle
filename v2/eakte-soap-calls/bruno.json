@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "WSDL Service",
+  "name": "eAkte SOAP Calls",
   "type": "collection",
   "ignore": [
     "node_modules",

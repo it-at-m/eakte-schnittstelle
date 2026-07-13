@@ -1,0 +1,62 @@
+meta {
+  name: SOAPSearch 2026-07-13 - DfV-Attribute alle Ebenen
+  type: http
+  seq: 4
+}
+
+post {
+  url: https://eakte26-k2-authldap.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: inherit
+}
+
+params:query {
+  WEBSVC: FSCGOVXML_1_1001_DefaultWebServiceDefinition
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPSearch
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fsc="http://schemas.fabasoft.com/websvc/FSCGOVXML_1_1001_DefaultWebServiceDefinition/" xmlns:urn="urn:schemas-fabasoft-com:bai:search">
+     <soapenv:Body>
+        <urn:SOAPSearchRequest>
+            <urn:query>             
+             LIMIT 100
+  	         SELECT *
+  	         FROM COOELAK@1.1001:SubjectArea 
+  	         WHERE EGOVTEMPLATE@15.1001:availabledefinitions is not null
+           </urn:query>
+           <!--
+             Bedeutung der in der attrlist zurückgelieferten Attribute:
+             - Name des Aktenplaneintrags
+             - Aktenplankennzeichen
+             - Name der Definition für Verfahren auf AKtenebene
+             - Name der Definition für Verfahren auf Vorgangsebene
+             Repetierend danach die mehrfachen Attributinformationen (mit korrespondierenden Index-Werten in 'fsc1:index'):
+             - Name des Attributs
+             - Vollständige Referenz des Attributs (wie in WHERE-Klausel und in 'attrlist' eines SOAPSearch Calls zu verwenden)
+             - Typ des Attributs (nur Name; benötigt: typenumvalues?)
+           -->
+           <urn:attrlist>
+              <urn:attr>COOSYSTEM@1.1:objname</urn:attr> 
+              <urn:attr>COOELAK@1.1001:basenr</urn:attr>
+             
+              <urn:attr>EGOVTEMPLATE@15.1001:availabledefinitions[0].COOSYSTEM@1.1:objname</urn:attr>
+              <urn:attr>EGOVTEMPLATE@15.1001:availabledefinitions[0].definitionclass.COOSYSTEM@1.1:objname</urn:attr>
+              <urn:attr>EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:definitionuseform.FSCUSERFORMS@1.1001:releasecategory.COOTC@1.1001:categoryattributes.COOSYSTEM@1.1:objname</urn:attr>
+              <urn:attr>EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:definitionuseform.FSCUSERFORMS@1.1001:releasecategory.COOTC@1.1001:categoryattributes.COOSYSTEM@1.1:fullreference</urn:attr>
+              <urn:attr>EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:definitionuseform.FSCUSERFORMS@1.1001:releasecategory.COOTC@1.1001:categoryattributes.COOSYSTEM@1.1:attrtype.COOSYSTEM@1.1:objname</urn:attr>
+  
+              <urn:attr>EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0].COOSYSTEM@1.1:objname</urn:attr>
+              <urn:attr>EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0].definitionclass.COOSYSTEM@1.1:objname</urn:attr>
+              <urn:attr>EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:definitionuseform.FSCUSERFORMS@1.1001:releasecategory.COOTC@1.1001:categoryattributes.COOSYSTEM@1.1:objname</urn:attr>
+              <urn:attr>EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:definitionuseform.FSCUSERFORMS@1.1001:releasecategory.COOTC@1.1001:categoryattributes.COOSYSTEM@1.1:fullreference</urn:attr>
+              <urn:attr>EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:definitionuseform.FSCUSERFORMS@1.1001:releasecategory.COOTC@1.1001:categoryattributes.COOSYSTEM@1.1:attrtype.COOSYSTEM@1.1:objname</urn:attr>
+           </urn:attrlist>
+        </urn:SOAPSearchRequest>
+     </soapenv:Body>
+  </soapenv:Envelope>
+}

@@ -1,0 +1,46 @@
+meta {
+  name: SOAPSearch 2026-07-10 - Vorgänge mit Bedingung auf DfV-Attribut
+  type: http
+  seq: 3
+}
+
+post {
+  url: https://eakte26-k2-authldap.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: inherit
+}
+
+params:query {
+  WEBSVC: FSCGOVXML_1_1001_DefaultWebServiceDefinition
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPSearch
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fsc="http://schemas.fabasoft.com/websvc/FSCGOVXML_1_1001_DefaultWebServiceDefinition/" xmlns:urn="urn:schemas-fabasoft-com:bai:search">
+     <soapenv:Body>
+        <urn:SOAPSearchRequest>
+           <urn:query>
+             NOCHECK
+  	         SELECT *
+  	         FROM DEPRECONFIG@15.1001:Procedure 
+  	         WHERE
+  	           .COOTC@1.1001:objcategory.COOSYSTEM@1.1:objname = "FH - Formular für Custom-Attribute"
+  	         AND
+  	           .lhmdfvpublic@2150.8800:fhattr1 = "text 1"
+           </urn:query>
+           <urn:attrlist>
+              <urn:attr>COOSYSTEM@1.1:objname</urn:attr>
+   
+              <urn:attr>COOTC@1.1001:objcategory.COOSYSTEM@1.1:objaddress</urn:attr>
+              <urn:attr>COOTC@1.1001:objcategory.COOSYSTEM@1.1:objname</urn:attr>
+              <urn:attr>COOTC@1.1001:objcategory.COOSYSTEM@1.1:objclass.COOSYSTEM@1.1:objname</urn:attr>
+              <urn:attr>lhmdfvpublic@2150.8800:fhattr1</urn:attr>
+           </urn:attrlist>
+        </urn:SOAPSearchRequest>
+     </soapenv:Body>
+  </soapenv:Envelope>
+}
