@@ -9,10 +9,16 @@ get:
   parameters:
     - name: "reference"
       description: |
-        Programmiername der Verfahrensdaten\
-        Kann in der GUI angezeigt werden, wenn man in den Eigenschaften eines Vorgangs 
-        die Verfahrensdefinition anzeigen lässt.\
-        Mit SHIFT-CONTROL-# kann man den Programmiernamen der Verfahrensdaten anzeigen lassen.
+        Referenz/Programmiername der Verfahrensdaten\
+        Die Referenz der Verfahrenseigenschaften sollte im Fachkonzept und Systemspezifikation vorgegeben werden.\
+        
+        Er kann in der GUI angezeigt werden, wenn man 
+        * in den "Eigenschaften" des Objekts (Akte, Vorgang, Dokument) 
+        die entsprechenden Reiter mit den Verfahrensdaten öffnet und 
+        * mit SHIFT-CONTROL-# den Referenznamen der Verfahrensdaten anzeigen läßt 
+        * oder 
+        * wenn man unter dem Menuepunkt "Erstellung" des Objektes die "Eigenschaften" bei "Kategorie" anzeigen läßt. 
+        Dort werden alle verfügbaren Verfahrensdaten eines Objektes mit ihren Referenzen angezeigt.
       in: "query"
       required: true
       schema:

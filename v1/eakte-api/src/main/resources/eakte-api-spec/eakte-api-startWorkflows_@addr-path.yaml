@@ -3,7 +3,8 @@ put:
     - /startWorkflows
   summary: Laufweg starten
   description:
-    Starten eines vordefinierten Workflows auf einem Schriftgutobjekt (Vorgang oder Umlaufmappe). 
+    Starten eines vordefinierten Workflows auf einem Schriftgutobjekt (Vorgang oder Umlaufmappe).
+    Dabei wird das entsprechende Objekt sowie das Muster für Verfügung-Objekt als COO-Adresse übergeben.
     Dabei wird das entsprechende Objekt sowie das Muster für Verfügung-Objekt als COO-Adresse übergeben.
   operationId: StartWorkflow
   parameters:

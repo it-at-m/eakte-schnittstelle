@@ -39,13 +39,15 @@ components:
       description: |
         COO-Adresse der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.\
         \
-        Die OE ist dann wichtig anzugeben, 
-        wenn der Nutzer in mehreren OEs zugeordnet ist.\
-        Über diese OE wird der Mandant zugeordnet und 
-        entsprechend die Berechtigungen geprüft.\
         Ohne Angabe der joboe und jobposition 
         wird die eingestellte Standardrolle und OE des Nutzers in der eAkte verwendet.\
-        Wenn die jobposition angegeben wird, muss auch die entsprechende joboe des Nutzers mit angegeben werden unter der er die Rolle hat.
+        Wenn eine bestimmte jobposition angegeben wird, unter der dieser Aufruf ausgeführt werden soll 
+        muss auch die entsprechende joboe des Nutzers mit angegeben werden. 
+        Das kann z.B. notwendig sein, wenn bestimmte Funktionen nur durch Schriftgutverwalter oder Registratur ausgeführt werden dürfen.\
+        Über die OE wird der Mandant zugeordnet und entsprechend die Berechtigungen geprüft.\
+        Hinweis:\
+        Die COO-Adresse für die joboe muss im Fachverfahren in einer Konfigurationsdatei hintelegt werden, da sie nicht per Schnittstelle ausgelesen werden kann und sich ggf. ändern kann. 
+        Meistens ist die joboe innerhalb eines Fachbereichs für alle Benutzer gleich, so dass sie bei Änderungen einfach zu verwalten ist.
       required: false
       schema:
         type: string

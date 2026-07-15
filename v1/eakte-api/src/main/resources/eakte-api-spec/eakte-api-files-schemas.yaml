@@ -8,10 +8,10 @@ components:
         shortname:
           type: string
           description: |
-            Der Titel bildet zusammen mit anderen Metadaten 
-            wie der aktenführenden Organisationseinheit, dem Aktenplankennzeichen oder 
-            der laufenden Nummer den Namen der Akte.
-          example: 2016 Anträge Firma XY
+            Der Name wird in der eAkte gebildet aus dem "Titel der Akte" 
+            ("Aktenplankennzeichen des Aktenplankennzeichens, in dem die Akte liegt"-
+            "laufende Nummer der Akte innerhalb des Aktenplaneintrags")
+          example: 2016 Anträge Firma XY (1001-47)
         filesubj:
           $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Betreff'
         objterms:

@@ -13,9 +13,9 @@ post:
     Das System überprüft ob in der gefundenen Akte 
     bereits ein Vorgang mit dem Titel existiert.
       - Vorgang existiert bereits\
-    Navigieren in den Vorgang
+    Das Dokument wird in dem Vorgang abgelegt
       - Vorgang existiert noch nicht\
-    Ein neuer Vorgang mit dem übergebenen Titel wird angelegt und in den Vorgang navigiert.
+    Ein neuer Vorgang mit dem übergebenen Titel wird angelegt und das Dokument in dem Vorgang abgelegt.
     
     * Eingangsparameter Dokumenttitel (shortnamedocument):\
     Das System überprüft, ob in dem gefundenen Vorgang 
@@ -24,7 +24,7 @@ post:
     Navigieren in das Eingangsdokument
       - Eingangsdokument existiert noch nicht\
     Ein neues Eingangsdokument mit dem übergebenen Titel wird angelegt & 
-    * Im entsprechenden Eingangsdokument wird das Schriftstück erzeugt und in das Eingangsdokument navigiert.
+    * Das Schriftstück wird im entsprechenden Eingangsdokument abgelegt.
   operationId: "CreateCompleteProcedureBusinessData"
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

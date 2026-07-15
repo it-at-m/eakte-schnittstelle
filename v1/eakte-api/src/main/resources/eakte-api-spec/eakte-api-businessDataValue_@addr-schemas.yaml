@@ -10,15 +10,13 @@ components:
           type: string
           description: |
             Referenz des Fachdatums\
-            Hier kann die einfache Referenz des Komponentenobjektes angeführt werden.\
+            Hier kann die einfache Referenz des Komponentenobjektes angeführt werden ("FD_Position" anstelle "COOSYSTEM@1.1:FD_Position".\
             Die Komponentenobjekte können sowohl von Fabasoft in der CFGMUENCHEN-Komponente 
             sowie von Domänenadministratoren in einer lokalen Softwarekomponenten erzeugt werden. 
             Wenn das Fachdaten-Komponentenobjekt gefunden wird, 
             wird diese unabhängig von der darüberliegenden Konfiguration gesetzt 
-            d.h. eine zusätzliche Prüfung ob diese in den darüberliegenden Aktenplaneinträgen vorgesehen ist, 
+            d.h. eine zusätzliche Prüfung, ob diese in den darüberliegenden Aktenplaneinträgen vorgesehen ist, 
             kann nicht erfolgen.
-            
-            Diese Funktion soll bei neuen Schnittstellen nicht mehr benutzt werden.\
             Dafür gibt es die neue Funktion /userFormsData, mit der Verfahrensdaten abgespeichert werden.\
             Für vorhandene Schnittstellen werden ab MUCS26 Fachdaten automatisch in den Verfahrensdaten abgespeichert.
           example: data_dognumber
@@ -28,13 +26,13 @@ components:
             Wert des Fachdatums
             
             Der Wert kann nur gesetzt werden, 
-            wenn auch das Fachdatum-Komponenten-Objekt (Fachdatum_Referenz_X) gefunden wurde.\
+            wenn auch das Fachdatum-Komponenten-Objekt (mit dem Referenznamen) gefunden wurde.\
             Folgende Fachdaten-Typen können übergeben werden – 
-            je nach Datentyp, müssen die Wert im vorab definierten Format übergeben werden:
+            je nach Datentyp, müssen die Werte im vorab definierten Format übergeben werden:
             * Zeichenkettentyp: String wird übergeben und direkt bei der Akte eingetragen
             * Liste von Zeichenketten: String wird übergeben und bei der Akte eingetragen (es kann lediglich eine Zeile/String übergeben werden)
             * Objekt: Die eindeutige COO-Adresse muss angegeben werden.
-            * Objektliste: Es kann lediglich eine COO-Adresse übergeben werden
+            * Objektliste: Liste von COO-Adressen kann übergeben werden
             * Boolescher Typ: Die möglichen Angaben in der Datenquelle sind „Ja“, oder „Nein“. 
             Wenn nichts übergeben wird, wird automatsich "Nein" gesetzt
             * Typ für Datum und Zeit: Das Datumsformat ist in folgendem Format zu übergeben: "DD.MM.YYYY"

@@ -194,5 +194,3 @@ nbdist/
 *.sln
 *.sw?
 v1/eakte-eai/eakte-external-config/application.yml
-**/swagger-dist/**
-**/swagger-ui.html

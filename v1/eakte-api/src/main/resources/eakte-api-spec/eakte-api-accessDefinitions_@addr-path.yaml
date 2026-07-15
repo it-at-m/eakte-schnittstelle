@@ -17,10 +17,10 @@ put:
     Die Vererbung von Zugriffsdefinitionen kann über die Eigenschaft „Rechtevererbung [authorization inheritance]“ 
     gesteuert werden. Auflistung der möglichen Werte zur Übergabe und die Auswirkungen:
     * 0 oder leer: Die Rechtevererbung aus dem Standardprodukt wird verwendet. 
-    Der neue Wert wird rekursiv gesetzt in A b h ä n g i g k e i t von den jeweiligen aktuell gesetzten Werten 
+    Der neue Wert wird rekursiv gesetzt  i n  A b h ä n g i g k e i t von den jeweiligen aktuell gesetzten Werten 
     der untergeordneten Objekte.
-    * 1: Die Zugriffsdefinition wird rekursiv auf alle untergeordneten Objekte vererbt 
-    u n a b h ä n g i g von den jeweiligen aktuell gesetzten Werten der untergeordneten Objekte.
+    * 1: Die Zugriffsdefinition wird rekursiv auf alle untergeordneten Objekte vererbt  
+    u n a b h ä n g i g  von den jeweiligen aktuell gesetzten Werten der untergeordneten Objekte.
     z.B.: beim Setzen der Zugriffsdefinition auf der Akte wird diese auf die 
     enthaltenen Vorgänge und wiederrum auf alle in den Vorgängen enthaltenen Dokumenten vererbt.
     * 2: Die Zugriffsdefinition ändert sich  n u r  b e i  d e m  a u s g e w ä h l t e n  Objekt
@@ -33,8 +33,6 @@ put:
     haben die gleiche Zugriffsdefinition.\
     Beim Setzen einer neuen Zugriffsdefinition der Sachakte ändern sich die Zugriffsdefinitionen 
     aller untergeordneten Vorgänge und Dokumente.
-    Sofern ein Vorgang eine andere Zugriffsdefinition hat, 
-    wird die auf der Sachakte gesetzte Zugriffsdefinition auf die untergeordneten Geschäftsobjekte nicht übernommen.
     
     Szenario 2: Die Sachakte und das Dokument haben die gleiche Zugriffsdefinition, 
     der Vorgang eine andere.\

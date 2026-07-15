@@ -26,7 +26,10 @@ components:
           type: "string"
           description: | 
             Objektname des erzeugten/gefundenen Vorgangs\
-            Der Name wird in der eAkte gebildet aus dem Titel des Vorgangs - eindeutige Nummer des Aktenplankennzeichens - lfdNr der Akte - lfdNr des Vorgangs
+            Der Name wird in der eAkte gebildet aus dem "Titel des Vorgangs" 
+            ("Aktenplankennzeichen des Aktenplankennzeichens, in dem die Akte liegt"-
+            "laufende Nummer der Akte innerhalb des Aktenplaneintrags"-
+            laufende Nummer des Vorgangs innerhalb des Akte")
           example: "2026-05-28 Anträge Firma XY-4 (2002-10-0004)"
         objiddocument:
           type: "string"

@@ -2,6 +2,9 @@ put:
   tags:
     - /businessDataValue
   summary: Setzen/Aktualisieren von Fachdaten
+  description: |
+    Diese Funktion soll bei neuen Schnittstellen nicht mehr benutzt werden.\
+    Dafür gibt es die neue Funktion für Verfahrensdaten PUT /userFormsData
   operationId: UpdateBusinessDataValue
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
