@@ -50,16 +50,15 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: template
+    id: component
     attributes:
-      label: Affected template
+      label: Affected component
       multiple: true
-      description: Name(s) of the affected template(s) (if applicable)
+      description: Name(s) of the affected component(s) (if applicable)
       options:
-        - refarch-frontend
-        - refarch-backend
-        - refarch-eai
-        - refarch-webcomponent
+        - v1/eakte-eai
+        - v2/api-spec
+        - v2/api-gateway
     validations:
       required: false
   - type: input
