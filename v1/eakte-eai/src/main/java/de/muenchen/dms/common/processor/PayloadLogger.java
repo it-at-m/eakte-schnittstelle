@@ -51,10 +51,6 @@ public class PayloadLogger implements Processor {
       // request context
       final String application =
           exchange.getProperty(QueryProperties.PROPERTY_ANWENDUNG, String.class);
-      final String userlogin = exchange.getProperty(QueryProperties.PROPERTY_NUTZER, String.class);
-      final String jobOe =
-          exchange.getProperty(QueryProperties.PROPERTY_ORGANISATIONSEINHEIT, String.class);
-      final String jobPosition = exchange.getProperty(QueryProperties.PROPERTY_ROLLE, String.class);
       log.atInfo()
           .addKeyValue("method", method)
           .addKeyValue("uri", camelUri)
@@ -62,9 +58,6 @@ public class PayloadLogger implements Processor {
           .addKeyValue("bodyFields", bodyFields)
           .addKeyValue("authUser", authUser)
           .addKeyValue("application", application)
-          .addKeyValue("userlogin", userlogin)
-          .addKeyValue("jobOe", jobOe)
-          .addKeyValue("jobPosition", jobPosition)
           .log();
     } catch (final RuntimeException | URISyntaxException e) {
       log.error("Error while logging request");
