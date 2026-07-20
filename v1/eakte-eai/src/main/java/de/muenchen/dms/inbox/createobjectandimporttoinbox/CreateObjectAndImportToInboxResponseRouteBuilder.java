@@ -3,6 +3,7 @@ package de.muenchen.dms.inbox.createobjectandimporttoinbox;
 import static de.muenchen.dms.common.util.JacksonData.getJacksonDataFormat;
 import static de.muenchen.dms.common.util.JacksonData.getMimeMultipartDataFormat;
 
+import de.muenchen.dms.common.processor.PayloadLogger;
 import de.muenchen.dms.common.route.DmsRouteBuilder;
 import de.muenchen.dms.common.route.RouteConstants;
 import de.muenchen.dms.common.route.auth.DmsAuthorizationProcessor;
@@ -34,6 +35,7 @@ public class CreateObjectAndImportToInboxResponseRouteBuilder extends DmsRouteBu
         .process(authorizationProcessor)
         .unmarshal(getMimeMultipartDataFormat())
         .unmarshal(getJacksonDataFormat(CreateObjectAndImportToInboxDTO.class))
+        .process(new PayloadLogger(RouteConstants.REQ_IN))
         .process(createObjectAndImportToInboxProcessor)
         .toD(RouteConstants.DIRECT_PAYLOAD_LOGGING_ENDPOINT)
         .process(createObjectAndImportToInboxResponseProcessor);
