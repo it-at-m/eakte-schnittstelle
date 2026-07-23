@@ -12,7 +12,7 @@
   </parent>
 
   <groupId>de.muenchen.eai</groupId>
-  <artifactId>eakte-api-v2-spring-boot-api-gateway</artifactId>
+  <artifactId>eakte-api-v2-spring-boot-api-gateway-poc</artifactId>
   <version>2.0.1-SNAPSHOT</version>
 
   <licenses>
