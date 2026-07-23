@@ -1,21 +1,6 @@
 server:
   port: 8086
 spring:
-  # Spring JPA
-  jpa:
-    # Logging for database operation
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-  datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    password: admin
-    username: admin
-  flyway:
-    locations:
-      - classpath:db/migration/schema
-      - classpath:db/migration/testdata
   security:
     oauth2:
       resourceserver:
@@ -48,7 +33,7 @@ logging:
       console: # set to empty to disable structured logging locally
   level:
     root: INFO
-    de.muenchen.oss.refarch: DEBUG
+    de.muenchen.oss.eakte: DEBUG
     org.springframework.cache: TRACE
     org.springframework.web: DEBUG
 
@@ -63,4 +48,3 @@ refarch:
   security:
     logging-mode: all
     client-id: ${sso.client}
-    permissions-uri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/token
