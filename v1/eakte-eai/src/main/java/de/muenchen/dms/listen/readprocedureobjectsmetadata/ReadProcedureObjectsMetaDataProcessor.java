@@ -32,8 +32,8 @@ public class ReadProcedureObjectsMetaDataProcessor extends AbstractDMSSoapProces
             final Integer docstate,
             final String bostate,
             final String userlogin,
-            final String jobposition,
             final String joboe,
+            final String jobposition,
             final String businessapp) {
         ReadProcedureGIObjectsMetaData readProcedureGIObjectsMetaData =
                 objectFactory.createReadProcedureGIObjectsMetaData();

@@ -3,7 +3,6 @@ package de.muenchen.dms.listen.readprocedureobjectsmetadata;
 import de.muenchen.dms.common.route.DmsRouteBuilder;
 import de.muenchen.dms.common.route.RestOperationDefinitionFactory;
 import de.muenchen.dms.common.route.RouteConstants;
-import de.muenchen.dms.listen.readdocumentobjectmetadata.ReadDocumentObjectMetaDataResponseDTO;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +21,7 @@ public class ReadProcedureObjectsMetaDataRouteBuilder extends DmsRouteBuilder {
                 .params(RestOperationDefinitionFactory.createObjectHeaderReadSubject())
                 .responseMessages(
                         RestOperationDefinitionFactory.createBaseResponseMsgDefinition(
-                                ReadDocumentObjectMetaDataResponseDTO.class))
+                                ReadProcedureObjectsMetaDataResponseDTO.class))
                 .to(RouteConstants.DIRECT_READ_PROCEDURE_OBJECTS_META_DATA);
     }
 }

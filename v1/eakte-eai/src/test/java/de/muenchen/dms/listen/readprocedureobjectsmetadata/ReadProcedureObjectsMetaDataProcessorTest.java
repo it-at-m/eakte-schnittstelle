@@ -41,7 +41,7 @@ public class ReadProcedureObjectsMetaDataProcessorTest {
                 exchange.getMessage().getBody(ReadProcedureGIObjectsMetaData.class);
 
         assertThat(header, equalTo(ReadProcedureGIObjectsMetaData.class.getSimpleName()));
-        assertNotNull(readProcedureGIObjectsMetaData, "ReadSubjectAreaGIObjectsMetaData is null");
+        assertNotNull(readProcedureGIObjectsMetaData, "ReadProcedureGIObjectsMetaData is null");
         assertEquals(
                 NUTZER, readProcedureGIObjectsMetaData.getUserlogin(), "Userlogin stimmt nicht überein");
         assertEquals(
