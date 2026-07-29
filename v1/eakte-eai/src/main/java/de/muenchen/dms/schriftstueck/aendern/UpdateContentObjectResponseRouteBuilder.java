@@ -6,6 +6,7 @@ import static de.muenchen.dms.common.route.RouteConstants.ROUTE_ID_UPDATE_CONTEN
 import static de.muenchen.dms.common.util.JacksonData.getJacksonDataFormat;
 import static de.muenchen.dms.common.util.JacksonData.getMimeMultipartDataFormat;
 
+import de.muenchen.dms.common.processor.PayloadLogger;
 import de.muenchen.dms.common.route.DmsRouteBuilder;
 import de.muenchen.dms.common.route.RouteConstants;
 import de.muenchen.dms.common.route.auth.DmsAuthorizationProcessor;
@@ -36,10 +37,12 @@ public class UpdateContentObjectResponseRouteBuilder extends DmsRouteBuilder {
         .choice()
         .when(simple("${body} != null"))
         .unmarshal(getJacksonDataFormat(UpdateContentObjectDTO.class))
+        .process(new PayloadLogger(RouteConstants.REQ_IN))
         .process(updateContentObjectProcessor)
         .toD(RouteConstants.DIRECT_PAYLOAD_LOGGING_ENDPOINT)
         .process(updateContentObjectResponseProcessor)
         .otherwise()
+        .process(new PayloadLogger(RouteConstants.REQ_IN))
         .process(updateContentObjectProcessor)
         .toD(RouteConstants.DIRECT_PAYLOAD_LOGGING_ENDPOINT)
         .process(updateContentObjectResponseProcessor)

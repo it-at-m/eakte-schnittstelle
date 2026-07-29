@@ -10,6 +10,7 @@ import static de.muenchen.dms.common.route.RouteConstants.ROUTE_ID_CREATE_INCOMI
 import static de.muenchen.dms.common.util.JacksonData.getJacksonDataFormat;
 import static de.muenchen.dms.common.util.JacksonData.getMimeMultipartDataFormat;
 
+import de.muenchen.dms.common.processor.PayloadLogger;
 import de.muenchen.dms.common.route.DmsRouteBuilder;
 import de.muenchen.dms.common.route.RouteConstants;
 import de.muenchen.dms.common.route.auth.DmsAuthorizationProcessor;
@@ -38,6 +39,7 @@ public class CreateIncomingResponseRouteBuilder extends DmsRouteBuilder {
         .process(authorizationProcessor)
         .unmarshal(getMimeMultipartDataFormat())
         .unmarshal(getJacksonDataFormat(CreateIncomingBasisAnfrageDTO.class))
+        .process(new PayloadLogger(RouteConstants.REQ_IN))
         .process(createIncomingProcessor)
         .toD(RouteConstants.DIRECT_PAYLOAD_LOGGING_ENDPOINT)
         .process(createIncomingResponseProcessor);

@@ -2,6 +2,7 @@ package de.muenchen.dms.userformsdata.update;
 
 import static de.muenchen.dms.common.util.JacksonData.getJacksonDataFormat;
 
+import de.muenchen.dms.common.processor.PayloadLogger;
 import de.muenchen.dms.common.route.DmsRouteBuilder;
 import de.muenchen.dms.common.route.RouteConstants;
 import de.muenchen.dms.common.route.auth.DmsAuthorizationProcessor;
@@ -30,6 +31,7 @@ public class UpdateUserFormsDataResponseRouteBuilder extends DmsRouteBuilder {
         .convertBodyTo(String.class)
         .process(authorizationProcessor)
         .unmarshal(getJacksonDataFormat(UpdateUserFormsDataRequestDTO.class))
+        .process(new PayloadLogger(RouteConstants.REQ_IN))
         .process(updateUserFormsDataProcessor)
         .toD(RouteConstants.DIRECT_PAYLOAD_LOGGING_ENDPOINT)
         .process(updateUserFormsDataResponseProcessor);

@@ -3,6 +3,7 @@ package de.muenchen.dms.vorgang.anlegen.complete;
 import static de.muenchen.dms.common.util.JacksonData.getJacksonDataFormat;
 import static de.muenchen.dms.common.util.JacksonData.getMimeMultipartDataFormat;
 
+import de.muenchen.dms.common.processor.PayloadLogger;
 import de.muenchen.dms.common.route.DmsRouteBuilder;
 import de.muenchen.dms.common.route.RouteConstants;
 import de.muenchen.dms.common.route.auth.DmsAuthorizationProcessor;
@@ -32,6 +33,7 @@ public class CreateCompleteProcedureResponseRouteBuilder extends DmsRouteBuilder
         .process(authorizationProcessor)
         .unmarshal(getMimeMultipartDataFormat())
         .unmarshal(getJacksonDataFormat(CreateCompleteProcedureBodyParams.class))
+        .process(new PayloadLogger(RouteConstants.REQ_IN))
         .process(createCompleteProcedureProcessor)
         .toD(RouteConstants.DIRECT_PAYLOAD_LOGGING_ENDPOINT)
         .process(createCompleteProcedureResponseProcessor);

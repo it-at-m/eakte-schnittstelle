@@ -9,14 +9,13 @@ import static de.muenchen.dms.common.util.JacksonData.getJacksonDataFormat;
 import de.muenchen.dms.common.DmsResponseFluentApi.DmsRequestApi;
 import de.muenchen.dms.common.DmsResponseFluentApi.DmsResponseApi;
 import de.muenchen.dms.common.DmsResponseFluentApi.DmsResponseFluentApiDone;
+import de.muenchen.dms.common.processor.PayloadLogger;
+import lombok.RequiredArgsConstructor;
 import org.apache.camel.Processor;
 
+@RequiredArgsConstructor
 public abstract class DmsResponseRouteBuilder extends DmsRouteBuilder {
-  private Processor authorizationProcessor;
-
-  protected DmsResponseRouteBuilder(Processor authorizationProcessor) {
-    this.authorizationProcessor = authorizationProcessor;
-  }
+  private final Processor authorizationProcessor;
 
   public DmsRequestApi soap(String id) {
     return new RouteSoapData(id);
@@ -80,6 +79,7 @@ public abstract class DmsResponseRouteBuilder extends DmsRouteBuilder {
           .when(exchange -> getClassToUnmarshal() != null)
           .unmarshal(getJacksonDataFormat(getClassToUnmarshal()))
           .end()
+          .process(new PayloadLogger(RouteConstants.REQ_IN))
           .process(getRequestProcessor())
           .toD(RouteConstants.DIRECT_PAYLOAD_LOGGING_ENDPOINT)
           .process(getResponseProcessor());
