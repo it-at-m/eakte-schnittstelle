@@ -7,11 +7,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
@@ -172,20 +172,22 @@ public class PayloadLogger implements Processor {
     if (object == null) {
       return Collections.emptyList();
     }
-    return Arrays.stream(object.getClass().getDeclaredFields())
-        .map(
-            field -> {
-              field.setAccessible(true);
-              try {
-                if (field.get(object) != null) {
-                  return field.getName();
-                }
-              } catch (IllegalAccessException ignored) {
-              }
-              return null;
-            })
-        .filter(Objects::nonNull)
-        .toList();
+    final List<String> fields = new ArrayList<>();
+    Class<?> clazz = object.getClass();
+    while (clazz != null && clazz != Object.class) {
+      for (Field field : clazz.getDeclaredFields()) {
+        field.setAccessible(true);
+        try {
+          if (field.get(object) != null) {
+            fields.add(field.getName());
+          }
+        } catch (final IllegalAccessException ignored) {
+        }
+      }
+      clazz = clazz.getSuperclass();
+    }
+
+    return fields;
   }
 
   private void logMessageContentsList(MessageContentsList messageContentsList) {
