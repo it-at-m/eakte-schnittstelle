@@ -32,7 +32,7 @@ public class VorgangController implements VorgangApi {
             final Optional<List<String>> attributes,
             final HttpServletRequest servletRequest) {
         // call
-        final RequestContext requestContext = new RequestContext(fachverfahrensID, loginName, stelle, organisationseinheit);
+        final RequestContext requestContext = new RequestContext(fachverfahrensID, loginName, organisationseinheit, stelle);
         final SearchResult result = vorgangInPort.searchVorgang(requestContext,
                 scope.orElse(null),
                 bedingungen.orElseThrow(),

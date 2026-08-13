@@ -4,6 +4,6 @@ import java.math.BigInteger;
 
 public class ContentAttribute extends Attribute<byte[]> {
     public ContentAttribute(final String reference, final BigInteger index, final byte[] value) {
-        super(AttributeType.DATE, reference, index, value);
+        super(AttributeType.CONTENT, reference, index, value);
     }
 }

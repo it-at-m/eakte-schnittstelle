@@ -7,7 +7,6 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
@@ -18,7 +17,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 DmsResponseException.class
         }
     )
-    public ErrorResponse handleDmsException(final DmsResponseException ex, final WebRequest request) {
+    public ErrorResponse handleDmsException(final DmsResponseException ex) {
         final HttpStatusCode statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
         final ProblemDetail problemDetail = ProblemDetail.forStatus(statusCode);
         problemDetail.setDetail(ex.getMessage());

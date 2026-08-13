@@ -46,7 +46,3 @@ refarch:
   security:
     logging-mode: all
     client-id: ${sso.client}
-
-fabasoft:
-  url: https://eakte26-k2-authldap.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
-  username: simon.hirtreiter

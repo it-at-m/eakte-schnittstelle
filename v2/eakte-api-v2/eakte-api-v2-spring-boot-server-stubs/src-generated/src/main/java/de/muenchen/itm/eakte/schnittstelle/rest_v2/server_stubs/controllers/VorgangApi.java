@@ -84,7 +84,8 @@ public interface VorgangApi {
             })
         },
         security = {
-            @SecurityRequirement(name = "basicAuth")
+            @SecurityRequirement(name = "basicAuth"),
+            @SecurityRequirement(name = "bearerAuth")
         }
     )
     @RequestMapping(
@@ -110,17 +111,17 @@ public interface VorgangApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"easError\" : { \"easDetail\" : \"easDetail\", \"easFehler\" : \"easFehler\", \"easFehlercode\" : 0 }, \"error\" : \"error\", \"message\" : \"message\", \"status\" : 0 }";
+                    String exampleString = "{ \"instance\" : \"instance\", \"dmsErrorReference\" : \"dmsErrorReference\", \"detail\" : \"detail\", \"title\" : \"title\", \"status\" : 0 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"easError\" : { \"easDetail\" : \"easDetail\", \"easFehler\" : \"easFehler\", \"easFehlercode\" : 0 }, \"error\" : \"error\", \"message\" : \"message\", \"status\" : 0 }";
+                    String exampleString = "{ \"instance\" : \"instance\", \"dmsErrorReference\" : \"dmsErrorReference\", \"detail\" : \"detail\", \"title\" : \"title\", \"status\" : 0 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"easError\" : { \"easDetail\" : \"easDetail\", \"easFehler\" : \"easFehler\", \"easFehlercode\" : 0 }, \"error\" : \"error\", \"message\" : \"message\", \"status\" : 0 }";
+                    String exampleString = "{ \"instance\" : \"instance\", \"dmsErrorReference\" : \"dmsErrorReference\", \"detail\" : \"detail\", \"title\" : \"title\", \"status\" : 0 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

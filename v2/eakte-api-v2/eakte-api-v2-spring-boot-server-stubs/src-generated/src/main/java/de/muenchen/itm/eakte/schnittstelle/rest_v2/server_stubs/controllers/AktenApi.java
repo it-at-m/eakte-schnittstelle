@@ -83,7 +83,8 @@ public interface AktenApi {
             })
         },
         security = {
-            @SecurityRequirement(name = "basicAuth")
+            @SecurityRequirement(name = "basicAuth"),
+            @SecurityRequirement(name = "bearerAuth")
         }
     )
     @RequestMapping(
@@ -165,7 +166,8 @@ public interface AktenApi {
             })
         },
         security = {
-            @SecurityRequirement(name = "basicAuth")
+            @SecurityRequirement(name = "basicAuth"),
+            @SecurityRequirement(name = "bearerAuth")
         }
     )
     @RequestMapping(
@@ -244,7 +246,8 @@ public interface AktenApi {
             })
         },
         security = {
-            @SecurityRequirement(name = "basicAuth")
+            @SecurityRequirement(name = "basicAuth"),
+            @SecurityRequirement(name = "bearerAuth")
         }
     )
     @RequestMapping(
@@ -324,7 +327,8 @@ public interface AktenApi {
             })
         },
         security = {
-            @SecurityRequirement(name = "basicAuth")
+            @SecurityRequirement(name = "basicAuth"),
+            @SecurityRequirement(name = "bearerAuth")
         }
     )
     @RequestMapping(

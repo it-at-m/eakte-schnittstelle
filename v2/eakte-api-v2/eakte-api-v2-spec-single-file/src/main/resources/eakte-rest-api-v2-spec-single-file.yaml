@@ -14,6 +14,7 @@ servers:
   - url: http://localhost:8080
 security:
   - basicAuth: []
+  - bearerAuth: []
 paths:
   /api/v2/akten:
     post:
@@ -1019,17 +1020,19 @@ components:
         Container für RFC9457 Fehlermeldung und konkrete Fabasoft Fehlermeldung falls Ursache
       required:
         - status
-        - error
+        - title
       properties:
         status:
           type: integer
           format: int32
-        error:
+        title:
           type: string
-        message:
+        instance:
           type: string
-        easError:
-          $ref: '#/components/schemas/EAkteSchnittstelleError'
+        detail:
+          type: string
+        dmsErrorReference:
+          type: string
   headers:
     Location:
       description: URL der neu angelegten Ressource

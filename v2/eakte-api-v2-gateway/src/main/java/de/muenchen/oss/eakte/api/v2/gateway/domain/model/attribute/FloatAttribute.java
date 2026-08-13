@@ -4,6 +4,6 @@ import java.math.BigInteger;
 
 public class FloatAttribute extends Attribute<Float> {
     public FloatAttribute(final String reference, final BigInteger index, final float value) {
-        super(AttributeType.STRING, reference, index, value);
+        super(AttributeType.FLOAT, reference, index, value);
     }
 }

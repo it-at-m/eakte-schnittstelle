@@ -80,7 +80,8 @@ public interface AttributbeschreibungenApi {
             })
         },
         security = {
-            @SecurityRequirement(name = "basicAuth")
+            @SecurityRequirement(name = "basicAuth"),
+            @SecurityRequirement(name = "bearerAuth")
         }
     )
     @RequestMapping(

@@ -18,6 +18,9 @@ public class FabasoftErrorHandler {
 
     public DmsResponseException handleSoapFault(final String name, final WebServiceException e) {
         if (e.getCause() instanceof SoapFault sf) {
+            if (sf.getDetail() == null) {
+                return new DmsResponseException(null, sf.getMessage(), e);
+            }
             final NodeList codeNodes = sf.getDetail().getElementsByTagNameNS(FS_NAMESPACE, TAG_ERROR_REFERENCE);
             final String code = codeNodes.getLength() == 1 ? codeNodes.item(0).getTextContent() : null;
             return new DmsResponseException(code, sf.getMessage(), e);

@@ -25,7 +25,9 @@ components:
       $ref: '_SicherheitsSchemata.yaml#/components/securitySchemes/bearerAuth'
 
 security:
+  # TODO rm basicAuth?
   - basicAuth: []
+  - bearerAuth: []
 
 paths:
 

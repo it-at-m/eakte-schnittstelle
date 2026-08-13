@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.EAkteSchnittstelleError;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -26,11 +25,13 @@ public class ErrorResponse {
 
   private Integer status;
 
-  private String error;
+  private String title;
 
-  private Optional<String> message = Optional.empty();
+  private Optional<String> instance = Optional.empty();
 
-  private Optional<EAkteSchnittstelleError> easError = Optional.empty();
+  private Optional<String> detail = Optional.empty();
+
+  private Optional<String> dmsErrorReference = Optional.empty();
 
   public ErrorResponse() {
     super();
@@ -39,9 +40,9 @@ public class ErrorResponse {
   /**
    * Constructor with only required parameters
    */
-  public ErrorResponse(Integer status, String error) {
+  public ErrorResponse(Integer status, String title) {
     this.status = status;
-    this.error = error;
+    this.title = title;
   }
 
   public ErrorResponse status(Integer status) {
@@ -65,67 +66,88 @@ public class ErrorResponse {
     this.status = status;
   }
 
-  public ErrorResponse error(String error) {
-    this.error = error;
+  public ErrorResponse title(String title) {
+    this.title = title;
     return this;
   }
 
   /**
-   * Get error
-   * @return error
+   * Get title
+   * @return title
    */
   @NotNull 
-  @Schema(name = "error", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("error")
-  public String getError() {
-    return error;
+  @Schema(name = "title", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("title")
+  public String getTitle() {
+    return title;
   }
 
-  @JsonProperty("error")
-  public void setError(String error) {
-    this.error = error;
+  @JsonProperty("title")
+  public void setTitle(String title) {
+    this.title = title;
   }
 
-  public ErrorResponse message(String message) {
-    this.message = Optional.ofNullable(message);
+  public ErrorResponse instance(String instance) {
+    this.instance = Optional.ofNullable(instance);
     return this;
   }
 
   /**
-   * Get message
-   * @return message
+   * Get instance
+   * @return instance
    */
   
-  @Schema(name = "message", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("message")
-  public Optional<String> getMessage() {
-    return message;
+  @Schema(name = "instance", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("instance")
+  public Optional<String> getInstance() {
+    return instance;
   }
 
-  @JsonProperty("message")
-  public void setMessage(Optional<String> message) {
-    this.message = message;
+  @JsonProperty("instance")
+  public void setInstance(Optional<String> instance) {
+    this.instance = instance;
   }
 
-  public ErrorResponse easError(EAkteSchnittstelleError easError) {
-    this.easError = Optional.ofNullable(easError);
+  public ErrorResponse detail(String detail) {
+    this.detail = Optional.ofNullable(detail);
     return this;
   }
 
   /**
-   * Get easError
-   * @return easError
+   * Get detail
+   * @return detail
    */
-  @Valid 
-  @Schema(name = "easError", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("easError")
-  public Optional<EAkteSchnittstelleError> getEasError() {
-    return easError;
+  
+  @Schema(name = "detail", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("detail")
+  public Optional<String> getDetail() {
+    return detail;
   }
 
-  @JsonProperty("easError")
-  public void setEasError(Optional<EAkteSchnittstelleError> easError) {
-    this.easError = easError;
+  @JsonProperty("detail")
+  public void setDetail(Optional<String> detail) {
+    this.detail = detail;
+  }
+
+  public ErrorResponse dmsErrorReference(String dmsErrorReference) {
+    this.dmsErrorReference = Optional.ofNullable(dmsErrorReference);
+    return this;
+  }
+
+  /**
+   * Get dmsErrorReference
+   * @return dmsErrorReference
+   */
+  
+  @Schema(name = "dmsErrorReference", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("dmsErrorReference")
+  public Optional<String> getDmsErrorReference() {
+    return dmsErrorReference;
+  }
+
+  @JsonProperty("dmsErrorReference")
+  public void setDmsErrorReference(Optional<String> dmsErrorReference) {
+    this.dmsErrorReference = dmsErrorReference;
   }
 
   @Override
@@ -138,14 +160,15 @@ public class ErrorResponse {
     }
     ErrorResponse errorResponse = (ErrorResponse) o;
     return Objects.equals(this.status, errorResponse.status) &&
-        Objects.equals(this.error, errorResponse.error) &&
-        Objects.equals(this.message, errorResponse.message) &&
-        Objects.equals(this.easError, errorResponse.easError);
+        Objects.equals(this.title, errorResponse.title) &&
+        Objects.equals(this.instance, errorResponse.instance) &&
+        Objects.equals(this.detail, errorResponse.detail) &&
+        Objects.equals(this.dmsErrorReference, errorResponse.dmsErrorReference);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(status, error, message, easError);
+    return Objects.hash(status, title, instance, detail, dmsErrorReference);
   }
 
   @Override
@@ -153,9 +176,10 @@ public class ErrorResponse {
     StringBuilder sb = new StringBuilder();
     sb.append("class ErrorResponse {\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    error: ").append(toIndentedString(error)).append("\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
-    sb.append("    easError: ").append(toIndentedString(easError)).append("\n");
+    sb.append("    title: ").append(toIndentedString(title)).append("\n");
+    sb.append("    instance: ").append(toIndentedString(instance)).append("\n");
+    sb.append("    detail: ").append(toIndentedString(detail)).append("\n");
+    sb.append("    dmsErrorReference: ").append(toIndentedString(dmsErrorReference)).append("\n");
     sb.append("}");
     return sb.toString();
   }
