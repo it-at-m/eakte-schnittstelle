@@ -1,0 +1,24 @@
+id: add client
+author: Default
+realm: local_realm
+changes:
+  - addSimpleClient:
+      clientId: local
+      secret: client_secret
+      publicClient: false
+      serviceAccountsEnabled: true
+      redirectUris:
+        - http://*
+        - https://*
+
+  - addSimpleClient:
+      clientId: public_local
+      publicClient: true
+      redirectUris:
+        - http://*
+        - https://*
+
+  - updateClient:
+      clientId: public_local
+      webOrigins:
+        - "*"

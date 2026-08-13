@@ -1,0 +1,60 @@
+components:
+  schemas:
+    Vorgang:
+      type: object
+      description: |
+        Repräsentation eines Vorgangs.\
+        Aufgrund der Konfigurierbarkeit der Attribute (verfahrensabhängige Metadaten, siehe
+        Fabasoft eGov-Suite "Definition von Verfahren") werden diese in einer dynamisch 
+        aufgebauten Liste geführt und nichts als Felder in einer fixen (JSON-) Datenstruktur.
+        Um eine einheitliche Behandlung von Standard- und Custom-Attributen zu ermöglichen, 
+        werden auch die Standard-Attribute in der 'attributListe' zurückgegeben.\
+        \
+        Um die innerhalb einer bestimmten Betreffseinheit verfügbaren Custom-Attribute auf
+        Vorgangsebene sowie die Standard-Attribute des Vorgangs zu erfahren, kann über den Endpunkt
+        '/v2/Attribute' eine Abfrage (GET-Methode) getätigt werden (s. Spezifikation dieses
+        Endpunktes, in diesem Fall die Verwendung des Filters 'Schriftgutebene=Vorgang').
+      required:
+        - id
+        - sachakte_id
+        - name
+        - attributeMap
+        - attributeListe
+      properties:
+        id:
+          type: string
+        sachakte_id:
+          type: string
+        name:
+          type: string
+        betreff:
+          type: string
+        attributeMap:
+          type: object
+          additionalProperties: true
+        attributeListe:
+          type: array
+          items:
+            $ref: 'Vorgang_Datentypen.yaml#/components/schemas/AttributEintrag'
+
+    VorgangListeResponse:
+      type: object
+      properties:
+        anzahl:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/AnzahlListenElemente'
+        elemente:
+          type: array
+          description: Liste von Vorgängen
+          items:
+            $ref: 'Vorgang_Datentypen.yaml#/components/schemas/Vorgang'
+
+    AttributEintrag:
+      type: object
+      required:
+        - reference
+        - value
+      properties:
+        reference:
+          type: string
+        value:
+          type: object

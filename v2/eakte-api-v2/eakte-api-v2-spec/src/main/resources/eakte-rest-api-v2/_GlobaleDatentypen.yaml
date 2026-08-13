@@ -1,6 +1,24 @@
 components:
   schemas:
 
+    ErrorResponse:
+      type: object
+      description: >
+        Container für RFC9457 Fehlermeldung und konkrete Fabasoft Fehlermeldung falls Ursache
+      required:
+        - status
+        - error
+      properties:
+        status:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        easError:
+          $ref: "_GlobaleDatentypen.yaml#/components/schemas/EAkteSchnittstelleError"
+
     EAkteSchnittstelleError:
       type: object
       description: >
