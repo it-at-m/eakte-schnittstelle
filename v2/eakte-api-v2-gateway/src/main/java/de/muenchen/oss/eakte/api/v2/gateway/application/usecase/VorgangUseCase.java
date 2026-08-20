@@ -31,8 +31,6 @@ public class VorgangUseCase implements VorgangInPort {
         attributes.addAll(clientAttrs != null ? clientAttrs : searchHelper.loadDfVAttributes(context, SearchType.VORGANG));
         // search
         final SearchRequest request = new SearchRequest(SearchType.VORGANG, scope, query, attributes);
-        // map result (json alias)
-        // return searchHelper.mapSearchResult(SearchType.VORGANG, result);
         return searchOutPort.searchObject(context, request);
     }
 }

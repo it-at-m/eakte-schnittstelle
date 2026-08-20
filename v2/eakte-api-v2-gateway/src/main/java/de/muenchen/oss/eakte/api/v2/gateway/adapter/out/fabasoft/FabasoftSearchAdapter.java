@@ -15,6 +15,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 import lombok.RequiredArgsConstructor;
@@ -39,9 +40,15 @@ public class FabasoftSearchAdapter implements SearchOutPort {
         // request
         final SOAPSearchResponseType response = errorHandler.handleErrors("searchObject", () -> soapClient.soapSearch(requestType, null));
         // map response
-        final List<SearchResult.ResultObject> result = response.getQueryresult().getObject().stream()
-                .map(i -> new SearchResult.ResultObject(i.getObjname(), i.getObjaddress(), this.parseAttributes(i.getAttrlist())))
-                .toList();
+        Objects.requireNonNull(response, "Response can't be null");
+        final List<SearchResult.ResultObject> result;
+        if (response.getQueryresult() != null) {
+            result = response.getQueryresult().getObject().stream()
+                    .map(i -> new SearchResult.ResultObject(i.getObjname(), i.getObjaddress(), this.parseAttributes(i.getAttrlist())))
+                    .toList();
+        } else {
+            result = List.of();
+        }
         return new SearchResult(result);
     }
 
