@@ -2,6 +2,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft;
 
 import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.DmsException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.DmsResponseException;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import jakarta.xml.ws.WebServiceException;
 import java.util.concurrent.Callable;
 
@@ -21,24 +22,30 @@ public class FabasoftErrorHandler {
     public static final String FS_NAMESPACE = "http://schemas.fabasoft.com/faultdetails";
     public static final String TAG_ERROR_REFERENCE = "ErrorReference";
 
+    private final RequestContextProvider contextProvider;
+
     /**
      * Helper method for executing Fabasoft calls and handle occuring errors by extract response error
      * codes and mapping to
      * {@link DmsException}s.
      *
      * @param name The name of the executing calls, used for clearer error messages.
+     * @param requestContext The request context to execute the call under.
      * @param task The method to execute.
      * @return The return of the method.
      * @param <T> The return type of the method.
      */
-    public <T> T handleErrors(final String name, final Callable<T> task) {
+    public <T> T handleErrors(final String name, final RequestContext requestContext, final Callable<T> task) {
         try {
+            contextProvider.set(requestContext);
             return task.call();
         } catch (final WebServiceException e) {
             throw this.handleSoapFault(name, e);
         } catch (final Exception e) {
             // TODO different exceptions (e.g. Timeout, Client vs Server)
             throw fallbackEx(name, e);
+        } finally {
+            contextProvider.clear();
         }
     }
 
