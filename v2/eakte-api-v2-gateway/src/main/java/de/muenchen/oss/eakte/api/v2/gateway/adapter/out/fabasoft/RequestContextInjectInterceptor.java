@@ -9,6 +9,14 @@ import org.apache.cxf.phase.AbstractPhaseInterceptor;
 import org.apache.cxf.phase.Phase;
 import org.springframework.stereotype.Component;
 
+/**
+ * CXF interceptor to inject {@link RequestContext} into requests.
+ * <p>
+ * An interceptor is used to allow the reuse of clients (and preserve the client pooling), as
+ * otherwise a new client needs to be created for each unique request context.
+ * <p>
+ * Uses {@link RequestContextProvider} to get a thread scoped context.
+ */
 @Component
 public class RequestContextInjectInterceptor extends AbstractPhaseInterceptor<Message> {
     private static final String USER_HEADER = "X-FSC-Authenticated-User";
