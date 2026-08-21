@@ -108,5 +108,78 @@ public class AttributUnspezifischeRessourcenURI extends AttributUriUndWert {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder extends AttributUriUndWert.Builder {
+
+    private AttributUnspezifischeRessourcenURI instance;
+
+    public Builder() {
+      this(new AttributUnspezifischeRessourcenURI());
+    }
+
+    protected Builder(AttributUnspezifischeRessourcenURI instance) {
+      super(instance); // the parent builder shares the same instance
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(AttributUnspezifischeRessourcenURI value) { 
+      super.copyOf(value);
+      this.instance.setAttributWert(value.attributWert);
+      return this;
+    }
+
+    public AttributUnspezifischeRessourcenURI.Builder attributWert(String attributWert) {
+      this.instance.attributWert(attributWert);
+      return this;
+    }
+    
+    @Override
+    public AttributUnspezifischeRessourcenURI.Builder attributURI(String attributURI) {
+      this.instance.attributURI(attributURI);
+      return this;
+    }
+    
+    @Override
+    public AttributUnspezifischeRessourcenURI.Builder datenTyp(String datenTyp) {
+      this.instance.datenTyp(datenTyp);
+      return this;
+    }
+    
+    /**
+    * returns a built AttributUnspezifischeRessourcenURI instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public AttributUnspezifischeRessourcenURI build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        super.build();
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static AttributUnspezifischeRessourcenURI.Builder builder() {
+    return new AttributUnspezifischeRessourcenURI.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public AttributUnspezifischeRessourcenURI.Builder toBuilder() {
+    AttributUnspezifischeRessourcenURI.Builder builder = new AttributUnspezifischeRessourcenURI.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

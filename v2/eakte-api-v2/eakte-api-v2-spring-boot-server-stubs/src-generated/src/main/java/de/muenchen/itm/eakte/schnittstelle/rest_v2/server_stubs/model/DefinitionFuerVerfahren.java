@@ -177,5 +177,81 @@ public class DefinitionFuerVerfahren {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder {
+
+    private DefinitionFuerVerfahren instance;
+
+    public Builder() {
+      this(new DefinitionFuerVerfahren());
+    }
+
+    protected Builder(DefinitionFuerVerfahren instance) {
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(DefinitionFuerVerfahren value) { 
+      this.instance.setEigeneUrl(value.eigeneUrl);
+      this.instance.setName(value.name);
+      this.instance.setIstEntwurf(value.istEntwurf);
+      this.instance.setAttributURIs(value.attributURIs);
+      return this;
+    }
+
+    public DefinitionFuerVerfahren.Builder eigeneUrl(String eigeneUrl) {
+      this.instance.eigeneUrl(eigeneUrl);
+      return this;
+    }
+    
+    public DefinitionFuerVerfahren.Builder name(String name) {
+      this.instance.name(name);
+      return this;
+    }
+    
+    public DefinitionFuerVerfahren.Builder istEntwurf(Boolean istEntwurf) {
+      this.instance.istEntwurf(istEntwurf);
+      return this;
+    }
+    
+    public DefinitionFuerVerfahren.Builder attributURIs(List<String> attributURIs) {
+      this.instance.attributURIs(attributURIs);
+      return this;
+    }
+    
+    /**
+    * returns a built DefinitionFuerVerfahren instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public DefinitionFuerVerfahren build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static DefinitionFuerVerfahren.Builder builder() {
+    return new DefinitionFuerVerfahren.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public DefinitionFuerVerfahren.Builder toBuilder() {
+    DefinitionFuerVerfahren.Builder builder = new DefinitionFuerVerfahren.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

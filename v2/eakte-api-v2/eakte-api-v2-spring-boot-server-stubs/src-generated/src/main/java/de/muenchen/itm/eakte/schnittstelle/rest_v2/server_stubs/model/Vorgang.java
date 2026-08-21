@@ -4,7 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.AttributEintrag;
+import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.EigenschaftEintrag;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,10 +38,10 @@ public class Vorgang {
   private Optional<String> betreff = Optional.empty();
 
   @Valid
-  private Map<String, Object> attributeMap = new HashMap<>();
+  private Map<String, Object> eigenschaftenMap = new HashMap<>();
 
   @Valid
-  private List<@Valid AttributEintrag> attributeListe = new ArrayList<>();
+  private List<@Valid EigenschaftEintrag> eigenschaftenListe = new ArrayList<>();
 
   public Vorgang() {
     super();
@@ -50,12 +50,12 @@ public class Vorgang {
   /**
    * Constructor with only required parameters
    */
-  public Vorgang(String id, String sachakteId, String name, Map<String, Object> attributeMap, List<@Valid AttributEintrag> attributeListe) {
+  public Vorgang(String id, String sachakteId, String name, Map<String, Object> eigenschaftenMap, List<@Valid EigenschaftEintrag> eigenschaftenListe) {
     this.id = id;
     this.sachakteId = sachakteId;
     this.name = name;
-    this.attributeMap = attributeMap;
-    this.attributeListe = attributeListe;
+    this.eigenschaftenMap = eigenschaftenMap;
+    this.eigenschaftenListe = eigenschaftenListe;
   }
 
   public Vorgang id(String id) {
@@ -142,62 +142,62 @@ public class Vorgang {
     this.betreff = betreff;
   }
 
-  public Vorgang attributeMap(Map<String, Object> attributeMap) {
-    this.attributeMap = attributeMap;
+  public Vorgang eigenschaftenMap(Map<String, Object> eigenschaftenMap) {
+    this.eigenschaftenMap = eigenschaftenMap;
     return this;
   }
 
-  public Vorgang putAttributeMapItem(String key, Object attributeMapItem) {
-    if (this.attributeMap == null) {
-      this.attributeMap = new HashMap<>();
+  public Vorgang putEigenschaftenMapItem(String key, Object eigenschaftenMapItem) {
+    if (this.eigenschaftenMap == null) {
+      this.eigenschaftenMap = new HashMap<>();
     }
-    this.attributeMap.put(key, attributeMapItem);
+    this.eigenschaftenMap.put(key, eigenschaftenMapItem);
     return this;
   }
 
   /**
-   * Get attributeMap
-   * @return attributeMap
+   * Get eigenschaftenMap
+   * @return eigenschaftenMap
    */
   @NotNull 
-  @Schema(name = "attributeMap", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("attributeMap")
-  public Map<String, Object> getAttributeMap() {
-    return attributeMap;
+  @Schema(name = "eigenschaften_map", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("eigenschaften_map")
+  public Map<String, Object> getEigenschaftenMap() {
+    return eigenschaftenMap;
   }
 
-  @JsonProperty("attributeMap")
-  public void setAttributeMap(Map<String, Object> attributeMap) {
-    this.attributeMap = attributeMap;
+  @JsonProperty("eigenschaften_map")
+  public void setEigenschaftenMap(Map<String, Object> eigenschaftenMap) {
+    this.eigenschaftenMap = eigenschaftenMap;
   }
 
-  public Vorgang attributeListe(List<@Valid AttributEintrag> attributeListe) {
-    this.attributeListe = attributeListe;
+  public Vorgang eigenschaftenListe(List<@Valid EigenschaftEintrag> eigenschaftenListe) {
+    this.eigenschaftenListe = eigenschaftenListe;
     return this;
   }
 
-  public Vorgang addAttributeListeItem(AttributEintrag attributeListeItem) {
-    if (this.attributeListe == null) {
-      this.attributeListe = new ArrayList<>();
+  public Vorgang addEigenschaftenListeItem(EigenschaftEintrag eigenschaftenListeItem) {
+    if (this.eigenschaftenListe == null) {
+      this.eigenschaftenListe = new ArrayList<>();
     }
-    this.attributeListe.add(attributeListeItem);
+    this.eigenschaftenListe.add(eigenschaftenListeItem);
     return this;
   }
 
   /**
-   * Get attributeListe
-   * @return attributeListe
+   * Get eigenschaftenListe
+   * @return eigenschaftenListe
    */
   @NotNull @Valid 
-  @Schema(name = "attributeListe", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("attributeListe")
-  public List<@Valid AttributEintrag> getAttributeListe() {
-    return attributeListe;
+  @Schema(name = "eigenschaften_liste", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("eigenschaften_liste")
+  public List<@Valid EigenschaftEintrag> getEigenschaftenListe() {
+    return eigenschaftenListe;
   }
 
-  @JsonProperty("attributeListe")
-  public void setAttributeListe(List<@Valid AttributEintrag> attributeListe) {
-    this.attributeListe = attributeListe;
+  @JsonProperty("eigenschaften_liste")
+  public void setEigenschaftenListe(List<@Valid EigenschaftEintrag> eigenschaftenListe) {
+    this.eigenschaftenListe = eigenschaftenListe;
   }
 
   @Override
@@ -213,13 +213,13 @@ public class Vorgang {
         Objects.equals(this.sachakteId, vorgang.sachakteId) &&
         Objects.equals(this.name, vorgang.name) &&
         Objects.equals(this.betreff, vorgang.betreff) &&
-        Objects.equals(this.attributeMap, vorgang.attributeMap) &&
-        Objects.equals(this.attributeListe, vorgang.attributeListe);
+        Objects.equals(this.eigenschaftenMap, vorgang.eigenschaftenMap) &&
+        Objects.equals(this.eigenschaftenListe, vorgang.eigenschaftenListe);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, sachakteId, name, betreff, attributeMap, attributeListe);
+    return Objects.hash(id, sachakteId, name, betreff, eigenschaftenMap, eigenschaftenListe);
   }
 
   @Override
@@ -230,8 +230,8 @@ public class Vorgang {
     sb.append("    sachakteId: ").append(toIndentedString(sachakteId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    betreff: ").append(toIndentedString(betreff)).append("\n");
-    sb.append("    attributeMap: ").append(toIndentedString(attributeMap)).append("\n");
-    sb.append("    attributeListe: ").append(toIndentedString(attributeListe)).append("\n");
+    sb.append("    eigenschaftenMap: ").append(toIndentedString(eigenschaftenMap)).append("\n");
+    sb.append("    eigenschaftenListe: ").append(toIndentedString(eigenschaftenListe)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -243,5 +243,93 @@ public class Vorgang {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder {
+
+    private Vorgang instance;
+
+    public Builder() {
+      this(new Vorgang());
+    }
+
+    protected Builder(Vorgang instance) {
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(Vorgang value) { 
+      this.instance.setId(value.id);
+      this.instance.setSachakteId(value.sachakteId);
+      this.instance.setName(value.name);
+      this.instance.setBetreff(value.betreff);
+      this.instance.setEigenschaftenMap(value.eigenschaftenMap);
+      this.instance.setEigenschaftenListe(value.eigenschaftenListe);
+      return this;
+    }
+
+    public Vorgang.Builder id(String id) {
+      this.instance.id(id);
+      return this;
+    }
+    
+    public Vorgang.Builder sachakteId(String sachakteId) {
+      this.instance.sachakteId(sachakteId);
+      return this;
+    }
+    
+    public Vorgang.Builder name(String name) {
+      this.instance.name(name);
+      return this;
+    }
+    
+    public Vorgang.Builder betreff(String betreff) {
+      this.instance.betreff(betreff);
+      return this;
+    }
+    
+    public Vorgang.Builder eigenschaftenMap(Map<String, Object> eigenschaftenMap) {
+      this.instance.eigenschaftenMap(eigenschaftenMap);
+      return this;
+    }
+    
+    public Vorgang.Builder eigenschaftenListe(List<EigenschaftEintrag> eigenschaftenListe) {
+      this.instance.eigenschaftenListe(eigenschaftenListe);
+      return this;
+    }
+    
+    /**
+    * returns a built Vorgang instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public Vorgang build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static Vorgang.Builder builder() {
+    return new Vorgang.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public Vorgang.Builder toBuilder() {
+    Vorgang.Builder builder = new Vorgang.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

@@ -19,7 +19,6 @@ src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/Att
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/AttributDatum.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/AttributDatumMitUhrzeit.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/AttributDokumentURI.java
-src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/AttributEintrag.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/AttributFliesskommazahl.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/AttributGanzzahl.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/AttributOrganisationseinheitsURI.java
@@ -36,6 +35,7 @@ src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/Auf
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/DefinitionFuerVerfahren.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/DefinitionenFuerVerfahrenListeResponse.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/EAkteSchnittstelleError.java
+src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/EigenschaftEintrag.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/ErrorResponse.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/NoContentResponse.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/Vorgang.java

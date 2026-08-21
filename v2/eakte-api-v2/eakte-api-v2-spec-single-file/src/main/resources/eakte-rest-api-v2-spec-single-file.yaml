@@ -263,24 +263,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DefinitionenFuerVerfahrenListeResponse'
-  /api/v2/vorgang:
+  /api/v2/vorgaenge:
     get:
       tags:
         - Vorgang
-      summary: Vorgang suchen
+      summary: Vorgaenge suchen
       description: |
         Mit diesem Aufruf können Vorgänge gesucht werden auf Basis von Bedingungen, die sich auf beliebige
         Attribute des Vorgangs beziehen (Standard-Metadaten der eGov-Suite oder auch Attribute aus der 
         "Definition von Verfahren").
-      operationId: SucheVorgang
+      operationId: SucheVorgaenge
       parameters:
-        - $ref: '#/components/parameters/FachverfahrensID'
         - $ref: '#/components/parameters/LoginName'
         - $ref: '#/components/parameters/Stelle'
         - $ref: '#/components/parameters/Organisationseinheit'
         - $ref: '#/components/parameters/Scope'
         - $ref: '#/components/parameters/Bedingungen'
-        - $ref: '#/components/parameters/Attribute'
+        - $ref: '#/components/parameters/Eigenschaften'
       responses:
         '200':
           description: OK
@@ -335,7 +334,7 @@ components:
         type: string
       example: SWH
     LoginName:
-      name: LoginName
+      name: Login-Name
       in: header
       description: |
         **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\
@@ -427,8 +426,8 @@ components:
       schema:
         type: string
         nullable: true
-    Attribute:
-      name: attributes
+    Eigenschaften:
+      name: eigenschaften
       in: query
       schema:
         type: array
@@ -958,7 +957,7 @@ components:
             List von Verfahrensdefinitionen
           items:
             $ref: '#/components/schemas/DefinitionFuerVerfahren'
-    AttributEintrag:
+    EigenschaftEintrag:
       type: object
       required:
         - reference
@@ -986,8 +985,8 @@ components:
         - id
         - sachakte_id
         - name
-        - attributeMap
-        - attributeListe
+        - eigenschaften_map
+        - eigenschaften_liste
       properties:
         id:
           type: string
@@ -997,13 +996,13 @@ components:
           type: string
         betreff:
           type: string
-        attributeMap:
+        eigenschaften_map:
           type: object
           additionalProperties: true
-        attributeListe:
+        eigenschaften_liste:
           type: array
           items:
-            $ref: '#/components/schemas/AttributEintrag'
+            $ref: '#/components/schemas/EigenschaftEintrag'
     VorgangListeResponse:
       type: object
       properties:

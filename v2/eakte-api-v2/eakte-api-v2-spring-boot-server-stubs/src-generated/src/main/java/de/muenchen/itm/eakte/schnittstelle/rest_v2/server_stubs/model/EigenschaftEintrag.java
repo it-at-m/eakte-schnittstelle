@@ -16,29 +16,29 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * AttributEintrag
+ * EigenschaftEintrag
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.21.0")
-public class AttributEintrag {
+public class EigenschaftEintrag {
 
   private String reference;
 
   private Object value;
 
-  public AttributEintrag() {
+  public EigenschaftEintrag() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public AttributEintrag(String reference, Object value) {
+  public EigenschaftEintrag(String reference, Object value) {
     this.reference = reference;
     this.value = value;
   }
 
-  public AttributEintrag reference(String reference) {
+  public EigenschaftEintrag reference(String reference) {
     this.reference = reference;
     return this;
   }
@@ -59,7 +59,7 @@ public class AttributEintrag {
     this.reference = reference;
   }
 
-  public AttributEintrag value(Object value) {
+  public EigenschaftEintrag value(Object value) {
     this.value = value;
     return this;
   }
@@ -88,9 +88,9 @@ public class AttributEintrag {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AttributEintrag attributEintrag = (AttributEintrag) o;
-    return Objects.equals(this.reference, attributEintrag.reference) &&
-        Objects.equals(this.value, attributEintrag.value);
+    EigenschaftEintrag eigenschaftEintrag = (EigenschaftEintrag) o;
+    return Objects.equals(this.reference, eigenschaftEintrag.reference) &&
+        Objects.equals(this.value, eigenschaftEintrag.value);
   }
 
   @Override
@@ -101,7 +101,7 @@ public class AttributEintrag {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AttributEintrag {\n");
+    sb.append("class EigenschaftEintrag {\n");
     sb.append("    reference: ").append(toIndentedString(reference)).append("\n");
     sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("}");
@@ -115,5 +115,69 @@ public class AttributEintrag {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder {
+
+    private EigenschaftEintrag instance;
+
+    public Builder() {
+      this(new EigenschaftEintrag());
+    }
+
+    protected Builder(EigenschaftEintrag instance) {
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(EigenschaftEintrag value) { 
+      this.instance.setReference(value.reference);
+      this.instance.setValue(value.value);
+      return this;
+    }
+
+    public EigenschaftEintrag.Builder reference(String reference) {
+      this.instance.reference(reference);
+      return this;
+    }
+    
+    public EigenschaftEintrag.Builder value(Object value) {
+      this.instance.value(value);
+      return this;
+    }
+    
+    /**
+    * returns a built EigenschaftEintrag instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public EigenschaftEintrag build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static EigenschaftEintrag.Builder builder() {
+    return new EigenschaftEintrag.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public EigenschaftEintrag.Builder toBuilder() {
+    EigenschaftEintrag.Builder builder = new EigenschaftEintrag.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

@@ -62,5 +62,5 @@ paths:
 #  '/api/v2/organisationseinheiten/{organisationseinheitenId}':
 #    $ref: 'Organisationseinheiten_Einzelsatz.yaml'
 
-  '/api/v2/vorgang':
-    $ref: 'Vorgang.yaml'
+  '/api/v2/vorgaenge':
+    $ref: 'Vorgaenge.yaml'

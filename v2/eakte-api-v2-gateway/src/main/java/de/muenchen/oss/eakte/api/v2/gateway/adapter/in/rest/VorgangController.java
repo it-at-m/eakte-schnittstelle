@@ -22,25 +22,25 @@ public class VorgangController implements VorgangApi {
     private final VorgangMapper vorgangMapper;
 
     @Override
-    public ResponseEntity<VorgangListeResponse> sucheVorgang(
-            final Optional<String> fachverfahrensID,
+    public ResponseEntity<VorgangListeResponse> sucheVorgaenge(
             final Optional<String> loginName,
             final Optional<String> stelle,
             final Optional<String> organisationseinheit,
             final Optional<String> scope,
             final Optional<String> bedingungen,
-            final Optional<List<String>> attributes,
+            final Optional<List<String>> eigenschaften,
             final HttpServletRequest servletRequest) {
         // call
-        final RequestContext requestContext = new RequestContext(fachverfahrensID, loginName, organisationseinheit, stelle);
+        final RequestContext requestContext = new RequestContext(loginName, organisationseinheit, stelle);
         final SearchResult result = vorgangInPort.searchVorgang(requestContext,
                 scope.orElse(null),
                 bedingungen.orElseThrow(),
-                attributes.map(HashSet::new).orElse(null));
+                eigenschaften.map(HashSet::new).orElse(null));
         // respond
-        final VorgangListeResponse response = new VorgangListeResponse();
-        response.anzahl(result.results().size());
-        response.elemente(vorgangMapper.mapResults(result.results()));
+        final VorgangListeResponse response = VorgangListeResponse.builder()
+                .anzahl(result.results().size())
+                .elemente(vorgangMapper.mapResults(result.results()))
+                .build();
         return ResponseEntity.of(Optional.of(response));
     }
 }

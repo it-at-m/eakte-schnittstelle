@@ -21,14 +21,14 @@ class VorgangMapper {
 
     protected Vorgang mapResult(final SearchResult.ResultObject result) {
         final Map<String, Object> uniqueReferenceValueMap = attributeMapper.toUniqueReferenceValueMap(result.attributes());
-        final Vorgang vorgang = new Vorgang(
-                result.coo(),
-                attributeMapper.getTyped(uniqueReferenceValueMap, PARENT_ID.getReference(), String.class).orElseThrow(),
-                result.name(),
+        return Vorgang.builder()
+                .id(result.coo())
+                .name(result.name())
+                .sachakteId(attributeMapper.getTyped(uniqueReferenceValueMap, PARENT_ID.getReference(), String.class).orElseThrow())
+                .betreff(attributeMapper.getTyped(uniqueReferenceValueMap, SUBJECT.getReference(), String.class).orElse(null))
                 // TODO filter out static attributes?
-                attributeMapper.mapAttributMap(result.attributes()),
-                attributeMapper.mapAttributEintragListe(result.attributes()));
-        vorgang.setBetreff(attributeMapper.getTyped(uniqueReferenceValueMap, SUBJECT.getReference(), String.class));
-        return vorgang;
+                .eigenschaftenMap(attributeMapper.toMap(result.attributes()))
+                .eigenschaftenListe(attributeMapper.toList(result.attributes()))
+                .build();
     }
 }

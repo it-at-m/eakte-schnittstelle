@@ -18,8 +18,8 @@ components:
         - id
         - sachakte_id
         - name
-        - attributeMap
-        - attributeListe
+        - eigenschaften_map
+        - eigenschaften_liste
       properties:
         id:
           type: string
@@ -29,13 +29,13 @@ components:
           type: string
         betreff:
           type: string
-        attributeMap:
+        eigenschaften_map:
           type: object
           additionalProperties: true
-        attributeListe:
+        eigenschaften_liste:
           type: array
           items:
-            $ref: 'Vorgang_Datentypen.yaml#/components/schemas/AttributEintrag'
+            $ref: 'Vorgaenge_Datentypen.yaml#/components/schemas/EigenschaftEintrag'
 
     VorgangListeResponse:
       type: object
@@ -46,9 +46,9 @@ components:
           type: array
           description: Liste von Vorgängen
           items:
-            $ref: 'Vorgang_Datentypen.yaml#/components/schemas/Vorgang'
+            $ref: 'Vorgaenge_Datentypen.yaml#/components/schemas/Vorgang'
 
-    AttributEintrag:
+    EigenschaftEintrag:
       type: object
       required:
         - reference

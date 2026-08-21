@@ -104,5 +104,69 @@ public class AufzaehlungstypElement {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder {
+
+    private AufzaehlungstypElement instance;
+
+    public Builder() {
+      this(new AufzaehlungstypElement());
+    }
+
+    protected Builder(AufzaehlungstypElement instance) {
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(AufzaehlungstypElement value) { 
+      this.instance.setSchluessel(value.schluessel);
+      this.instance.setKurzbezeichnungDesWerts(value.kurzbezeichnungDesWerts);
+      return this;
+    }
+
+    public AufzaehlungstypElement.Builder schluessel(String schluessel) {
+      this.instance.schluessel(schluessel);
+      return this;
+    }
+    
+    public AufzaehlungstypElement.Builder kurzbezeichnungDesWerts(String kurzbezeichnungDesWerts) {
+      this.instance.kurzbezeichnungDesWerts(kurzbezeichnungDesWerts);
+      return this;
+    }
+    
+    /**
+    * returns a built AufzaehlungstypElement instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public AufzaehlungstypElement build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static AufzaehlungstypElement.Builder builder() {
+    return new AufzaehlungstypElement.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public AufzaehlungstypElement.Builder toBuilder() {
+    AufzaehlungstypElement.Builder builder = new AufzaehlungstypElement.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

@@ -108,5 +108,78 @@ public class AttributSprachenURI extends AttributUriUndWert {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder extends AttributUriUndWert.Builder {
+
+    private AttributSprachenURI instance;
+
+    public Builder() {
+      this(new AttributSprachenURI());
+    }
+
+    protected Builder(AttributSprachenURI instance) {
+      super(instance); // the parent builder shares the same instance
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(AttributSprachenURI value) { 
+      super.copyOf(value);
+      this.instance.setAttributWert(value.attributWert);
+      return this;
+    }
+
+    public AttributSprachenURI.Builder attributWert(String attributWert) {
+      this.instance.attributWert(attributWert);
+      return this;
+    }
+    
+    @Override
+    public AttributSprachenURI.Builder attributURI(String attributURI) {
+      this.instance.attributURI(attributURI);
+      return this;
+    }
+    
+    @Override
+    public AttributSprachenURI.Builder datenTyp(String datenTyp) {
+      this.instance.datenTyp(datenTyp);
+      return this;
+    }
+    
+    /**
+    * returns a built AttributSprachenURI instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public AttributSprachenURI build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        super.build();
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static AttributSprachenURI.Builder builder() {
+    return new AttributSprachenURI.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public AttributSprachenURI.Builder toBuilder() {
+    AttributSprachenURI.Builder builder = new AttributSprachenURI.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

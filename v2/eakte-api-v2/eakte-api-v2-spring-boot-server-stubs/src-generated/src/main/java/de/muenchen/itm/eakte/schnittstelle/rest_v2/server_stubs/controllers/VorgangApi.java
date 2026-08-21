@@ -47,26 +47,25 @@ public interface VorgangApi {
         return Optional.empty();
     }
 
-    String PATH_SUCHE_VORGANG = "/api/v2/vorgang";
+    String PATH_SUCHE_VORGAENGE = "/api/v2/vorgaenge";
     /**
-     * GET /api/v2/vorgang : Vorgang suchen
+     * GET /api/v2/vorgaenge : Vorgaenge suchen
      * Mit diesem Aufruf können Vorgänge gesucht werden auf Basis von Bedingungen, die sich auf beliebige Attribute des Vorgangs beziehen (Standard-Metadaten der eGov-Suite oder auch Attribute aus der  \&quot;Definition von Verfahren\&quot;). 
      *
-     * @param fachverfahrensID **Aufrufende Fachanwendung**  Die FachverfahrensID identifziert ein Fachverfahren behördenunabhängig und wird vom Betrieb eAkte vergeben  Der mitgegebene Wert wird auch als Http-Header in der Antwort zurückgegeben.  Somit ist ein Filtern der Antworten nach Fachverfahren möglich.  (optional)
      * @param loginName **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\\ Log-in-Name des Benutzerobjekts  (optional)
      * @param stelle Referenz der Stelle (**Stelle des Nutzers** in der eAkte). * Sachbearbeitung - OfficialInCharge * Registratur - Official * Sekretariat - Secretary * Leitung - Head * Fachadministration - OpAdm * Schriftgutverwaltung - DocumentManager  Es dürfen ausschließlich die Stellen genannt werden,  die bei der LHM genutzt werden.\\ Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt!  (optional)
      * @param organisationseinheit URI der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.\\ \\ Die OE ist dann wichtig anzugeben,  wenn der Nutzer in mehreren OEs zugeordnet ist.\\ Über diese OE wird der Mandant zugeordnet und  entsprechend die Berechtigungen geprüft.  (optional)
      * @param scope  (optional)
      * @param bedingungen Bedingungen (Suchkriterien, Restriktionen) für die Suche nach Schriftgutobjekten  (Betreffseinheiten, Akten, Vorgänge und Dokumente)  Die Bedingungen werden als Query-Parameter \&quot;bedingungen\&quot; als Teil der URL  übertragen (nach dem Fragezeichen, also \&quot;/v1/Akten?bedingungen&#x3D;...\&quot;). Dadurch können diese Suchen als einfache Strings konfiguriert bzw. im Browser als Bookmark gespeichert werden.  Der Wert dieses URL-Parameters muss \&quot;URL-Encoded\&quot; sein (siehe z.B. https://en.wikipedia.org/wiki/Percent-encoding). Diese Kodierung wird in der Regel durch die Client-Frameworks vorgenommen. Nur wenn man z.B. über den Browser manuell eine URL mit Bedingung eingeben will, muss ggf. der Query-Parameter z.B. mit dem Linux-Tool \&quot;urlencode\&quot; umgewandelt werden.  Die &#39;bedingungen&#39; werden als WHERE-Klausel der Fabasoft-Query-Language intepretiert, mit folgenden Abweichungen:  * Attributreferenzen werden als URI angegeben und nicht mit der Fabasoft-internen kryptischenSchreibweise. Diese URIs sind als Makros der Form \&quot;${...}\&quot; zu schreiben (zu klammern). Die in den geschweiften Klammern angegebenen URIs können unter dem Endpunkt \&quot;/Attributbeschreibungen\&quot; zusammen mit Meta-Informationen zu allen verfügbaren Attributen abgerufen werden. Statt \&quot;.COOSYSTEM@1.1:objowner\&quot; wird also \&quot;.${Eigentümer}\&quot; geschrieben. Man beachte den notwendigen  Punkt (&#39;.&#39;) vor der Attributbenennung, was in der Fabasoft Query Language anzeigt, dass es sich um eine Attributbenennung im Kontext der abgefrakten Objektklasse handelt.  * Anstelle von COO-Adressen in den WHERE-Bedingungen (z.B. \&quot;.${Eigentümer} &#x3D; &#39;COO.2150.8800.1.230497&#39;\&quot; kan bzw. soll eie andere Art von Makro benutzt werden: \&quot;#{...}\&quot;. Dieses enthält in den geschweiften Klammern nicht die Fabasoft COO-Adresse, sondern die jedem Schnittstellen-Objekt zueigene URI, z.B. \&quot;#{/Akten/COO.1.2.3.4}\&quot;. Damit  wird grundsätzlich nur mit \&quot;opaquen\&quot; (nicht zu interpretierenden) URIs hantiert und nicht mit Primärschlüsseln oder Objekt-Ids aus dem Zielsystem.  (optional)
-     * @param attributes  (optional)
+     * @param eigenschaften  (optional)
      * @return OK (status code 200)
      *         or Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten. (status code 400)
      *         or Falscher oder fehlender technischer Nutzer. (status code 401)
      *         or Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten. (status code 500)
      */
     @Operation(
-        operationId = "sucheVorgang",
-        summary = "Vorgang suchen",
+        operationId = "sucheVorgaenge",
+        summary = "Vorgaenge suchen",
         description = "Mit diesem Aufruf können Vorgänge gesucht werden auf Basis von Bedingungen, die sich auf beliebige Attribute des Vorgangs beziehen (Standard-Metadaten der eGov-Suite oder auch Attribute aus der  \"Definition von Verfahren\"). ",
         tags = { "Vorgang" },
         responses = {
@@ -90,23 +89,22 @@ public interface VorgangApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = VorgangApi.PATH_SUCHE_VORGANG,
+        value = VorgangApi.PATH_SUCHE_VORGAENGE,
         produces = { "application/json" }
     )
-    default ResponseEntity<VorgangListeResponse> sucheVorgang(
-        @Parameter(name = "FachverfahrensID", description = "**Aufrufende Fachanwendung**  Die FachverfahrensID identifziert ein Fachverfahren behördenunabhängig und wird vom Betrieb eAkte vergeben  Der mitgegebene Wert wird auch als Http-Header in der Antwort zurückgegeben.  Somit ist ein Filtern der Antworten nach Fachverfahren möglich. ", in = ParameterIn.HEADER) @RequestHeader(value = "FachverfahrensID", required = false) Optional<String> fachverfahrensID,
-        @Parameter(name = "LoginName", description = "**Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\\ Log-in-Name des Benutzerobjekts ", in = ParameterIn.HEADER) @RequestHeader(value = "LoginName", required = false) Optional<String> loginName,
+    default ResponseEntity<VorgangListeResponse> sucheVorgaenge(
+        @Parameter(name = "Login-Name", description = "**Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\\ Log-in-Name des Benutzerobjekts ", in = ParameterIn.HEADER) @RequestHeader(value = "Login-Name", required = false) Optional<String> loginName,
         @Parameter(name = "Stelle", description = "Referenz der Stelle (**Stelle des Nutzers** in der eAkte). * Sachbearbeitung - OfficialInCharge * Registratur - Official * Sekretariat - Secretary * Leitung - Head * Fachadministration - OpAdm * Schriftgutverwaltung - DocumentManager  Es dürfen ausschließlich die Stellen genannt werden,  die bei der LHM genutzt werden.\\ Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt! ", in = ParameterIn.HEADER) @RequestHeader(value = "Stelle", required = false) Optional<String> stelle,
         @Parameter(name = "Organisationseinheit", description = "URI der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.\\ \\ Die OE ist dann wichtig anzugeben,  wenn der Nutzer in mehreren OEs zugeordnet ist.\\ Über diese OE wird der Mandant zugeordnet und  entsprechend die Berechtigungen geprüft. ", in = ParameterIn.HEADER) @RequestHeader(value = "Organisationseinheit", required = false) Optional<String> organisationseinheit,
         @Parameter(name = "scope", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "scope", required = false) Optional<String> scope,
         @Parameter(name = "bedingungen", description = "Bedingungen (Suchkriterien, Restriktionen) für die Suche nach Schriftgutobjekten  (Betreffseinheiten, Akten, Vorgänge und Dokumente)  Die Bedingungen werden als Query-Parameter \"bedingungen\" als Teil der URL  übertragen (nach dem Fragezeichen, also \"/v1/Akten?bedingungen=...\"). Dadurch können diese Suchen als einfache Strings konfiguriert bzw. im Browser als Bookmark gespeichert werden.  Der Wert dieses URL-Parameters muss \"URL-Encoded\" sein (siehe z.B. https://en.wikipedia.org/wiki/Percent-encoding). Diese Kodierung wird in der Regel durch die Client-Frameworks vorgenommen. Nur wenn man z.B. über den Browser manuell eine URL mit Bedingung eingeben will, muss ggf. der Query-Parameter z.B. mit dem Linux-Tool \"urlencode\" umgewandelt werden.  Die 'bedingungen' werden als WHERE-Klausel der Fabasoft-Query-Language intepretiert, mit folgenden Abweichungen:  * Attributreferenzen werden als URI angegeben und nicht mit der Fabasoft-internen kryptischenSchreibweise. Diese URIs sind als Makros der Form \"${...}\" zu schreiben (zu klammern). Die in den geschweiften Klammern angegebenen URIs können unter dem Endpunkt \"/Attributbeschreibungen\" zusammen mit Meta-Informationen zu allen verfügbaren Attributen abgerufen werden. Statt \".COOSYSTEM@1.1:objowner\" wird also \".${Eigentümer}\" geschrieben. Man beachte den notwendigen  Punkt ('.') vor der Attributbenennung, was in der Fabasoft Query Language anzeigt, dass es sich um eine Attributbenennung im Kontext der abgefrakten Objektklasse handelt.  * Anstelle von COO-Adressen in den WHERE-Bedingungen (z.B. \".${Eigentümer} = 'COO.2150.8800.1.230497'\" kan bzw. soll eie andere Art von Makro benutzt werden: \"#{...}\". Dieses enthält in den geschweiften Klammern nicht die Fabasoft COO-Adresse, sondern die jedem Schnittstellen-Objekt zueigene URI, z.B. \"#{/Akten/COO.1.2.3.4}\". Damit  wird grundsätzlich nur mit \"opaquen\" (nicht zu interpretierenden) URIs hantiert und nicht mit Primärschlüsseln oder Objekt-Ids aus dem Zielsystem. ", in = ParameterIn.QUERY) @Valid @RequestParam(value = "bedingungen", required = false) Optional<String> bedingungen,
-        @Parameter(name = "attributes", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "attributes", required = false) Optional<List<String>> attributes,
+        @Parameter(name = "eigenschaften", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "eigenschaften", required = false) Optional<List<String>> eigenschaften,
         @Parameter(hidden = true) final HttpServletRequest servletRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"anzahl\" : 3, \"elemente\" : [ { \"betreff\" : \"betreff\", \"name\" : \"name\", \"attributeMap\" : { \"key\" : \"\" }, \"sachakte_id\" : \"sachakte_id\", \"id\" : \"id\", \"attributeListe\" : [ { \"reference\" : \"reference\", \"value\" : \"{}\" }, { \"reference\" : \"reference\", \"value\" : \"{}\" } ] }, { \"betreff\" : \"betreff\", \"name\" : \"name\", \"attributeMap\" : { \"key\" : \"\" }, \"sachakte_id\" : \"sachakte_id\", \"id\" : \"id\", \"attributeListe\" : [ { \"reference\" : \"reference\", \"value\" : \"{}\" }, { \"reference\" : \"reference\", \"value\" : \"{}\" } ] } ] }";
+                    String exampleString = "{ \"anzahl\" : 3, \"elemente\" : [ { \"betreff\" : \"betreff\", \"eigenschaften_liste\" : [ { \"reference\" : \"reference\", \"value\" : \"{}\" }, { \"reference\" : \"reference\", \"value\" : \"{}\" } ], \"eigenschaften_map\" : { \"key\" : \"\" }, \"name\" : \"name\", \"sachakte_id\" : \"sachakte_id\", \"id\" : \"id\" }, { \"betreff\" : \"betreff\", \"eigenschaften_liste\" : [ { \"reference\" : \"reference\", \"value\" : \"{}\" }, { \"reference\" : \"reference\", \"value\" : \"{}\" } ], \"eigenschaften_map\" : { \"key\" : \"\" }, \"name\" : \"name\", \"sachakte_id\" : \"sachakte_id\", \"id\" : \"id\" } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

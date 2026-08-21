@@ -108,5 +108,78 @@ public class AttributAktenURI extends AttributUriUndWert {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder extends AttributUriUndWert.Builder {
+
+    private AttributAktenURI instance;
+
+    public Builder() {
+      this(new AttributAktenURI());
+    }
+
+    protected Builder(AttributAktenURI instance) {
+      super(instance); // the parent builder shares the same instance
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(AttributAktenURI value) { 
+      super.copyOf(value);
+      this.instance.setAttributWert(value.attributWert);
+      return this;
+    }
+
+    public AttributAktenURI.Builder attributWert(String attributWert) {
+      this.instance.attributWert(attributWert);
+      return this;
+    }
+    
+    @Override
+    public AttributAktenURI.Builder attributURI(String attributURI) {
+      this.instance.attributURI(attributURI);
+      return this;
+    }
+    
+    @Override
+    public AttributAktenURI.Builder datenTyp(String datenTyp) {
+      this.instance.datenTyp(datenTyp);
+      return this;
+    }
+    
+    /**
+    * returns a built AttributAktenURI instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public AttributAktenURI build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        super.build();
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static AttributAktenURI.Builder builder() {
+    return new AttributAktenURI.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public AttributAktenURI.Builder toBuilder() {
+    AttributAktenURI.Builder builder = new AttributAktenURI.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

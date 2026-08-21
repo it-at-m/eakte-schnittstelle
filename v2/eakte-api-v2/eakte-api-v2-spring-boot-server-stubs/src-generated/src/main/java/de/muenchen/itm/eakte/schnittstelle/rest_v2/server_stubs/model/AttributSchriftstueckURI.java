@@ -108,5 +108,78 @@ public class AttributSchriftstueckURI extends AttributUriUndWert {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder extends AttributUriUndWert.Builder {
+
+    private AttributSchriftstueckURI instance;
+
+    public Builder() {
+      this(new AttributSchriftstueckURI());
+    }
+
+    protected Builder(AttributSchriftstueckURI instance) {
+      super(instance); // the parent builder shares the same instance
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(AttributSchriftstueckURI value) { 
+      super.copyOf(value);
+      this.instance.setAttributWert(value.attributWert);
+      return this;
+    }
+
+    public AttributSchriftstueckURI.Builder attributWert(String attributWert) {
+      this.instance.attributWert(attributWert);
+      return this;
+    }
+    
+    @Override
+    public AttributSchriftstueckURI.Builder attributURI(String attributURI) {
+      this.instance.attributURI(attributURI);
+      return this;
+    }
+    
+    @Override
+    public AttributSchriftstueckURI.Builder datenTyp(String datenTyp) {
+      this.instance.datenTyp(datenTyp);
+      return this;
+    }
+    
+    /**
+    * returns a built AttributSchriftstueckURI instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public AttributSchriftstueckURI build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        super.build();
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static AttributSchriftstueckURI.Builder builder() {
+    return new AttributSchriftstueckURI.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public AttributSchriftstueckURI.Builder toBuilder() {
+    AttributSchriftstueckURI.Builder builder = new AttributSchriftstueckURI.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

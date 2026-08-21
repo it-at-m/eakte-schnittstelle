@@ -191,5 +191,87 @@ public class ErrorResponse {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder {
+
+    private ErrorResponse instance;
+
+    public Builder() {
+      this(new ErrorResponse());
+    }
+
+    protected Builder(ErrorResponse instance) {
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(ErrorResponse value) { 
+      this.instance.setStatus(value.status);
+      this.instance.setTitle(value.title);
+      this.instance.setInstance(value.instance);
+      this.instance.setDetail(value.detail);
+      this.instance.setDmsErrorReference(value.dmsErrorReference);
+      return this;
+    }
+
+    public ErrorResponse.Builder status(Integer status) {
+      this.instance.status(status);
+      return this;
+    }
+    
+    public ErrorResponse.Builder title(String title) {
+      this.instance.title(title);
+      return this;
+    }
+    
+    public ErrorResponse.Builder instance(String instance) {
+      this.instance.instance(instance);
+      return this;
+    }
+    
+    public ErrorResponse.Builder detail(String detail) {
+      this.instance.detail(detail);
+      return this;
+    }
+    
+    public ErrorResponse.Builder dmsErrorReference(String dmsErrorReference) {
+      this.instance.dmsErrorReference(dmsErrorReference);
+      return this;
+    }
+    
+    /**
+    * returns a built ErrorResponse instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public ErrorResponse build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static ErrorResponse.Builder builder() {
+    return new ErrorResponse.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public ErrorResponse.Builder toBuilder() {
+    ErrorResponse.Builder builder = new ErrorResponse.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

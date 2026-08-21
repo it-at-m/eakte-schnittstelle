@@ -18,7 +18,7 @@ components:
       example: SWH
 
     LoginName:
-      name: LoginName
+      name: Login-Name
       in: header
       description: |
         **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\
@@ -108,8 +108,8 @@ components:
         type: string
         nullable: true
 
-    Attribute:
-      name: attributes
+    Eigenschaften:
+      name: eigenschaften
       in: query
       schema:
         type: array

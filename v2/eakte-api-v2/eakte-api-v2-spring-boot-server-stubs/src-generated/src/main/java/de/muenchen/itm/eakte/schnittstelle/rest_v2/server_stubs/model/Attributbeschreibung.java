@@ -310,5 +310,111 @@ public class Attributbeschreibung {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder {
+
+    private Attributbeschreibung instance;
+
+    public Builder() {
+      this(new Attributbeschreibung());
+    }
+
+    protected Builder(Attributbeschreibung instance) {
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(Attributbeschreibung value) { 
+      this.instance.setEigeneUrl(value.eigeneUrl);
+      this.instance.setReferenzSchriftgutObjektklasseOderFormular(value.referenzSchriftgutObjektklasseOderFormular);
+      this.instance.setReferenzAttribut(value.referenzAttribut);
+      this.instance.setBezeichnung(value.bezeichnung);
+      this.instance.setBeschreibung(value.beschreibung);
+      this.instance.setDatentyp(value.datentyp);
+      this.instance.setPflichtFeld(value.pflichtFeld);
+      this.instance.setMaximaleTextLaenge(value.maximaleTextLaenge);
+      this.instance.setAufzaehlungswerte(value.aufzaehlungswerte);
+      return this;
+    }
+
+    public Attributbeschreibung.Builder eigeneUrl(String eigeneUrl) {
+      this.instance.eigeneUrl(eigeneUrl);
+      return this;
+    }
+    
+    public Attributbeschreibung.Builder referenzSchriftgutObjektklasseOderFormular(String referenzSchriftgutObjektklasseOderFormular) {
+      this.instance.referenzSchriftgutObjektklasseOderFormular(referenzSchriftgutObjektklasseOderFormular);
+      return this;
+    }
+    
+    public Attributbeschreibung.Builder referenzAttribut(String referenzAttribut) {
+      this.instance.referenzAttribut(referenzAttribut);
+      return this;
+    }
+    
+    public Attributbeschreibung.Builder bezeichnung(String bezeichnung) {
+      this.instance.bezeichnung(bezeichnung);
+      return this;
+    }
+    
+    public Attributbeschreibung.Builder beschreibung(String beschreibung) {
+      this.instance.beschreibung(beschreibung);
+      return this;
+    }
+    
+    public Attributbeschreibung.Builder datentyp(AttributDatenTyp datentyp) {
+      this.instance.datentyp(datentyp);
+      return this;
+    }
+    
+    public Attributbeschreibung.Builder pflichtFeld(Boolean pflichtFeld) {
+      this.instance.pflichtFeld(pflichtFeld);
+      return this;
+    }
+    
+    public Attributbeschreibung.Builder maximaleTextLaenge(Integer maximaleTextLaenge) {
+      this.instance.maximaleTextLaenge(maximaleTextLaenge);
+      return this;
+    }
+    
+    public Attributbeschreibung.Builder aufzaehlungswerte(List<AufzaehlungstypElement> aufzaehlungswerte) {
+      this.instance.aufzaehlungswerte(aufzaehlungswerte);
+      return this;
+    }
+    
+    /**
+    * returns a built Attributbeschreibung instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public Attributbeschreibung build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static Attributbeschreibung.Builder builder() {
+    return new Attributbeschreibung.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public Attributbeschreibung.Builder toBuilder() {
+    Attributbeschreibung.Builder builder = new Attributbeschreibung.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

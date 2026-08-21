@@ -116,5 +116,69 @@ public class VorgangListeResponse {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder {
+
+    private VorgangListeResponse instance;
+
+    public Builder() {
+      this(new VorgangListeResponse());
+    }
+
+    protected Builder(VorgangListeResponse instance) {
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(VorgangListeResponse value) { 
+      this.instance.setAnzahl(value.anzahl);
+      this.instance.setElemente(value.elemente);
+      return this;
+    }
+
+    public VorgangListeResponse.Builder anzahl(Integer anzahl) {
+      this.instance.anzahl(anzahl);
+      return this;
+    }
+    
+    public VorgangListeResponse.Builder elemente(List<Vorgang> elemente) {
+      this.instance.elemente(elemente);
+      return this;
+    }
+    
+    /**
+    * returns a built VorgangListeResponse instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public VorgangListeResponse build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static VorgangListeResponse.Builder builder() {
+    return new VorgangListeResponse.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public VorgangListeResponse.Builder toBuilder() {
+    VorgangListeResponse.Builder builder = new VorgangListeResponse.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

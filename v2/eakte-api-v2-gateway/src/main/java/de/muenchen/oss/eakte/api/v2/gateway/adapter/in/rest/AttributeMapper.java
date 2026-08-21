@@ -1,6 +1,6 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
-import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.AttributEintrag;
+import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.EigenschaftEintrag;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.Attribute;
 
 import java.util.List;
@@ -12,16 +12,16 @@ import org.mapstruct.Mapper;
 
 @Mapper
 abstract class AttributeMapper {
-    protected Map<String, Object> mapAttributMap(final List<Attribute<?>> attributes) {
+    protected Map<String, Object> toMap(final List<Attribute<?>> attributes) {
         return attributes.stream().collect(Collectors.toMap(
                 i -> String.format("%s_%s", i.getReference(), i.getIndex()),
                 Attribute::getValue));
     }
 
-    protected abstract List<AttributEintrag> mapAttributEintragListe(List<Attribute<?>> attributes);
+    protected abstract List<EigenschaftEintrag> toList(List<Attribute<?>> attributes);
 
-    protected AttributEintrag mapAttributEintrag(final Attribute<?> attribute) {
-        return new AttributEintrag(attribute.getReference(), attribute.getValue());
+    protected EigenschaftEintrag toListEntry(final Attribute<?> attribute) {
+        return new EigenschaftEintrag(attribute.getReference(), attribute.getValue());
     }
 
     /**

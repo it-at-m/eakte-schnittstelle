@@ -178,5 +178,81 @@ public class AttributbeschreibungenListeResponse {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder {
+
+    private AttributbeschreibungenListeResponse instance;
+
+    public Builder() {
+      this(new AttributbeschreibungenListeResponse());
+    }
+
+    protected Builder(AttributbeschreibungenListeResponse instance) {
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(AttributbeschreibungenListeResponse value) { 
+      this.instance.setSuccess(value.success);
+      this.instance.setError(value.error);
+      this.instance.setAnzahlAttributbeschreibungen(value.anzahlAttributbeschreibungen);
+      this.instance.setAttributbeschreibungenListe(value.attributbeschreibungenListe);
+      return this;
+    }
+
+    public AttributbeschreibungenListeResponse.Builder success(Boolean success) {
+      this.instance.success(success);
+      return this;
+    }
+    
+    public AttributbeschreibungenListeResponse.Builder error(EAkteSchnittstelleError error) {
+      this.instance.error(error);
+      return this;
+    }
+    
+    public AttributbeschreibungenListeResponse.Builder anzahlAttributbeschreibungen(Integer anzahlAttributbeschreibungen) {
+      this.instance.anzahlAttributbeschreibungen(anzahlAttributbeschreibungen);
+      return this;
+    }
+    
+    public AttributbeschreibungenListeResponse.Builder attributbeschreibungenListe(List<Attributbeschreibung> attributbeschreibungenListe) {
+      this.instance.attributbeschreibungenListe(attributbeschreibungenListe);
+      return this;
+    }
+    
+    /**
+    * returns a built AttributbeschreibungenListeResponse instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public AttributbeschreibungenListeResponse build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static AttributbeschreibungenListeResponse.Builder builder() {
+    return new AttributbeschreibungenListeResponse.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public AttributbeschreibungenListeResponse.Builder toBuilder() {
+    AttributbeschreibungenListeResponse.Builder builder = new AttributbeschreibungenListeResponse.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

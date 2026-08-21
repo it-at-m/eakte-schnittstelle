@@ -141,5 +141,75 @@ public class AkteResponse {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder {
+
+    private AkteResponse instance;
+
+    public Builder() {
+      this(new AkteResponse());
+    }
+
+    protected Builder(AkteResponse instance) {
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(AkteResponse value) { 
+      this.instance.setSuccess(value.success);
+      this.instance.setError(value.error);
+      this.instance.setAkte(value.akte);
+      return this;
+    }
+
+    public AkteResponse.Builder success(Boolean success) {
+      this.instance.success(success);
+      return this;
+    }
+    
+    public AkteResponse.Builder error(EAkteSchnittstelleError error) {
+      this.instance.error(error);
+      return this;
+    }
+    
+    public AkteResponse.Builder akte(Akte akte) {
+      this.instance.akte(akte);
+      return this;
+    }
+    
+    /**
+    * returns a built AkteResponse instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public AkteResponse build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static AkteResponse.Builder builder() {
+    return new AkteResponse.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public AkteResponse.Builder toBuilder() {
+    AkteResponse.Builder builder = new AkteResponse.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 
