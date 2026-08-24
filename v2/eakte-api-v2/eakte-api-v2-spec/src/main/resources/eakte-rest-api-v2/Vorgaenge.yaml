@@ -28,7 +28,7 @@ get:
           schema:
             $ref: '_GlobaleDatentypen.yaml#/components/schemas/ErrorResponse'
     '401':
-      description: Falscher oder fehlender technischer Nutzer.
+      description: Falscher oder fehlende Anmeldeinformationen.
       content:
         application/json:
           schema:

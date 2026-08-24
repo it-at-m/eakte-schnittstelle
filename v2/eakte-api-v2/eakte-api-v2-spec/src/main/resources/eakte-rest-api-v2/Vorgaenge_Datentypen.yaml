@@ -7,8 +7,6 @@ components:
         Aufgrund der Konfigurierbarkeit der Attribute (verfahrensabhängige Metadaten, siehe
         Fabasoft eGov-Suite "Definition von Verfahren") werden diese in einer dynamisch 
         aufgebauten Liste geführt und nichts als Felder in einer fixen (JSON-) Datenstruktur.
-        Um eine einheitliche Behandlung von Standard- und Custom-Attributen zu ermöglichen, 
-        werden auch die Standard-Attribute in der 'attributListe' zurückgegeben.\
         \
         Um die innerhalb einer bestimmten Betreffseinheit verfügbaren Custom-Attribute auf
         Vorgangsebene sowie die Standard-Attribute des Vorgangs zu erfahren, kann über den Endpunkt
