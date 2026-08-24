@@ -47,6 +47,7 @@ components:
           $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Schlagworte'
         definition:
           type: string
+          description: Objekt-ID (COO-Adresse) der Definition für Verfahren
         userformsdata:
           type: array
           items:

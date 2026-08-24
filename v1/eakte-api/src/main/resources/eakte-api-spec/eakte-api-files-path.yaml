@@ -3,7 +3,32 @@ post:
   tags:
     - /files
   summary: Akte anlegen
-  description: Sachakten können nur in Aktenplaneinträgen des Aktenplaneintragstyps „Betreffseinheit“ angelegt werden, d.h. auf der untersten Ebene eines Aktenplans.
+  description: |
+    Sachakten können nur in Aktenplaneinträgen des Aktenplaneintragstyps „Betreffseinheit“ angelegt werden, 
+    d.h. auf der untersten Ebene eines Aktenplans.
+        
+    Ist der übergebene Aktenplaneintrag eine Betreffseinheit (unterstes Element im Aktenplan), 
+    prüft das System, ob die Betreffseinheit noch frei ist (weniger als 10.000 Akten in der Betreffseinheit)
+    * Ist die Betreffseinheit frei, wird die Akte in der Betreffseinheit abgelegt.
+    * Ist die Betreffseinheit nicht frei, prüft das System, ob bereits weitere Betreffseinheiten angelegt wurden und ob diese frei sind.
+    * Ist eine andere bereits angelegte Betreffseinheit frei, wird die Akte in dieser Betreffseinheit abgelegt
+    * Wurde noch keine weitere Betreffseinheit angelegt oder sind alle automatisch angelegten voll, 
+    wird eine neue Betreffseinheit auf der gleichen Ebene mit folgendem Namen angelegt:
+    Aktenplanzeichen: <Name des darüberliegenden Aktenplaneintrags> + „.„ + <Fortlaufende Nummer>\ 
+    Die Akte wird in der neu erzeugten Betreffseinheit angelegt.
+
+    Ist der übergebene Aktenplaneintrag keine Betreffseinheit, 
+    eruiert das System die Liste der Betreffseinheiten, welche eine Ebene tiefer sind.\
+    Das System prüft, ob eine dieser Betreffseinheiten frei ist.
+    * Wenn eine freie Betreffseinheit gefunden wird, wird die Akte in der freien Betreffseinheit angelegt.
+    * Wenn keine freie Betreffseinheit gefunden wird, wird eine neue Betreffseinheit unterhalb des übergebenen Aktenplaneintrages mit folgendem Namen angelegt:\
+    „Name des darüberliegenden Aktenplaneintrags„ + „.„ + „Fortlaufende Nummer„\
+    Die Akte wird in der neu erzeugten Betreffseinheit erzeugt.
+    
+    Als Organisationseinheit der Sachakte (COOSYSTEM@1.1:objowngroup) wird 
+    die Organisationseinheit des darüber liegenden Aktenplankennzeichens (COOELAK@1.1001:ou) gesetzt. 
+    Sofern keine Organisationseinheit auf dem Aktenplankennzeichen definiert ist, 
+    wird die Organisationseinheit der ersten Rolle des Benutzers verwendet.
   operationId: CreateFile
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

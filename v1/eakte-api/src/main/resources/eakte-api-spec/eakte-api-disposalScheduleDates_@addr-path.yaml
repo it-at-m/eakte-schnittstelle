@@ -2,6 +2,10 @@ put:
   tags:
     - /disposalScheduleDates
   summary: Aufbewahrungsdatum setzen
+  description: |
+    Bei Akten und Vorgängen kann das vorgesehene Endedatum der Aufbewahrung geändert werden, nachdem sie z.A. gesetzt wurden.\
+    Das angegebene Datum in der Eigenschaft „Aufbewahrung.vorgesehen“ [COOELAK@1.1001:filelifetime.COOELAK@1.1001:offltscheduled] 
+    wird überschrieben und das Datum (FSCSCHEDULE@1.1001:nddate) des Fristen-Objekts vom Typ Aufbewahrung.
   operationId: DisposalScheduleDate
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

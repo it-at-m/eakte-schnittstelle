@@ -27,6 +27,15 @@ put:
   tags:
     - /outgoings
   summary: Erledigung ändern
+  description: |
+    Bereits befüllte Werte werden überschrieben. 
+    Bei keiner Übergabe bleiben die bestehenden Werte erhalten.\
+    Ausnahme: Inhaltsobjekte können über diesen Aufruf nur hinzugefügt und 
+    nicht ersetzt werden.\
+    Bei jeder Änderung über die Schnittstelle 
+    wird in der eGov-Suite eine neue Version des Objekts erzeugt. 
+    Dies betrifft auch wiederholte Änderungen, 
+    die durch einen Benutzer durchgeführt werden.
   operationId: UpdateOutgoing
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

@@ -2,6 +2,17 @@ get:
   tags:
     - /contentObjects
   summary: Schriftstück lesen
+  description: |
+    Stornierte Objekte können nicht ausgelesen werden, 
+    d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] 
+    werden gefiltert und nicht zurückgegeben.\
+    Vor dem Aufruf wird automatisiert überprüft, 
+    ob die angefragte Datei größer als der angegebene Wert 
+    in der Eigenschaft „Maximale Größe der Inhalte“ [FSCVAPP@1.1001:defaultimportlimit]\ 
+    Derzeit beträgt die maximale Größe bei MUCS23 100 MB, im Produktivsystem MUCS26 vorr. 512 MB.  
+    aus der Virtual Application Konfiguration ist. 
+    Sofern die Datei größer ist als der angegebene Wert in MB ist, 
+    wird der Inhalt das Schriftstücks nicht ausgelesen und eine Fehlermeldung zurückgegeben.
   operationId: ReadContentObject
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
