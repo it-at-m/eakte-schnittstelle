@@ -504,6 +504,6 @@ public final class RouteConstants {
       DIRECT_PREFIX + ROUTE_ID_PAYLOAD_LOGGING;
 
   public static final String REQ_IN = "req_in";
-
+  public static final String REQ_OUT = "req_out";
   public static final String RESP_IN = "resp_in";
 }

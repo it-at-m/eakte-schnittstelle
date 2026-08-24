@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "eAkte SOAP Calls",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

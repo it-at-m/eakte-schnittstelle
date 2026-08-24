@@ -24,13 +24,18 @@ springdoc:
 
 
 logging:
+  structured:
+    format:
+      console: logstash
+    json:
+      stacktrace:
+        root: first
+        # default max size of one log line in docker is 16kb - UTF8 ~ 1 Character = 1 Byte
+        # therefore limit stack traces to a maximum of 8192 characters (to leave room for the rest of the message)
+        max-length: 8192
   level:
-    de:
-      muenchen:
-        dms:
-          common:
-            processor: INFO
-          config: INFO
+    root: info
+
 management:
   info:
     env:

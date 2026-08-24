@@ -1,41 +1,77 @@
 package de.muenchen.dms.common.processor;
 
+import de.muenchen.dms.common.route.QueryProperties;
 import de.muenchen.dms.common.route.RouteConstants;
 import java.lang.reflect.Field;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.cxf.message.MessageContentsList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
-@Component
+@Slf4j
+@RequiredArgsConstructor
 public class PayloadLogger implements Processor {
-
-  private String type;
-
-  public PayloadLogger(String type) {
-    this.type = type;
-  }
-
-  public PayloadLogger() {}
-
-  private static final Logger log = LoggerFactory.getLogger(PayloadLogger.class);
+  private final String type;
 
   public void process(Exchange exchange) throws Exception {
     if (RouteConstants.REQ_IN.equals(type)) {
+      logRequest(exchange);
+    } else if (RouteConstants.REQ_OUT.equals(type)) {
       logHeaders(exchange);
-
       logBody(exchange);
-
     } else if (RouteConstants.RESP_IN.equals(type)) {
       logHeaders(exchange);
-
       logHTTPStatusCode(exchange);
-
       logBody(exchange);
     }
+  }
+
+  private void logRequest(final Exchange exchange) {
+    try {
+      // request
+      final String camelUri = exchange.getIn().getHeader("CamelServletContextPath", String.class);
+      final String uriString = exchange.getIn().getHeader(Exchange.HTTP_URI, String.class);
+      final URI uri = new URI(uriString);
+      final String method = exchange.getIn().getHeader(Exchange.HTTP_METHOD, String.class);
+      final List<String> params = getParamsFromQuery(uri.getQuery());
+      final Object body = exchange.getIn().getBody();
+      final List<String> bodyFields = getKeysFromPojo(body);
+      // auth
+      final String authUser = exchange.getProperty("AuthenticatedUser", String.class);
+      // request context
+      final String application =
+          exchange.getProperty(QueryProperties.PROPERTY_ANWENDUNG, String.class);
+      log.atInfo()
+          .addKeyValue("method", method)
+          .addKeyValue("uri", camelUri)
+          .addKeyValue("params", params)
+          .addKeyValue("bodyFields", bodyFields)
+          .addKeyValue("authUser", authUser)
+          .addKeyValue("application", application)
+          .log();
+    } catch (final RuntimeException | URISyntaxException e) {
+      log.error("Error while logging request");
+    }
+  }
+
+  private List<String> getParamsFromQuery(final String query) {
+    if (query == null) {
+      return Collections.emptyList();
+    }
+    return Arrays.stream(query.split("&"))
+        .map(param -> param.split("=", 2))
+        .map(i -> URLDecoder.decode(i[0], StandardCharsets.US_ASCII))
+        .toList();
   }
 
   private void logHTTPStatusCode(Exchange exchange) {
@@ -43,7 +79,7 @@ public class PayloadLogger implements Processor {
         exchange.getIn().getHeader(Exchange.HTTP_RESPONSE_CODE, Integer.class);
 
     if (httpResponseCode != null) {
-      log.info("httpStatus: " + httpResponseCode);
+      log.info("httpStatus: {}", httpResponseCode);
     } else {
       log.info("No httpStatus");
     }
@@ -52,17 +88,17 @@ public class PayloadLogger implements Processor {
   private void logHeaders(Exchange exchange) {
     Map<String, Object> headers = exchange.getMessage().getHeaders();
     if (headers != null) {
-      if (RouteConstants.REQ_IN.equals(type)) {
-        log.info("REQ_IN: ");
+      if (RouteConstants.REQ_OUT.equals(type)) {
+        log.info("REQ_OUT: ");
         for (Map.Entry<String, Object> entry : headers.entrySet()) {
-          log.info(entry.getKey() + ": " + entry.getValue());
+          log.info("{}: {}", entry.getKey(), entry.getValue());
         }
         logUsernameFromAuthHeader(exchange);
       } else if (RouteConstants.RESP_IN.equals(type)) {
         log.info("RESP_IN: ");
         Object object = headers.get("operationName");
         if (object != null) {
-          log.info("operationName: " + object);
+          log.info("operationName: {}", object);
         }
       }
     } else {
@@ -83,7 +119,7 @@ public class PayloadLogger implements Processor {
 
   private void logBody(Exchange exchange) {
     Object body = exchange.getIn().getBody();
-    if (RouteConstants.REQ_IN.equals(type)) {
+    if (RouteConstants.REQ_OUT.equals(type)) {
       logAllFromPojo(body);
     } else if (RouteConstants.RESP_IN.equals(type)) {
       logMessageContentsList((MessageContentsList) body);
@@ -120,10 +156,10 @@ public class PayloadLogger implements Processor {
         String fieldName = field.getName().toLowerCase();
 
         if (statusNotZero) {
-          log.error(field.getName() + ": " + value);
+          log.error("{}: {}", field.getName(), value);
         } else {
           if ("status".equalsIgnoreCase(fieldName) || "userlogin".equalsIgnoreCase(fieldName)) {
-            log.info(field.getName() + ": " + value);
+            log.info("{}: {}", field.getName(), value);
           }
         }
       }
@@ -132,11 +168,30 @@ public class PayloadLogger implements Processor {
     }
   }
 
+  private List<String> getKeysFromPojo(final Object object) {
+    if (object == null) {
+      return Collections.emptyList();
+    }
+    final List<String> fields = new ArrayList<>();
+    Class<?> clazz = object.getClass();
+    while (clazz != null && clazz != Object.class) {
+      for (Field field : clazz.getDeclaredFields()) {
+        field.setAccessible(true);
+        try {
+          if (field.get(object) != null) {
+            fields.add(field.getName());
+          }
+        } catch (final IllegalAccessException ignored) {
+        }
+      }
+      clazz = clazz.getSuperclass();
+    }
+
+    return fields;
+  }
+
   private void logMessageContentsList(MessageContentsList messageContentsList) {
-
-    for (int i = 0; i < messageContentsList.size(); i++) {
-      Object element = messageContentsList.get(i);
-
+    for (Object element : messageContentsList) {
       if (element != null) {
         logAllFromPojo(element);
       } else {
