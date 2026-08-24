@@ -2,6 +2,12 @@ post:
   tags:
     - /outgoings
   summary: Erledigung anlegen
+  description: | 
+    Neue Erledigung unter dem angegebenen Vorgang anlegen.\
+    Wenn kein Vorgang erzeugt wird, 
+    so wird die erzeugte Erledigung am Schreibtisch des Benutzers abgelegt.
+    
+    Beim Anlegen von neuen Dokumenten wird die auf dem Vorgang gesetzte Zugriffsdefinition verwendet.
   operationId: CreateOutgoing
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

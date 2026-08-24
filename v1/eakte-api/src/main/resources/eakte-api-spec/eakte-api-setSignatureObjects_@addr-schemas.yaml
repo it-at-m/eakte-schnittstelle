@@ -12,7 +12,10 @@ components:
             COO-Adresse der Unterschriftenart\
             Anmerkung:\
             Titel ist nicht eindeutig, da es im System mehrere
-            Unterschriftenarten mit dem gleichen Namen/Titel gibt.
+            Unterschriftenarten mit dem gleichen Namen/Titel gibt.\
+            In den jeweiligen Anwendungsfällen 
+            (z.B. Vorgang stornieren, Eingang sperren, Eingang weglegen, Erledigung unterschreiben) 
+            sind die Referenzen für Unterschriftsarten (signaturetype) definiert
           example: COO.1.1001.1.6485
         remark:
           type: string

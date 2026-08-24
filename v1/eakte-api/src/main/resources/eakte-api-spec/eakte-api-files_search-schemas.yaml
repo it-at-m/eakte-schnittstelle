@@ -11,8 +11,12 @@ components:
           example: "COO.1.2300.1.847"
         filereference:
           type: "string"
-          description: "Geschäftszeichen"
-          example: "A1 01 01 01 01/00010"
+          description: | 
+            eindeutiges Geschäfts-/Aktenzeichen\
+            Wird im eAkte-System automatisch gebildet aus dem Aktenplaneintrag und 
+            einer fortlaufenden Nummer der Akte 
+            (bei Ableitungen mit .fortlaufende Nummer der Betreffseinheit im Aktenplan (siehe Beispiel)\
+          example: "2002.1-36"
         objmlname:
           type: "string"
           description: "Name"

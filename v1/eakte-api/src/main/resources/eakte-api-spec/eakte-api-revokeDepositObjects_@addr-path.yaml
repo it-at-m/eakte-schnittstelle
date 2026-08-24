@@ -1,7 +1,15 @@
 put:
   tags:
     - /revokeDepositObjects
-  summary: z.A. aufheben
+  summary: z.A. aufheben für Akten oder Vorgänge
+  description: |
+    Die angegebene Akte oder Vorgang wird z.A. aufgehoben.\
+    Wenn die z.A.-Setzung einer "Akte" aufgehoben wird, dann 
+    * wird in der eAkte für die betreffende Akte der Wert im Feld "gültig bis" geleert
+    * bleiben enthaltene Vorgänge z.A., können dann aber ggf. wieder in Bearbeitung genommen werden
+    * bekommt die Akte Bearbeitungsstatus "erstellt" und den Status "in Bearbeitung"
+    * können Inhalte  bearbeitet werden
+    * werden das Enddatum für Transfer- und Aufbewahrung geleert
   operationId: RevokeDeposit
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

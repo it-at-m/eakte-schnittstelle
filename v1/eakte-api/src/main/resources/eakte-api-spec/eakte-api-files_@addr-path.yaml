@@ -2,7 +2,11 @@ get:
   tags:
     - /files
   summary: Akte lesen
-  description: Stornierte Objekte können nicht ausgelesen werden. D.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.
+  description: |
+    Ausgabe der jeweiligen Metadaten der übergebenen Sachakte.\
+    Stornierte Objekte können nicht ausgelesen werden. 
+    D.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] 
+    werden gefiltert und nicht zurückgegeben.
   operationId: ReadFile
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
@@ -27,7 +31,9 @@ put:
   tags:
     - /files
   summary: Akte ändern
-  description: Bereits befüllte Eigenschaften werden mit übergebenen Werten überschrieben. Bei keiner Übergabe bleiben die bestehenden Werte erhalten. Bei jeder Änderung über die Schnittstelle wird in der eGov-Suite eine neue Version des Objekts erzeugt.
+  description: |
+    Bereits befüllte Eigenschaften werden mit übergebenen Werten überschrieben. 
+    Bei keiner Übergabe bleiben die bestehenden Werte erhalten. Bei jeder Änderung über die Schnittstelle wird in der eGov-Suite eine neue Version des Objekts erzeugt.
   operationId: UpdateFile
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

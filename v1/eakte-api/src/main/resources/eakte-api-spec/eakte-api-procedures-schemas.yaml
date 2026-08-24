@@ -8,9 +8,7 @@ components:
       properties:
         shortname:
           type: string
-          description: |
-            Titel\
-            Der Titel bildet zusammen mit dem Geschäftszeichen den Namen des Vorgangs.
+          description: Der Titel bildet zusammen mit dem Geschäftszeichen den Namen des Vorgangs.
           example: 2016 Anträge Firma XY
         filesubj:
           $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Betreff'
@@ -34,6 +32,7 @@ components:
           $ref: 'eakte-api--global-schemas.yaml#/components/schemas/filetype'
         definition:
           type: string
+          description: Objekt-ID (COO-Adresse) der Definition für Verfahren
         userformsdata:
           type: array
           items:

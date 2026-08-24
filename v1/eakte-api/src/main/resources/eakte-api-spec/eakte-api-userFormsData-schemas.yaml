@@ -4,11 +4,20 @@ components:
 
     ReadUserFormsDataResponseDTO:
       type: "object"
+      description: |
+        Rückgabe der Verfahrenseigenschaft bestehend aus
+        * dem Wert (oder Werteliste) der Verfahrenseigenschaft
+        * der internen lfd. Nummer des Wertes der Verfahrenseigenschaft (bei einer Liste jeweils die lfdNr. aller Werte)
+        * dem zugehörigen Referenznamen zur lfd. Nummer des Wertes der Verfahrenseigenschaft (bei einer Liste die Referenznamen aller Werte)
       properties:
         value:
           type: "string"
-          description: "Ein Wert"
-          example: "COO.1.2300.1.847"
+          description: Wert(e) der Verfahreneigenschaft als String
+          example: "Direktorium\nIT-Referat,\nPersonal- und Organisationsreferat"
+        enuminteger:
+          $ref: "eakte-api--global-schemas.yaml#/components/schemas/ArrayOfint"
+        enumreference:
+          $ref: "eakte-api--global-schemas.yaml#/components/schemas/ArrayOfstring"
 
     UpdateUserFormsDataRequestDTO:
       type: "object"

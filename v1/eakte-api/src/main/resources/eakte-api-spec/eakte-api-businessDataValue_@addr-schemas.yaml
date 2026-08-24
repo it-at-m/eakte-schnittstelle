@@ -10,9 +10,38 @@ components:
           type: string
           description: |
             Referenz des Fachdatums\
-            Frage: Wo bekommt man den Namen des Fachdatums her?
+            Hier kann die einfache Referenz des Komponentenobjektes angeführt werden ("FD_Position" anstelle "COOSYSTEM@1.1:FD_Position".\
+            Die Komponentenobjekte können sowohl von Fabasoft in der CFGMUENCHEN-Komponente 
+            sowie von Domänenadministratoren in einer lokalen Softwarekomponenten erzeugt werden. 
+            Wenn das Fachdaten-Komponentenobjekt gefunden wird, 
+            wird diese unabhängig von der darüberliegenden Konfiguration gesetzt 
+            d.h. eine zusätzliche Prüfung, ob diese in den darüberliegenden Aktenplaneinträgen vorgesehen ist, 
+            kann nicht erfolgen.
+            Dafür gibt es die neue Funktion /userFormsData, mit der Verfahrensdaten abgespeichert werden.\
+            Für vorhandene Schnittstellen werden ab MUCS26 Fachdaten automatisch in den Verfahrensdaten abgespeichert.
           example: data_dognumber
         value:
           type: string
-          description: Wert des Fachdatums
+          description: |
+            Wert des Fachdatums
+            
+            Der Wert kann nur gesetzt werden, 
+            wenn auch das Fachdatum-Komponenten-Objekt (mit dem Referenznamen) gefunden wurde.\
+            Folgende Fachdaten-Typen können übergeben werden – 
+            je nach Datentyp, müssen die Werte im vorab definierten Format übergeben werden:
+            * Zeichenkettentyp: String wird übergeben und direkt bei der Akte eingetragen
+            * Liste von Zeichenketten: String wird übergeben und bei der Akte eingetragen (es kann lediglich eine Zeile/String übergeben werden)
+            * Objekt: Die eindeutige COO-Adresse muss angegeben werden.
+            * Objektliste: Liste von COO-Adressen kann übergeben werden
+            * Boolescher Typ: Die möglichen Angaben in der Datenquelle sind „Ja“, oder „Nein“. 
+            Wenn nichts übergeben wird, wird automatsich "Nein" gesetzt
+            * Typ für Datum und Zeit: Das Datumsformat ist in folgendem Format zu übergeben: "DD.MM.YYYY"
+            * Währungstyp: Die Zahlenwert kann übergeben werden z.B. „53,89“ – der Wert wird automatisch immer in EUR eingetragen
+            * Zahlentyp: Es dürfen nur ganze Zahlen übergeben werden z.B.“5“
+            * Aufzählungstyp: Hier muss der entsprechende Zahlenwert übergeben werden. 
+            Wenn ein Zahlenwert übergeben wird, der nicht in den Aufzählungseigenschaft enthalten ist, 
+            wird folgende Fehlermeldung zurückgegeben:
+            „Übergebenes Element ist im Aufzählungstyp nicht vorhanden.“
+            * Gleitkommazahlentyp: Es können auch Gleitkommazahlen übergeben werden 
+            z.B. „14,51“ (standardmäßig erlaubt die Fabasoft eGov-Suite nicht mehr als zwei Kommastellen)
           example: '458965'

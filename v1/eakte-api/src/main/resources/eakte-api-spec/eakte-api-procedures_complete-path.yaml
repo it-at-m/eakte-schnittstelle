@@ -2,7 +2,26 @@
 post:
   tags:
     - /procedures
-  summary: Anlegen eines kompletten Vorgangs
+  summary: Anlegen eines kompletten Vorgangs inkl. Dokument und Schriftstücke
+  description: |
+    Es wird ein kompletter Vorgang mit einem Dokument und Schrifstück neu angelegt 
+    bzw. es können auch einzelne Schriftstücke beim Vorgang ergänzt werden.\
+    Sobald eine Sachakte lokalisiert wurde, wird folgendermaßen vorgegangen:
+    
+    Eingangsparameter Vorgangstitel shortnameprocedure:\
+    Das System überprüft ob in der lokalisierten Akte bereits ein Vorgang mit dem Titel existiert.
+    * Vorgang existiert bereits 
+      - Navigieren in den Vorgang
+    * Vorgang existiert noch nicht 
+      - Ein neuer Vorgang mit dem übergebenen Titel wird angelegt und in den Vorgang navigiert.
+    
+    Eingangsparameter Dokumenttitel shortnamedocument\
+    Das System überprüft, ob in dem lokalisierten Vorgang bereits 
+    ein Eingangsdokument mit dem Titel existiert.
+    * Eingangsdokument existiert bereits 
+      - Navigieren in das Eingangsdokument
+    * Eingangsdokument existiert noch nicht 
+      - ein neues Eingangsdokument mit dem übergebenen Titel wird angelegt und in das Eingangsdokument navigiert.
   operationId: CreateCompleteProcedure
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

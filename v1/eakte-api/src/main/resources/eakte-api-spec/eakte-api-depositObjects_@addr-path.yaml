@@ -1,7 +1,18 @@
 put:
   tags:
     - /depositObjects
-  summary: z.A. setzen
+  summary: z.A. setzen von Akten und Vorgängen
+  description: |
+    Der Status der Akte oder des Vorgangs wird „z.A.“ gesetzt.
+    * Alle Vorgänge unter der betreffenden Akte werden z.A. gesetzt.
+    * Für die betreffende Akte wird das Feld "gültig bis" 
+    auf das Datum der Durchführung des Calls gesetzt.
+    * Neue Vorgänge können nach dem Bayern Standard nicht mehr angelegt und 
+    Inhalte nicht mehr bearbeitet werden.
+    * Das Transfer- und Aussonderungsdatum für Vorgänge wird 
+    auf Basis von Aufbewahrungsfrist und Aussonderungsart berechnet und gesetzt.
+    * Eine Akte kann lediglich dann z.A. geschrieben werden, 
+    wenn bei keinem der darunterliegenden Vorgänge ein offener Prozess/Laufweg vorliegt.
   operationId: DepositObject
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

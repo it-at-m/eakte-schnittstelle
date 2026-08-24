@@ -2,6 +2,60 @@ put:
   tags:
     - /accessDefinitions
   summary: Zugriffsdefinition des angegebenen Objektes ändern
+  description: |
+    Ändern der Zugriffsdefinition von einem Objekt, 
+    sowie in bestimmten Konstellationen auch automatisch dessen untergeordneten Objekte. 
+    Beispielsweise kann dieser Aufruf verwendet werden, 
+    wenn aufgrund Anforderungen des Datenschutzes (z.B. Zeugenschutz) 
+    der Zugriff auf ein Dokument oder einen Vorgang inkl. Dokumente eingeschränkt werden muss.
+    
+    Dieser Aufruf steht für folgende Objektklassen zur Verfügung:
+    * Sachakte
+    * Vorgang
+    * Dokument (Eingangsdokument, Erledigung)
+    
+    Die Vererbung von Zugriffsdefinitionen kann über die Eigenschaft „Rechtevererbung [authorization inheritance]“ 
+    gesteuert werden. Auflistung der möglichen Werte zur Übergabe und die Auswirkungen:
+    * 0 oder leer: Die Rechtevererbung aus dem Standardprodukt wird verwendet. 
+    Der neue Wert wird rekursiv gesetzt  i n  A b h ä n g i g k e i t von den jeweiligen aktuell gesetzten Werten 
+    der untergeordneten Objekte.
+    * 1: Die Zugriffsdefinition wird rekursiv auf alle untergeordneten Objekte vererbt  
+    u n a b h ä n g i g  von den jeweiligen aktuell gesetzten Werten der untergeordneten Objekte.
+    z.B.: beim Setzen der Zugriffsdefinition auf der Akte wird diese auf die 
+    enthaltenen Vorgänge und wiederrum auf alle in den Vorgängen enthaltenen Dokumenten vererbt.
+    * 2: Die Zugriffsdefinition ändert sich  n u r  b e i  d e m  a u s g e w ä h l t e n  Objekt
+    
+    Grundsätzlich erfolgt beim Setzen einer Zugriffsdefinition eine rekursive Vererbung 
+    auf alle untergeordneten Objekte, sofern auf den unterordneten Objekten 
+    die gleiche Zugriffsdefinition gesetzt ist.
+    
+    Szenario 1: Die Sachakte sowie alle untergeordneten Vorgänge und Dokumente  
+    haben die gleiche Zugriffsdefinition.\
+    Beim Setzen einer neuen Zugriffsdefinition der Sachakte ändern sich die Zugriffsdefinitionen 
+    aller untergeordneten Vorgänge und Dokumente.
+    
+    Szenario 2: Die Sachakte und das Dokument haben die gleiche Zugriffsdefinition, 
+    der Vorgang eine andere.\
+    Beim Setzen einer neuen Zugriffsdefinition auf der Sachakte ändert sich 
+    die Zugriffsdefinition des Vorgangs und des Dokumentes nicht, da der Vorgang eine andere Zugriffsdefinition als die Sachakte hat.
+    
+    Szenario 3: Die Sachakte und der Vorgang haben die gleiche Zugriffsdefinition. 
+    Das untergeordnete Dokument des Vorgangs hat eine andere Zugriffsdefinition.\
+    Beim Setzen der Zugriffsdefinition für Schriftgutobjekte des Eigentümers auf der Sachakte 
+    ändert sich die Zugriffsdefinition des Dokumentes nicht, 
+    da das Dokument eine andere Zugriffsdefinition als der Vorgang hat. 
+    Die Zugriffsdefinition des Vorgangs ändert sich.
+    
+    Szenario 4: Der Vorgang und das Dokument haben die gleiche Zugriffsdefinition.\
+    Beim Setzen einer neuen Zugriffsdefinition auf dem Vorgang 
+    ändert sich die Zugriffsdefinition des Dokumentes, 
+    da das Dokument die gleiche Zugriffsdefinition wie der Vorgang hat. 
+    Es ändern sich alle Dokumente des Vorgangs mit der gleichen Zugriffsdefinition!
+    
+    Szenario 5: Der Vorgang und das Dokument haben unterschiedliche Zugriffsdefinitionen.
+    Beim Setzen einer neuen Zugriffsdefinition auf dem Vorgang 
+    ändert sich die Zugriffsdefinition des Dokumentes nicht, 
+    da das Dokument eine andere Zugriffsdefinition als der Vorgang hat.
   operationId: UpdateAccessDefinitionObject
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

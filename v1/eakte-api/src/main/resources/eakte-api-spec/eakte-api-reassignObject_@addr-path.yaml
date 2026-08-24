@@ -1,7 +1,7 @@
 put:
   tags:
     - /reAssignObject
-  summary: Objekt umschreiben
+  summary: Akte oder Vorgang umschreiben
   operationId: ReAssignObject
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

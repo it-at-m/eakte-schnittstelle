@@ -3,6 +3,11 @@ post:
   tags:
     - /subjectAreaUnits
   summary: Betreffseinheit anlegen
+  description: |
+    Ein neuer Aktenplaneintrag [COOELAK@1.1001:SubjectArea] des Aktenplaneintragstyps „Betreffseinheit“ 
+    wird unter dem angegebenen übergeordneten Aktenplaneintrag erstellt.\
+    Beim Anlegen von neuen Aktenplaneinträgen wird die 
+    auf dem angegebenen übergeordneten Aktenplaneintrag angegebene Zugriffsdefinition übernommen.
   operationId: CreateSubjectAreaUnit
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

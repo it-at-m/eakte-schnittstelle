@@ -2,6 +2,11 @@ get:
   tags:
     - /procedureObjects
   summary: Liste von Dokumenten auslesen
+  description: |
+    Stornierte Objekte können nicht ausgelesen werden, 
+    d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.\
+    Über die optionalen Parameter kann das Fachverfahren vorab eine Selektierung der Liste vornehmen, 
+    d.h. es sollten lediglich die Objekte übermittelt werden auf welche die optionalen Parameter zutreffen.
   operationId: ReadProcedureObject
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
