@@ -1,0 +1,41 @@
+get:
+  tags:
+    - Vorgang
+  summary: Vorgaenge suchen
+  description: |
+    Mit diesem Aufruf können Vorgänge gesucht werden auf Basis von Bedingungen, die sich auf beliebige
+    Attribute des Vorgangs beziehen (Standard-Metadaten der eGov-Suite oder auch Attribute aus der 
+    "Definition von Verfahren").
+  operationId: SucheVorgaenge
+  parameters:
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Scope'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Bedingungen'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Eigenschaften'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'Vorgaenge_Datentypen.yaml#/components/schemas/VorgangListeResponse'
+    '400':
+      description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+      content:
+        application/json:
+          schema:
+            $ref: '_GlobaleDatentypen.yaml#/components/schemas/ErrorResponse'
+    '401':
+      description: Falscher oder fehlende Anmeldeinformationen.
+      content:
+        application/json:
+          schema:
+            $ref: '_GlobaleDatentypen.yaml#/components/schemas/ErrorResponse'
+    '500':
+      description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+      content:
+        application/json:
+          schema:
+            $ref: '_GlobaleDatentypen.yaml#/components/schemas/ErrorResponse'

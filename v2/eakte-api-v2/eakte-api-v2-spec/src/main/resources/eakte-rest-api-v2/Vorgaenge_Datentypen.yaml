@@ -1,0 +1,58 @@
+components:
+  schemas:
+    Vorgang:
+      type: object
+      description: |
+        Repräsentation eines Vorgangs.\
+        Aufgrund der Konfigurierbarkeit der Attribute (verfahrensabhängige Metadaten, siehe
+        Fabasoft eGov-Suite "Definition von Verfahren") werden diese in einer dynamisch 
+        aufgebauten Liste geführt und nichts als Felder in einer fixen (JSON-) Datenstruktur.
+        \
+        Um die innerhalb einer bestimmten Betreffseinheit verfügbaren Custom-Attribute auf
+        Vorgangsebene sowie die Standard-Attribute des Vorgangs zu erfahren, kann über den Endpunkt
+        '/v2/Attribute' eine Abfrage (GET-Methode) getätigt werden (s. Spezifikation dieses
+        Endpunktes, in diesem Fall die Verwendung des Filters 'Schriftgutebene=Vorgang').
+      required:
+        - id
+        - sachakte_id
+        - name
+        - eigenschaften_map
+        - eigenschaften_liste
+      properties:
+        id:
+          type: string
+        sachakte_id:
+          type: string
+        name:
+          type: string
+        betreff:
+          type: string
+        eigenschaften_map:
+          type: object
+          additionalProperties: true
+        eigenschaften_liste:
+          type: array
+          items:
+            $ref: 'Vorgaenge_Datentypen.yaml#/components/schemas/EigenschaftEintrag'
+
+    VorgangListeResponse:
+      type: object
+      properties:
+        anzahl:
+          $ref: '_GlobaleDatentypen.yaml#/components/schemas/AnzahlListenElemente'
+        elemente:
+          type: array
+          description: Liste von Vorgängen
+          items:
+            $ref: 'Vorgaenge_Datentypen.yaml#/components/schemas/Vorgang'
+
+    EigenschaftEintrag:
+      type: object
+      required:
+        - reference
+        - value
+      properties:
+        reference:
+          type: string
+        value:
+          type: object

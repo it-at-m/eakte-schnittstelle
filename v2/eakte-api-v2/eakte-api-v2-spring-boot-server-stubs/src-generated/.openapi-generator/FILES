@@ -4,6 +4,7 @@ src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/controlle
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/controllers/ApiUtil.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/controllers/AttributbeschreibungenApi.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/controllers/DefinitionenFuerVerfahrenApi.java
+src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/controllers/VorgangApi.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/Akte.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/AkteResponse.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/AktenListeResponse.java
@@ -34,5 +35,9 @@ src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/Auf
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/DefinitionFuerVerfahren.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/DefinitionenFuerVerfahrenListeResponse.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/EAkteSchnittstelleError.java
+src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/EigenschaftEintrag.java
+src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/ErrorResponse.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/NoContentResponse.java
+src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/Vorgang.java
+src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/VorgangListeResponse.java
 src/main/java/org/openapitools/configuration/EnumConverterConfiguration.java

@@ -108,5 +108,78 @@ public class AttributBoolescherWert extends AttributUriUndWert {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder extends AttributUriUndWert.Builder {
+
+    private AttributBoolescherWert instance;
+
+    public Builder() {
+      this(new AttributBoolescherWert());
+    }
+
+    protected Builder(AttributBoolescherWert instance) {
+      super(instance); // the parent builder shares the same instance
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(AttributBoolescherWert value) { 
+      super.copyOf(value);
+      this.instance.setAttributWert(value.attributWert);
+      return this;
+    }
+
+    public AttributBoolescherWert.Builder attributWert(Boolean attributWert) {
+      this.instance.attributWert(attributWert);
+      return this;
+    }
+    
+    @Override
+    public AttributBoolescherWert.Builder attributURI(String attributURI) {
+      this.instance.attributURI(attributURI);
+      return this;
+    }
+    
+    @Override
+    public AttributBoolescherWert.Builder datenTyp(String datenTyp) {
+      this.instance.datenTyp(datenTyp);
+      return this;
+    }
+    
+    /**
+    * returns a built AttributBoolescherWert instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public AttributBoolescherWert build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        super.build();
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static AttributBoolescherWert.Builder builder() {
+    return new AttributBoolescherWert.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public AttributBoolescherWert.Builder toBuilder() {
+    AttributBoolescherWert.Builder builder = new AttributBoolescherWert.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

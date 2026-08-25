@@ -25,7 +25,9 @@ components:
       $ref: '_SicherheitsSchemata.yaml#/components/securitySchemes/bearerAuth'
 
 security:
+  # TODO rm basicAuth?
   - basicAuth: []
+  - bearerAuth: []
 
 paths:
 
@@ -59,3 +61,6 @@ paths:
 #
 #  '/api/v2/organisationseinheiten/{organisationseinheitenId}':
 #    $ref: 'Organisationseinheiten_Einzelsatz.yaml'
+
+  '/api/v2/vorgaenge':
+    $ref: 'Vorgaenge.yaml'

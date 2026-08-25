@@ -196,6 +196,7 @@ nbdist/
 
 v1/eakte-eai/eakte-external-config/application.yml
 **/application-test-credentials.yaml
+**/application-local-credentials.yaml
 
 v2/eakte-soap-calls/environments/*
 !v2/eakte-soap-calls/environments/example-env.bru

@@ -108,5 +108,78 @@ public class AttributBase64EncodedContent extends AttributUriUndWert {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder extends AttributUriUndWert.Builder {
+
+    private AttributBase64EncodedContent instance;
+
+    public Builder() {
+      this(new AttributBase64EncodedContent());
+    }
+
+    protected Builder(AttributBase64EncodedContent instance) {
+      super(instance); // the parent builder shares the same instance
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(AttributBase64EncodedContent value) { 
+      super.copyOf(value);
+      this.instance.setAttributWert(value.attributWert);
+      return this;
+    }
+
+    public AttributBase64EncodedContent.Builder attributWert(String attributWert) {
+      this.instance.attributWert(attributWert);
+      return this;
+    }
+    
+    @Override
+    public AttributBase64EncodedContent.Builder attributURI(String attributURI) {
+      this.instance.attributURI(attributURI);
+      return this;
+    }
+    
+    @Override
+    public AttributBase64EncodedContent.Builder datenTyp(String datenTyp) {
+      this.instance.datenTyp(datenTyp);
+      return this;
+    }
+    
+    /**
+    * returns a built AttributBase64EncodedContent instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public AttributBase64EncodedContent build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        super.build();
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static AttributBase64EncodedContent.Builder builder() {
+    return new AttributBase64EncodedContent.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public AttributBase64EncodedContent.Builder toBuilder() {
+    AttributBase64EncodedContent.Builder builder = new AttributBase64EncodedContent.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

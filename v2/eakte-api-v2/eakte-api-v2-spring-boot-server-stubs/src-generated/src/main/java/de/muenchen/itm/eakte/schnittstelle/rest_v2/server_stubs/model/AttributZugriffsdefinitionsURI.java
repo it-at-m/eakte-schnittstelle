@@ -108,5 +108,78 @@ public class AttributZugriffsdefinitionsURI extends AttributUriUndWert {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder extends AttributUriUndWert.Builder {
+
+    private AttributZugriffsdefinitionsURI instance;
+
+    public Builder() {
+      this(new AttributZugriffsdefinitionsURI());
+    }
+
+    protected Builder(AttributZugriffsdefinitionsURI instance) {
+      super(instance); // the parent builder shares the same instance
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(AttributZugriffsdefinitionsURI value) { 
+      super.copyOf(value);
+      this.instance.setAttributWert(value.attributWert);
+      return this;
+    }
+
+    public AttributZugriffsdefinitionsURI.Builder attributWert(String attributWert) {
+      this.instance.attributWert(attributWert);
+      return this;
+    }
+    
+    @Override
+    public AttributZugriffsdefinitionsURI.Builder attributURI(String attributURI) {
+      this.instance.attributURI(attributURI);
+      return this;
+    }
+    
+    @Override
+    public AttributZugriffsdefinitionsURI.Builder datenTyp(String datenTyp) {
+      this.instance.datenTyp(datenTyp);
+      return this;
+    }
+    
+    /**
+    * returns a built AttributZugriffsdefinitionsURI instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public AttributZugriffsdefinitionsURI build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        super.build();
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static AttributZugriffsdefinitionsURI.Builder builder() {
+    return new AttributZugriffsdefinitionsURI.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public AttributZugriffsdefinitionsURI.Builder toBuilder() {
+    AttributZugriffsdefinitionsURI.Builder builder = new AttributZugriffsdefinitionsURI.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

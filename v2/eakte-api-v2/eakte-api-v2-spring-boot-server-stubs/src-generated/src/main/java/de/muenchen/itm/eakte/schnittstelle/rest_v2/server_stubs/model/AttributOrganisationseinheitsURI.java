@@ -108,5 +108,78 @@ public class AttributOrganisationseinheitsURI extends AttributUriUndWert {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder extends AttributUriUndWert.Builder {
+
+    private AttributOrganisationseinheitsURI instance;
+
+    public Builder() {
+      this(new AttributOrganisationseinheitsURI());
+    }
+
+    protected Builder(AttributOrganisationseinheitsURI instance) {
+      super(instance); // the parent builder shares the same instance
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(AttributOrganisationseinheitsURI value) { 
+      super.copyOf(value);
+      this.instance.setAttributWert(value.attributWert);
+      return this;
+    }
+
+    public AttributOrganisationseinheitsURI.Builder attributWert(String attributWert) {
+      this.instance.attributWert(attributWert);
+      return this;
+    }
+    
+    @Override
+    public AttributOrganisationseinheitsURI.Builder attributURI(String attributURI) {
+      this.instance.attributURI(attributURI);
+      return this;
+    }
+    
+    @Override
+    public AttributOrganisationseinheitsURI.Builder datenTyp(String datenTyp) {
+      this.instance.datenTyp(datenTyp);
+      return this;
+    }
+    
+    /**
+    * returns a built AttributOrganisationseinheitsURI instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public AttributOrganisationseinheitsURI build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        super.build();
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static AttributOrganisationseinheitsURI.Builder builder() {
+    return new AttributOrganisationseinheitsURI.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public AttributOrganisationseinheitsURI.Builder toBuilder() {
+    AttributOrganisationseinheitsURI.Builder builder = new AttributOrganisationseinheitsURI.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

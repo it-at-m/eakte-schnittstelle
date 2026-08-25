@@ -14,6 +14,7 @@ servers:
   - url: http://localhost:8080
 security:
   - basicAuth: []
+  - bearerAuth: []
 paths:
   /api/v2/akten:
     post:
@@ -262,6 +263,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DefinitionenFuerVerfahrenListeResponse'
+  /api/v2/vorgaenge:
+    get:
+      tags:
+        - Vorgang
+      summary: Vorgaenge suchen
+      description: |
+        Mit diesem Aufruf können Vorgänge gesucht werden auf Basis von Bedingungen, die sich auf beliebige
+        Attribute des Vorgangs beziehen (Standard-Metadaten der eGov-Suite oder auch Attribute aus der 
+        "Definition von Verfahren").
+      operationId: SucheVorgaenge
+      parameters:
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/Scope'
+        - $ref: '#/components/parameters/Bedingungen'
+        - $ref: '#/components/parameters/Eigenschaften'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VorgangListeResponse'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falscher oder fehlender technischer Nutzer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   securitySchemes:
     basicAuth:
@@ -291,7 +334,7 @@ components:
         type: string
       example: SWH
     LoginName:
-      name: LoginName
+      name: Login-Name
       in: header
       description: |
         **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\
@@ -377,6 +420,20 @@ components:
       schema:
         type: string
       example: <grmblfix>
+    Scope:
+      name: scope
+      in: query
+      schema:
+        type: string
+        nullable: true
+    Eigenschaften:
+      name: eigenschaften
+      in: query
+      schema:
+        type: array
+        nullable: true
+        items:
+          type: string
   schemas:
     EAkteSchnittstelleError:
       type: object
@@ -900,6 +957,81 @@ components:
             List von Verfahrensdefinitionen
           items:
             $ref: '#/components/schemas/DefinitionFuerVerfahren'
+    EigenschaftEintrag:
+      type: object
+      required:
+        - reference
+        - value
+      properties:
+        reference:
+          type: string
+        value:
+          type: object
+    Vorgang:
+      type: object
+      description: |
+        Repräsentation eines Vorgangs.\
+        Aufgrund der Konfigurierbarkeit der Attribute (verfahrensabhängige Metadaten, siehe
+        Fabasoft eGov-Suite "Definition von Verfahren") werden diese in einer dynamisch 
+        aufgebauten Liste geführt und nichts als Felder in einer fixen (JSON-) Datenstruktur.
+        Um eine einheitliche Behandlung von Standard- und Custom-Attributen zu ermöglichen, 
+        werden auch die Standard-Attribute in der 'attributListe' zurückgegeben.\
+        \
+        Um die innerhalb einer bestimmten Betreffseinheit verfügbaren Custom-Attribute auf
+        Vorgangsebene sowie die Standard-Attribute des Vorgangs zu erfahren, kann über den Endpunkt
+        '/v2/Attribute' eine Abfrage (GET-Methode) getätigt werden (s. Spezifikation dieses
+        Endpunktes, in diesem Fall die Verwendung des Filters 'Schriftgutebene=Vorgang').
+      required:
+        - id
+        - sachakte_id
+        - name
+        - eigenschaften_map
+        - eigenschaften_liste
+      properties:
+        id:
+          type: string
+        sachakte_id:
+          type: string
+        name:
+          type: string
+        betreff:
+          type: string
+        eigenschaften_map:
+          type: object
+          additionalProperties: true
+        eigenschaften_liste:
+          type: array
+          items:
+            $ref: '#/components/schemas/EigenschaftEintrag'
+    VorgangListeResponse:
+      type: object
+      properties:
+        anzahl:
+          $ref: '#/components/schemas/AnzahlListenElemente'
+        elemente:
+          type: array
+          description: Liste von Vorgängen
+          items:
+            $ref: '#/components/schemas/Vorgang'
+    ErrorResponse:
+      type: object
+      description: |
+        Container für RFC9457 Fehlermeldung und konkrete Fabasoft Fehlermeldung falls Ursache
+      required:
+        - status
+        - title
+      properties:
+        status:
+          type: integer
+          format: int32
+        title:
+          type: string
+        instance:
+          type: string
+        detail:
+          type: string
+        dmsErrorReference:
+          type: string
   headers:
     Location:
       description: URL der neu angelegten Ressource

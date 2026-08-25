@@ -128,5 +128,69 @@ public class Akte {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder {
+
+    private Akte instance;
+
+    public Builder() {
+      this(new Akte());
+    }
+
+    protected Builder(Akte instance) {
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(Akte value) { 
+      this.instance.setEigeneUrl(value.eigeneUrl);
+      this.instance.setAttributListe(value.attributListe);
+      return this;
+    }
+
+    public Akte.Builder eigeneUrl(String eigeneUrl) {
+      this.instance.eigeneUrl(eigeneUrl);
+      return this;
+    }
+    
+    public Akte.Builder attributListe(List<AttributUriUndWert> attributListe) {
+      this.instance.attributListe(attributListe);
+      return this;
+    }
+    
+    /**
+    * returns a built Akte instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public Akte build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static Akte.Builder builder() {
+    return new Akte.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public Akte.Builder toBuilder() {
+    Akte.Builder builder = new Akte.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

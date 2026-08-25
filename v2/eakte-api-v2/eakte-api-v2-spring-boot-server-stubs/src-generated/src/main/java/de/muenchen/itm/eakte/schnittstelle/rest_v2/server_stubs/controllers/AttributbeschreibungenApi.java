@@ -80,7 +80,8 @@ public interface AttributbeschreibungenApi {
             })
         },
         security = {
-            @SecurityRequirement(name = "basicAuth")
+            @SecurityRequirement(name = "basicAuth"),
+            @SecurityRequirement(name = "bearerAuth")
         }
     )
     @RequestMapping(
@@ -90,7 +91,7 @@ public interface AttributbeschreibungenApi {
     )
     default ResponseEntity<AttributbeschreibungenListeResponse> leseAttributebeschreibungen(
         @Parameter(name = "FachverfahrensID", description = "**Aufrufende Fachanwendung**  Die FachverfahrensID identifziert ein Fachverfahren behördenunabhängig und wird vom Betrieb eAkte vergeben  Der mitgegebene Wert wird auch als Http-Header in der Antwort zurückgegeben.  Somit ist ein Filtern der Antworten nach Fachverfahren möglich. ", in = ParameterIn.HEADER) @RequestHeader(value = "FachverfahrensID", required = false) Optional<String> fachverfahrensID,
-        @Parameter(name = "LoginName", description = "**Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\\ Log-in-Name des Benutzerobjekts ", in = ParameterIn.HEADER) @RequestHeader(value = "LoginName", required = false) Optional<String> loginName,
+        @Parameter(name = "Login-Name", description = "**Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\\ Log-in-Name des Benutzerobjekts ", in = ParameterIn.HEADER) @RequestHeader(value = "Login-Name", required = false) Optional<String> loginName,
         @Parameter(name = "Stelle", description = "Referenz der Stelle (**Stelle des Nutzers** in der eAkte). * Sachbearbeitung - OfficialInCharge * Registratur - Official * Sekretariat - Secretary * Leitung - Head * Fachadministration - OpAdm * Schriftgutverwaltung - DocumentManager  Es dürfen ausschließlich die Stellen genannt werden,  die bei der LHM genutzt werden.\\ Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt! ", in = ParameterIn.HEADER) @RequestHeader(value = "Stelle", required = false) Optional<String> stelle,
         @Parameter(name = "Organisationseinheit", description = "URI der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.\\ \\ Die OE ist dann wichtig anzugeben,  wenn der Nutzer in mehreren OEs zugeordnet ist.\\ Über diese OE wird der Mandant zugeordnet und  entsprechend die Berechtigungen geprüft. ", in = ParameterIn.HEADER) @RequestHeader(value = "Organisationseinheit", required = false) Optional<String> organisationseinheit,
         @Parameter(hidden = true) final HttpServletRequest servletRequest

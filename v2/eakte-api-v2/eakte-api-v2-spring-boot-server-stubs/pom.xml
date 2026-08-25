@@ -68,8 +68,8 @@
     </dependency>
     <dependency>
       <groupId>io.swagger.core.v3</groupId>
-      <artifactId>swagger-annotations</artifactId>
-      <version>2.2.22</version>
+      <artifactId>swagger-annotations-jakarta</artifactId>
+      <version>2.2.47</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -142,68 +142,33 @@
               <goal>generate</goal>
             </goals>
             <configuration>
+              <!--See https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator-maven-plugin#general-configuration-parameters -->
               <inputSpec>${project.build.directory}/unpacked-dependencies/eakte-rest-api-v2/__ServiceDefinition.yaml</inputSpec>
               <output>${project.basedir}/src-generated</output>
-              <!--
-              <templateResourcePath>${project.basedir}/src/templates/JavaSpring</templateResourcePath>
-              -->
+
               <generatorName>spring</generatorName>
-              <generateApis>true</generateApis>
               <apiPackage>de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.controllers</apiPackage>
               <modelPackage>de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model</modelPackage>
               <invokerPackage>de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.invokers</invokerPackage>
-              <generateAliasAsModel>true</generateAliasAsModel>
 
-              <!-- or should we set:
-              JAVA_POST_PROCESS_FILE=cmd /c "clang-format -i"
-              -->
-              <enablePostProcessFile>true</enablePostProcessFile>
               <configOptions>
-                <java8>true</java8> <!-- Nur für Java 8 und höher -->
-                <javaVersion>21</javaVersion>
-                <useSpringBoot>true</useSpringBoot>
-
-                <useSpringBoot3>true</useSpringBoot3>
-                <useResponseEntity>true</useResponseEntity>
-                <!--
-                <generateGenericResponseEntity>true</generateGenericResponseEntity>
-                -->
-
-                <springBootVersion>4.0.5</springBootVersion>
-                <useJakarta>true</useJakarta>
+                <!-- See https://openapi-generator.tech/docs/generators/spring/#config-options -->
+                <useSpringBoot4>true</useSpringBoot4>
                 <useSpringController>true</useSpringController>
-                <useOneOfInterfaces>true</useOneOfInterfaces>
-
+                <!-- <useOneOfInterfaces>true</useOneOfInterfaces> -->
                 <interfaceOnly>true</interfaceOnly>
                 <hideGenerationTimestamp>true</hideGenerationTimestamp>
                 <useOptional>true</useOptional>
-
                 <includeHttpRequestContext>true</includeHttpRequestContext>
                 <useTags>true</useTags>
-
-                <!--
-                <useSpringfox>false</useSpringfox>
-                <library>spring-boot</library>
-
-
-                <oas3>true</oas3>
-
-                <delegatePattern>false</delegatePattern>
-                <serializableModel>true</serializableModel>
-                <snapshotVersion>true</snapshotVersion>
-                <strictSpec>true</strictSpec>
-                <removeOperationIdPrefix>true</removeOperationIdPrefix>
-                <skipOperationExample>true</skipOperationExample>
-                <modelNameSuffix>Dto</modelNameSuffix>
-                <apiNameSuffix>Dto</apiNameSuffix>
-                -->
+                <generateBuilders>true</generateBuilders>
               </configOptions>
               <globalProperties>
                 <!-- generator problem with $ref vs. inlining:
                      see https://github.com/OpenAPITools/openapi-generator/issues/10415
                      and https://github.com/OpenAPITools/openapi-generator/issues/14976
                 -->
-                <skipFormModel>false</skipFormModel>
+                <!-- <skipFormModel>false</skipFormModel>-->
               </globalProperties>
             </configuration>
           </execution>

@@ -18,7 +18,7 @@ components:
       example: SWH
 
     LoginName:
-      name: LoginName
+      name: Login-Name
       in: header
       description: |
         **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\
@@ -100,3 +100,19 @@ components:
 
       example: |
         ${/Attributbeschreibungen/lhmdfvpublic-fh_attr_auf_Formularebene}="Orangen"
+
+    Scope:
+      name: scope
+      in: query
+      schema:
+        type: string
+        nullable: true
+
+    Eigenschaften:
+      name: eigenschaften
+      in: query
+      schema:
+        type: array
+        nullable: true
+        items:
+          type: string

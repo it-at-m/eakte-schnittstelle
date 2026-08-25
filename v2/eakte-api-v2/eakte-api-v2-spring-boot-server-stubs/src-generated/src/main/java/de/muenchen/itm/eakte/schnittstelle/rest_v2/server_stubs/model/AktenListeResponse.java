@@ -178,5 +178,81 @@ public class AktenListeResponse {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder {
+
+    private AktenListeResponse instance;
+
+    public Builder() {
+      this(new AktenListeResponse());
+    }
+
+    protected Builder(AktenListeResponse instance) {
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(AktenListeResponse value) { 
+      this.instance.setSuccess(value.success);
+      this.instance.setError(value.error);
+      this.instance.setAnzahlAkten(value.anzahlAkten);
+      this.instance.setAktenListe(value.aktenListe);
+      return this;
+    }
+
+    public AktenListeResponse.Builder success(Boolean success) {
+      this.instance.success(success);
+      return this;
+    }
+    
+    public AktenListeResponse.Builder error(EAkteSchnittstelleError error) {
+      this.instance.error(error);
+      return this;
+    }
+    
+    public AktenListeResponse.Builder anzahlAkten(Integer anzahlAkten) {
+      this.instance.anzahlAkten(anzahlAkten);
+      return this;
+    }
+    
+    public AktenListeResponse.Builder aktenListe(List<Akte> aktenListe) {
+      this.instance.aktenListe(aktenListe);
+      return this;
+    }
+    
+    /**
+    * returns a built AktenListeResponse instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public AktenListeResponse build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static AktenListeResponse.Builder builder() {
+    return new AktenListeResponse.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public AktenListeResponse.Builder toBuilder() {
+    AktenListeResponse.Builder builder = new AktenListeResponse.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

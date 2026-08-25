@@ -141,5 +141,75 @@ public class EAkteSchnittstelleError {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder {
+
+    private EAkteSchnittstelleError instance;
+
+    public Builder() {
+      this(new EAkteSchnittstelleError());
+    }
+
+    protected Builder(EAkteSchnittstelleError instance) {
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(EAkteSchnittstelleError value) { 
+      this.instance.setEasFehlercode(value.easFehlercode);
+      this.instance.setEasFehler(value.easFehler);
+      this.instance.setEasDetail(value.easDetail);
+      return this;
+    }
+
+    public EAkteSchnittstelleError.Builder easFehlercode(Integer easFehlercode) {
+      this.instance.easFehlercode(easFehlercode);
+      return this;
+    }
+    
+    public EAkteSchnittstelleError.Builder easFehler(String easFehler) {
+      this.instance.easFehler(easFehler);
+      return this;
+    }
+    
+    public EAkteSchnittstelleError.Builder easDetail(String easDetail) {
+      this.instance.easDetail(easDetail);
+      return this;
+    }
+    
+    /**
+    * returns a built EAkteSchnittstelleError instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public EAkteSchnittstelleError build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static EAkteSchnittstelleError.Builder builder() {
+    return new EAkteSchnittstelleError.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public EAkteSchnittstelleError.Builder toBuilder() {
+    EAkteSchnittstelleError.Builder builder = new EAkteSchnittstelleError.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

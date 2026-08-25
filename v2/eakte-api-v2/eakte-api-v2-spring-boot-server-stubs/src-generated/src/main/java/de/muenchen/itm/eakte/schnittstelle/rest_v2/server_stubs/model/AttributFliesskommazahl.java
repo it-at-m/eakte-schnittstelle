@@ -109,5 +109,78 @@ public class AttributFliesskommazahl extends AttributUriUndWert {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder extends AttributUriUndWert.Builder {
+
+    private AttributFliesskommazahl instance;
+
+    public Builder() {
+      this(new AttributFliesskommazahl());
+    }
+
+    protected Builder(AttributFliesskommazahl instance) {
+      super(instance); // the parent builder shares the same instance
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(AttributFliesskommazahl value) { 
+      super.copyOf(value);
+      this.instance.setAttributWert(value.attributWert);
+      return this;
+    }
+
+    public AttributFliesskommazahl.Builder attributWert(BigDecimal attributWert) {
+      this.instance.attributWert(attributWert);
+      return this;
+    }
+    
+    @Override
+    public AttributFliesskommazahl.Builder attributURI(String attributURI) {
+      this.instance.attributURI(attributURI);
+      return this;
+    }
+    
+    @Override
+    public AttributFliesskommazahl.Builder datenTyp(String datenTyp) {
+      this.instance.datenTyp(datenTyp);
+      return this;
+    }
+    
+    /**
+    * returns a built AttributFliesskommazahl instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public AttributFliesskommazahl build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        super.build();
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static AttributFliesskommazahl.Builder builder() {
+    return new AttributFliesskommazahl.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public AttributFliesskommazahl.Builder toBuilder() {
+    AttributFliesskommazahl.Builder builder = new AttributFliesskommazahl.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 

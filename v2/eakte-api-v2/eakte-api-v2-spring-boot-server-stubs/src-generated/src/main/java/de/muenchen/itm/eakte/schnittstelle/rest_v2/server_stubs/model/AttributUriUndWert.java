@@ -145,5 +145,69 @@ public class AttributUriUndWert {
   private String toIndentedString(Object o) {
     return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
+  
+  public static class Builder {
+
+    private AttributUriUndWert instance;
+
+    public Builder() {
+      this(new AttributUriUndWert());
+    }
+
+    protected Builder(AttributUriUndWert instance) {
+      this.instance = instance;
+    }
+
+    protected Builder copyOf(AttributUriUndWert value) { 
+      this.instance.setAttributURI(value.attributURI);
+      this.instance.setDatenTyp(value.datenTyp);
+      return this;
+    }
+
+    public AttributUriUndWert.Builder attributURI(String attributURI) {
+      this.instance.attributURI(attributURI);
+      return this;
+    }
+    
+    public AttributUriUndWert.Builder datenTyp(String datenTyp) {
+      this.instance.datenTyp(datenTyp);
+      return this;
+    }
+    
+    /**
+    * returns a built AttributUriUndWert instance.
+    *
+    * The builder is not reusable (NullPointerException)
+    */
+    public AttributUriUndWert build() {
+      try {
+        return this.instance;
+      } finally {
+        // ensure that this.instance is not reused
+        this.instance = null;
+      }
+    }
+
+    @Override
+    public String toString() {
+      return getClass() + "=(" + instance + ")";
+    }
+  }
+
+  /**
+  * Create a builder with no initialized field (except for the default values).
+  */
+  public static AttributUriUndWert.Builder builder() {
+    return new AttributUriUndWert.Builder();
+  }
+
+  /**
+  * Create a builder with a shallow copy of this instance.
+  */
+  public AttributUriUndWert.Builder toBuilder() {
+    AttributUriUndWert.Builder builder = new AttributUriUndWert.Builder();
+    return builder.copyOf(this);
+  }
+
 }
 
