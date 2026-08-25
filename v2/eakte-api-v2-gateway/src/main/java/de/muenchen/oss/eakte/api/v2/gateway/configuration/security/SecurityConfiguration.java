@@ -33,9 +33,12 @@ public class SecurityConfiguration {
     private final Optional<KeycloakPermissionsAuthoritiesConverter> keycloakPermissionsAuthoritiesConverter;
 
     @Bean
-    public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(final HttpSecurity http) {
         http
                 .authorizeHttpRequests((requests) -> requests.requestMatchers(
+                        // allow access to index page
+                        PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/"),
+                        PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/index.html"),
                         // allow access to /actuator/info
                         PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/info"),
                         // allow access to /actuator/health for OpenShift Health Check
