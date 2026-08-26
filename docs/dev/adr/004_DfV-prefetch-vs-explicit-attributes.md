@@ -5,7 +5,7 @@ Date: 2026-07-30
 
 ## Context
 
-The API needs to support DfV (german: Definition für Verfahren), which are variable attributes that may be available on 
+The API needs to support DfV (german: Definition für Verfahren), which are variable attributes that may be available on
 resources and can differ between object instances.
 
 The API could support that in two different ways:

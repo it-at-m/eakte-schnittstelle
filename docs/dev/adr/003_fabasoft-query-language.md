@@ -9,10 +9,12 @@ For search endpoints there needs to be a way to define conditions for objects wh
 In the previous V1 API the only option was searching for the object name with an `like` comparator, which wasn't enough for some use cases.
 
 So the requirements for the new condition parameter are:
+
 - More comparators like `gt`, `lt`, `eq`, `like`
 - All available attributes should be filterable through the condition
 
 Possible alternatives:
+
 - Defining and implementing an own condition language
 - Use the Fabasoft query language
 

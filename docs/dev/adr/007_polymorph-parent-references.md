@@ -5,7 +5,7 @@ Date: 2026-08-17
 
 ## Context
 
-Some resources can have different parent resource types (polymorphic relationships). 
+Some resources can have different parent resource types (polymorphic relationships).
 For example, an incoming document may belong to an inbox, a work queue, or a procedure.
 
 ## Decision
