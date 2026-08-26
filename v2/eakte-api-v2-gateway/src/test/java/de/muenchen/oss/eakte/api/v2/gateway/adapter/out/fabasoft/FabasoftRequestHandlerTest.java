@@ -1,7 +1,7 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft;
 
-import static de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftErrorHandler.FS_NAMESPACE;
-import static de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftErrorHandler.TAG_ERROR_REFERENCE;
+import static de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftRequestHandler.FS_NAMESPACE;
+import static de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftRequestHandler.TAG_ERROR_REFERENCE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -19,22 +19,22 @@ import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-class FabasoftErrorHandlerTest {
+class FabasoftRequestHandlerTest {
     private static final String CALL_NAME = "searchObject";
     private static final RequestContext REQUEST_CONTEXT = new RequestContext("user", "ou", "role");
 
     private RequestContextProvider contextProvider;
-    private FabasoftErrorHandler errorHandler;
+    private FabasoftRequestHandler errorHandler;
 
     @BeforeEach
     void setUp() {
         contextProvider = new RequestContextProvider();
-        errorHandler = new FabasoftErrorHandler(contextProvider);
+        errorHandler = new FabasoftRequestHandler(contextProvider);
     }
 
     @Test
     void givenSuccessfulTask_thenReturnResultAndClearContext() {
-        final String result = errorHandler.handleErrors(CALL_NAME, REQUEST_CONTEXT, () -> {
+        final String result = errorHandler.handleRequest(CALL_NAME, REQUEST_CONTEXT, () -> {
             assertSame(REQUEST_CONTEXT, contextProvider.get());
             return "result";
         });
@@ -48,7 +48,7 @@ class FabasoftErrorHandlerTest {
         final Exception cause = new Exception("failure");
 
         final DmsException exception = assertThrows(DmsException.class,
-                () -> errorHandler.handleErrors(CALL_NAME, REQUEST_CONTEXT, () -> {
+                () -> errorHandler.handleRequest(CALL_NAME, REQUEST_CONTEXT, () -> {
                     throw cause;
                 }));
 
@@ -63,7 +63,7 @@ class FabasoftErrorHandlerTest {
         final WebServiceException cause = new WebServiceException("web service failure", fault);
 
         final DmsResponseException exception = assertThrows(DmsResponseException.class,
-                () -> errorHandler.handleErrors(CALL_NAME, REQUEST_CONTEXT, () -> {
+                () -> errorHandler.handleRequest(CALL_NAME, REQUEST_CONTEXT, () -> {
                     throw cause;
                 }));
 
@@ -79,7 +79,7 @@ class FabasoftErrorHandlerTest {
         final WebServiceException cause = new WebServiceException("web service failure", fault);
 
         final DmsResponseException exception = assertThrows(DmsResponseException.class,
-                () -> errorHandler.handleErrors(CALL_NAME, REQUEST_CONTEXT, () -> {
+                () -> errorHandler.handleRequest(CALL_NAME, REQUEST_CONTEXT, () -> {
                     throw cause;
                 }));
 
@@ -92,7 +92,7 @@ class FabasoftErrorHandlerTest {
         final WebServiceException cause = new WebServiceException("web service failure", fault);
 
         final DmsResponseException exception = assertThrows(DmsResponseException.class,
-                () -> errorHandler.handleErrors(CALL_NAME, REQUEST_CONTEXT, () -> {
+                () -> errorHandler.handleRequest(CALL_NAME, REQUEST_CONTEXT, () -> {
                     throw cause;
                 }));
 
@@ -104,7 +104,7 @@ class FabasoftErrorHandlerTest {
         final WebServiceException cause = new WebServiceException("web service failure");
 
         final DmsException exception = assertThrows(DmsException.class,
-                () -> errorHandler.handleErrors(CALL_NAME, REQUEST_CONTEXT, () -> {
+                () -> errorHandler.handleRequest(CALL_NAME, REQUEST_CONTEXT, () -> {
                     throw cause;
                 }));
 

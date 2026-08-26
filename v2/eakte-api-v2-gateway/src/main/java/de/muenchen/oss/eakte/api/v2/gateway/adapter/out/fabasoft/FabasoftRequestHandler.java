@@ -13,21 +13,20 @@ import org.springframework.stereotype.Component;
 import org.w3c.dom.NodeList;
 
 /**
- * Helper class for handling errors which occur during Fabasoft API calls.
+ * Helper class for handling making Fabasoft API calls and handling occurring errors.
  */
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class FabasoftErrorHandler {
+public class FabasoftRequestHandler {
     public static final String FS_NAMESPACE = "http://schemas.fabasoft.com/faultdetails";
     public static final String TAG_ERROR_REFERENCE = "ErrorReference";
 
     private final RequestContextProvider contextProvider;
 
     /**
-     * Helper method for executing Fabasoft calls and handle occuring errors by extract response error
-     * codes and mapping to
-     * {@link DmsException}s.
+     * Helper method for executing Fabasoft calls with given context and handle occurring errors by
+     * extract response error codes and mapping to {@link DmsException}s.
      *
      * @param name The name of the executing calls, used for clearer error messages.
      * @param requestContext The request context to execute the call under.
@@ -35,7 +34,7 @@ public class FabasoftErrorHandler {
      * @return The return of the method.
      * @param <T> The return type of the method.
      */
-    public <T> T handleErrors(final String name, final RequestContext requestContext, final Callable<T> task) {
+    public <T> T handleRequest(final String name, final RequestContext requestContext, final Callable<T> task) {
         try {
             contextProvider.set(requestContext);
             return task.call();

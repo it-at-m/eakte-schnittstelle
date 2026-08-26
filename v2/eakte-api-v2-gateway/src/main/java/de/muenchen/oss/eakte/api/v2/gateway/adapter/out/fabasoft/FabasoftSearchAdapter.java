@@ -27,7 +27,7 @@ import org.springframework.util.StringUtils;
 public class FabasoftSearchAdapter implements SearchOutPort {
     private final FSCGOVXML11001DefaultWebServiceDefinitionSoap soapClient;
     private final FabasoftAttributeMapper attributeMapper;
-    private final FabasoftErrorHandler errorHandler;
+    private final FabasoftRequestHandler requestHandler;
 
     @Override
     public SearchResult searchObject(final RequestContext requestContext, final SearchRequest request) {
@@ -38,7 +38,7 @@ public class FabasoftSearchAdapter implements SearchOutPort {
         attrList.getAttr().addAll(request.attributes());
         requestType.setAttrlist(attrList);
         // request
-        final SOAPSearchResponseType response = errorHandler.handleErrors("searchObject", requestContext, () -> soapClient.soapSearch(requestType, null));
+        final SOAPSearchResponseType response = requestHandler.handleRequest("searchObject", requestContext, () -> soapClient.soapSearch(requestType, null));
         // map response
         Objects.requireNonNull(response, "Response can't be null");
         final List<SearchResult.ResultObject> result;
