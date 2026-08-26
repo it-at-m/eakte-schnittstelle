@@ -200,3 +200,5 @@ v1/eakte-eai/eakte-external-config/application.yml
 
 v2/eakte-soap-calls/environments/*
 !v2/eakte-soap-calls/environments/example-env.bru
+
+*.p12
