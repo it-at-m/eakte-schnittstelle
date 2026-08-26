@@ -21,6 +21,7 @@ const vitepressConfig = defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
+      { text: "DMS", link: "/dms" },
       {
         text: "V1",
         items: [
@@ -44,6 +45,10 @@ const vitepressConfig = defineConfig({
       },
     ],
     sidebar: [
+      {
+        text: "DMS",
+        link: "/dms",
+      },
       {
         text: "V1",
         link: "/v1",
