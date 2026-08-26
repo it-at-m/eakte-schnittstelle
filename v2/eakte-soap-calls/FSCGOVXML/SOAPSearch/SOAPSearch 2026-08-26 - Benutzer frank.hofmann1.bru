@@ -1,0 +1,39 @@
+meta {
+  name: SOAPSearch 2026-08-26 - Benutzer frank.hofmann1
+  type: http
+  seq: 6
+}
+
+post {
+  url: https://eakte26-k2-authldap.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: inherit
+}
+
+params:query {
+  WEBSVC: FSCGOVXML_1_1001_DefaultWebServiceDefinition
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPSearch
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fsc="http://schemas.fabasoft.com/websvc/FSCGOVXML_1_1001_DefaultWebServiceDefinition/" xmlns:urn="urn:schemas-fabasoft-com:bai:search">
+      <soapenv:Body>
+          <urn:SOAPSearchRequest>
+              <urn:query>
+                LIMIT 10
+                SELECT *
+  	            FROM COOSYSTEM@1.1:User
+              WHERE .COOSYSTEM@1.1:userlogname = 'frank.hofmann1'
+            </urn:query>
+              <urn:attrlist>
+                  <urn:attr>COOSYSTEM@1.1:userlogname</urn:attr>
+                  <urn:attr>COOSYSTEM@1.1:UserRoleList</urn:attr>
+              </urn:attrlist>
+          </urn:SOAPSearchRequest>
+      </soapenv:Body>
+  </soapenv:Envelope>
+}

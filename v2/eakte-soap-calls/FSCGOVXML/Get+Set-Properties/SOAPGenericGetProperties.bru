@@ -1,0 +1,31 @@
+meta {
+  name: SOAPGenericGetProperties
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://eakte26-k2.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: inherit
+}
+
+params:query {
+  WEBSVC: FSCGOVXML_1_1001_DefaultWebServiceDefinition
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPGenericGetProperties
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Body>
+          <object>COO.2150.8801.2.1069285</object>
+          <attrlist> 
+            <attr>COOSYSTEM@1.1:objname</attr> ... 
+        </attrlist>
+      </soap:Body>
+  </soap:Envelope>
+}
