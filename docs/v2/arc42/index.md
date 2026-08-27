@@ -1,6 +1,6 @@
 # arc42 - Architecture Documentation
 
-This project uses [arc42](https://arc42.org) as it's architecture documentation, with the following chapters:
+This project uses [arc42](https://arc42.org) as its architecture documentation, with the following chapters:
 
 1. [Introduction and Goals](./01_introduction_and_goals.md)
 2. [Architecture Constraints](./02_architecture_constraints.md)

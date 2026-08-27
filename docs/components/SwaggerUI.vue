@@ -36,5 +36,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   observer?.disconnect();
+  document.documentElement.classList.remove("dark-mode");
 });
 </script>

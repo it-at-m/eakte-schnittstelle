@@ -2,11 +2,11 @@
 
 ## Reference Architecture
 
-As each development at it@M/LHM the application should be implemented with the [reference architecture](https://refarch.oss.muenchen.de/).
+For each development at it@M/LHM, the application should use the [reference architecture](https://refarch.oss.muenchen.de/).
 
 This in general would allow to implement the gateway either with Apache Camel or Spring.
-As Spring is way more suitable for REST-API (especially because auf Multi-Part handling) the use of Spring for
-implementation is regarded as constraint and no decision.
+Because Spring is more suitable for REST APIs, especially for multipart handling, using Spring is
+treated as a constraint rather than a decision.
 
 ## FSCGOV API
 
