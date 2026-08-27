@@ -13,7 +13,6 @@
     <module>eakte-api-v2</module>
     <module>eakte-fscgovxml-java-client</module>
     <module>eakte-api-v2-gateway</module>
-    <module>eakte-api-v2-spring-boot-api-gateway-poc</module>
   </modules>
 
 </project>
