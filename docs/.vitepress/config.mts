@@ -16,7 +16,6 @@ const vitepressConfig = defineConfig({
     ],
   ],
   lastUpdated: true,
-  appearance: false,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
