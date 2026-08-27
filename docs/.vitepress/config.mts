@@ -24,22 +24,16 @@ const vitepressConfig = defineConfig({
       {
         text: "V1",
         items: [
-          { text: "Index", link: "/v1" },
+          { text: "Index", link: "/v1/" },
           { text: "Swagger-UI", link: "/v1/swagger-ui" },
         ],
       },
       {
         text: "V2",
         items: [
-          { text: "Index", link: "/v2" },
+          { text: "Index", link: "/v2/" },
           { text: "Swagger-UI", link: "/v2/swagger-ui" },
-        ],
-      },
-      {
-        text: "Development",
-        items: [
-          { text: "Index", link: "/dev" },
-          { text: "ADRs", link: "/dev/adr" },
+          { text: "arc42", link: "/v2/arc42/" },
         ],
       },
     ],
@@ -50,7 +44,7 @@ const vitepressConfig = defineConfig({
       },
       {
         text: "V1",
-        link: "/v1",
+        link: "/v1/",
         items: [
           { text: "Use Cases", link: "/v1/usecases" },
           { text: "Swagger-UI", link: "/v1/swagger-ui" },
@@ -58,13 +52,56 @@ const vitepressConfig = defineConfig({
       },
       {
         text: "V2",
-        link: "/v2",
-        items: [{ text: "Swagger-UI", link: "/v2/swagger-ui" }],
-      },
-      {
-        text: "Development",
-        link: "/dev",
-        items: [{ text: "ADRs", link: "/dev/adr" }],
+        link: "/v2/",
+        items: [
+          { text: "Swagger-UI", link: "/v2/swagger-ui" },
+          {
+            text: "arc42",
+            link: "/v2/arc42/",
+            collapsed: false,
+            items: [
+              {
+                text: "Introduction and Goals",
+                link: "/v2/arc42/01_introduction_and_goals",
+              },
+              {
+                text: "Architecture Constraints",
+                link: "/v2/arc42/02_architecture_constraints",
+              },
+              {
+                text: "Context and Scope",
+                link: "/v2/arc42/03_context_and_scope",
+              },
+              {
+                text: "Solution Strategy",
+                link: "/v2/arc42/04_solution_strategy",
+              },
+              {
+                text: "Building Block View",
+                link: "/v2/arc42/05_building_block_view",
+              },
+              { text: "Runtime View", link: "/v2/arc42/06_runtime_view" },
+              {
+                text: "Deployment View",
+                link: "/v2/arc42/07_deployment_view",
+              },
+              { text: "Cross-cutting Concepts", link: "/v2/arc42/08_concepts" },
+              {
+                text: "Architecture Decisions",
+                link: "/v2/arc42/09_architecture_decisions",
+              },
+              {
+                text: "Quality Requirements",
+                link: "/v2/arc42/10_quality_requirements",
+              },
+              {
+                text: "Risks and Technical Debts",
+                link: "/v2/arc42/11_technical_risks",
+              },
+              { text: "Glossary", link: "/v2/arc42/12_glossary" },
+            ],
+          },
+        ],
       },
     ],
     socialLinks: [

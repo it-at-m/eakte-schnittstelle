@@ -1,10 +1,10 @@
-# Development
+# Cross-cutting Concepts
 
 ## Language
 
 As a simple guideline, subject-specific terms should be written in German and everything else in English.
 
-## API Guidelines
+## API Conventions
 
 - Prefix endpoints with version (e.g. `/api/v2`)
 - Endpoint paths in multiples (e.g. `/vorgaenge`)
