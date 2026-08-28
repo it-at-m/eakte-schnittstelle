@@ -1,12 +1,12 @@
 get:
   tags:
-    - /readDocumentObjectsMetaData
-  summary: Liste aller Schriftstücke eines Dokuments mit Metadaten auslesen
+    - /readSubjectAreaObjectsMetaData
+  summary: Liste aller Akten einer Betreffseinheit mit Metadaten auslesen
   description: |
     Stornierte Objekte können nicht ausgelesen werden, 
     d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.\
-    Über die optionalen Parameter können Schriftstücke zur Anzeige gemäß der gewählten Kriterien ausgewählt werden.
-  operationId: ReadDocumentMetaData
+    Über die optionalen Parameter können Akten zur Anzeige gemäß der gewählten Kriterien ausgewählt werden.
+  operationId: ReadSubjectAreaObjectsMetaData
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/userlogin'
@@ -15,16 +15,19 @@ get:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/propdocstate'
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/propbostate'
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/objaddress'
+
   responses:
     '200':
       description: OK
       content:
         application/json:
           schema:
-            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/ReadDocumentObjectMetaDataResponseDTO'
+            $ref: 'eakte-api-readSubjectAreaObjectsMetaData_@addr-schemas.yaml#/components/schemas/ReadSubjectAreaObjectsMetaDataResponseDTO'
     '400':
       $ref: 'eakte-api--default-responses.yaml#/components/responses/400'
     '401':
       $ref: 'eakte-api--default-responses.yaml#/components/responses/401'
     '500':
       $ref: 'eakte-api--default-responses.yaml#/components/responses/500'
+  security:
+    - basicAuthSecurityDefintion: []

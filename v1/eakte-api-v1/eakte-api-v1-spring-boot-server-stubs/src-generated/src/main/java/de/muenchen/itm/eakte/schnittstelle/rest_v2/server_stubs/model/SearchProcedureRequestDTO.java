@@ -78,11 +78,11 @@ public class SearchProcedureRequestDTO {
   }
 
   /**
-   * Name des Vorgangs
+   * Titel des Vorgangs
    * @return objmlname
    */
   
-  @Schema(name = "objmlname", example = "Vorgang Eins Name", description = "Name des Vorgangs", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "objmlname", example = "Vorgang Eins Name", description = "Titel des Vorgangs", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("objmlname")
   public Optional<String> getObjmlname() {
     return objmlname;

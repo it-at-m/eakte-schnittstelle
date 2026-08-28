@@ -1,0 +1,11 @@
+components:
+  schemas:
+
+    ReadSubjectAreaObjectsMetaDataResponseDTO:
+      type: object
+      properties:
+        businessobjecttype:
+          type: array
+          description: Liste der Sachakten mit Metadaten
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/BusinessObjectReference'

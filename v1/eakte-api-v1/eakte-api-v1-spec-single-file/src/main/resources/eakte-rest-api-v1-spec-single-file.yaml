@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: eAkte API Specification
   description: REST-API for the LHM eAkte Service
-  version: 1.2.5
+  version: 1.2.7
   contact:
     name: Competence Center eAkte
     url: https://it-at-m.github.io/eakte-api
@@ -37,6 +37,8 @@ tags:
   - name: /proceduresFromTemplate
   - name: /reAssignObject
   - name: /readDocumentObjectsMetaData
+  - name: /readProcedureObjectsMetaData
+  - name: /readSubjectAreaObjectsMetaData
   - name: /revokeDepositObjects
   - name: /searchObjNames
   - name: /setSignatureObjects
@@ -796,15 +798,15 @@ paths:
       summary: Eingangsdokument anlegen
       description: |
         Neues Eingangsdokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).\
-        \
         Wenn das Eingangsdokument keinem Vorgang zugeordnet ist (referrednumber == NULL), 
-        wird eine neue Aktivität „Neues Eingangsdokument“ erzeugt.\
+        wird eine neue Aktivität „Eingang“ im Arbeitsvorrat erzeugt.
+
         Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.\
         Sollte jedoch der Parameter useOE == true sein, 
-        so soll die Aktivität „Neues Eingangsdokument“ der OE (aus der Standardrolle des Benutzers) vorgeschrieben werden – 
-        in diesem Fall, soll bei der Vorschreibung kein Benutzer eingetragen werden.\
-        \
-        Beim Anlegen von neuen Dokumenten wird die auf dem Vorgang gesetzte Zugriffsdefinition verwendet.\
+        so soll die Aktivität „Eingang“ der OE (aus der Standardrolle des Benutzers) vorgeschrieben werden – 
+        in diesem Fall, soll bei der Vorschreibung kein Benutzer eingetragen werden.
+
+        Beim Anlegen von neuen Dokumenten wird die auf dem Vorgang gesetzte Zugriffsdefinition verwendet. 
         Anhand des Userlogins werden der Eigentümer (COOSYSTEM@1.1:objowner) und die Organisationseinheit (COOSYSTEM@1.1:objowngroud) gesetzt.
       operationId: CreateIncoming
       parameters:
@@ -874,12 +876,17 @@ paths:
         - /internal
       summary: Anlegen eines internen Dokuments
       description: |
-        Die Werte werden mit den übergebenen Parametern überschrieben.
-        Bei keiner Übergabe bleiben die bestehenden Werte erhalten.\
-        Ausnahme: Inhaltsobjekte können über diesen Aufruf nur hinzugefügt werden.\
-        Dokumente können nur in bereits bestehenden Vorgängen angelegt werden.\
-        Bei jeder Änderung über die Schnittstelle wird in der eGov-Suite eine neue Version des Objekts erzeugt. 
-        Dies betrifft auch wiederholte Änderungen, die durch einen Benutzer durchgeführt werden.
+        Neues Internes Dokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).\
+        Wenn das Eingangsdokument keinem Vorgang zugeordnet ist (referrednumber == NULL), 
+        wird eine neue Aktivität „Intern“ im Arbeitsvorrat erzeugt.
+
+        Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.\
+        Sollte jedoch der Parameter useOE == true sein, 
+        so soll die Aktivität „Intern“ der OE (aus der Standardrolle des Benutzers) vorgeschrieben werden – 
+        in diesem Fall, soll bei der Vorschreibung kein Benutzer eingetragen werden.
+
+        Beim Anlegen von neuen Dokumenten wird die auf dem Vorgang gesetzte Zugriffsdefinition verwendet. 
+        Anhand des Userlogins werden der Eigentümer (COOSYSTEM@1.1:objowner) und die Organisationseinheit (COOSYSTEM@1.1:objowngroud) gesetzt.
       operationId: CreateInternal
       parameters:
         - $ref: '#/components/parameters/x_anwendung'
@@ -941,11 +948,17 @@ paths:
         - /outgoings
       summary: Erledigung anlegen
       description: |
-        Neue Erledigung unter dem angegebenen Vorgang anlegen.\
-        Wenn kein Vorgang erzeugt wird, 
-        so wird die erzeugte Erledigung am Schreibtisch des Benutzers abgelegt.
+        Neues Ausgangsdokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).\
+        Wenn das Ausgangsdokument keinem Vorgang zugeordnet ist (referrednumber == NULL), 
+        wird eine neue Aktivität „Ausgang“ im Arbeitsvorrat erzeugt.
 
-        Beim Anlegen von neuen Dokumenten wird die auf dem Vorgang gesetzte Zugriffsdefinition verwendet.
+        Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.\
+        Sollte jedoch der Parameter useOE == true sein, 
+        so soll die Aktivität „Ausgang“ der OE (aus der Standardrolle des Benutzers) vorgeschrieben werden – 
+        in diesem Fall, soll bei der Vorschreibung kein Benutzer eingetragen werden.
+
+        Beim Anlegen von neuen Dokumenten wird die auf dem Vorgang gesetzte Zugriffsdefinition verwendet. 
+        Anhand des Userlogins werden der Eigentümer (COOSYSTEM@1.1:objowner) und die Organisationseinheit (COOSYSTEM@1.1:objowngroud) gesetzt.
       operationId: CreateOutgoing
       parameters:
         - $ref: '#/components/parameters/x_anwendung'
@@ -1065,6 +1078,72 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
+  /readProcedureObjectsMetaData/{objaddress}:
+    get:
+      tags:
+        - /readProcedureObjectsMetaData
+      summary: Liste aller Dokumente des Vorgangs mit Metadaten auslesen
+      description: |
+        Stornierte Objekte können nicht ausgelesen werden, 
+        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.\
+        Über die optionalen Parameter können Dokumente zur Anzeige gemäß der gewählten Kriterien ausgewählt werden.
+      operationId: ReadProcedureObjectsMetaData
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/propdocstate'
+        - $ref: '#/components/parameters/propbostate'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadDocumentObjectMetaDataResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+      security:
+        - basicAuthSecurityDefintion: []
+  /readSubjectAreaObjectsMetaData/{objaddress}:
+    get:
+      tags:
+        - /readSubjectAreaObjectsMetaData
+      summary: Liste aller Akten einer Betreffseinheit mit Metadaten auslesen
+      description: |
+        Stornierte Objekte können nicht ausgelesen werden, 
+        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.\
+        Über die optionalen Parameter können Akten zur Anzeige gemäß der gewählten Kriterien ausgewählt werden.
+      operationId: ReadSubjectAreaObjectsMetaData
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/propdocstate'
+        - $ref: '#/components/parameters/propbostate'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadSubjectAreaObjectsMetaDataResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+      security:
+        - basicAuthSecurityDefintion: []
   /procedures:
     post:
       tags:
@@ -1441,13 +1520,23 @@ paths:
       description: |
         Bei dem Schriftgutobjekt (parameter: objaddress) wird eine definierte Unterschriftenart gesetzt (parameter: signaturetype). 
         Dabei wird die in der Domäne/Mandanten gültige Unterschriftenregelung beachtet. 
-        Die Vorbedingungen werden jedoch nicht ausgewertet.\ 
+        Die jeweiligen Vorbedingungen werden vor dem Anbringen der Unterschrift ebenfalls geprüft.
+
         Bitte beachten Sie, dass beim Anbringen der Unterschrift 
         auch Folge-Aktivitäten ausgeführt werden 
         (wie z.B. der Bearbeitungsstatus wird korrekt gesetzt).\
         Unterschriften, in denen weitere GUI-Masken angezeigt werden (wie z.B. bei Umschreibungen), 
         können über diese Soap-Aktion natürlich nicht angebracht werden. 
         Für entsprechende Aktionen müssen bei Bedarf spezielle Soap-Aktionen entwickelt werden.
+
+        Im Kontext des 4-Augen-Löschens sind über diesen Aufruf 
+        nur die dafür freigegebenen Unterschriften „Löschmarkierung setzen“, „Löschmarkierung bestätigen“ 
+        und „Löschmarkierung ablehnen“ über die Schnittstelle zulässig, 
+        sofern sie in der gültigen Unterschriftenkonfiguration vorgesehen sind und 
+        alle fachlichen Vorbedingungen erfüllt sind.\
+        Die Aktivitäten im Arbeitsvorrat, die nach Löschmarkierung setzen gestartet werden, 
+        werden im Arbeitsvorrat des Technischen Nutzers aufgeräumt, 
+        wenn der AT-Job die bestätigten Löschaufträge aus dem Arbeitsvorrat entfernt.
       operationId: SetSignature
       parameters:
         - $ref: '#/components/parameters/x_anwendung'
@@ -1861,6 +1950,10 @@ components:
         Wenn Vorgänge die Zugriffsdefinition und zusätzlich berechtigte Organisationseinheiten 
         aus der übergeordneten Akte übernehmen sollen, 
         muss "Aktengebunden" für Vorgänge bei der Akte angegeben werden (procaccdef).
+        Wenn eine Akte über die SST angelegt wird und 
+        am Aktenplaneintrag zusätzlich berechtigte OE's eingetragen wurden 
+        (im Reiter "Sicherheitseinstellungen" des Aktenplaneintrags), 
+        dann wird die Zugriffsdefinition "Aktengebunden" automatisch für Vorgänge gesetzt.
       example: Eigener Mandant
     UpdateAccessDefinitionObjectAnfrageDTO:
       required:
@@ -2231,7 +2324,7 @@ components:
           description: |
             erzeugt am/um
 
-            Datumsformat: YYYY-MM-DDTHH:MM:SS+HH:MM\
+            Datumsformat: YYYY-MM-DDTHH:MM:SS+TH:TM\
             - = Trenner zusammengehörende Werte\
             YYYY = 4 Stellen für das Jahr\
             MM = 2 Stellen für den Monat\
@@ -2249,7 +2342,21 @@ components:
         objmodifiedat:
           type: string
           format: date-time
-          description: Letzte Änderung am/um
+          description: |
+            Letzte Änderung am/um
+
+            Datumsformat: YYYY-MM-DDTHH:MM:SS+TH:TM\
+            - = Trenner zusammengehörende Werte\
+            YYYY = 4 Stellen für das Jahr\
+            MM = 2 Stellen für den Monat\
+            DD = 4 Stellen für das Jahr\
+            T = Trenner Datum und Uhrzeit\
+            HH = 2 Stellen für die Stunden\
+            MM = 2 Stellen für die Minuten\
+            SS = 2 Stellen für die Sekunden\
+            + = Trenner Uhrzeit und Zeitzone\
+            TH = Zeitzone in Stunden\
+            TM = Zeitzone in Minuten
           example: '2018-07-23T10:39:32+01:00'
     ReadContentObjectMetaDataAntwortDTO:
       type: object
@@ -2387,7 +2494,7 @@ components:
             Hier kann das Datum neu gesetzt werden, bis wann die Aufbewahrung dauern soll.\
             Nach Ablauf dieses Datums startet der Aussonderungsprozess und 
             die Akte / Vorgang können nicht mehr durch Sachbearbeitungen bearbeitet werden.
-          example: date-time notation as defined by RFC 3339, section 5.6, z.B. 2017-07-21T17:32:28Z
+          example: 2017-07-21T17:32:28T01:00
           format: date-time
     SetDisposalScheduleDateAntwortDTO:
       type: object
@@ -2481,7 +2588,12 @@ components:
 
         Wenn kein Wert übergeben wird, wird die auf der Akte hinterlegte Zugriffsdefinition übernommen (empfohlen).
         Wenn Vorgänge die Zugriffsdefinition und zusätzlich berechtigte Organisationseinheiten
-        aus der übergeordneten Akte übernehmen sollen, muss "Aktengebunden" angegeben werden.
+        aus der übergeordneten Akte übernehmen sollen, muss "Aktengebunden" angegeben werden.\
+        Wenn eine Akte über die SST angelegt wird und 
+        am Aktenplaneintrag zusätzlich berechtigte OE's eingetragen wurden 
+        (im Reiter "Sicherheitseinstellungen" des Aktenplaneintrags), 
+        dann wird die Zugriffsdefinition "Aktengebunden" automatisch bei der Akte für Vorgänge gesetzt.\
+        Der Parameter procedureaccdef wird in solchen Fällen nicht berücksichtigt.
       example: Aktengebunden
     UserFormsReferenz:
       description: |
@@ -2738,7 +2850,7 @@ components:
           example: 2002.1-36
         objmlname:
           type: string
-          description: Name
+          description: Titel
           example: Akte1
         filesubj:
           type: string
@@ -2796,7 +2908,9 @@ components:
         objterms:
           $ref: '#/components/schemas/Schlagworte'
     CreateIncomingBasisAnfrageDTO:
-      description: Parameter, die den Eingang spezifizieren
+      description: |
+        Json Objekt, das die Parameter für den Eingang spezifiziert.\
+        Das Objekt ist vom Typ `CreateIncomingBasisAnfrageDTO`.
       type: object
       properties:
         shortname:
@@ -3313,6 +3427,51 @@ components:
               id: COO.2150.9151.1.1206000
           items:
             $ref: '#/components/schemas/Objektreferenz'
+    BusinessObjectReference:
+      type: object
+      description: Metadaten eines Schriftgutobjekts (Akte, Vorgang, Dokument)
+      properties:
+        objname:
+          type: string
+        objaddress:
+          type: string
+        objclass:
+          type: string
+        objcreatedat:
+          type: string
+          format: date-time
+        objcreatedby:
+          $ref: '#/components/schemas/ArrayOfstring'
+        objmodifiedat:
+          type: string
+          format: date-time
+        objchangedby:
+          $ref: '#/components/schemas/ArrayOfstring'
+        objowner:
+          type: string
+        objou:
+          type: string
+        fileextension:
+          type: string
+        contsize:
+          type: string
+    ReadDocumentObjectMetaDataResponseDTO:
+      type: object
+      properties:
+        businessobjecttype:
+          type: array
+          description: Liste der Dokumente mit Metadaten eines Vorgangs auslesen
+          example: BusinessObjectType
+          items:
+            $ref: '#/components/schemas/BusinessObjectReference'
+    ReadSubjectAreaObjectsMetaDataResponseDTO:
+      type: object
+      properties:
+        businessobjecttype:
+          type: array
+          description: Liste der Sachakten mit Metadaten
+          items:
+            $ref: '#/components/schemas/BusinessObjectReference'
     filetype:
       type: string
       description: |
@@ -3539,7 +3698,7 @@ components:
           example: 2002.1-36
         objmlname:
           type: string
-          description: Name des Vorgangs
+          description: Titel des Vorgangs
           example: Vorgang Eins Name
         filesubj:
           type: string
@@ -3583,53 +3742,6 @@ components:
           type: string
           description: Name des erzeugten Vorgangs
           example: 2016 Anträge Firma XY
-    ObjChangedBy:
-      type: object
-      description: Letzte Änderung von (Login-String des Benutzers) (COOSYSTEM@1.1:objchangedby)
-      example: lhm\erika.musterfrau
-      properties:
-        string:
-          type: array
-          items:
-            type: string
-    BusinessObjectReference:
-      type: object
-      properties:
-        objname:
-          type: string
-        objaddress:
-          type: string
-        objclass:
-          $ref: '#/components/schemas/objclass'
-        objcreatedat:
-          type: string
-          format: date-time
-        objcreatedby:
-          $ref: '#/components/schemas/ArrayOfstring'
-        objmodifiedat:
-          type: string
-          format: date-time
-        objchangedby:
-          $ref: '#/components/schemas/ObjChangedBy'
-        objowner:
-          type: string
-        objou:
-          type: string
-        fileextension:
-          $ref: '#/components/schemas/fileExtension'
-        contsize:
-          type: string
-      description: Liste der Dokumente mit Metadaten eines Vorgangs auslesen
-      example: BusinessObjectType
-    ReadDocumentObjectMetaDataResponseDTO:
-      type: object
-      properties:
-        businessobjecttype:
-          type: array
-          description: Liste der Dokumente mit Metadaten eines Vorgangs auslesen
-          example: BusinessObjectType
-          items:
-            $ref: '#/components/schemas/BusinessObjectReference'
     ReAssignObjectDTO:
       required:
         - newtarget

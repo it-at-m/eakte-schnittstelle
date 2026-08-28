@@ -78,11 +78,11 @@ public class SearchFileRequestDTO {
   }
 
   /**
-   * Name
+   * Titel
    * @return objmlname
    */
   
-  @Schema(name = "objmlname", example = "Akte1", description = "Name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "objmlname", example = "Akte1", description = "Titel", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("objmlname")
   public Optional<String> getObjmlname() {
     return objmlname;

@@ -3,12 +3,17 @@ post:
     - /internal
   summary: Anlegen eines internen Dokuments
   description: |
-    Die Werte werden mit den übergebenen Parametern überschrieben.
-    Bei keiner Übergabe bleiben die bestehenden Werte erhalten.\
-    Ausnahme: Inhaltsobjekte können über diesen Aufruf nur hinzugefügt werden.\
-    Dokumente können nur in bereits bestehenden Vorgängen angelegt werden.\
-    Bei jeder Änderung über die Schnittstelle wird in der eGov-Suite eine neue Version des Objekts erzeugt. 
-    Dies betrifft auch wiederholte Änderungen, die durch einen Benutzer durchgeführt werden.
+    Neues Internes Dokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).\
+    Wenn das Eingangsdokument keinem Vorgang zugeordnet ist (referrednumber == NULL), 
+    wird eine neue Aktivität „Intern“ im Arbeitsvorrat erzeugt.
+    
+    Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.\
+    Sollte jedoch der Parameter useOE == true sein, 
+    so soll die Aktivität „Intern“ der OE (aus der Standardrolle des Benutzers) vorgeschrieben werden – 
+    in diesem Fall, soll bei der Vorschreibung kein Benutzer eingetragen werden.
+    
+    Beim Anlegen von neuen Dokumenten wird die auf dem Vorgang gesetzte Zugriffsdefinition verwendet. 
+    Anhand des Userlogins werden der Eigentümer (COOSYSTEM@1.1:objowner) und die Organisationseinheit (COOSYSTEM@1.1:objowngroud) gesetzt.
   operationId: CreateInternal
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

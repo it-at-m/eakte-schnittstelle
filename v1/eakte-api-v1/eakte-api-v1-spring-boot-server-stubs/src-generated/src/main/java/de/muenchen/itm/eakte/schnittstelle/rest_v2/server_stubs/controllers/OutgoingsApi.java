@@ -54,7 +54,7 @@ public interface OutgoingsApi {
     String PATH_CREATE_OUTGOING = "/outgoings";
     /**
      * POST /outgoings : Erledigung anlegen
-     * Neue Erledigung unter dem angegebenen Vorgang anlegen.\\ Wenn kein Vorgang erzeugt wird,  so wird die erzeugte Erledigung am Schreibtisch des Benutzers abgelegt.  Beim Anlegen von neuen Dokumenten wird die auf dem Vorgang gesetzte Zugriffsdefinition verwendet. 
+     * Neues Ausgangsdokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).\\ Wenn das Ausgangsdokument keinem Vorgang zugeordnet ist (referrednumber &#x3D;&#x3D; NULL),  wird eine neue Aktivität „Ausgang“ im Arbeitsvorrat erzeugt.  Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.\\ Sollte jedoch der Parameter useOE &#x3D;&#x3D; true sein,  so soll die Aktivität „Ausgang“ der OE (aus der Standardrolle des Benutzers) vorgeschrieben werden –  in diesem Fall, soll bei der Vorschreibung kein Benutzer eingetragen werden.  Beim Anlegen von neuen Dokumenten wird die auf dem Vorgang gesetzte Zugriffsdefinition verwendet.  Anhand des Userlogins werden der Eigentümer (COOSYSTEM@1.1:objowner) und die Organisationseinheit (COOSYSTEM@1.1:objowngroud) gesetzt. 
      *
      * @param userlogin **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\\ Log-in-Name des Benutzerobjekts  (required)
      * @param params  (required)
@@ -70,7 +70,7 @@ public interface OutgoingsApi {
     @Operation(
         operationId = "createOutgoing",
         summary = "Erledigung anlegen",
-        description = "Neue Erledigung unter dem angegebenen Vorgang anlegen.\\ Wenn kein Vorgang erzeugt wird,  so wird die erzeugte Erledigung am Schreibtisch des Benutzers abgelegt.  Beim Anlegen von neuen Dokumenten wird die auf dem Vorgang gesetzte Zugriffsdefinition verwendet. ",
+        description = "Neues Ausgangsdokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).\\ Wenn das Ausgangsdokument keinem Vorgang zugeordnet ist (referrednumber == NULL),  wird eine neue Aktivität „Ausgang“ im Arbeitsvorrat erzeugt.  Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.\\ Sollte jedoch der Parameter useOE == true sein,  so soll die Aktivität „Ausgang“ der OE (aus der Standardrolle des Benutzers) vorgeschrieben werden –  in diesem Fall, soll bei der Vorschreibung kein Benutzer eingetragen werden.  Beim Anlegen von neuen Dokumenten wird die auf dem Vorgang gesetzte Zugriffsdefinition verwendet.  Anhand des Userlogins werden der Eigentümer (COOSYSTEM@1.1:objowner) und die Organisationseinheit (COOSYSTEM@1.1:objowngroud) gesetzt. ",
         tags = { "/outgoings" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
