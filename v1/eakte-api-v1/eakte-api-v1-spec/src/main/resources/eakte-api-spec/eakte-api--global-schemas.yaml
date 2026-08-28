@@ -389,6 +389,16 @@ components:
         Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &#10; in Abfragen unterstützt.
       example: Alle Anträge der Firma XY aus dem Jahr 2016
 
+    ReadDocumentObjectMetaDataResponseDTO:
+      type: object
+      properties:
+        businessobjecttype:
+          type: array
+          description: Liste der Dokumente mit Metadaten eines Vorgangs auslesen
+          example: BusinessObjectType
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/BusinessObjectReference'
+
     BusinessObjectReference:
       type: object
       description: Metadaten eines Schriftgutobjekts (Akte, Vorgang, Dokument)

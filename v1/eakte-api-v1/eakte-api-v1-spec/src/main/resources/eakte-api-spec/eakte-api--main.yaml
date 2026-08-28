@@ -3,7 +3,7 @@ openapi: 3.0.1
 info:
   title: eAkte API Specification
   description: REST-API for the LHM eAkte Service
-  version: '1.2.5'
+  version: '1.2.7'
 
   contact:
     name: Competence Center eAkte

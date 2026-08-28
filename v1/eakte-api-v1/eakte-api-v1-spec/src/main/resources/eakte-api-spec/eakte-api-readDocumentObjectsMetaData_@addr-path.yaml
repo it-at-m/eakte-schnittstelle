@@ -21,7 +21,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: 'eakte-api-readDocumentObjectsMetaData_@addr-schemas.yaml#/components/schemas/ReadDocumentObjectMetaDataResponseDTO'
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/ReadDocumentObjectMetaDataResponseDTO'
     '400':
       $ref: 'eakte-api--default-responses.yaml#/components/responses/400'
     '401':

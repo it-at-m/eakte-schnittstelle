@@ -5,10 +5,9 @@
  */
 package de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.controllers;
 
-import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.CreateInternalBodyParams;
-import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.CreateInternalResponseDTO;
 import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.DmsErrorResponse;
 import org.springframework.lang.Nullable;
+import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.ReadDocumentObjectMetaDataResponseDTO;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -41,37 +40,38 @@ import jakarta.annotation.Generated;
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.21.0")
 @Validated
 @Controller
-@Tag(name = "/internal", description = "the /internal API")
-public interface InternalApi {
+@Tag(name = "/readProcedureObjectsMetaData", description = "the /readProcedureObjectsMetaData API")
+public interface ReadProcedureObjectsMetaDataApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
 
-    String PATH_CREATE_INTERNAL = "/internal";
+    String PATH_READ_PROCEDURE_OBJECTS_META_DATA = "/readProcedureObjectsMetaData/{objaddress}";
     /**
-     * POST /internal : Anlegen eines internen Dokuments
-     * Neues Internes Dokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).\\ Wenn das Eingangsdokument keinem Vorgang zugeordnet ist (referrednumber &#x3D;&#x3D; NULL),  wird eine neue Aktivität „Intern“ im Arbeitsvorrat erzeugt.  Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.\\ Sollte jedoch der Parameter useOE &#x3D;&#x3D; true sein,  so soll die Aktivität „Intern“ der OE (aus der Standardrolle des Benutzers) vorgeschrieben werden –  in diesem Fall, soll bei der Vorschreibung kein Benutzer eingetragen werden.  Beim Anlegen von neuen Dokumenten wird die auf dem Vorgang gesetzte Zugriffsdefinition verwendet.  Anhand des Userlogins werden der Eigentümer (COOSYSTEM@1.1:objowner) und die Organisationseinheit (COOSYSTEM@1.1:objowngroud) gesetzt. 
+     * GET /readProcedureObjectsMetaData/{objaddress} : Liste aller Dokumente des Vorgangs mit Metadaten auslesen
+     * Stornierte Objekte können nicht ausgelesen werden,  d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate&#x3D;Storniert] werden gefiltert und nicht zurückgegeben.\\ Über die optionalen Parameter können Dokumente zur Anzeige gemäß der gewählten Kriterien ausgewählt werden. 
      *
      * @param userlogin **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\\ Log-in-Name des Benutzerobjekts  (required)
-     * @param params  (required)
+     * @param objaddress Objekt-ID (COO-Adresse) des Objekts (required)
      * @param xAnwendung **Aufrufende Fachanwendung**  Für jeden Aufruf soll ersichtlich sein,  welche Fachanwendung den Aufruf getätigt hat.  Dies soll es ermöglichen, Requests und Responses den entsprechenden Fachverfahren zuzuordnen.  Für diesen Zweck wird sowohl im Request,  als auch im Response ein Parameter „businessapp“ angegeben.  Dieser Parameter ist optional und kann mit einem Namen befüllt werden.  Sofern der Aufruf einen Wert enthält, wird dieser auch im Response zurückgegeben.  Somit ist ein nachträgliches Filtern von Aufrufen möglich.  (optional)
      * @param joboe COO-Adresse der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.\\ \\ Ohne Angabe der joboe und jobposition  wird die eingestellte Standardrolle und OE des Nutzers in der eAkte verwendet.\\ Wenn eine bestimmte jobposition angegeben wird, unter der dieser Aufruf ausgeführt werden soll  muss auch die entsprechende joboe des Nutzers mit angegeben werden.  Das kann z.B. notwendig sein, wenn bestimmte Funktionen nur durch Schriftgutverwalter oder Registratur ausgeführt werden dürfen.\\ Über die OE wird der Mandant zugeordnet und entsprechend die Berechtigungen geprüft.\\ Hinweis:\\ Die COO-Adresse für die joboe muss im Fachverfahren in einer Konfigurationsdatei hintelegt werden, da sie nicht per Schnittstelle ausgelesen werden kann und sich ggf. ändern kann.  Meistens ist die joboe innerhalb eines Fachbereichs für alle Benutzer gleich, so dass sie bei Änderungen einfach zu verwalten ist.  (optional)
      * @param jobposition Referenz der Stelle (**Rolle des Nutzers** in der eAkte). * Schriftgutverwaltung - DocumentManager * Sachbearbeitung - OfficialInCharge * Fachadministration - OpAdm * Registratur - Official * Sekretariat - Secretary * Leitung - Head * Archivar - Registrar * Vorlagenadministrator - TemplateAdministrator * Vorlagenverwaltung - TemplateManager  Es dürfen ausschließlich die o.g. genannten Stellen der LHM verwendet werden.\\ Bitte verwenden Sie die englische Bezeichnung.  Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt!  (optional)
-     * @param giattachmenttype Liste der Objektadressen und Namen der Schriftstücke im Dokument. (optional)
+     * @param propdocstate Aktueller Bearbeitungsstatus der darunterliegenden Objekte * 10 &#x3D; In Bearbeitung * 20 &#x3D; Suspendiert (kann wieder aufgehoben werden) * 30 &#x3D; Abgeschlossen * 40 &#x3D; Storniert (endgültig storniert) * 50 &#x3D; Archiviert  (optional)
+     * @param propbostate Bearbeitungsstatus der darunterliegenden Objekte\\ Es muss die COO-Adresse des Bearbeitungsstatus übergeben werden.  Die Liste kann aus dem jeweiligen System generiert werden (Suche nach Status Komponentenobjekt im Verwaltungswerkzeug)  Je nach Bearbeitungsschritt mit dem Objekt können folgende (beispielhafte) Status vorliegen: * Erstellt * Weggelegt * z.A. verfügt * Schlusszeichnung * Schlusszeichnung abgelehnt * Billigung * Billigung abgelehnt * Mitgezeichnet * Mitzeichnung abgelehnt * Versand erzeugt * Versendet * Zu Bewerten * Bewertet * Dem Archiv übermittelt * Vom Archiv zurückgegeben bzw. Übernahme vom Archiv bestätigt * Vernichtet  (optional)
      * @return OK (status code 200)
      *         or Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten. (status code 400)
      *         or Falscher oder fehlender technischer Nutzer. (status code 401)
      *         or Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten. (status code 500)
      */
     @Operation(
-        operationId = "createInternal",
-        summary = "Anlegen eines internen Dokuments",
-        description = "Neues Internes Dokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).\\ Wenn das Eingangsdokument keinem Vorgang zugeordnet ist (referrednumber == NULL),  wird eine neue Aktivität „Intern“ im Arbeitsvorrat erzeugt.  Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.\\ Sollte jedoch der Parameter useOE == true sein,  so soll die Aktivität „Intern“ der OE (aus der Standardrolle des Benutzers) vorgeschrieben werden –  in diesem Fall, soll bei der Vorschreibung kein Benutzer eingetragen werden.  Beim Anlegen von neuen Dokumenten wird die auf dem Vorgang gesetzte Zugriffsdefinition verwendet.  Anhand des Userlogins werden der Eigentümer (COOSYSTEM@1.1:objowner) und die Organisationseinheit (COOSYSTEM@1.1:objowngroud) gesetzt. ",
-        tags = { "/internal" },
+        operationId = "readProcedureObjectsMetaData",
+        summary = "Liste aller Dokumente des Vorgangs mit Metadaten auslesen",
+        description = "Stornierte Objekte können nicht ausgelesen werden,  d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.\\ Über die optionalen Parameter können Dokumente zur Anzeige gemäß der gewählten Kriterien ausgewählt werden. ",
+        tags = { "/readProcedureObjectsMetaData" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = CreateInternalResponseDTO.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ReadDocumentObjectMetaDataResponseDTO.class))
             }),
             @ApiResponse(responseCode = "400", description = "Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = DmsErrorResponse.class))
@@ -84,24 +84,24 @@ public interface InternalApi {
         }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = InternalApi.PATH_CREATE_INTERNAL,
-        produces = { "application/json" },
-        consumes = { "multipart/form-data" }
+        method = RequestMethod.GET,
+        value = ReadProcedureObjectsMetaDataApi.PATH_READ_PROCEDURE_OBJECTS_META_DATA,
+        produces = { "application/json" }
     )
-    default ResponseEntity<CreateInternalResponseDTO> createInternal(
+    default ResponseEntity<ReadDocumentObjectMetaDataResponseDTO> readProcedureObjectsMetaData(
         @NotNull @Parameter(name = "userlogin", description = "**Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\\ Log-in-Name des Benutzerobjekts ", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "userlogin", required = true) String userlogin,
-        @Parameter(name = "params", description = "", required = true) @Valid @RequestPart(value = "params", required = true) CreateInternalBodyParams params,
+        @Parameter(name = "objaddress", description = "Objekt-ID (COO-Adresse) des Objekts", required = true, in = ParameterIn.PATH) @PathVariable("objaddress") String objaddress,
         @Parameter(name = "x-anwendung", description = "**Aufrufende Fachanwendung**  Für jeden Aufruf soll ersichtlich sein,  welche Fachanwendung den Aufruf getätigt hat.  Dies soll es ermöglichen, Requests und Responses den entsprechenden Fachverfahren zuzuordnen.  Für diesen Zweck wird sowohl im Request,  als auch im Response ein Parameter „businessapp“ angegeben.  Dieser Parameter ist optional und kann mit einem Namen befüllt werden.  Sofern der Aufruf einen Wert enthält, wird dieser auch im Response zurückgegeben.  Somit ist ein nachträgliches Filtern von Aufrufen möglich. ", in = ParameterIn.HEADER) @RequestHeader(value = "x-anwendung", required = false) Optional<String> xAnwendung,
         @Parameter(name = "joboe", description = "COO-Adresse der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.\\ \\ Ohne Angabe der joboe und jobposition  wird die eingestellte Standardrolle und OE des Nutzers in der eAkte verwendet.\\ Wenn eine bestimmte jobposition angegeben wird, unter der dieser Aufruf ausgeführt werden soll  muss auch die entsprechende joboe des Nutzers mit angegeben werden.  Das kann z.B. notwendig sein, wenn bestimmte Funktionen nur durch Schriftgutverwalter oder Registratur ausgeführt werden dürfen.\\ Über die OE wird der Mandant zugeordnet und entsprechend die Berechtigungen geprüft.\\ Hinweis:\\ Die COO-Adresse für die joboe muss im Fachverfahren in einer Konfigurationsdatei hintelegt werden, da sie nicht per Schnittstelle ausgelesen werden kann und sich ggf. ändern kann.  Meistens ist die joboe innerhalb eines Fachbereichs für alle Benutzer gleich, so dass sie bei Änderungen einfach zu verwalten ist. ", in = ParameterIn.HEADER) @RequestHeader(value = "joboe", required = false) Optional<String> joboe,
         @Parameter(name = "jobposition", description = "Referenz der Stelle (**Rolle des Nutzers** in der eAkte). * Schriftgutverwaltung - DocumentManager * Sachbearbeitung - OfficialInCharge * Fachadministration - OpAdm * Registratur - Official * Sekretariat - Secretary * Leitung - Head * Archivar - Registrar * Vorlagenadministrator - TemplateAdministrator * Vorlagenverwaltung - TemplateManager  Es dürfen ausschließlich die o.g. genannten Stellen der LHM verwendet werden.\\ Bitte verwenden Sie die englische Bezeichnung.  Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt! ", in = ParameterIn.HEADER) @RequestHeader(value = "jobposition", required = false) Optional<String> jobposition,
-        @Parameter(name = "giattachmenttype", description = "Liste der Objektadressen und Namen der Schriftstücke im Dokument.") @RequestPart(value = "giattachmenttype", required = false) List<MultipartFile> giattachmenttype,
+        @Parameter(name = "propdocstate", description = "Aktueller Bearbeitungsstatus der darunterliegenden Objekte * 10 = In Bearbeitung * 20 = Suspendiert (kann wieder aufgehoben werden) * 30 = Abgeschlossen * 40 = Storniert (endgültig storniert) * 50 = Archiviert ", in = ParameterIn.HEADER) @RequestHeader(value = "propdocstate", required = false) Optional<Integer> propdocstate,
+        @Parameter(name = "propbostate", description = "Bearbeitungsstatus der darunterliegenden Objekte\\ Es muss die COO-Adresse des Bearbeitungsstatus übergeben werden.  Die Liste kann aus dem jeweiligen System generiert werden (Suche nach Status Komponentenobjekt im Verwaltungswerkzeug)  Je nach Bearbeitungsschritt mit dem Objekt können folgende (beispielhafte) Status vorliegen: * Erstellt * Weggelegt * z.A. verfügt * Schlusszeichnung * Schlusszeichnung abgelehnt * Billigung * Billigung abgelehnt * Mitgezeichnet * Mitzeichnung abgelehnt * Versand erzeugt * Versendet * Zu Bewerten * Bewertet * Dem Archiv übermittelt * Vom Archiv zurückgegeben bzw. Übernahme vom Archiv bestätigt * Vernichtet ", in = ParameterIn.HEADER) @RequestHeader(value = "propbostate", required = false) Optional<String> propbostate,
         @Parameter(hidden = true) final HttpServletRequest servletRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"objname\" : \"Internes Dokument zum Antrag auf Baugenehmigung Firma Mustermann (0010 A20 011-4-0006-0006)\", \"giobjecttype\" : [ [ { \"name\" : \"Beispielname\", \"id\" : \"COO.2150.9151.1.1206000\" } ], [ { \"name\" : \"Beispielname\", \"id\" : \"COO.2150.9151.1.1206000\" } ] ], \"objid\" : \"COO.1.2301.1.1042465\" }";
+                    String exampleString = "{ \"businessobjecttype\" : \"BusinessObjectType\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

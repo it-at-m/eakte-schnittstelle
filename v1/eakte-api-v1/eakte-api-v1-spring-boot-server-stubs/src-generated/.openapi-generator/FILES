@@ -24,6 +24,8 @@ src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/controlle
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/controllers/ProceduresFromTemplateApi.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/controllers/ReAssignObjectApi.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/controllers/ReadDocumentObjectsMetaDataApi.java
+src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/controllers/ReadProcedureObjectsMetaDataApi.java
+src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/controllers/ReadSubjectAreaObjectsMetaDataApi.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/controllers/RevokeDepositObjectsApi.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/controllers/SearchObjNamesApi.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/controllers/SetSignatureObjectsApi.java
@@ -63,7 +65,6 @@ src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/Cre
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/DmsErrorResponse.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/DmsObjektResponse.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/MetadataReferenz.java
-src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/ObjChangedBy.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/Objektreferenz.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/ReAssignObjectDTO.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/ReadApentryAntwortDTO.java
@@ -77,6 +78,7 @@ src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/Rea
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/ReadProcedureResponseDTO.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/ReadSubjectAreaFileAntwortDTO.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/ReadSubjectAreaObjectsAntwortDTO.java
+src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/ReadSubjectAreaObjectsMetaDataResponseDTO.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/ReadUserFormsDataResponseDTO.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/SearchApentryDTO.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/SearchApentryResponseDTO.java
