@@ -40,6 +40,8 @@ tags:
   - name: /proceduresFromTemplate
   - name: /reAssignObject
   - name: /readDocumentObjectsMetaData
+  - name: /readProcedureObjectsMetaData
+  - name: /readSubjectAreaObjectsMetaData
   - name: /revokeDepositObjects
   - name: /searchObjNames
   - name: /setSignatureObjects
@@ -137,6 +139,12 @@ paths:
 
   '/procedureObjects/{objaddress}':
     $ref: 'eakte-api-procedureObjects_@addr-path.yaml'
+
+  '/readProcedureObjectsMetaData/{objaddress}':
+    $ref: 'eakte-api-readProcedureObjectsMetaData_@addr-path.yaml'
+
+  '/readSubjectAreaObjectsMetaData/{objaddress}':
+    $ref: 'eakte-api-readSubjectAreaObjectsMetaData_@addr-path.yaml'
 
   '/procedures':
     $ref: 'eakte-api-procedures-path.yaml'

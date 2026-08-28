@@ -19,7 +19,7 @@ components:
           example: "2002.1-36"
         objmlname:
           type: "string"
-          description: "Name des Vorgangs"
+          description: "Titel des Vorgangs"
           example: "Vorgang Eins Name"
         filesubj:
           type: "string"

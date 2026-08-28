@@ -24,7 +24,9 @@ components:
             $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Objektreferenz'
 
     CreateIncomingBasisAnfrageDTO:
-      description: 'Parameter, die den Eingang spezifizieren'
+      description: |
+        Json Objekt, das die Parameter für den Eingang spezifiziert.\
+        Das Objekt ist vom Typ `CreateIncomingBasisAnfrageDTO`.
       type: object
       properties:
         shortname:

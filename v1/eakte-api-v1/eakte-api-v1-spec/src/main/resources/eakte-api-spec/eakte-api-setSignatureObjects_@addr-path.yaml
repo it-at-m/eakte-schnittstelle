@@ -5,13 +5,23 @@ put:
   description: |
     Bei dem Schriftgutobjekt (parameter: objaddress) wird eine definierte Unterschriftenart gesetzt (parameter: signaturetype). 
     Dabei wird die in der Domäne/Mandanten gültige Unterschriftenregelung beachtet. 
-    Die Vorbedingungen werden jedoch nicht ausgewertet.\ 
+    Die jeweiligen Vorbedingungen werden vor dem Anbringen der Unterschrift ebenfalls geprüft.
+    
     Bitte beachten Sie, dass beim Anbringen der Unterschrift 
     auch Folge-Aktivitäten ausgeführt werden 
     (wie z.B. der Bearbeitungsstatus wird korrekt gesetzt).\
     Unterschriften, in denen weitere GUI-Masken angezeigt werden (wie z.B. bei Umschreibungen), 
     können über diese Soap-Aktion natürlich nicht angebracht werden. 
     Für entsprechende Aktionen müssen bei Bedarf spezielle Soap-Aktionen entwickelt werden.
+    
+    Im Kontext des 4-Augen-Löschens sind über diesen Aufruf 
+    nur die dafür freigegebenen Unterschriften „Löschmarkierung setzen“, „Löschmarkierung bestätigen“ 
+    und „Löschmarkierung ablehnen“ über die Schnittstelle zulässig, 
+    sofern sie in der gültigen Unterschriftenkonfiguration vorgesehen sind und 
+    alle fachlichen Vorbedingungen erfüllt sind.\
+    Die Aktivitäten im Arbeitsvorrat, die nach Löschmarkierung setzen gestartet werden, 
+    werden im Arbeitsvorrat des Technischen Nutzers aufgeräumt, 
+    wenn der AT-Job die bestätigten Löschaufträge aus dem Arbeitsvorrat entfernt.
   operationId: SetSignature
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'

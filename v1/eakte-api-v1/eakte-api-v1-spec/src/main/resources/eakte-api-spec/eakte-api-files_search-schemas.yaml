@@ -19,7 +19,7 @@ components:
           example: "2002.1-36"
         objmlname:
           type: "string"
-          description: "Name"
+          description: "Titel"
           example: "Akte1"
         filesubj:
           type: "string"

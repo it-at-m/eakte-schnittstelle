@@ -110,7 +110,7 @@ components:
           description: |
             erzeugt am/um
             
-            Datumsformat: YYYY-MM-DDTHH:MM:SS+HH:MM\
+            Datumsformat: YYYY-MM-DDTHH:MM:SS+TH:TM\
             - = Trenner zusammengehörende Werte\
             YYYY = 4 Stellen für das Jahr\
             MM = 2 Stellen für den Monat\
@@ -128,7 +128,21 @@ components:
         objmodifiedat:
           type: string
           format: date-time
-          description: Letzte Änderung am/um
+          description: |
+            Letzte Änderung am/um
+            
+            Datumsformat: YYYY-MM-DDTHH:MM:SS+TH:TM\
+            - = Trenner zusammengehörende Werte\
+            YYYY = 4 Stellen für das Jahr\
+            MM = 2 Stellen für den Monat\
+            DD = 4 Stellen für das Jahr\
+            T = Trenner Datum und Uhrzeit\
+            HH = 2 Stellen für die Stunden\
+            MM = 2 Stellen für die Minuten\
+            SS = 2 Stellen für die Sekunden\
+            + = Trenner Uhrzeit und Zeitzone\
+            TH = Zeitzone in Stunden\
+            TM = Zeitzone in Minuten
           example: 2018-07-23T10:39:32+01:00
 
     Zugriffsdefinition:
@@ -162,6 +176,10 @@ components:
         Wenn Vorgänge die Zugriffsdefinition und zusätzlich berechtigte Organisationseinheiten 
         aus der übergeordneten Akte übernehmen sollen, 
         muss "Aktengebunden" für Vorgänge bei der Akte angegeben werden (procaccdef).
+        Wenn eine Akte über die SST angelegt wird und 
+        am Aktenplaneintrag zusätzlich berechtigte OE's eingetragen wurden 
+        (im Reiter "Sicherheitseinstellungen" des Aktenplaneintrags), 
+        dann wird die Zugriffsdefinition "Aktengebunden" automatisch für Vorgänge gesetzt.
       example: Eigener Mandant
 
     Schlagworte:
@@ -332,7 +350,12 @@ components:
         
         Wenn kein Wert übergeben wird, wird die auf der Akte hinterlegte Zugriffsdefinition übernommen (empfohlen).
         Wenn Vorgänge die Zugriffsdefinition und zusätzlich berechtigte Organisationseinheiten
-        aus der übergeordneten Akte übernehmen sollen, muss "Aktengebunden" angegeben werden.
+        aus der übergeordneten Akte übernehmen sollen, muss "Aktengebunden" angegeben werden.\
+        Wenn eine Akte über die SST angelegt wird und 
+        am Aktenplaneintrag zusätzlich berechtigte OE's eingetragen wurden 
+        (im Reiter "Sicherheitseinstellungen" des Aktenplaneintrags), 
+        dann wird die Zugriffsdefinition "Aktengebunden" automatisch bei der Akte für Vorgänge gesetzt.\
+        Der Parameter procedureaccdef wird in solchen Fällen nicht berücksichtigt.
       example: Aktengebunden
 
     subfiletype:
@@ -365,3 +388,32 @@ components:
         Betreff (mehrzeilig)\
         Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &#10; in Abfragen unterstützt.
       example: Alle Anträge der Firma XY aus dem Jahr 2016
+
+    BusinessObjectReference:
+      type: object
+      description: Metadaten eines Schriftgutobjekts (Akte, Vorgang, Dokument)
+      properties:
+        objname:
+          type: string
+        objaddress:
+          type: string
+        objclass:
+          type: string
+        objcreatedat:
+          type: string
+          format: date-time
+        objcreatedby:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/ArrayOfstring'
+        objmodifiedat:
+          type: string
+          format: date-time
+        objchangedby:
+          $ref: 'eakte-api--global-schemas.yaml#/components/schemas/ArrayOfstring'
+        objowner:
+          type: string
+        objou:
+          type: string
+        fileextension:
+          type: string
+        contsize:
+          type: string
