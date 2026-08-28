@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "devDependencies": {
+    "@redocly/cli": "^2.0.0"
+  },
+  "scripts": {
+    "openapi:bundle": "redocly bundle target/unpacked-dependencies/eakte-rest-api-v1/eakte-api--main.yaml -o src/main/resources/eakte-rest-api-v1-spec-single-file.yaml",
+    "openapi:bundle:deref": "redocly bundle target/unpacked-dependencies/eakte-rest-api-v1/eakte-api--main.yaml -o src/main/resources/eakte-rest-api-v1-spec-single-file-deref.yaml --dereferenced"
+  }
+}

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>de.muenchen.eai</groupId>
+    <artifactId>eakte-api-v1</artifactId>
+    <version>1.2.7-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>eakte-api-v1-spec-single-file</artifactId>
+  <packaging>jar</packaging>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>de.muenchen.eai</groupId>
+      <artifactId>eakte-api-v1-spec</artifactId>
+      <version>${project.version}</version>
+      <type>zip</type>
+    </dependency>
+
+    <dependency>
+      <groupId>io.swagger.codegen.v3</groupId>
+      <artifactId>swagger-codegen-cli</artifactId>
+      <version>3.0.68</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.6.1</version>
+        <executions>
+          <execution>
+            <id>unpack-dependencies</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>unpack-dependencies</goal>
+            </goals>
+            <configuration>
+              <excludeGroupIds>*</excludeGroupIds>
+              <excludeArtifactIds>*</excludeArtifactIds>
+              <includeGroupIds>de.muenchen.eai</includeGroupIds>
+              <includeArtifactIds>eakte-api-v1-spec</includeArtifactIds>
+              <includes>**/*.yaml</includes>
+              <outputDirectory>${project.build.directory}/unpacked-dependencies</outputDirectory>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.1</version>
+        <configuration>
+          <archive>
+            <addMavenDescriptor>false</addMavenDescriptor>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <appendAssemblyId>false</appendAssemblyId>
+              <descriptors>
+                <descriptor>${project.basedir}/apispec-zipfile-assembly-single-file.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.6.3</version>
+
+        <executions>
+          <execution>
+            <id>npm-install</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>npm</executable>
+              <arguments>
+                <argument>install</argument>
+              </arguments>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>bundle-openapi</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>npx</executable>
+              <arguments>
+                <argument>--no-install</argument>
+                <argument>redocly</argument>
+                <argument>bundle</argument>
+                <argument>${project.build.directory}/unpacked-dependencies/eakte-rest-api-v1/eakte-api--main.yaml</argument>
+                <argument>-o</argument>
+                <argument>${project.basedir}/src/main/resources/eakte-rest-api-v1-spec-single-file.yaml</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+
+      </plugin>
+
+    </plugins>
+  </build>
+
+</project>

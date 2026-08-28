@@ -1,0 +1,3959 @@
+openapi: 3.0.1
+info:
+  title: eAkte API Specification
+  description: REST-API for the LHM eAkte Service
+  version: 1.2.5
+  contact:
+    name: Competence Center eAkte
+    url: https://it-at-m.github.io/eakte-api
+    email: schnittstelle.eakte@muenchen.de
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: /api
+security:
+  - basicAuth: []
+tags:
+  - name: /accessDefinitions
+  - name: /addAddressees
+  - name: /addressee
+  - name: /apentries
+  - name: /businessDataValue
+  - name: /cancelObjects
+  - name: /contentObjectMetaData
+  - name: /contentObjects
+  - name: /depositObjects
+  - name: /disposalScheduleDates
+  - name: /documentObjects
+  - name: /files
+  - name: /incomingFromInbox
+  - name: /incomings
+  - name: /internal
+  - name: /objectAndImportToInbox
+  - name: /outgoings
+  - name: /procedureObjects
+  - name: /procedures
+  - name: /proceduresFromTemplate
+  - name: /reAssignObject
+  - name: /readDocumentObjectsMetaData
+  - name: /revokeDepositObjects
+  - name: /searchObjNames
+  - name: /setSignatureObjects
+  - name: /startWorkflows
+  - name: /subjectAreaFileObjects
+  - name: /subjectAreaUnits
+  - name: /subjectAreas
+paths:
+  /accessDefinitions/{objaddress}:
+    put:
+      tags:
+        - /accessDefinitions
+      summary: Zugriffsdefinition des angegebenen Objektes ändern
+      description: |
+        Ändern der Zugriffsdefinition von einem Objekt, 
+        sowie in bestimmten Konstellationen auch automatisch dessen untergeordneten Objekte. 
+        Beispielsweise kann dieser Aufruf verwendet werden, 
+        wenn aufgrund Anforderungen des Datenschutzes (z.B. Zeugenschutz) 
+        der Zugriff auf ein Dokument oder einen Vorgang inkl. Dokumente eingeschränkt werden muss.
+
+        Dieser Aufruf steht für folgende Objektklassen zur Verfügung:
+        * Sachakte
+        * Vorgang
+        * Dokument (Eingangsdokument, Erledigung)
+
+        Die Vererbung von Zugriffsdefinitionen kann über die Eigenschaft „Rechtevererbung [authorization inheritance]“ 
+        gesteuert werden. Auflistung der möglichen Werte zur Übergabe und die Auswirkungen:
+        * 0 oder leer: Die Rechtevererbung aus dem Standardprodukt wird verwendet. 
+        Der neue Wert wird rekursiv gesetzt  i n  A b h ä n g i g k e i t von den jeweiligen aktuell gesetzten Werten 
+        der untergeordneten Objekte.
+        * 1: Die Zugriffsdefinition wird rekursiv auf alle untergeordneten Objekte vererbt  
+        u n a b h ä n g i g  von den jeweiligen aktuell gesetzten Werten der untergeordneten Objekte.
+        z.B.: beim Setzen der Zugriffsdefinition auf der Akte wird diese auf die 
+        enthaltenen Vorgänge und wiederrum auf alle in den Vorgängen enthaltenen Dokumenten vererbt.
+        * 2: Die Zugriffsdefinition ändert sich  n u r  b e i  d e m  a u s g e w ä h l t e n  Objekt
+
+        Grundsätzlich erfolgt beim Setzen einer Zugriffsdefinition eine rekursive Vererbung 
+        auf alle untergeordneten Objekte, sofern auf den unterordneten Objekten 
+        die gleiche Zugriffsdefinition gesetzt ist.
+
+        Szenario 1: Die Sachakte sowie alle untergeordneten Vorgänge und Dokumente  
+        haben die gleiche Zugriffsdefinition.\
+        Beim Setzen einer neuen Zugriffsdefinition der Sachakte ändern sich die Zugriffsdefinitionen 
+        aller untergeordneten Vorgänge und Dokumente.
+
+        Szenario 2: Die Sachakte und das Dokument haben die gleiche Zugriffsdefinition, 
+        der Vorgang eine andere.\
+        Beim Setzen einer neuen Zugriffsdefinition auf der Sachakte ändert sich 
+        die Zugriffsdefinition des Vorgangs und des Dokumentes nicht, da der Vorgang eine andere Zugriffsdefinition als die Sachakte hat.
+
+        Szenario 3: Die Sachakte und der Vorgang haben die gleiche Zugriffsdefinition. 
+        Das untergeordnete Dokument des Vorgangs hat eine andere Zugriffsdefinition.\
+        Beim Setzen der Zugriffsdefinition für Schriftgutobjekte des Eigentümers auf der Sachakte 
+        ändert sich die Zugriffsdefinition des Dokumentes nicht, 
+        da das Dokument eine andere Zugriffsdefinition als der Vorgang hat. 
+        Die Zugriffsdefinition des Vorgangs ändert sich.
+
+        Szenario 4: Der Vorgang und das Dokument haben die gleiche Zugriffsdefinition.\
+        Beim Setzen einer neuen Zugriffsdefinition auf dem Vorgang 
+        ändert sich die Zugriffsdefinition des Dokumentes, 
+        da das Dokument die gleiche Zugriffsdefinition wie der Vorgang hat. 
+        Es ändern sich alle Dokumente des Vorgangs mit der gleichen Zugriffsdefinition!
+
+        Szenario 5: Der Vorgang und das Dokument haben unterschiedliche Zugriffsdefinitionen.
+        Beim Setzen einer neuen Zugriffsdefinition auf dem Vorgang 
+        ändert sich die Zugriffsdefinition des Dokumentes nicht, 
+        da das Dokument eine andere Zugriffsdefinition als der Vorgang hat.
+      operationId: UpdateAccessDefinitionObject
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAccessDefinitionObjectAnfrageDTO'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /addAddressees/{objaddress}:
+    put:
+      tags:
+        - /addAddressees
+      summary: Hinzufügen eines Freitextadressaten bei Dokumenten oder Vorgängen
+      operationId: AddAddressee
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddAddresseeRequestDTO'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /addressee/{objaddress}:
+    get:
+      tags:
+        - /addressee
+      summary: Auslesen der Freitextadressaten bei Dokumenten oder Vorgängen
+      operationId: GetAddressee
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /apentries/{objaddress}:
+    get:
+      tags:
+        - /apentries
+      summary: Untergeordnete Aktenplaneinträge auslesen
+      description: |
+        Untergeordnete Aktenplaneinträge eines Aktenplaneintrags werden durch Übergabe der COO-Adresse abgefragt. 
+        Als Rückgabewerte erhält den Namen des Aktenplaneintrags und seine COO-Adresse.\
+        Ist die übergebene Objektadresse kein Aktenplaneintrag, 
+        so wird eine Fehlermeldung des Standardprodukts zurückgegeben.\
+        Wenn bei der Rückgabe der gesamten Objektliste auf bestimmte Objekte kein Zugriff besteht, 
+        werden diese Objekte mit der Information „Zugriff verweigert“ mit ausgegeben.
+      operationId: ReadApentry
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadApentryAntwortDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /apentries/search:
+    post:
+      tags:
+        - /apentries
+      summary: Suche nach Aktenplaneinträgen
+      operationId: SearchApentry
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchApentryDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchApentryResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /businessDataValue/{objaddress}:
+    put:
+      tags:
+        - /businessDataValue
+      summary: Setzen/Aktualisieren von Fachdaten
+      description: |
+        Diese Funktion soll bei neuen Schnittstellen nicht mehr benutzt werden.\
+        Dafür gibt es die neue Funktion für Verfahrensdaten PUT /userFormsData
+      operationId: UpdateBusinessDataValue
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBusinessDataValueDTO'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /cancelObjects/{objaddress}:
+    put:
+      tags:
+        - /cancelObjects
+      summary: Objekt stornieren (Vorgang, Dokument, Schriftstück)
+      description: |
+        Stornieren wird verwendet, wenn fälschlicherweise ein Schriftgutobjekt erstellt worden ist.\
+        Nach dem Stornieren kann das stornierte Objekt über die Schnittstelle nicht mehr ausgelesen werden.\
+        Das Aufheben von stornierten Objekten ist nur in der GUI der eGov-Suite möglich, nicht über die Schnittstelle.
+
+        Der Status [FSCFOLIO@1.1001:objdocstate] des Objekts wird auf „Storniert“ gesetzt. 
+        Zudem erfolgt gemäß dem Berechtigungskonzept ein Access Control List (ACL) Übergang.\
+        Welcher ACL-Übergang beim Stornieren erfolgt, ist im Berechtigungskonzept definiert und 
+        ist abhängig von der hinterlegten ACL des zu stornierenden Objekts.\
+        Beispiel: Eine Akte hat die ACL für Schriftgutobjekte des Eigentümers. 
+        Im Rahmen der Stornierung erfolgt der ACL-Übergang und 
+        die Akte erhält die ACL für abgeschlossene Schriftgutobjekte des Eigentümers.
+
+        Bei einer Stornierung werden auch alle untergeordneten Schriftgutobjekte storniert.
+      operationId: CancelObject
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /completeProcedureBusinessData:
+    post:
+      tags:
+        - /completeProcedureBusinessData
+      summary: Anlegen eines kompletten Vorgangs mit Dokument und Schriftstücken bzw. Ergänzung einzelner Schriftstücke beim Vorgang
+      description: |
+        Sobald eine Sachakte über die Fachdaten gefunden wurde, 
+        (über die Parameter businessterm und businessvalue),
+        wird folgendermaßen vorgegangen:
+
+        * Eingangsparameter Vorgangstitel (shortnameprocedure):\
+        Das System überprüft ob in der gefundenen Akte 
+        bereits ein Vorgang mit dem Titel existiert.
+          - Vorgang existiert bereits\
+        Das Dokument wird in dem Vorgang abgelegt
+          - Vorgang existiert noch nicht\
+        Ein neuer Vorgang mit dem übergebenen Titel wird angelegt und das Dokument in dem Vorgang abgelegt.
+
+        * Eingangsparameter Dokumenttitel (shortnamedocument):\
+        Das System überprüft, ob in dem gefundenen Vorgang 
+        bereits ein Eingangsdokument mit dem Titel existiert.
+          - Eingangsdokument existiert bereits\
+        Navigieren in das Eingangsdokument
+          - Eingangsdokument existiert noch nicht\
+        Ein neues Eingangsdokument mit dem übergebenen Titel wird angelegt & 
+        * Das Schriftstück wird im entsprechenden Eingangsdokument abgelegt.
+      operationId: CreateCompleteProcedureBusinessData
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateCompleteProcedureBusinessDataRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCompleteProcedureBusinessDataResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /contentObjectMetaData/{objaddress}:
+    get:
+      tags:
+        - /contentObjectMetaData
+      summary: Schriftstück Metadaten lesen
+      operationId: ReadContentObjectMetaData
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadContentObjectMetaDataAntwortDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /contentObjects:
+    post:
+      tags:
+        - /contentObjects
+      summary: Schriftstück anlegen
+      operationId: CreateContentObject
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateContentObjectRequestBodyDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateContentObjectAntwortDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /contentObjects/{objaddress}:
+    get:
+      tags:
+        - /contentObjects
+      summary: Schriftstück lesen
+      description: |
+        Stornierte Objekte können nicht ausgelesen werden, 
+        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] 
+        werden gefiltert und nicht zurückgegeben.\
+        Vor dem Aufruf wird automatisiert überprüft, 
+        ob die angefragte Datei größer als der angegebene Wert 
+        in der Eigenschaft „Maximale Größe der Inhalte“ [FSCVAPP@1.1001:defaultimportlimit]\ 
+        Derzeit beträgt die maximale Größe bei MUCS23 100 MB, im Produktivsystem MUCS26 vorr. 512 MB.  
+        aus der Virtual Application Konfiguration ist. 
+        Sofern die Datei größer ist als der angegebene Wert in MB ist, 
+        wird der Inhalt das Schriftstücks nicht ausgelesen und eine Fehlermeldung zurückgegeben.
+      operationId: ReadContentObject
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadContentObjectResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      tags:
+        - /contentObjects
+      summary: Schriftstück ändern
+      operationId: UpdateContentObject
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateContentObjectRequestBodyDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateContentObjectAntwortDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /depositObjects/{objaddress}:
+    put:
+      tags:
+        - /depositObjects
+      summary: z.A. setzen von Akten und Vorgängen
+      description: |
+        Der Status der Akte oder des Vorgangs wird „z.A.“ gesetzt.
+        * Alle Vorgänge unter der betreffenden Akte werden z.A. gesetzt.
+        * Für die betreffende Akte wird das Feld "gültig bis" 
+        auf das Datum der Durchführung des Calls gesetzt.
+        * Neue Vorgänge können nach dem Bayern Standard nicht mehr angelegt und 
+        Inhalte nicht mehr bearbeitet werden.
+        * Das Transfer- und Aussonderungsdatum für Vorgänge wird 
+        auf Basis von Aufbewahrungsfrist und Aussonderungsart berechnet und gesetzt.
+        * Eine Akte kann lediglich dann z.A. geschrieben werden, 
+        wenn bei keinem der darunterliegenden Vorgänge ein offener Prozess/Laufweg vorliegt.
+      operationId: DepositObject
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DmsObjektResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /disposalScheduleDates/{objaddress}:
+    put:
+      tags:
+        - /disposalScheduleDates
+      summary: Aufbewahrungsdatum setzen
+      description: |
+        Bei Akten und Vorgängen kann das vorgesehene Endedatum der Aufbewahrung geändert werden, nachdem sie z.A. gesetzt wurden.\
+        Das angegebene Datum in der Eigenschaft „Aufbewahrung.vorgesehen“ [COOELAK@1.1001:filelifetime.COOELAK@1.1001:offltscheduled] 
+        wird überschrieben und das Datum (FSCSCHEDULE@1.1001:nddate) des Fristen-Objekts vom Typ Aufbewahrung.
+      operationId: DisposalScheduleDate
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetDisposalScheduleDateAnfrageDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetDisposalScheduleDateAntwortDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /documentObjects/{objaddress}:
+    get:
+      tags:
+        - /documentObjects
+      summary: Liste von Schriftstücken auslesen
+      description: |
+        Stornierte Objekte können nicht ausgelesen werden, 
+        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.\
+        Über die optionalen Parameter kann das Fachverfahren vorab eine Selektierung der Liste vornehmen, 
+        d.h. es sollten lediglich die Objekte übermittelt werden auf welche die optionalen Parameter zutreffen.
+      operationId: ReadDocumentObject
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/propdocstate'
+        - $ref: '#/components/parameters/propbostate'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadDocumentObjectsAntwortDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /files:
+    post:
+      tags:
+        - /files
+      summary: Akte anlegen
+      description: |
+        Sachakten können nur in Aktenplaneinträgen des Aktenplaneintragstyps „Betreffseinheit“ angelegt werden, 
+        d.h. auf der untersten Ebene eines Aktenplans.
+            
+        Ist der übergebene Aktenplaneintrag eine Betreffseinheit (unterstes Element im Aktenplan), 
+        prüft das System, ob die Betreffseinheit noch frei ist (weniger als 10.000 Akten in der Betreffseinheit)
+        * Ist die Betreffseinheit frei, wird die Akte in der Betreffseinheit abgelegt.
+        * Ist die Betreffseinheit nicht frei, prüft das System, ob bereits weitere Betreffseinheiten angelegt wurden und ob diese frei sind.
+        * Ist eine andere bereits angelegte Betreffseinheit frei, wird die Akte in dieser Betreffseinheit abgelegt
+        * Wurde noch keine weitere Betreffseinheit angelegt oder sind alle automatisch angelegten voll, 
+        wird eine neue Betreffseinheit auf der gleichen Ebene mit folgendem Namen angelegt:
+        Aktenplanzeichen: <Name des darüberliegenden Aktenplaneintrags> + „.„ + <Fortlaufende Nummer>\ 
+        Die Akte wird in der neu erzeugten Betreffseinheit angelegt.
+
+        Ist der übergebene Aktenplaneintrag keine Betreffseinheit, 
+        eruiert das System die Liste der Betreffseinheiten, welche eine Ebene tiefer sind.\
+        Das System prüft, ob eine dieser Betreffseinheiten frei ist.
+        * Wenn eine freie Betreffseinheit gefunden wird, wird die Akte in der freien Betreffseinheit angelegt.
+        * Wenn keine freie Betreffseinheit gefunden wird, wird eine neue Betreffseinheit unterhalb des übergebenen Aktenplaneintrages mit folgendem Namen angelegt:\
+        „Name des darüberliegenden Aktenplaneintrags„ + „.„ + „Fortlaufende Nummer„\
+        Die Akte wird in der neu erzeugten Betreffseinheit erzeugt.
+
+        Als Organisationseinheit der Sachakte (COOSYSTEM@1.1:objowngroup) wird 
+        die Organisationseinheit des darüber liegenden Aktenplankennzeichens (COOELAK@1.1001:ou) gesetzt. 
+        Sofern keine Organisationseinheit auf dem Aktenplankennzeichen definiert ist, 
+        wird die Organisationseinheit der ersten Rolle des Benutzers verwendet.
+      operationId: CreateFile
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFileDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DmsObjektResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /files/{objaddress}:
+    get:
+      tags:
+        - /files
+      summary: Akte lesen
+      description: |
+        Ausgabe der jeweiligen Metadaten der übergebenen Sachakte.\
+        Stornierte Objekte können nicht ausgelesen werden. 
+        D.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] 
+        werden gefiltert und nicht zurückgegeben.
+      operationId: ReadFile
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadFileResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      tags:
+        - /files
+      summary: Akte ändern
+      description: |
+        Bereits befüllte Eigenschaften werden mit übergebenen Werten überschrieben. 
+        Bei keiner Übergabe bleiben die bestehenden Werte erhalten. Bei jeder Änderung über die Schnittstelle wird in der eGov-Suite eine neue Version des Objekts erzeugt.
+      operationId: UpdateFile
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFileDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DmsObjektResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /files/complete:
+    post:
+      tags:
+        - /files
+      summary: Anlegen einer kompletten Akte mit Vorgängen, Dokumenten und Schriftstücken
+      description: Es wird eine komplette Sachakte erstellt mit einem Vorgang, Dokument & Schrifstück) bzw. man kann auch einzelne Schriftstücke bei der Akte ergänzen.\ Bitte beachten Sie die Bedingungen beim Anlegen von einfachen Akten (POST /files)
+      operationId: CreateCompleteFile
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateCompleteFileRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCompleteFileResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /files/search:
+    post:
+      tags:
+        - /files
+      summary: Suche nach Akten über definierte Parameter
+      operationId: SearchFile
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchFileRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchFileResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /incomingFromInbox:
+    post:
+      tags:
+        - /incomingFromInbox
+      summary: Erfassen eines Eingangs aus dem Postkorb
+      description: |
+        Schriftstücke eines Postkorbs werden als Eingangsdokument erfasst.\
+        Eingänge können nur in bereits bestehenden Vorgängen angelegt werden.
+      operationId: CreateIncomingFromInbox
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateIncomingFromInboxRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DmsObjektResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /incomings:
+    post:
+      tags:
+        - /incomings
+      summary: Eingangsdokument anlegen
+      description: |
+        Neues Eingangsdokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).\
+        \
+        Wenn das Eingangsdokument keinem Vorgang zugeordnet ist (referrednumber == NULL), 
+        wird eine neue Aktivität „Neues Eingangsdokument“ erzeugt.\
+        Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.\
+        Sollte jedoch der Parameter useOE == true sein, 
+        so soll die Aktivität „Neues Eingangsdokument“ der OE (aus der Standardrolle des Benutzers) vorgeschrieben werden – 
+        in diesem Fall, soll bei der Vorschreibung kein Benutzer eingetragen werden.\
+        \
+        Beim Anlegen von neuen Dokumenten wird die auf dem Vorgang gesetzte Zugriffsdefinition verwendet.\
+        Anhand des Userlogins werden der Eigentümer (COOSYSTEM@1.1:objowner) und die Organisationseinheit (COOSYSTEM@1.1:objowngroud) gesetzt.
+      operationId: CreateIncoming
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateIncomingRequestBodyDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateIncomingAntwortDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /incomings/{objaddress}:
+    put:
+      tags:
+        - /incomings
+      summary: Eingang ändern
+      description: |
+        Die Werte werden mit den übergebenen Parametern überschrieben. 
+        Bei keiner Übergabe bleiben die bestehenden Werte erhalten.\
+        Ausnahme: Inhaltsobjekte können über diesen Aufruf nur hinzugefügt werden.\
+        Dokumente können nur in bereits bestehenden Vorgängen angelegt werden.
+        Bei jeder Änderung über die Schnittstelle wird in der eGov-Suite eine neue Version des Objekts erzeugt. Dies betrifft auch wiederholte Änderungen, die durch einen Benutzer durchgeführt werden.
+      operationId: UpdateIncoming
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateIncomingRequestBodyDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateIncomingAntwortDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /internal:
+    post:
+      tags:
+        - /internal
+      summary: Anlegen eines internen Dokuments
+      description: |
+        Die Werte werden mit den übergebenen Parametern überschrieben.
+        Bei keiner Übergabe bleiben die bestehenden Werte erhalten.\
+        Ausnahme: Inhaltsobjekte können über diesen Aufruf nur hinzugefügt werden.\
+        Dokumente können nur in bereits bestehenden Vorgängen angelegt werden.\
+        Bei jeder Änderung über die Schnittstelle wird in der eGov-Suite eine neue Version des Objekts erzeugt. 
+        Dies betrifft auch wiederholte Änderungen, die durch einen Benutzer durchgeführt werden.
+      operationId: CreateInternal
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateInternatRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateInternalResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /objectAndImportToInbox:
+    post:
+      tags:
+        - /objectAndImportToInbox
+      summary: Erzeugen eines Schriftstückes in einem Postkorb
+      operationId: CreateObjectAndImportToInbox
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateObjectAndImportToInboxRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateObjectAndImportToInboxResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /outgoings:
+    post:
+      tags:
+        - /outgoings
+      summary: Erledigung anlegen
+      description: |
+        Neue Erledigung unter dem angegebenen Vorgang anlegen.\
+        Wenn kein Vorgang erzeugt wird, 
+        so wird die erzeugte Erledigung am Schreibtisch des Benutzers abgelegt.
+
+        Beim Anlegen von neuen Dokumenten wird die auf dem Vorgang gesetzte Zugriffsdefinition verwendet.
+      operationId: CreateOutgoing
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateOutgoingRequestBodyDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOutgoingAntwortDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /outgoings/{objaddress}:
+    get:
+      tags:
+        - /outgoings
+      summary: Erledigung lesen
+      operationId: ReadOutgoing
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadOutgoingAntwortDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      tags:
+        - /outgoings
+      summary: Erledigung ändern
+      description: |
+        Bereits befüllte Werte werden überschrieben. 
+        Bei keiner Übergabe bleiben die bestehenden Werte erhalten.\
+        Ausnahme: Inhaltsobjekte können über diesen Aufruf nur hinzugefügt und 
+        nicht ersetzt werden.\
+        Bei jeder Änderung über die Schnittstelle 
+        wird in der eGov-Suite eine neue Version des Objekts erzeugt. 
+        Dies betrifft auch wiederholte Änderungen, 
+        die durch einen Benutzer durchgeführt werden.
+      operationId: UpdateOutgoing
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateOutgoingRequestBodyDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateOutgoingResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /procedureObjects/{objaddress}:
+    get:
+      tags:
+        - /procedureObjects
+      summary: Liste von Dokumenten auslesen
+      description: |
+        Stornierte Objekte können nicht ausgelesen werden, 
+        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.\
+        Über die optionalen Parameter kann das Fachverfahren vorab eine Selektierung der Liste vornehmen, 
+        d.h. es sollten lediglich die Objekte übermittelt werden auf welche die optionalen Parameter zutreffen.
+      operationId: ReadProcedureObject
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadProcedureObjectsAntwortDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /procedures:
+    post:
+      tags:
+        - /procedures
+      summary: Vorgang anlegen
+      description: |
+        Unter der angegebenen Akte wird ein neuer Vorgang (ohne Laufweg) angelegt.\
+        Für neue Vorgängen wird die auf der Sachakte angegebene Zugriffsdefinition verwendet.
+      operationId: CreateProcedure
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProcedureDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DmsObjektResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /procedures/{objaddress}:
+    get:
+      tags:
+        - /procedures
+      summary: Vorgang lesen
+      description: Stornierte Objekte können nicht ausgelesen werden. D.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.
+      operationId: ReadProcedure
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadProcedureResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      tags:
+        - /procedures
+      summary: Vorgang ändern
+      description: Bereits befüllte Eigenschaften werden mit der übergebenen Eingabe überschrieben. Bei keiner Übergabe bleiben die bestehenden Werte erhalten. Bei jeder Änderung über die Schnittstelle wird in der eGov-Suite eine neue Version des Objekts erzeugt.
+      operationId: UpdateProcedure
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProcedureDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DmsObjektResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /procedures/complete:
+    post:
+      tags:
+        - /procedures
+      summary: Anlegen eines kompletten Vorgangs inkl. Dokument und Schriftstücke
+      description: |
+        Es wird ein kompletter Vorgang mit einem Dokument und Schrifstück neu angelegt 
+        bzw. es können auch einzelne Schriftstücke beim Vorgang ergänzt werden.\
+        Sobald eine Sachakte lokalisiert wurde, wird folgendermaßen vorgegangen:
+
+        Eingangsparameter Vorgangstitel shortnameprocedure:\
+        Das System überprüft ob in der lokalisierten Akte bereits ein Vorgang mit dem Titel existiert.
+        * Vorgang existiert bereits 
+          - Navigieren in den Vorgang
+        * Vorgang existiert noch nicht 
+          - Ein neuer Vorgang mit dem übergebenen Titel wird angelegt und in den Vorgang navigiert.
+
+        Eingangsparameter Dokumenttitel shortnamedocument\
+        Das System überprüft, ob in dem lokalisierten Vorgang bereits 
+        ein Eingangsdokument mit dem Titel existiert.
+        * Eingangsdokument existiert bereits 
+          - Navigieren in das Eingangsdokument
+        * Eingangsdokument existiert noch nicht 
+          - ein neues Eingangsdokument mit dem übergebenen Titel wird angelegt und in das Eingangsdokument navigiert.
+      operationId: CreateCompleteProcedure
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateCompleteProcedureRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCompleteProcedureResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /procedures/search:
+    post:
+      tags:
+        - /procedures
+      summary: Suche nach Vorgängen über definierte Parameter
+      operationId: SearchProcedure
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchProcedureRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchProcedureResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /proceduresFromTemplate:
+    post:
+      tags:
+        - /proceduresFromTemplate
+      summary: Erzeugen von Vorgängen auf Basis einer Vorgangsvorlage
+      operationId: CreateProcedureFromTemplate
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProcedureFromTemplateRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProcedureFromTemplateResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /readDocumentObjectsMetaData/{objaddress}:
+    get:
+      tags:
+        - /readDocumentObjectsMetaData
+      summary: Liste aller Schriftstücke eines Dokuments mit Metadaten auslesen
+      description: |
+        Stornierte Objekte können nicht ausgelesen werden, 
+        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.\
+        Über die optionalen Parameter können Schriftstücke zur Anzeige gemäß der gewählten Kriterien ausgewählt werden.
+      operationId: ReadDocumentMetaData
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/propdocstate'
+        - $ref: '#/components/parameters/propbostate'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadDocumentObjectMetaDataResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /reAssignObject/{objaddress}:
+    put:
+      tags:
+        - /reAssignObject
+      summary: Akte oder Vorgang umschreiben
+      operationId: ReAssignObject
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReAssignObjectDTO'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /revokeDepositObjects/{objaddress}:
+    put:
+      tags:
+        - /revokeDepositObjects
+      summary: z.A. aufheben für Akten oder Vorgänge
+      description: |
+        Die angegebene Akte oder Vorgang wird z.A. aufgehoben.\
+        Wenn die z.A.-Setzung einer "Akte" aufgehoben wird, dann 
+        * wird in der eAkte für die betreffende Akte der Wert im Feld "gültig bis" geleert
+        * bleiben enthaltene Vorgänge z.A., können dann aber ggf. wieder in Bearbeitung genommen werden
+        * bekommt die Akte Bearbeitungsstatus "erstellt" und den Status "in Bearbeitung"
+        * können Inhalte  bearbeitet werden
+        * werden das Enddatum für Transfer- und Aufbewahrung geleert
+      operationId: RevokeDeposit
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DmsObjektResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /searchObjNames/search:
+    post:
+      tags:
+        - /searchObjNames
+      summary: Suche nach Objektnamen
+      description: |
+        Mit diesem Aufruf ist eine generische Suche möglich, mit dem ein Objekt bzw. 
+        Objekte auf Basis des Objektnamens gesucht und zurückgegeben werden können.\
+        Bei Bedarf kann die Suche in einer weiteren Ausbaustufe der Schnittstelle 
+        erweitert werden, sodass beispielsweise die Suche auch auf das Erstellungsdatum 
+        oder das letzte Änderungsdatum von Objekten eingeschränkt werden kann.
+
+        Im Suchstring können folgende Operatoren verwendet werden:
+
+        „*“ oder „%“ Der Stern „*“ steht für eine beliebige Zeichenfolge.
+        * Optional zum Zeichen „*“ kann auch das Prozentzeichen „%“ verwendet werden.
+        * Beispiele: 
+        * Eine Suche nach „*berg“ liefert Ergebnisse, 
+        die eine beliebige Zeichenfolge gefolgt von der Zeichenfolge „berg“ enthalten – 
+        „Eisberg“, „Zauberberg“, „Erzberg“. 
+        * Eine Suche nach „Berg*“ liefert Ergebnisse, 
+        die „Berg“ gefolgt von einer beliebigen Zeichenfolge enthalten – 
+        „Berger“, „Bergsteiger“, „Berghotel“. 
+        * Eine Suche nach „Ber*er“ liefert Ergebnisse, die „Ber“ 
+        gefolgt von einer beliebigen Zeichenfolge 
+        sowie gefolgt von „er“ enthalten – „Berger“, „Bergsteiger“, „Berliner“.
+
+        „?“ oder „_“ Das Fragezeichen „?“ steht für exakt ein Zeichen.
+        * Optional zum Zeichen „?“ kann auch das Zeichen Unterstrich „_“ verwendet werden.
+        * Beispiel: Eine Suche nach „_atterbauer“ liefert Ergebnisse, 
+        die exakt ein (beliebiges) Zeichen gefolgt von der Zeichenkette „atterbauer“ enthalten – 
+        „Katterbauer“, „Patterbauer“, „Natterbauer“.
+
+        „~“ Die Tilde „~“ (erreichbar über die Tastenkombination AltGr +) steht für eine phonetische Suche.
+        * Es werden alle Objekte gefunden, bei denen die Aussprache 
+        der im Suchkriterium angegebenen Zeichenkette ähnlich ist. 
+        Eine Tilde muss genau am Beginn des Suchkriteriums eingegeben werden.
+        * Beispiel: Eine Suche nach „~Maier“ liefert ähnlich klingende Ergebnisse wie „Maier“ und „Meier“.
+
+        „[ ] „ Für mehrere Zeichen, von denen genau eines vorhanden sein muss, 
+        können eckige Klammern „[ ]“ verwendet werden.
+        * Die in Frage kommenden Zeichen werden ohne Leerzeichen und ohne Komma eingegeben 
+        (Hinweis: Die genaue Funktionalität hängt von der verwendeten Datenbank ab). 
+        Wenn ein Leerzeichen zwischen Zeichen eingegeben wird, 
+        so wird auch das Leerzeichen als mögliches Zeichen gewertet.
+        * Beispiel: Es werden Word-Objekte gesucht, 
+        deren Name entweder „Test-Eingangsstück“, „Tast-Eingangsstück“ oder 
+        „T st-Eingangsstück“ ist. Dazu wird als Suchstring eingegeben: „T[e a]st-Eingangsstück“.
+
+        Hinweis:\
+        Stornierte Objekte können nicht ausgelesen werden, d.h. Objekte mit dem Status „Storniert“ 
+        [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.
+      operationId: SearchObjName
+      x-soap-operation: SearchObjNameGI
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchObjNameAnfrageDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchObjNameAntwortDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /setSignatureObjects/{objaddress}:
+    put:
+      tags:
+        - /setSignatureObjects
+      summary: Unterschrift setzen auf Objekten
+      description: |
+        Bei dem Schriftgutobjekt (parameter: objaddress) wird eine definierte Unterschriftenart gesetzt (parameter: signaturetype). 
+        Dabei wird die in der Domäne/Mandanten gültige Unterschriftenregelung beachtet. 
+        Die Vorbedingungen werden jedoch nicht ausgewertet.\ 
+        Bitte beachten Sie, dass beim Anbringen der Unterschrift 
+        auch Folge-Aktivitäten ausgeführt werden 
+        (wie z.B. der Bearbeitungsstatus wird korrekt gesetzt).\
+        Unterschriften, in denen weitere GUI-Masken angezeigt werden (wie z.B. bei Umschreibungen), 
+        können über diese Soap-Aktion natürlich nicht angebracht werden. 
+        Für entsprechende Aktionen müssen bei Bedarf spezielle Soap-Aktionen entwickelt werden.
+      operationId: SetSignature
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetSignatureRequestDTO'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /startWorkflows/{objaddress}:
+    put:
+      tags:
+        - /startWorkflows
+      summary: Laufweg starten
+      description: Starten eines vordefinierten Workflows auf einem Schriftgutobjekt (Vorgang oder Umlaufmappe). Dabei wird das entsprechende Objekt sowie das Muster für Verfügung-Objekt als COO-Adresse übergeben. Dabei wird das entsprechende Objekt sowie das Muster für Verfügung-Objekt als COO-Adresse übergeben.
+      operationId: StartWorkflow
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartWorkflowDTO'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /subjectArea/{objaddress}:
+    put:
+      tags:
+        - /subjectArea
+      summary: Aktenplaneintrag ändern
+      operationId: UpdateSubjectArea
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSubjectAreaRequestDTO'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /subjectAreaFileObjects/{objaddress}:
+    get:
+      tags:
+        - /subjectAreaFileObjects
+      summary: Liste von Vorgängen einer Akte auslesen
+      description: |
+        Stornierte Objekte können nicht ausgelesen werden, 
+        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] 
+        werden gefiltert und nicht zurückgegeben.\
+        Über die optionalen Parameter kann die Liste vorgefiltert werden, 
+        d.h. es werden lediglich die Objekte übermittelt, auf welche die optionalen Parameter zutreffen.
+      operationId: ReadSubjectAreaFile
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/propdocstate'
+        - $ref: '#/components/parameters/propbostate'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadSubjectAreaFileAntwortDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /subjectAreas/{objaddress}:
+    get:
+      tags:
+        - /subjectAreas
+      summary: Liste von Sachakten auslesen
+      description: |
+        Ausgabe aller Sachakten unter dem übergebenen Aktenplaneintrag.\
+        Stornierte Objekte können nicht ausgelesen werden, 
+        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] 
+        werden gefiltert und nicht zurückgegeben.\
+        Über die optionalen Parameter können die auszulesenden Akten vorgefiltert werden, 
+        d.h. es werden lediglich die Objekte übermittelt, auf welche die optionalen Parameter zutreffen.
+      operationId: ReadSubjectAreaObject
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadSubjectAreaObjectsAntwortDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /subjectAreaUnits:
+    post:
+      tags:
+        - /subjectAreaUnits
+      summary: Betreffseinheit anlegen
+      description: |
+        Ein neuer Aktenplaneintrag [COOELAK@1.1001:SubjectArea] des Aktenplaneintragstyps „Betreffseinheit“ 
+        wird unter dem angegebenen übergeordneten Aktenplaneintrag erstellt.\
+        Beim Anlegen von neuen Aktenplaneinträgen wird die 
+        auf dem angegebenen übergeordneten Aktenplaneintrag angegebene Zugriffsdefinition übernommen.
+      operationId: CreateSubjectAreaUnit
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSubjectAreaUnitAnfrageDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DmsObjektResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /userFormsData/{objaddress}:
+    get:
+      tags:
+        - /userFormsData
+      summary: Lesen von Verfahrensdaten zu einer Akte, Vorgang oder Dokument
+      description: |
+        Beim Lesen von Verfahrenseigenschaften werden zusätzlich zum Wert der Eigenschaften auch alle Schlüsselwerte zurückgegeben.
+      operationId: ReadUserFormsData
+      parameters:
+        - name: reference
+          description: |
+            Referenz/Programmiername der Verfahrensdaten\
+            Die Referenz der Verfahrenseigenschaften sollte im Fachkonzept und Systemspezifikation vorgegeben werden.\
+
+            Er kann in der GUI angezeigt werden, wenn man 
+            * in den "Eigenschaften" des Objekts (Akte, Vorgang, Dokument) 
+            die entsprechenden Reiter mit den Verfahrensdaten öffnet und 
+            * mit SHIFT-CONTROL-# den Referenznamen der Verfahrensdaten anzeigen läßt 
+            * oder 
+            * wenn man unter dem Menuepunkt "Erstellung" des Objektes die "Eigenschaften" bei "Kategorie" anzeigen läßt. 
+            Dort werden alle verfügbaren Verfahrensdaten eines Objektes mit ihren Referenzen angezeigt.
+          in: query
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadUserFormsDataResponseDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      tags:
+        - /userFormsData
+      summary: Verfahrensdaten für Akten, Vorgänge oder Dokumente ändern
+      description: Eine Liste von Referenz-Wert-Paaren von Verfahrenseigenschaften wird ausgewertet und mit Hilfe einer neuen Hilfsaktion SetUserFormData gesetzt. Die Gültigkeit der übergebenen Referenz (= Programmiername) wird anhand der Definition für Verfahren ermittelt und geprüft.
+      operationId: UpdateUserFormsData
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserFormsDataRequestDTO'
+        required: true
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: |
+        This API uses Basic Auth flow. [More info](https://api.example.com/docs/auth)
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: jwt
+  parameters:
+    x_anwendung:
+      name: x-anwendung
+      in: header
+      description: |
+        **Aufrufende Fachanwendung**
+
+        Für jeden Aufruf soll ersichtlich sein, 
+        welche Fachanwendung den Aufruf getätigt hat. 
+        Dies soll es ermöglichen, Requests und Responses den entsprechenden Fachverfahren zuzuordnen. 
+        Für diesen Zweck wird sowohl im Request, 
+        als auch im Response ein Parameter „businessapp“ angegeben.
+
+        Dieser Parameter ist optional und kann mit einem Namen befüllt werden. 
+        Sofern der Aufruf einen Wert enthält, wird dieser auch im Response zurückgegeben. 
+        Somit ist ein nachträgliches Filtern von Aufrufen möglich.
+      required: false
+      schema:
+        type: string
+      example: SWH
+    userlogin:
+      name: userlogin
+      in: header
+      description: |
+        **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\
+        Log-in-Name des Benutzerobjekts
+      required: true
+      schema:
+        type: string
+      example: max.mustermann
+    joboe:
+      name: joboe
+      in: header
+      description: |
+        COO-Adresse der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.\
+        \
+        Ohne Angabe der joboe und jobposition 
+        wird die eingestellte Standardrolle und OE des Nutzers in der eAkte verwendet.\
+        Wenn eine bestimmte jobposition angegeben wird, unter der dieser Aufruf ausgeführt werden soll 
+        muss auch die entsprechende joboe des Nutzers mit angegeben werden. 
+        Das kann z.B. notwendig sein, wenn bestimmte Funktionen nur durch Schriftgutverwalter oder Registratur ausgeführt werden dürfen.\
+        Über die OE wird der Mandant zugeordnet und entsprechend die Berechtigungen geprüft.\
+        Hinweis:\
+        Die COO-Adresse für die joboe muss im Fachverfahren in einer Konfigurationsdatei hintelegt werden, da sie nicht per Schnittstelle ausgelesen werden kann und sich ggf. ändern kann. 
+        Meistens ist die joboe innerhalb eines Fachbereichs für alle Benutzer gleich, so dass sie bei Änderungen einfach zu verwalten ist.
+      required: false
+      schema:
+        type: string
+      example: COO.1.2300.1.847
+    jobposition:
+      name: jobposition
+      in: header
+      description: |
+        Referenz der Stelle (**Rolle des Nutzers** in der eAkte).
+        * Schriftgutverwaltung - DocumentManager
+        * Sachbearbeitung - OfficialInCharge
+        * Fachadministration - OpAdm
+        * Registratur - Official
+        * Sekretariat - Secretary
+        * Leitung - Head
+        * Archivar - Registrar
+        * Vorlagenadministrator - TemplateAdministrator
+        * Vorlagenverwaltung - TemplateManager
+
+        Es dürfen ausschließlich die o.g. genannten Stellen der LHM verwendet werden.\
+        Bitte verwenden Sie die englische Bezeichnung.
+
+        Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt!
+      required: false
+      schema:
+        type: string
+      example: DocumentManager
+    objaddress:
+      name: objaddress
+      description: Objekt-ID (COO-Adresse) des Objekts
+      in: path
+      required: true
+      schema:
+        type: string
+      example: COO.1.2300.1.847
+    propdocstate:
+      name: propdocstate
+      in: header
+      description: |
+        Aktueller Bearbeitungsstatus der darunterliegenden Objekte
+        * 10 = In Bearbeitung
+        * 20 = Suspendiert (kann wieder aufgehoben werden)
+        * 30 = Abgeschlossen
+        * 40 = Storniert (endgültig storniert)
+        * 50 = Archiviert
+      required: false
+      schema:
+        type: integer
+      example: '12'
+    propbostate:
+      name: propbostate
+      in: header
+      description: |
+        Bearbeitungsstatus der darunterliegenden Objekte\
+        Es muss die COO-Adresse des Bearbeitungsstatus übergeben werden. 
+        Die Liste kann aus dem jeweiligen System generiert werden (Suche nach Status Komponentenobjekt im Verwaltungswerkzeug)
+
+        Je nach Bearbeitungsschritt mit dem Objekt können folgende (beispielhafte) Status vorliegen:
+        * Erstellt
+        * Weggelegt
+        * z.A. verfügt
+        * Schlusszeichnung
+        * Schlusszeichnung abgelehnt
+        * Billigung
+        * Billigung abgelehnt
+        * Mitgezeichnet
+        * Mitzeichnung abgelehnt
+        * Versand erzeugt
+        * Versendet
+        * Zu Bewerten
+        * Bewertet
+        * Dem Archiv übermittelt
+        * Vom Archiv zurückgegeben bzw. Übernahme vom Archiv bestätigt
+        * Vernichtet
+      required: false
+      schema:
+        type: string
+      example: COO.1.2301.1.679
+  schemas:
+    Zugriffsdefinition:
+      type: string
+      description: |
+        Folgende Zugriffsdefinitionen sind möglich:
+
+        * "Eigene Organisationseinheit und Linienorganisation"
+        * "Eigener Mandant"
+        * "Eigene Organisationseinheit und Vorgesetzte"
+        * "Eigene Organisationseinheit und Vorgesetzte (ohne Zentralregistratur)"
+        * "Eigene Organisationseinheit"
+        * "Persönlich und Vorgesetzte"
+        * "Persönlich" (für Verschlusssachen)
+        * "Aktengebunden" (nur für untergeordnete Vorgänge einer Akte)
+
+        Die Zugriffsdefinition wird jeweils auf die darunterliegenden Objekte vererbt, 
+        d.h. 
+        * wenn ein Wert für den Aktenplaneintrag eingetragen wird (empfohlen), 
+        dann gilt dieser automatisch für alle darunter liegenden Akten, 
+        * entsprechend für alle Vorgänge einer Akte, 
+        wenn die Zugriffsdefinition bei der Akte eingetragen wurde und 
+        * entsprechend bei allen Dokumenten eines Vorgangs, 
+        wenn die Zugriffsdefinition bei dem Vorgang eingetragen wurde.
+
+        Wenn kein Wert übergeben wird, 
+        wird die auf dem jeweils höheren Objekt hinterlegte Zugriffsdefinition initialisiert.
+        Wurde auf dem Aktenplaneintrag keine Zugriffsdefinition festgelegt, 
+        wird die im System eingestellte Definition verwendet - "Eigener Mandant".
+
+        Wenn Vorgänge die Zugriffsdefinition und zusätzlich berechtigte Organisationseinheiten 
+        aus der übergeordneten Akte übernehmen sollen, 
+        muss "Aktengebunden" für Vorgänge bei der Akte angegeben werden (procaccdef).
+      example: Eigener Mandant
+    UpdateAccessDefinitionObjectAnfrageDTO:
+      required:
+        - objaccdef
+      type: object
+      properties:
+        objaccdef:
+          $ref: '#/components/schemas/Zugriffsdefinition'
+        authinheritance:
+          type: integer
+          description: |
+            Rechtevererbung\
+            Mögliche Werte: null,0,1,2
+
+            0 oder leer (null): Die Rechtevererbung aus dem Standardprodukt wird
+            verwendet.\
+            Der neue Wert wird rekursiv gesetzt in Abhängigkeit von den
+            jeweiligen aktuell gesetzten Werten der untergeordneten Objekte.
+
+            1: Änderung der Zugriffsdefinition auf dem Objekt und rekursive Vererbung 
+            auf alle untergeordneten Objekte
+            unabhängig von den jeweiligen aktuell gesetzten Werten der untergeordneten Objekte.
+
+            2: Änderung der Zugriffsdefinition nur auf dem Objekt
+
+            Hinweis:\ 
+            Beim übergeben des Werts 1 auf einer Sachakte vererbt sich
+            die Zugriffsdefinition auf alle in der Akte enthaltenen Vorgänge und wieder auf alle Dokumente, 
+            die in den Vorgängen enthalten sind.\
+            Bei einer großen Anzahl von untergeordneten Objekten kann es zu Abbrüchen 
+            aufgrund Objektsperren oder durch Timeouts kommen.
+          format: int32
+          example: 1
+    DmsErrorResponse:
+      type: object
+      properties:
+        fehlerQuelle:
+          type: string
+          enum:
+            - INTERN
+            - DMS
+        status:
+          type: integer
+          format: int32
+        text:
+          type: string
+    AddAddresseeRequestDTO:
+      type: object
+      properties:
+        addrdate:
+          type: string
+          description: Briefdatum des Objektes
+          format: date-time
+        addrtransmedia:
+          type: string
+          description: |
+            Versandart für den jeweiligen Adressaten\
+            Folgende Werte sind möglich:
+            * Papier
+            * E-Fax
+            * E-Mail
+            * XML-Dokument
+            * Intern
+            Wenn kein Wert übertragen wird, soll Papier eingetragen werden.
+          example: Papier
+        addrorgname:
+          type: string
+          description: Organisationsname
+          example: Staatskanzlei Bayern
+        addrtitle:
+          type: string
+          description: Titel
+          example: Dr.
+        addrfirstname:
+          type: string
+          description: Vorname
+          example: Thomas
+        addrname:
+          type: string
+          description: Nachname
+          example: Mayer
+        addrstreet:
+          type: string
+          description: Straße
+          example: Maximilianstraße
+        addrstreetnumber:
+          type: string
+          description: Hausnummer
+          example: '3'
+        addrzipcode:
+          type: string
+          description: Postleitzahl
+          example: '80200'
+        addrcity:
+          type: string
+          description: Ort
+          example: München
+        addrcountry:
+          type: string
+          description: Land
+          example: Deutschland
+        addremail:
+          type: string
+          description: E-Mail-Adresse
+          example: staatskanzlei@muenchen.de
+        addradditional5:
+          type: string
+          description: E-Fax
+          example: 498524885
+    Objektreferenz:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+      description: Name und ID (COO-Adresse) des Schriftgutobjekts
+      example:
+        - name: Beispielname
+          id: COO.2150.9151.1.1206000
+    ReadApentryAntwortDTO:
+      type: object
+      properties:
+        giobjecttype:
+          type: array
+          description: |
+            Liste der untergeordneten Aktenplaneinträge eines Aktenplaneintrags mit jeweils Bezeichner (Name) und COO-Adresse (ID) des Objekts
+          items:
+            $ref: '#/components/schemas/Objektreferenz'
+    SearchApentryDTO:
+      type: object
+      properties:
+        basenr:
+          type: string
+          description: Aktenplankennzeichen
+          example: A1 01 01 01 01
+        subjareaspecreference:
+          type: string
+          description: Ableitung
+          example: Ableitung1
+    SearchApentryResponseDTO:
+      type: object
+      properties:
+        giobjecttype:
+          type: array
+          description: |
+            Auflistung aller Objekte, auf die der Suchstring zutrifft.\
+            Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind.
+          items:
+            $ref: '#/components/schemas/Objektreferenz'
+    UpdateBusinessDataValueDTO:
+      required:
+        - reference
+      type: object
+      properties:
+        reference:
+          type: string
+          description: |
+            Referenz des Fachdatums\
+            Hier kann die einfache Referenz des Komponentenobjektes angeführt werden ("FD_Position" anstelle "COOSYSTEM@1.1:FD_Position".\
+            Die Komponentenobjekte können sowohl von Fabasoft in der CFGMUENCHEN-Komponente 
+            sowie von Domänenadministratoren in einer lokalen Softwarekomponenten erzeugt werden. 
+            Wenn das Fachdaten-Komponentenobjekt gefunden wird, 
+            wird diese unabhängig von der darüberliegenden Konfiguration gesetzt 
+            d.h. eine zusätzliche Prüfung, ob diese in den darüberliegenden Aktenplaneinträgen vorgesehen ist, 
+            kann nicht erfolgen.
+            Dafür gibt es die neue Funktion /userFormsData, mit der Verfahrensdaten abgespeichert werden.\
+            Für vorhandene Schnittstellen werden ab MUCS26 Fachdaten automatisch in den Verfahrensdaten abgespeichert.
+          example: data_dognumber
+        value:
+          type: string
+          description: |
+            Wert des Fachdatums
+
+            Der Wert kann nur gesetzt werden, 
+            wenn auch das Fachdatum-Komponenten-Objekt (mit dem Referenznamen) gefunden wurde.\
+            Folgende Fachdaten-Typen können übergeben werden – 
+            je nach Datentyp, müssen die Werte im vorab definierten Format übergeben werden:
+            * Zeichenkettentyp: String wird übergeben und direkt bei der Akte eingetragen
+            * Liste von Zeichenketten: String wird übergeben und bei der Akte eingetragen (es kann lediglich eine Zeile/String übergeben werden)
+            * Objekt: Die eindeutige COO-Adresse muss angegeben werden.
+            * Objektliste: Liste von COO-Adressen kann übergeben werden
+            * Boolescher Typ: Die möglichen Angaben in der Datenquelle sind „Ja“, oder „Nein“. 
+            Wenn nichts übergeben wird, wird automatsich "Nein" gesetzt
+            * Typ für Datum und Zeit: Das Datumsformat ist in folgendem Format zu übergeben: "DD.MM.YYYY"
+            * Währungstyp: Die Zahlenwert kann übergeben werden z.B. „53,89“ – der Wert wird automatisch immer in EUR eingetragen
+            * Zahlentyp: Es dürfen nur ganze Zahlen übergeben werden z.B.“5“
+            * Aufzählungstyp: Hier muss der entsprechende Zahlenwert übergeben werden. 
+            Wenn ein Zahlenwert übergeben wird, der nicht in den Aufzählungseigenschaft enthalten ist, 
+            wird folgende Fehlermeldung zurückgegeben:
+            „Übergebenes Element ist im Aufzählungstyp nicht vorhanden.“
+            * Gleitkommazahlentyp: Es können auch Gleitkommazahlen übergeben werden 
+            z.B. „14,51“ (standardmäßig erlaubt die Fabasoft eGov-Suite nicht mehr als zwei Kommastellen)
+          example: '458965'
+    CreateCompleteProcedureBusinessDataBodyParams:
+      required:
+        - businessterm
+        - businessvalue
+      type: object
+      properties:
+        businessterm:
+          type: string
+          description: COO-Adresse des Fachdatum
+          example: COO.1.2301.1.683
+        businessvalue:
+          type: string
+          description: Wert des Fachdatum
+          example: '78541235'
+        shortnameprocedure:
+          type: string
+          description: Vorgangstitel
+          example: 2016 Anträge Firma XY
+        shortnamedocument:
+          type: string
+          description: Dokumenttitel
+          example: 2016 Anträge Firma XY
+      description: Parameter, die den kompletten Vorgang spezifizieren
+    CreateCompleteProcedureBusinessDataRequestDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/CreateCompleteProcedureBusinessDataBodyParams'
+        giattachmenttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            type: string
+            format: binary
+    CreateCompleteProcedureBusinessDataResponseDTO:
+      type: object
+      properties:
+        objidprocedure:
+          type: string
+          description: Objekt-ID des erzeugten/gefundenen Vorgangs
+          example: COO.1.2301.1.1042406
+        objnameprocedure:
+          type: string
+          description: |
+            Objektname des erzeugten/gefundenen Vorgangs\
+            Der Name wird in der eAkte gebildet aus dem "Titel des Vorgangs" 
+            ("Aktenplankennzeichen des Aktenplankennzeichens, in dem die Akte liegt"-
+            "laufende Nummer der Akte innerhalb des Aktenplaneintrags"-
+            laufende Nummer des Vorgangs innerhalb des Akte")
+          example: 2026-05-28 Anträge Firma XY-4 (2002-10-0004)
+        objiddocument:
+          type: string
+          description: Objekt-ID des erzeugten/gefundenen Dokuments
+          example: COO.1.2301.1.1042406
+        objnamedocument:
+          type: string
+          description: Objektname des erzeugten/gefundenen Dokuments
+          example: 0010 A20 011-2016 Anträge Frima XY-4
+        objidcontent:
+          type: string
+          description: Objekt-ID des erzeugten/gefundenen Schriftstücks
+          example: COO.1.2301.1.1042406
+        objnamecontent:
+          type: string
+          description: Objektname des erzeugten/gefundenen Schriftstücks
+          example: 0010 A20 011-2016 Anträge Firma XY-4
+    objclass:
+      type: string
+      description: |
+        Name der Objektklasse (COOSYSTEM@1.1:objclass)
+        * Aktenplan (COOELAK@1.1001:Fileplan)
+        * Aktenplaneintrag (COOELAK@1.1001:SubjectArea)
+        * Erledigung (COOELAK@1.1001:Outgoing)
+        * AutoCAD Zeichnung (FSCAUTOCAD@1.1001:Drawing)
+        * Benutzer (COOSYSTEM@1.1:User)
+        * Bericht (FSCAREXT@1.1001:Report)
+        * Bild (FSCWEBCONT@1.1001:ImageObject)
+        * Dokumentkategorie (FSCFOLIO@1.1001:DocumentCategory)
+        * Dokumenttyp (COOELAK@1.1001:Subject)
+        * Dokument (COOELAK@1.1001:SubFileDocument) 
+        (bei Angabe dieser Objektklasse, sollten Eingangs-, und Erledigungsdokumente angezeigt werden)
+        * E-Mail (Microsoft Office Outlook) (COOMAPI@1.1:MailObject)
+        * E-Mail (MIME) FSCMIME(@1.1001:MIMEObject)
+        * Eingangsdokument (COOELAK@1.1001:Incoming)
+        * Freemind Mindmap (CFGMUENCHEN@15.1700:FreemindMindmap)
+        * Frist (ELAKGOV@1.1001:Deadline)
+        * GIF-Objekt (FSCWEBCONT@1.1001:GIFObject)
+        * Hewlett Packard Graphic Language (CFGMUENCHEN@15.1700:HPGraphicLanguage)
+        * Inhalt (erweitert) (CFGMUENCHEN@15.1700:GenericContent)
+        * Inhalt (unbekannter Typ) (GENCONT@1.1:ContentObject)
+        * JPEG-Objekt (FSCWEBCONT@1.1001:JPEGObject)
+        * Kostenstelle (CFGMUENCHEN@15.1700:CostCenter)
+        * Medieninhalt (FSCDIGITALASSET@1.1001:DigitalAsset)
+        * Microsoft Excel-Arbeitsblatt (COOMSOFFICE@1.1:ExcelObject)
+        * Microsoft PowerPoint-Präsentation (COOMSOFFICE@1.1:PowerPointObject)
+        * Microsoft Project-Objekt (COOMSPROJECT@1.1001:MSProject)        t
+        * Microsoft Visio-Zeichnung (VISIO@1.1:VisioObject)
+        * Microsoft Word-Objekt (COOMSOFFICE@1.1:WinWordObject)
+        * OpenDocument Formel (FSCOOFFICE@1.1001:OOorgMathObject)
+        * OpenOffice.org Vorlage (CFGMUENCHEN@15.1700:OOorgTemplateObject)
+        * Ordner (COODESK@1.1:Folder)
+        * Organisation (FSCFOLIO@1.1001:Organisation)
+        * Organisationseinheit (COOSYSTEM@1.1:Group)
+        * PDF-Dokument (FSCACROBAT@1.1:PDFObject)
+        * Person (FSCFOLIO@1.1001:Person)
+        * Personenakte (CFGMUENCHEN@15.1700:PersonalSubjectAreaFile)
+        * PNG-Objekt (FSCWEBCONT@1.1001:PNGObject)
+        * Postkorb (FSCVGOV@1.1001:Inbox)
+        * Präsentation (FSCOOFFICE@1.1001:OOorgPresObject)
+        * Projektordner (COOELAK@1.1001:ProjectFolder)
+        * Rechnungsposition (CFGMUENCHEN@15.1700:InvoiceItem)
+        * Rich Text Format (CFGMUENCHEN@15.1700:RichTextFormat)
+        * Sachakte (DEPRECONFIG@15.1001:SubjectAreaFile)
+        * Schlagwort (FSCTERM@1.1001:Term)
+        * Schmierzettel (ELAKGOV@1.1001:FileMemo)
+        * Schriftstück (COOSYSTEM@1.1:ContentObject)
+        * Serena OpenProj Projekt (CFGMUENCHEN@15.1700:SerenaOpenProj)
+        * Suchordner (COOQBOL@1.1:GenericStoredQBOL)
+        * Tabelle (FSCOOFFICE@1.1001:OOorgCalcObject)
+        * Teamroom (FSCTEAMROOM@1.1001:TeamRoom)
+        * Text-Dokument (NOTE@1.1:NoteObject)
+        * Textbaustein (COOAR@1.1:BasicTextModuleEx_Web)
+        * Textdokument (FSCOOFFICE@1.1001:OOorgTextObject)
+        * TIFF-Objekt (FSCWEBCONT@1.1001:TIFFObject)
+        * Verteiler (COOELAK@1.1001:DistributionList)
+        * Verteilerliste (COOWF@1.1:ParticipantInstance)
+        * Vorgang (DEPRECONFIG@15.1001:Procedure)
+        * Vorlagenkategorie (COOTC@1.1001:TemplateCategory)
+        * XDOMEA Paket (FSCGOVXMLDE@1.1001:XDOMEAPackage)
+        * Zeichnung (FSCOOFFICE@1.1001:OOorgDrawObject)
+        * Zip-Archiv (WINZIP@1.1001:WinZipObject)
+      example: Erledigung
+    ArrayOfstring:
+      type: object
+      description: Liste von Werten (im Textformat)
+      properties:
+        string:
+          type: array
+          items:
+            type: string
+      example:
+        string:
+          - Auto
+          - Bahn
+          - Flugzeug
+    MetadataReferenz:
+      type: object
+      properties:
+        objaddress:
+          type: string
+          description: COO-Adresse des Objekts
+          example: COO.1.2301.1.1041875
+        filename:
+          type: string
+          description: Dateiname
+          example: Brief an Dr. Müller
+        fileextension:
+          type: string
+          description: Dateiendung
+          example: txt
+        objclass:
+          $ref: '#/components/schemas/objclass'
+        contsize:
+          type: string
+          description: Größe der Inhalte (in KB)
+          example: 5
+        objcreatedby:
+          $ref: '#/components/schemas/ArrayOfstring'
+        objcreatedat:
+          type: string
+          format: date-time
+          description: |
+            erzeugt am/um
+
+            Datumsformat: YYYY-MM-DDTHH:MM:SS+HH:MM\
+            - = Trenner zusammengehörende Werte\
+            YYYY = 4 Stellen für das Jahr\
+            MM = 2 Stellen für den Monat\
+            DD = 4 Stellen für das Jahr\
+            T = Trenner Datum und Uhrzeit\
+            HH = 2 Stellen für die Stunden\
+            MM = 2 Stellen für die Minuten\
+            SS = 2 Stellen für die Sekunden\
+            + = Trenner Uhrzeit und Zeitzone\
+            TH = Zeitzone in Stunden\
+            TM = Zeitzone in Minuten
+          example: '2018-07-23T08:59:52+01:00'
+        objchangedby:
+          $ref: '#/components/schemas/ArrayOfstring'
+        objmodifiedat:
+          type: string
+          format: date-time
+          description: Letzte Änderung am/um
+          example: '2018-07-23T10:39:32+01:00'
+    ReadContentObjectMetaDataAntwortDTO:
+      type: object
+      properties:
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) des zugehörigen Dokuments
+          example: COO.1.2301.1.1042432
+        gimetadatatype:
+          $ref: '#/components/schemas/MetadataReferenz'
+    CreateContentObjectAnfrageDTO:
+      type: object
+      properties:
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) des zugehörigen Dokuments
+          example: COO.1.2301.1.1042432
+        filesubj:
+          type: array
+          items:
+            type: string
+      description: Parameter, die das  Schriftstück beschreiben
+    CreateContentObjectRequestBodyDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/CreateContentObjectAnfrageDTO'
+        giattachmenttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            type: string
+            format: binary
+    CreateContentObjectAntwortDTO:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: Objekt-ID (COO-Adresse) des erzeugten Schriftstückes.
+          example: COO.1.2301.1.1042465
+    fileExtension:
+      type: string
+      description: Dateiendung
+      example: txt
+    fileContent:
+      type: string
+      description: |
+        Inhalt der Datei 
+        (Base64 kodierter Inhalt)
+      example: SGFsbG8K (Hallo in Base64)
+    AttachmentType:
+      type: object
+      properties:
+        fileName:
+          type: string
+        fileExtention:
+          $ref: '#/components/schemas/fileExtension'
+        fileContent:
+          $ref: '#/components/schemas/fileContent'
+        fileContsize:
+          type: string
+          description: Größe der Inhalte (in KB)
+          example: 5
+        filesubj:
+          $ref: '#/components/schemas/ArrayOfstring'
+    ReadContentObjectResponseDTO:
+      type: object
+      properties:
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) des zugehörigen Dokuments
+          example: COO.1.2301.1.1042465
+        giattachmenttype:
+          $ref: '#/components/schemas/AttachmentType'
+    UpdateContentObjectDTO:
+      type: object
+      properties:
+        filesubj:
+          type: array
+          items:
+            type: string
+    UpdateContentObjectRequestBodyDTO:
+      required:
+        - giattachmenttype
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/UpdateContentObjectDTO'
+        giattachmenttype:
+          type: string
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument
+          format: binary
+    UpdateContentObjectAntwortDTO:
+      type: object
+      properties:
+        contentobjid:
+          type: string
+          description: Objekt-ID (COO-Adresse) des ersetzten Schriftstücks
+          example: COO.1.2301.1.1042466
+        contentobjname:
+          type: string
+          description: Objektname des ersetzten Schriftstücks
+          example: LHM Schreiben Extern vom 11.11.2016 v101
+        objid:
+          type: string
+          description: |
+            Zugehöriges Dokument, Objekt-ID (COO-Adresse) des Dokuments, in dem
+            das Schriftstück ersetzt worden ist.
+          example: COO.1.2301.1.1042465
+        objname:
+          type: string
+          description: |
+            Objektname des Schriftgutobjekts
+            (COOSYSTEM@1.1:objname)
+          example: Ausgangsschreiben zum Antrag auf Baugenehmigung Firma Mustermann (0010 A20 011-4-0006-0006)
+    DmsObjektResponse:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: COO-Adresse
+        objname:
+          type: string
+          description: Name des Objekts
+    SetDisposalScheduleDateAnfrageDTO:
+      required:
+        - offltscheduled
+      type: object
+      properties:
+        offltscheduled:
+          type: string
+          description: |
+            Hier kann das Datum neu gesetzt werden, bis wann die Aufbewahrung dauern soll.\
+            Nach Ablauf dieses Datums startet der Aussonderungsprozess und 
+            die Akte / Vorgang können nicht mehr durch Sachbearbeitungen bearbeitet werden.
+          example: date-time notation as defined by RFC 3339, section 5.6, z.B. 2017-07-21T17:32:28Z
+          format: date-time
+    SetDisposalScheduleDateAntwortDTO:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: Objekt-ID (COO-Adresse) des Objekts
+          example: COO.1.2301.1.1042441
+        objname:
+          type: string
+          description: Objektname des Objekts
+          example: Eingangspost vom 21.10.2016 (0010 A20 011-4-0006-0001)
+    ReadDocumentObjectsAntwortDTO:
+      type: object
+      properties:
+        giobjecttype:
+          type: array
+          description: |
+            Liste aller Schriftstücke eines Dokuments
+          example:
+            - name: Beispielname
+              id: COO.2150.9151.1.1206000
+          items:
+            $ref: '#/components/schemas/Objektreferenz'
+    Betreff:
+      type: string
+      description: |
+        Betreff (mehrzeilig)\
+        Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &#10; in Abfragen unterstützt.
+      example: Alle Anträge der Firma XY aus dem Jahr 2016
+    Schlagworte:
+      type: string
+      description: |
+        Angabe der Schlagworte getrennt mit „;“. Kein Semikola am Ende angeben.
+
+        Hinweis:\
+        Aktuell ist es für Benutzer*innen nicht möglich, Schlagworte über die Schnittstelle anzulegen oder zu ändern.
+        Bereits vorhandene Schlagworte in der eAkte können verwendet werden.\
+        Dazu gibt es einen gemeinsamen Katalog von Schlagworten für Akten, Vorgänge, 
+        die je OE durch Sachbearbeiter in der GUI angelegt werden können.\
+        Wenn übergebene Schlagworte nicht gefunden werden, wird keine Fehlermeldung zurückgegeben.
+        Das Anlegen erfolgt dann ohne die angegebenen Schlagworte.
+
+        Es ist in der Fachabteilung zu klären, ob und welche Schlagworte im Fachverfahren genutzt werden, 
+        damit sie in der Akte vorab angelegt werden.\
+        Für die Schnittstelle kann eine spezifische Schlagwortliste (Oberbegriff, z.B. "Koi-Schlagworte") 
+        über die generische Suche abgerufen werden und 
+        für die Verschlagwortung von Schriftgutobjekten im Fachverfahren verwendet werden.
+      example: Firma XY; Anträge; Anträge 2016
+    fileruntimefrom:
+      type: string
+      description: |
+        Laufzeitbeginn\
+        Tatsächliches Datum der Anlage der Akte (unabhängig von der Anlage der Akte im eAkte-System).
+        Kann z.B. gesetzt werden, wenn das erste Schriftstück zu der neuen Akte bereits vor der Anlage der Akte im eAkte-System eingegangen ist.
+
+        Das Datum hat keine Auswirkungen im System, sondern dient nur zur Information.
+      format: date-time
+      example: '2017-01-13T17:09:42.411+01:00'
+    fileruntimetill:
+      type: string
+      description: |
+        Laufzeitende\
+        Geplanter Abschluss der Akte.
+
+        Das Datum hat keine Auswirkungen im System, sondern dient nur zur Information.
+      format: date-time
+      example: '2017-01-13T17:09:42.411+01:00'
+    fileouobj:
+      type: string
+      description: |
+        Objekt-ID (COO-Adresse) der aktenführenden Organisationseinheit.\
+        Als Organisationseinheit der Akte wird die Organisationseinheit des
+        darüber liegenden Aktenplankennzeichens gesetzt.\
+        Sofern keine Organisationseinheit auf dem Aktenplankennzeichen
+        definiert ist, wird die Organisationseinheit der ersten Rolle des
+        Benutzers verwendet.
+      example: COO.1.2300.1.847
+    procedureaccdef:
+      type: string
+      description: |
+        Folgende Zugriffsdefinitionen für neue Vorgänge der Akte sind möglich:
+        * "Eigene Organisationseinheit und Linienorganisation"
+        * "Eigener Mandant"
+        * "Eigene Organisationseinheit und Vorgesetzte"
+        * "Eigene Organisationseinheit und Vorgesetzte (ohne Zentralregistratur)"
+        * "Eigene Organisationseinheit"
+        * "Persönlich und Vorgesetzte"
+        * "Persönlich" (für Verschlusssachen)
+        * "Aktengebunden" (nur bei Vorgängen)
+
+        Wenn kein Wert übergeben wird, wird die auf der Akte hinterlegte Zugriffsdefinition übernommen (empfohlen).
+        Wenn Vorgänge die Zugriffsdefinition und zusätzlich berechtigte Organisationseinheiten
+        aus der übergeordneten Akte übernehmen sollen, muss "Aktengebunden" angegeben werden.
+      example: Aktengebunden
+    UserFormsReferenz:
+      description: |
+        Referenz der Verfahrenseigenschaft und der entsprechende Wert.\
+        Folgende Typen für Verfahrenseigenschaft werden unterstützt:
+        * Zeichenkette und Zeichenkettenliste (Textfeld)
+        * Datum (und Zeit), z.B. "01.02.2003 12:00:00"
+        * Boolean ("ja" für true)
+        * Integer und Float (z.B. "3,14")
+        * Währung, z.B. "99,90" ("EUR" wir implizit mitgesetzt)
+        * Aufzählungen (bzw. Optionsfelder) mittels Integer-Wert, wobei geprüft wird, ob der Integer Wert auch vorhanden ist.
+        * Objektzeiger und Objektlisten mittels COO-Adresse
+      type: object
+      properties:
+        lhmbai_15_1700_ufreference:
+          description: Programmiername der Verfahrenseigenschaft
+          type: string
+        lhmbai_15_1700_ufvalue:
+          description: Wert(e) der Verfahrenseigenschaft
+          type: array
+          items:
+            type: string
+    CreateFileDTO:
+      required:
+        - apentry
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: |
+            Der Name wird in der eAkte gebildet aus dem "Titel der Akte" 
+            ("Aktenplankennzeichen des Aktenplankennzeichens, in dem die Akte liegt"-
+            "laufende Nummer der Akte innerhalb des Aktenplaneintrags")
+          example: 2016 Anträge Firma XY (1001-47)
+        filesubj:
+          $ref: '#/components/schemas/Betreff'
+        objterms:
+          $ref: '#/components/schemas/Schlagworte'
+        accdef:
+          $ref: '#/components/schemas/Zugriffsdefinition'
+        apentry:
+          type: string
+          description: Aktenplankennzeichen (Objekt-ID des APl-Kennzeichens)
+          example: COO.1.2301.1.683
+        fileruntimefrom:
+          $ref: '#/components/schemas/fileruntimefrom'
+        fileruntimetill:
+          $ref: '#/components/schemas/fileruntimetill'
+        fileouobj:
+          $ref: '#/components/schemas/fileouobj'
+        procedureaccdef:
+          $ref: '#/components/schemas/procedureaccdef'
+        definition:
+          type: string
+          description: Objekt-ID (COO-Adresse) der Definition für Verfahren
+        userformsdata:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserFormsReferenz'
+    ReadFileResponseDTO:
+      required:
+        - apentry
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: '#/components/schemas/Betreff'
+        objterms:
+          $ref: '#/components/schemas/Schlagworte'
+        accdef:
+          $ref: '#/components/schemas/Zugriffsdefinition'
+        apentry:
+          type: string
+          description: Aktenplankennzeichen Objekt-ID
+          example: COO.1.2301.1.683
+        fileruntimefrom:
+          $ref: '#/components/schemas/fileruntimefrom'
+        fileruntimetill:
+          $ref: '#/components/schemas/fileruntimetill'
+        fileouobj:
+          $ref: '#/components/schemas/fileouobj'
+        procedureaccdef:
+          $ref: '#/components/schemas/procedureaccdef'
+        objname:
+          type: string
+          description: Aktenzeichen
+          example: 0010 A20 011-2016 Anträge Firma XY-4
+        giobjecttype:
+          type: array
+          description: |
+            Liste aller Vorgänge der Akte
+          example:
+            - name: Beispielname
+              id: COO.2150.9151.1.1206000
+          items:
+            $ref: '#/components/schemas/Objektreferenz'
+    UpdateFileDTO:
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: '#/components/schemas/Betreff'
+        objterms:
+          $ref: '#/components/schemas/Schlagworte'
+        fileruntimefrom:
+          $ref: '#/components/schemas/fileruntimefrom'
+        fileruntimetill:
+          $ref: '#/components/schemas/fileruntimetill'
+        filearchivetimeOffltdeadline:
+          type: string
+          description: |
+            Transferfrist
+
+            Die Transferfrist beginnt gleichzeitig mit der Aufbewahrungsfrist, endet aber meist früher. 
+            Während der Transferfrist können Vorgänge wieder aufleben und fortgeführt werden.\
+            Die Vorgänge müssen nach Ende der Arbeiten erneut abgeschlossen werden und 
+            die Aufbewahrungs- und die Transferfrist fangen wieder von Beginn an zu laufen.
+
+            Häufig werden Akten auf einen internen Langzeitspeicher oder in das Zwischenarchiv des Bundesarchivs ausgelagert.\
+            Bei der LHM wird die Transferfrist nicht eingesetzt, da die Akten bis zur Übergabe an das Stadtarchiv in der eAkte verbleiben!\
+            Die Fabasoft eGov Suite erlaubt auch nach Ablauf der Transferfrist bis zum Ende der Aufbewahrungsfrist "z.A. aufheben", um die Akte wieder bearbeiten zu können.\
+            Daher wird die Transferfrist gleich der Aufbewahrungsfrist gesetzt und im Lebenszyklus nicht beachtet (auch keine Änderung der Zugriffsrechte).
+          example: 10 Jahre
+        filelifetimeOffltdeadline:
+          type: string
+          description: |
+            Aufbewahrungsfrist
+
+            Die Aufbewahrungsfrist bestimmt den Zeitraum, in dem Vorgänge und Akten nach der Bearbeitung aufzubewahren sind. 
+            Nach Ablauf dieser Frist erfolgt die Aussonderung, 
+            d.h. Vorgänge oder Akten werden entweder vernichtet oder an das zuständige Archiv übermittelt. 
+            Für Vorgänge und Akten, deren Archivwürdigkeit nicht durch eine Vorabentscheidung im Bewertungsverzeichnis festgelegt ist oder für die kein Bewertungsverzeichnis vorliegt, 
+            wird „B - Bewerten“ hinterlegt.
+
+            Hinweis:\
+            In der eAkte wird beim Anlegen einer neuen Akte die definierte Aufbewahrungsfrist verwendet. 
+            Wenn die Frist vom Standard abweichen soll, 
+            muss sie in den Eigenschaften der Akte überschrieben werden (Anwendungsfall "Akte Eigenschaften bearbeiten").
+
+            Folgende Werte sind auswählbar:\
+            1 Jahr, 6 Monate, 3 Monate, 1 Monat, 1 Woche, 1 Tag,\
+            3, 5, 7, 10, 15, 20, 25, 30 Jahre,\
+            40, 50, 60, 70, 80, 90, 100, 110 Jahre\
+            Die im System verwendeten Fristen finden Sie in der Suche auf dem Schreibtisch der eAkte, 
+            wenn sie nach der Frist (Komponentenbjekt) suchen
+          example: 5 Jahre
+        offltdispstate:
+          type: string
+          description: |
+            Gewünschte Aussonderungsart
+            * „DISPSTATE_ARCHIVE“ - für „A - Archivwürdig“
+            * „DISPSTATE_DESTROY“ - für „V - Vernichten“
+            * „DISPSTATE_DM_B“ für „B - Bewerten“
+
+            Ergänzungen zu den Aussonderungsarten:
+            * „A - Archivwürdig“ - Vorgänge oder Akten sind nach Ablauf der Aufbewahrungsfrist dem zuständigen Archiv als archivwürdig zu übermitteln.
+            * „V - Vernichten“ - Vorgänge oder Akten werden nach Ablauf der Aufbewahrungsfrist vernichtet.
+            * „B - Bewerten“ - Bewerten von Vorgängen oder Akten, deren Archivwürdigkeit nicht durch eine Vorentscheidung festgelegt ist.
+
+            Die Aussonderungsart wird üblicherweise über die Aussonderungsart im Aktenplaneintrag gesetzt.
+          example: DISPSTATE_ARCHIVE
+        procedureaccdef:
+          $ref: '#/components/schemas/procedureaccdef'
+    CreateCompleteFileBodyParams:
+      type: object
+      properties:
+        apentry:
+          type: string
+          description: Objekt-ID der Betreffseinheit
+          example: COO.1.2301.1.683
+        shortnamefile:
+          type: string
+          description: Titel der Akte
+          example: 2016 Anträge Firma XY
+        shortnameprocedure:
+          type: string
+          description: Titel des Vorgangs
+          example: Bauantrag Seestraße
+        shortnamedocument:
+          type: string
+          description: Titel des Dokuments
+          example: Antragsformular mit Anlagen
+        fileouobj:
+          $ref: '#/components/schemas/fileouobj'
+      description: Parameter, die die komplette Akte beschreiben
+    CreateCompleteFileRequestDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/CreateCompleteFileBodyParams'
+        giattachmenttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument
+          items:
+            type: string
+            format: binary
+    CreateCompleteFileResponseDTO:
+      type: object
+      properties:
+        objidfile:
+          type: string
+          description: Objekt-ID der erzeugten/gefundenen Sachakte
+          example: COO.1.2301.1.1042406
+        objnamefile:
+          type: string
+          description: Objektname der erzeugten/gefundenen Sachakte
+          example: 0010 A20 011-2016 Anträge Firma XY-4
+        objidprocedure:
+          type: string
+          description: Objekt-ID des erzeugten/gefundenen Vorgangs
+          example: COO.1.2301.1.1042406
+        objnameprocedure:
+          type: string
+          description: Objektname des erzeugten/gefundenen Vorgangs
+          example: 0010 A20 011-2016 Anträge Firma XY-4
+        objiddocument:
+          type: string
+          description: Objekt-ID des erzeugten/gefundenen Dokuments
+          example: COO.1.2301.1.1042406
+        objnamedocument:
+          type: string
+          description: Objektname des erzeugten/gefundenen Dokuments
+          example: 0010 A20 011-2016 Anträge Firma XY-4
+        objidcontent:
+          type: string
+          description: Objekt-ID des erzeugten/gefundenen Schriftstücks
+          example: COO.1.2301.1.1042406
+        objnamecontent:
+          type: string
+          description: Objektname des erzeugten/gefundenen Schriftstücks
+          example: 0010 A20 011-2016 Anträge Firma XY-4
+    SearchFileRequestDTO:
+      type: object
+      properties:
+        apentry:
+          type: string
+          description: COO-Adresse des Aktenplankennzeichen
+          example: COO.1.2300.1.847
+        filereference:
+          type: string
+          description: |
+            eindeutiges Geschäfts-/Aktenzeichen\
+            Wird im eAkte-System automatisch gebildet aus dem Aktenplaneintrag und 
+            einer fortlaufenden Nummer der Akte 
+            (bei Ableitungen mit .fortlaufende Nummer der Betreffseinheit im Aktenplan (siehe Beispiel)\
+          example: 2002.1-36
+        objmlname:
+          type: string
+          description: Name
+          example: Akte1
+        filesubj:
+          type: string
+          description: Betreff
+          example: Betreff der Akte
+    SearchFileResponseDTO:
+      type: object
+      properties:
+        giobjecttype:
+          type: array
+          description: |-
+            Auflistung aller Objekte, auf die der Suchstring zutrifft.
+            Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind.
+          example:
+            - objname: Beispielname
+              objaddress: COO.2150.9151.1.1206000
+          items:
+            $ref: '#/components/schemas/Objektreferenz'
+    CreateIncomingFromInboxRequestDTO:
+      required:
+        - contentid
+        - inboxid
+      type: object
+      properties:
+        inboxid:
+          type: string
+          description: Objekt-ID (COO-Adresse) des Postkorbs
+          example: COO.1.2301.4.191
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) des Vorgangs
+          example: COO.1.2301.1.1042432
+        contentid:
+          type: string
+          description: COO-Adressse eines Schriftstücks aus dem Postkorb
+          example: COO.1.2301.1.1042446
+        shortname:
+          type: string
+          description: Titel
+          example: Eingangspost vom 21.10.2016
+        foreignnr:
+          type: string
+          description: Fremdes Geschäftszeichen
+          example: A2016-10-2016-Landeshauptstadt-München
+        filesubj:
+          $ref: '#/components/schemas/Betreff'
+        documentremarks:
+          type: string
+          description: Dokumentbezogene Hinweise
+          example: Antrag auf Baugenehmigung
+        incattachments:
+          type: string
+          description: Sonstige Anlagen
+          example: Bebauungsplan
+        objterms:
+          $ref: '#/components/schemas/Schlagworte'
+    CreateIncomingBasisAnfrageDTO:
+      description: Parameter, die den Eingang spezifizieren
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: '#/components/schemas/Betreff'
+        objterms:
+          $ref: '#/components/schemas/Schlagworte'
+        accdef:
+          $ref: '#/components/schemas/Zugriffsdefinition'
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) des Vorgangs
+          example: COO.1.2301.1.1042432
+        useou:
+          type: boolean
+          description: |
+            Der Wert wird nur ausgelesen wenn (referrednumber == NULL) d.h.
+            keine Vorgangszuordnung stattfindet.
+            * Wenn true, wird die Aktivität „Neue Erledigung“ an die OE (ohne
+            Benutzer vorgeschrieben).
+            * Wenn kein Wert (oder false) übermittelt wird, wird die direkte
+            Vorschreibung an den Benutzer durchgeführt.
+          example: false
+        delivery:
+          type: string
+          description: Eingangsdatum des Objekts
+          format: date-time
+        foreignnr:
+          type: string
+          description: |
+            Fremdes Geschäftszeichen\
+            In diesem Feld kann - falls erforderlich - das Geschäftszeichen einer anderen Organisation eingetragen werden.
+          example: A2016-10-2016-Landeshauptstadt-München
+        documentremarks:
+          type: string
+          description: Dokumentbezogene Hinweise
+          example: Antrag auf Baugenehmigung
+        incattachments:
+          type: string
+          description: Sonstige Anlagen
+          example: Bebauungsplan
+        definition:
+          type: string
+          description: Objekt-ID (COO-Adresse) der Definition für Verfahren
+        userformsdata:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserFormsReferenz'
+    CreateIncomingRequestBodyDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/CreateIncomingBasisAnfrageDTO'
+        giattachmenttype:
+          type: array
+          description: |
+            Liste von Schriftstücken\
+            Array im Format: COO-Adresse, Dateiname, Inhalt der Datei, Dateiendung, Größe der Datei (in KB), Betreff
+
+            Hinweis:\
+            Schriftstücke können über diesen Aufruf nicht geändert bzw. ersetzt werden.\
+            Neue Schriftstücke können bei Bedarf (zum Beispiel zum nachträglichen Hinzufügen
+            von Anhängen vor dem Postversand) über diesen Aufruf hinzugefügt werden.
+          example: null
+          items:
+            type: string
+            format: binary
+    CreateIncomingAntwortDTO:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: Objekt-ID (COO-Adresse) des erzeugten Objekts
+        objname:
+          type: string
+          description: Objektname des erzeugten Objekts
+        giobjecttype:
+          type: array
+          description: |
+            Auflistung aller Objekte, auf die der Suchstring zutrifft.\
+            Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind 
+            (Objektname und COO-Adresse)
+          example: LHM-Sitzung 14.10.2016 COO.1.2301.1.1041875
+          items:
+            $ref: '#/components/schemas/Objektreferenz'
+    UpdateIncomingAnfrageDTO:
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: '#/components/schemas/Betreff'
+        objterms:
+          $ref: '#/components/schemas/Schlagworte'
+        accdef:
+          $ref: '#/components/schemas/Zugriffsdefinition'
+        foreignnr:
+          type: string
+          description: |
+            Fremdes Geschäftszeichen\
+            In diesem Feld kann - falls erforderlich - das Geschäftszeichen einer anderen Organisation eingetragen werden.
+          example: A2016-10-2016-Landeshauptstadt-München
+        delivery:
+          type: string
+          description: |
+            Eingangsdatum des Objekts\
+            In diesem Feld wird vermerkt, wann das Dokument eingegangen ist.
+          format: date-time
+        documentremarks:
+          type: string
+          description: Dokumentbezogene Hinweise
+          example: Antrag auf Baugenehmigung
+        incattachments:
+          type: string
+          description: Sonstige Anlagen
+          example: Bebauungsplan
+      description: Parameter, die den Eingang spezifizieren
+    UpdateIncomingRequestBodyDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/UpdateIncomingAnfrageDTO'
+        giattachmenttype:
+          type: array
+          description: |
+            Liste der Schriftstücke\
+            Schriftstücke können über diesen Aufruf nicht geändert bzw. ersetzt werden.
+            Neue Schriftstücke können bei Bedarf (zum Beispiel zum nachträglichen Hinzufügen von Anhängen
+            vor dem Postversand) über diesen Aufruf hinzugefügt werden.
+          items:
+            type: string
+            format: binary
+    UpdateIncomingAntwortDTO:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: Objekt-ID (COO-Adresse) des Objekts
+          example: COO.1.2301.1.1042441
+        objname:
+          type: string
+          description: |
+            Objektname des erzeugten/gefundenen Vorgangs\
+            Der Name wird in der eAkte gebildet 
+            aus dem "Titel des Vorgangs" ("Aktenplankennzeichen"-"lfdNr der Akte"/"lfdNr des Vorgangs"-"lfdNr des Dokuments")
+          example: Eingangspost vom 28.05.2026 (0010-11/2-0006)
+        giobjecttype:
+          type: array
+          description: |
+            Liste der Objektadressen und Namen
+            der Schriftstücke im Dokument.
+          items:
+            $ref: '#/components/schemas/Objektreferenz'
+    subfiletype:
+      type: string
+      description: |
+        Dokumenttyp (COOELAK@1.1001:subfiletyp)\
+        Plausibilitätsprüfung: Der Name eines im System vorhandenen
+        Dokumenttyps muss angegeben werden.\
+        Eine dazugehörige Vorlage (doctemplate) muss nicht verwendet werden.\
+        Es können auch finalisierte Schriftstücke der Fachanwendung 
+        über GiAttachmentType übertragen und verwendet werden.
+      example: Vorlagen
+    CreateInternalBodyParams:
+      description: Parameter, die das Interne Dokument spezifizieren
+      type: object
+      properties:
+        referrednumber:
+          type: string
+          description: |
+            Objekt-ID (COO-Adresse) des Vorgangs\
+            Zugehöriger Vorgang (COOELAK@1.1001:referrednumber)\
+            Wenn kein Vorgang angegeben wird, soll das erzeugte interne Dokument am Schreibtisch des Benutzers abgelegt werden.
+          example: COO.1.2301.1.1042432
+        shortname:
+          type: string
+          description: Titel
+          example: Ausgangsschreiben zum Antrag auf Baugenehmigung Firma
+        accdef:
+          $ref: '#/components/schemas/Zugriffsdefinition'
+        deliverydate:
+          type: string
+          description: Zustelldatum
+          format: date-time
+        filesubj:
+          $ref: '#/components/schemas/Betreff'
+        subfiletype:
+          $ref: '#/components/schemas/subfiletype'
+        doctemplate:
+          type: string
+          description: |
+            Vorlage\
+            Der Name einer im System vorhandenen Vorlage kann angegeben werden.\
+            In dieser Vorlage können beispielsweise Metadaten 
+            automatisiert über DocProperty ausgegeben werden.\
+            Die angegebene Vorlage muss im angegebenen Dokumenttyp enthalten
+            sein.
+
+            Alternativ können finalisierte Schriftstücke auch über
+            GiAttachmentType übertragen werden.
+          example: LHM Schreiben Extern
+        incattachments:
+          type: string
+          description: Sonstige Anlagen
+          example: Ausfüllhilfe Antrag auf Baugenehmigung
+        objterms:
+          $ref: '#/components/schemas/Schlagworte'
+        definition:
+          type: string
+          description: Objekt-ID (COO-Adresse) der Definition für Verfahren
+        userformsdata:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserFormsReferenz'
+    CreateInternatRequestDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/CreateInternalBodyParams'
+        giattachmenttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            type: string
+            format: binary
+    CreateInternalResponseDTO:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: Objekt-ID (COO-Adresse) des erzeugten internen Dokuments.
+          example: COO.1.2301.1.1042465
+        objname:
+          type: string
+          description: Objektname des erzeugten internen Dokuments
+          example: Internes Dokument zum Antrag auf Baugenehmigung Firma Mustermann (0010 A20 011-4-0006-0006)
+        giobjecttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            $ref: '#/components/schemas/Objektreferenz'
+    CreateObjectAndImportToInboxDTO:
+      required:
+        - objaddress
+      type: object
+      properties:
+        objaddress:
+          type: string
+          description: Objekt-ID (COO-Adresse) des Postkorb
+          example: COO.1.2302.1.8
+        filesubj:
+          type: array
+          description: Betreff für die Datei
+          items:
+            type: array
+            description: Betreff für die Datei
+            items:
+              type: string
+              description: Betreff für die Datei
+      description: Parameter, die den Postkorb beschreiben
+    CreateObjectAndImportToInboxRequestDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/CreateObjectAndImportToInboxDTO'
+        giattachmenttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            type: string
+            format: binary
+    CreateObjectAndImportToInboxResponseDTO:
+      type: object
+      properties:
+        listcontents:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetadataReferenz'
+    CreateOutgoingAnfrageDTO:
+      description: Parameter, die die Erledigung spezifizieren
+      required:
+        - referrednumber
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: '#/components/schemas/Betreff'
+        objterms:
+          $ref: '#/components/schemas/Schlagworte'
+        accdef:
+          $ref: '#/components/schemas/Zugriffsdefinition'
+        referrednumber:
+          type: string
+          description: |
+            Objekt-ID (COO-Adresse) des Vorgangs\
+            Wenn kein Vorgang angegeben wird, soll das erzeugte Erledigungsdokument
+            am Schreibtisch des Benutzers abgelegt werden.
+          example: COO.1.2301.1.1042432
+        referredincoming:
+          type: string
+          description: |
+            Bezug zum Eingang\
+            Bei Bedarf kann die COO-Adresse des Eingangs angegeben werden,
+            damit ein direkter Bezug zwischen Eingang und Erledigung hergestellt
+            werden kann.
+          example: COO.1.2301.1.1042441
+        outgoingdate:
+          type: string
+          description: Versanddatum (Datum/Uhrzeit)
+          format: date-time
+        subfiletype:
+          $ref: '#/components/schemas/subfiletype'
+        doctemplate:
+          type: string
+          description: |
+            Der Name einer im System vorhandenen Vorlage kann angegeben werden (COOELAK@1.1001:doctemplate).\
+            In dieser Vorlage können beispielsweise Metadaten automatisiert über
+            DocProperty ausgegeben werden.\
+            Die angegebene Vorlage muss im angegebenen Dokumenttyp enthalten
+            sein.
+            Alternativ können finalisierte Schriftstücke auch über GiAttachmentType übertragen werden.
+          example: LHM Schreiben Extern
+        incattachments:
+          type: string
+          description: |
+            Sonstige Anlagen\
+            Freitextfeld, um zusätzliche Anlagen zu benennen, die nicht elektronisch erfasst wurden (z.B. Baupläne)
+          example: Ausfüllhilfe Antrag auf Baugenehmigung
+        definition:
+          type: string
+          description: Objekt-ID (COO-Adresse) der Definition für Verfahren
+        userformsdata:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserFormsReferenz'
+    CreateOutgoingRequestBodyDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/CreateOutgoingAnfrageDTO'
+        giattachmenttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            type: string
+            format: binary
+    CreateOutgoingAntwortDTO:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: Objekt-ID (COO-Adresse) der erzeugten Erledigung.
+          example: COO.1.2301.1.1042465
+        objname:
+          type: string
+          description: Objektname des angelegten Erledigungsdokuments
+          example: Ausgangsschreiben zum Antrag auf Baugenehmigung Firma Mustermann (0010 A20 011-4-0006-0006)
+        giobjecttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            $ref: '#/components/schemas/Objektreferenz'
+    ReadOutgoingAntwortDTO:
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: '#/components/schemas/Betreff'
+        objterms:
+          $ref: '#/components/schemas/Schlagworte'
+        accdef:
+          $ref: '#/components/schemas/Zugriffsdefinition'
+        objname:
+          type: string
+          description: Erledigungskennzeichen
+          example: Ausgangsschreiben zum Antrag auf Baugenehmigung Firma Mustermann (0010 A20011-4-0006-0006)
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) des Vorgangs
+          example: COO.1.2301.1.1042432
+        referredincoming:
+          type: string
+          description: Bezug zum Eingang
+          example: COO.1.2301.1.1042441
+        outgoingdate:
+          type: string
+          description: Versanddatum (Datum/Uhrzeit)
+          format: date-time
+          example: '2016-10-26T18:16:29+01:00'
+        subfiletype:
+          $ref: '#/components/schemas/subfiletype'
+        incattachments:
+          type: string
+          description: Sonstige Anlagen
+          example: Ausfüllhilfe Antrag auf Baugenehmigung
+        gimetadatatype:
+          type: array
+          description: Datei
+          example:
+            objaddress: COO.1.2301.1.1041875
+            filename: Antrag auf Baugenehmigung
+            fileextension: pdf
+            objclass: PDF-Dokument
+            contsize: '243'
+            objcreatedby:
+              string:
+                - musterfraum
+            objcreatedat: '2018-07-23T08:59:52+01:00'
+            objchangedby:
+              string:
+                - mustermannm
+            objmodifiedat: '2018-07-23T09:23:52+01:00'
+          items:
+            $ref: '#/components/schemas/MetadataReferenz'
+        searchalso:
+          type: string
+          description: Dieser Parameter wird nicht genutzt
+        businessapp:
+          type: string
+          description: |
+            Bezeichnung der Fachanwendung/
+            Dieser Parameter wird nicht weiter unterstützt, sondern über Header-Parameter x-application
+          example: Fachanwendung xyz
+    UpdateOutgoingRequestDTO:
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: '#/components/schemas/Betreff'
+        objterms:
+          $ref: '#/components/schemas/Schlagworte'
+        accdef:
+          $ref: '#/components/schemas/Zugriffsdefinition'
+        referredincoming:
+          type: string
+          description: |
+            Bezug zum Eingang\
+            Bei Bedarf kann die COO-Adresse des Eingangs geändert werden,
+            damit ein direkter Bezug zwischen Eingang und Erledigung hergestellt werden kann.
+          example: COO.1.2301.1.1042441
+        outgoingdate:
+          type: string
+          description: Versanddatum (Datum/Uhrzeit)
+          format: date-time
+          example: '2016-10-26T18:48:01+01:00'
+        incattachments:
+          type: string
+          description: sonstige Anlagen
+          example: Ausfüllhilfe Antrag auf Baugenehmigung
+      description: Parameter die den Ausgang spezifizieren
+    UpdateOutgoingRequestBodyDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/UpdateOutgoingRequestDTO'
+        giattachmenttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument
+          items:
+            type: string
+            format: binary
+    UpdateOutgoingResponseDTO:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: Object-ID
+          example: COO.1.2301.1.1042465
+        objname:
+          type: string
+          description: Objektname des Objekts
+          example: Ausgangsschreiben zum Antrag auf Baugenehmigung Firma Mustermann (0010 A20 011-4-0006-0006)
+        giobjecttype:
+          type: array
+          description: |
+            Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            $ref: '#/components/schemas/Objektreferenz'
+    ReadProcedureObjectsAntwortDTO:
+      type: object
+      properties:
+        giobjecttype:
+          type: array
+          description: |
+            Liste aller Vorgänge der Akte
+          example:
+            - name: Beispielname
+              id: COO.2150.9151.1.1206000
+          items:
+            $ref: '#/components/schemas/Objektreferenz'
+    filetype:
+      type: string
+      description: |
+        Art des originalen Typs des Vorgangs (COOELAK@1.1001:filetype)
+        Einer der drei Typen kann beim Anlegen eines Vorgangs angegeben werden:
+        * Elektronisch
+        * Papier
+        * Hybrid
+
+        Wird ein falscher Wert angegeben, wird eine Fehlermeldung zurückgegeben:\ 
+        Status -1 und "Art des Vorgangs" enthält einen ungültigen Wert.“\
+        Wenn kein Wert eingetragen wird, wird „Elektronisch“ hinterlegt.
+      example: Elektronisch
+    CreateProcedureDTO:
+      required:
+        - referrednumber
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Der Titel bildet zusammen mit dem Geschäftszeichen den Namen des Vorgangs.
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: '#/components/schemas/Betreff'
+        objterms:
+          $ref: '#/components/schemas/Schlagworte'
+        accdef:
+          $ref: '#/components/schemas/Zugriffsdefinition'
+        fileruntimefrom:
+          $ref: '#/components/schemas/fileruntimefrom'
+        fileruntimetill:
+          $ref: '#/components/schemas/fileruntimetill'
+        procremark:
+          type: string
+          description: Bemerkung für Prozessverantwortliche
+          example: Warte auf Rückmeldung
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) der Sachakte
+          example: COO.1.2301.1.1042406
+        filetype:
+          $ref: '#/components/schemas/filetype'
+        definition:
+          type: string
+          description: Objekt-ID (COO-Adresse) der Definition für Verfahren
+        userformsdata:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserFormsReferenz'
+    ReadProcedureResponseDTO:
+      required:
+        - referrednumber
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: '#/components/schemas/Betreff'
+        objterms:
+          $ref: '#/components/schemas/Schlagworte'
+        accdef:
+          $ref: '#/components/schemas/Zugriffsdefinition'
+        fileruntimefrom:
+          $ref: '#/components/schemas/fileruntimefrom'
+        fileruntimetill:
+          $ref: '#/components/schemas/fileruntimetill'
+        procremark:
+          type: string
+          description: Bemerkung für Prozessverantwortliche
+          example: Warte auf Rückmeldung
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) der Sachakte
+          example: COO.1.2301.1.1042406
+        filetype:
+          $ref: '#/components/schemas/filetype'
+        objname:
+          type: string
+          description: Vorgangskennzeichen
+          example: Anfrage Baugenehmigung (0010 A20 011-4-0006)
+        objdocstate:
+          type: string
+          description: Aktueller Bearbeitungsstatus (z.B. in Bearbeitung, Suspendiert, Abgeschlossen, Storniert)
+          example: In Bearbeitung
+        bostate:
+          type: string
+          description: Zu jedem Bearbeitungsstatus können weitere Status definiert sein (z.B. erstellt, erledigt, weggelegt, z.A. verfügt)
+          example: Erstellt
+        objowngroup:
+          type: string
+          description: Objektname der zuständigen OE
+          example: SG A1 0001 (Sachgebiet A1 0001)
+        giobjecttype:
+          type: array
+          description: Auflistung aller Objekte, auf die der Suchstring zutrifft.
+          example:
+            - name: Beispielname
+              id: COO.2150.9151.1.1206000
+          items:
+            $ref: '#/components/schemas/Objektreferenz'
+    UpdateProcedureDTO:
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          $ref: '#/components/schemas/Betreff'
+        objterms:
+          $ref: '#/components/schemas/Schlagworte'
+        accdef:
+          $ref: '#/components/schemas/Zugriffsdefinition'
+        fileruntimefrom:
+          $ref: '#/components/schemas/fileruntimefrom'
+        fileruntimetill:
+          $ref: '#/components/schemas/fileruntimetill'
+        procremark:
+          type: string
+          description: Bemerkung für Prozessverantwortliche
+          example: Warte auf Rückmeldung
+        filetype:
+          $ref: '#/components/schemas/filetype'
+        filearchivetimeOffltdeadline:
+          type: string
+          description: |
+            Transferfrist/
+            Wird bei der LHM nicht ausgewertet (Beschreibung siehe Lebenszyklus der Akte)
+          example: 10 Jahre
+        filelifetimeOffltdeadline:
+          type: string
+          description: Aufbewahrungsfrist
+          example: 10 Jahre
+        offltdispstate:
+          type: string
+          description: |
+            Folgende Aussonderungsarten sind möglich
+            * „DISPSTATE_ARCHIVE“ - für „ A - Archivwürdig“
+            * „DISPSTATE_DESTROY“ - für „ V - Vernichten“
+            * „DISPSTATE_DM_B“ für „ B - Bewerten“
+
+            Ergänzende Erläuterungen:
+            * „A - Archivwürdig“ - Dokumente, Vorgänge oder Akten sind nach Ablauf der Aufbewahrungsfrist dem zuständigen Archiv als archivwürdig zu übermitteln.
+            * „V - Vernichten“ - Dokumente, Vorgänge oder Akten können nach Ablauf der Aufbewahrungsfrist vernichtet werden.
+            * „B - Bewerten“ - Bewerten von Dokumenten, Vorgängen oder Akten, deren Archivwürdigkeit nicht durch eine Vorentscheidung festgelegt ist.
+
+            Hinweis:\
+            Wird nicht beim Anlegen, sondern nur beim Ändern einer Betreffseinheit, Akte oder Vorgang gesetzt.
+          example: DISPSTATE_ARCHIVE
+    CreateCompleteProcedureBodyParams:
+      required:
+        - file
+      type: object
+      properties:
+        file:
+          type: string
+          description: Objekt-ID (COO-Adresse) der Sachakte
+          example: COO.1.2301.1.683
+        shortnameprocedure:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        shortnamedocument:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+      description: Parameter, die den kompletten Vorgang spezifizieren
+    CreateCompleteProcedureRequestDTO:
+      required:
+        - params
+      type: object
+      properties:
+        params:
+          $ref: '#/components/schemas/CreateCompleteProcedureBodyParams'
+        giattachmenttype:
+          type: array
+          description: Liste der Objektadressen und Namen der Schriftstücke im Dokument.
+          items:
+            type: string
+            format: binary
+    CreateCompleteProcedureResponseDTO:
+      type: object
+      properties:
+        objidprocedure:
+          type: string
+          description: Objekt-ID (COO-Adresse) des erzeugten/gefundenen Vorgangs
+          example: COO.1.2301.1.1042406
+        objnameprocedure:
+          type: string
+          description: Objektname des erzeugten/gefundenen Vorgangs
+          example: 0010 A20 011-2016 Anträge Firma XY-4
+        objiddocument:
+          type: string
+          description: Objekt-ID (COO-Adresse) des erzeugten/gefundenen Dokuments
+          example: COO.1.2301.1.1042406
+        objnamedocument:
+          type: string
+          description: Objektname des erzeugten/gefundenen
+          example: 0010 A20 011-2016 Anträge Firma XY-4
+        objidcontent:
+          type: string
+          description: Objekt-ID (COO-Adresse) des erzeugten/gefundenen Schrifstücks
+          example: COO.1.2301.1.1042406
+        objnamecontent:
+          type: string
+          description: Objektname des erzeugten/gefundenen Schrifstücks
+          example: 0010 A20 011-2016 Anträge Firma XY-4
+    SearchProcedureRequestDTO:
+      type: object
+      properties:
+        referrednumber:
+          type: string
+          description: COO-Adresse der Akte
+          example: COO.1.2300.1.847
+        filereference:
+          type: string
+          description: |
+            eindeutiges Geschäfts-/Aktenzeichen\
+            Wird im eAkte-System automatisch gebildet aus dem Aktenplaneintrag 
+            und einer fortlaufenden Nummer der Akte 
+            (oder "Aktenplankennzeichen"."fortlaufende Nummer der Betreffseinheit"-"fortlaufende Nummer der Akte" wie im Beispiel)
+          example: 2002.1-36
+        objmlname:
+          type: string
+          description: Name des Vorgangs
+          example: Vorgang Eins Name
+        filesubj:
+          type: string
+          description: Betreff des Vorgangs
+          example: Vorgang Eins
+    SearchProcedureResponseDTO:
+      type: object
+      properties:
+        giobjecttype:
+          type: array
+          description: |-
+            Auflistung aller Objekte, auf die der Suchstring zutrifft.
+            Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind.
+          example:
+            - objname: Beispielname
+              objaddress: COO.2150.9151.1.1206000
+          items:
+            $ref: '#/components/schemas/Objektreferenz'
+    CreateProcedureFromTemplateRequestDTO:
+      required:
+        - referrednumber
+        - template
+      type: object
+      properties:
+        referrednumber:
+          type: string
+          description: COO-Addresse der Akte
+          example: COO.1.2300.1.847
+        template:
+          type: string
+          description: COO-Addresse der Vorlage
+          example: COO.1.2300.1.73641
+    CreateProcedureFromTemplateResponseDTO:
+      type: object
+      properties:
+        objid:
+          type: string
+          description: Objekt-ID des erzeugten Vorgangs
+          example: COO.1.2301.1.1042432
+        objname:
+          type: string
+          description: Name des erzeugten Vorgangs
+          example: 2016 Anträge Firma XY
+    ObjChangedBy:
+      type: object
+      description: Letzte Änderung von (Login-String des Benutzers) (COOSYSTEM@1.1:objchangedby)
+      example: lhm\erika.musterfrau
+      properties:
+        string:
+          type: array
+          items:
+            type: string
+    BusinessObjectReference:
+      type: object
+      properties:
+        objname:
+          type: string
+        objaddress:
+          type: string
+        objclass:
+          $ref: '#/components/schemas/objclass'
+        objcreatedat:
+          type: string
+          format: date-time
+        objcreatedby:
+          $ref: '#/components/schemas/ArrayOfstring'
+        objmodifiedat:
+          type: string
+          format: date-time
+        objchangedby:
+          $ref: '#/components/schemas/ObjChangedBy'
+        objowner:
+          type: string
+        objou:
+          type: string
+        fileextension:
+          $ref: '#/components/schemas/fileExtension'
+        contsize:
+          type: string
+      description: Liste der Dokumente mit Metadaten eines Vorgangs auslesen
+      example: BusinessObjectType
+    ReadDocumentObjectMetaDataResponseDTO:
+      type: object
+      properties:
+        businessobjecttype:
+          type: array
+          description: Liste der Dokumente mit Metadaten eines Vorgangs auslesen
+          example: BusinessObjectType
+          items:
+            $ref: '#/components/schemas/BusinessObjectReference'
+    ReAssignObjectDTO:
+      required:
+        - newtarget
+      type: object
+      properties:
+        newtarget:
+          type: string
+          description: |
+            COO-Adresse des neuen darüberliegenden Objektes (Betreffseinheit oder Akte)
+          example: COO.1.2302.1.76
+        newoe:
+          type: string
+          description: COO-Adresse der Organisationseinheit
+          example: COO.1.23.10.8854
+    searchstring:
+      type: string
+      description: |
+        Suchstring für Objektname
+
+        Hinweise zum Suchstring:
+
+        Der Suchstring kann folgenden Operatoren verwendet werden:
+        * „*“ oder „%“ Der Stern „*“ steht für eine beliebige Zeichenfolge.\
+        Optional zum Zeichen „*“ kann auch das Prozentzeichen „%“ verwendet werden.\
+        Beispiel: \
+        Eine Suche nach „*berg“ liefert Ergebnisse, die eine beliebige 
+        Zeichenfolge gefolgt von der Zeichenfolge „berg“ enthalten – „Eisberg“, „Zauberberg“, „Erzberg“.\
+        Eine Suche nach „Berg*“ liefert Ergebnisse, die „Berg“ gefolgt von einer beliebigen Zeichenfolge enthalten – „Berger“, 
+        „Bergsteiger“, „Berghotel“.\
+        Eine Suche nach „Ber*er“ liefert Ergebnisse, die „Ber“ gefolgt von einer 
+        beliebigen Zeichenfolge sowie gefolgt von „er“ enthalten – „Berger“, „Bergsteiger“, „Berliner“.
+        * „?“ oder „_“\
+        Das Fragezeichen „?“ steht für exakt ein Zeichen.\
+        Optional zum Zeichen „?“ kann auch das Zeichen Unterstrich „_“ verwendet werden.\
+        Beispiel: Eine Suche nach „_atterbauer“ liefert Ergebnisse, die 
+        exakt ein (beliebiges) Zeichen gefolgt von der Zeichenkette „atterbauer“ enthalten – „Katterbauer“, „Patterbauer“, „Natterbauer“.
+        * „~“ Die Tilde „~“ (erreichbar über die Tastenkombination AltGr +)\
+        steht für eine phonetische Suche.\ 
+        Es werden alle Objekte gefunden, bei denen die Aussprache der im Suchkriterium angegebenen Zeichenkette 
+        ähnlich ist. Eine Tilde muss genau am Beginn des Suchkriteriums eingegeben werden.\
+        Beispiel: Eine Suche nach „~Maier“ liefert ähnlich klingende Ergebnisse wie „Maier“ und „Meier“.
+        * „[ ] „ Für mehrere Zeichen, von denen genau eines vorhanden sein muss, können eckige Klammern „[ ]“ 
+        verwendet werden.\
+        Die in Frage kommenden Zeichen werden ohne Leerzeichen und ohne Komma eingegeben\
+        Hinweis: Die genaue Funktionalität hängt von der verwendeten Datenbank ab.\
+        Wenn ein Leerzeichen zwischen Zeichen eingegeben wird, 
+        so wird auch das Leerzeichen als mögliches Zeichen gewertet.\
+        Beispiel: Es werden Word-Objekte gesucht, deren Name entweder „Test-Eingangsstück“, „Tast-Eingangsstück“ oder 
+        „T st-Eingangsstück“ ist. Dazu wird als Suchstring eingegeben: „T[e a]st-Eingangsstück“.
+      example: Test*
+    objclass_in_search:
+      type: string
+      description: |
+        Referenz der Objektklasse
+        * Aktenplan COOELAK@1.1001:Fileplan
+        * Aktenplaneintrag COOELAK@1.1001:SubjectArea
+        * Erledigung COOELAK@1.1001:Outgoing
+        * AutoCAD Zeichnung FSCAUTOCAD@1.1001:Drawing
+        * Benutzer COOSYSTEM@1.1:User
+        * Bericht FSCAREXT@1.1001:Report
+        * Bild FSCWEBCONT@1.1001:ImageObject
+        * Dokumentkategorie FSCFOLIO@1.1001:DocumentCategory
+        * Dokumenttyp COOELAK@1.1001:Subject
+        * Dokument  COOELAK@1.1001:SubFileDocument (bei Angabe dieser Objektklasse, sollten Eingangs-, und
+        Erledigungsdokumente angezeigt werden)
+        * E-Mail (Microsoft Office Outlook) COOMAPI@1.1:MailObject
+        * E-Mail (MIME) FSCMIME@1.1001:MIMEObject
+        * Eingang COOELAK@1.1001:Incoming
+        * Freemind Mindmap CFGMUENCHEN@15.1700:FreemindMindmap
+        * Frist ELAKGOV@1.1001:Deadline
+        * GIF-Objekt FSCWEBCONT@1.1001:GIFObject
+        * Hewlett Packard Graphic Language  CFGMUENCHEN@15.1700:HPGraphicLanguage
+        * Inhalt (erweitert) CFGMUENCHEN@15.1700:GenericContent
+        * Inhalt (unbekannter Typ) GENCONT@1.1:ContentObject
+        * JPEG-Objekt FSCWEBCONT@1.1001:JPEGObject
+        * Kostenstelle CFGMUENCHEN@15.1700:CostCenter
+        * Medieninhalt FSCDIGITALASSET@1.1001:DigitalAsset
+        * Microsoft Excel-Arbeitsblatt COOMSOFFICE@1.1:ExcelObject
+        * Microsoft PowerPoint-Präsentation COOMSOFFICE@1.1:PowerPointObject
+        * Microsoft Project-Objekt COOMSPROJECT@1.1001:MSProject
+        * Microsoft Visio-Zeichnung VISIO@1.1:VisioObject
+        * Microsoft Word-Objekt COOMSOFFICE@1.1:WinWordObject
+        * OpenDocument Formel FSCOOFFICE@1.1001:OOorgMathObject
+        * OpenOffice.org Vorlage CFGMUENCHEN@15.1700:OOorgTemplateObject
+        * Ordner COODESK@1.1:Folder
+        * Organisation FSCFOLIO@1.1001:Organisation
+        * Organisationseinheit COOSYSTEM@1.1:Group
+        * PDF-Dokument FSCACROBAT@1.1:PDFObject
+        * Person FSCFOLIO@1.1001:Person
+        * Personenakte CFGMUENCHEN@15.1700:PersonalSubjectAreaFile
+        * PNG-Objekt FSCWEBCONT@1.1001:PNGObject
+        * Postkorb FSCVGOV@1.1001:Inbox
+        * Präsentation FSCOOFFICE@1.1001:OOorgPresObject
+        * Projektordner COOELAK@1.1001:ProjectFolder
+        * Rechnungsposition CFGMUENCHEN@15.1700:InvoiceItem
+        * Rich Text Format CFGMUENCHEN@15.1700:RichTextFormat
+        * Sachakte DEPRECONFIG@15.1001:SubjectAreaFile
+        * Schlagwort FSCTERM@1.1001:Term
+        * Schmierzettel ELAKGOV@1.1001:FileMemo
+        * Schriftstück COOSYSTEM@1.1:ContentObject
+        * Serena OpenProj Projekt CFGMUENCHEN@15.1700:SerenaOpenProj
+        * Suchordner COOQBOL@1.1:GenericStoredQBOL
+        * Tabelle FSCOOFFICE@1.1001:OOorgCalcObject
+        * Teamroom FSCTEAMROOM@1.1001:TeamRoom
+        * Text-Dokument NOTE@1.1:NoteObject
+        * Textbaustein COOAR@1.1:BasicTextModuleEx_Web
+        * Textdokument FSCOOFFICE@1.1001:OOorgTextObject
+        * TIFF-Objekt FSCWEBCONT@1.1001:TIFFObject
+        * Verteiler COOELAK@1.1001:DistributionList
+        * Verteilerliste COOWF@1.1:ParticipantInstance
+        * Vorgang DEPRECONFIG@15.1001:Procedure
+        * Vorlagenkategorie COOTC@1.1001:TemplateCategory
+        * XDOMEA Paket FSCGOVXMLDE@1.1001:XDOMEAPackage
+        * Zeichnung FSCOOFFICE@1.1001:OOorgDrawObject
+        * Zip-Archiv WINZIP@1.1001:WinZipObject (Alle Objekte von Objektklassen, nach denen ein Sachbearbeiter
+        suchen kann.)
+      example: FSCACROBAT@1.1:PDF Object
+    SearchObjNameAnfrageDTO:
+      required:
+        - objclass
+        - searchstring
+      type: object
+      properties:
+        searchstring:
+          $ref: '#/components/schemas/searchstring'
+        objclass:
+          $ref: '#/components/schemas/objclass_in_search'
+        reference:
+          type: string
+          description: Referenz des Fachdatum
+          example: data_dognumber
+        value:
+          type: string
+          description: Wert des Fachdatum
+          example: '458965'
+    SearchObjNameAntwortDTO:
+      type: object
+      properties:
+        giobjecttype:
+          type: array
+          description: Auflistung aller Objekte, auf die der Suchstring zutrifft.
+          example:
+            - name: Beispielname
+              id: COO.2150.9151.1.1206000
+          items:
+            $ref: '#/components/schemas/Objektreferenz'
+    SetSignatureRequestDTO:
+      required:
+        - signaturetype
+      type: object
+      properties:
+        signaturetype:
+          type: string
+          description: |
+            COO-Adresse der Unterschriftenart\
+            Anmerkung:\
+            Titel ist nicht eindeutig, da es im System mehrere
+            Unterschriftenarten mit dem gleichen Namen/Titel gibt.\
+            In den jeweiligen Anwendungsfällen 
+            (z.B. Vorgang stornieren, Eingang sperren, Eingang weglegen, Erledigung unterschreiben) 
+            sind die Referenzen für Unterschriftsarten (signaturetype) definiert
+          example: COO.1.1001.1.6485
+        remark:
+          type: string
+          description: Bemerkung zur Unterschrift
+          example: String
+    StartWorkflowDTO:
+      required:
+        - workflowpattern
+      type: object
+      properties:
+        workflowpattern:
+          type: string
+          description: |
+            COO-Adresse der Muster für Verfügung (COOWF@1.1:PrescriptionTemplate)\
+            Die COO-Adresse findet man über die GUI der eAkte, wenn man im Schreibtisch "Suche" ausführt, nach Muster für Verfügungen sucht. 
+            In den Eigenschaften (im Tab Erstellung) der entsprechenden Mustervorlage steht die COO-Adresse. 
+            Anmerkung: \
+            Der Titel ist nicht eindeutig, da es im System mehrere
+            „Muster für Verfügung“ mit dem gleichen Namen geben kann.
+          example: COO.1.1001.1.6485
+    UpdateSubjectAreaRequestDTO:
+      required:
+        - subjareascope
+      type: object
+      properties:
+        subjareascope:
+          type: string
+          description: |
+            Der neue Aktenplaneintragstyp.\
+            Folgende Werte sind möglich:
+            * Hauptgruppe
+            * Obergruppe
+            * Gruppe
+            * Untergruppe
+            * Betreffseinheit.
+
+            Eine Änderung darf nur erfolgen wenn der Aktenplaneintragstyp leer ist.
+          example: '"subjareascope": "Betreffseinheit"'
+    ReadSubjectAreaFileAntwortDTO:
+      type: object
+      properties:
+        giobjecttype:
+          type: array
+          description: |
+            Liste aller Vorgänge der Akte
+          example:
+            - name: Beispielname
+              id: COO.2150.9151.1.1206000
+          items:
+            $ref: '#/components/schemas/Objektreferenz'
+    ReadSubjectAreaObjectsAntwortDTO:
+      type: object
+      properties:
+        giobjecttype:
+          type: array
+          description: |
+            Liste aller Vorgänge der Akte
+          example:
+            - name: Beispielname
+              id: COO.2150.9151.1.1206000
+          items:
+            $ref: '#/components/schemas/Objektreferenz'
+    CreateSubjectAreaUnitAnfrageDTO:
+      required:
+        - basenr
+        - objaddress
+      type: object
+      properties:
+        objaddress:
+          type: string
+          description: Objekt-ID (COO-Adresse) des übergeordneten Aktenplaneintrags
+          example: COO.1.2302.1.8
+        basenr:
+          type: string
+          description: Aktenplankennzeichen der Betreffseinheit
+          example: 0001 B10 000
+        subjareaspecreference:
+          type: string
+          description: Ableitung
+          example: '1'
+        shortterm:
+          type: string
+          description: Kurzbezeichnung
+          example: Betreffseinheit B
+        subjarchiveschedule:
+          type: string
+          description: |
+            Standardmäßige Transferfrist für alle Objekte unterhalb der Betreffseinheit\
+            Hinweis zur Transferfrist: siehe bei POST /files (Anlegen von Akten)
+          example: 10 Jahre
+        subjschedule:
+          type: string
+          description: Standardmäßige Aufbewahrungsfrist für alle Objekte unterhalb der Betreffseinheit
+          example: 10 Jahre
+        subjdispstate:
+          type: string
+          description: |
+            Gewünschte Aussonderungsart für alle Objete unterhalb der Betreffseinheit
+            * „DISPSTATE_ARCHIVE“ - für „A - Archivwürdig“
+            * „DISPSTATE_DESTROY“ - für „V - Vernichten“
+            * „DISPSTATE_DM_B“ für „B - Bewerten“
+
+            Erläuterungen zu den Aussonderungsarten:
+            * „A - Archivwürdig“ - Vorgänge oder Akten sind nach Ablauf der Aufbewahrungsfrist dem zuständigen Archiv als archivwürdig zu übermitteln.
+            * „V - Vernichten“ - Vorgänge oder Akten werden nach Ablauf der Aufbewahrungsfrist vernichtet.
+            * „B - Bewerten“ - Bewerten von Vorgängen oder Akten, deren Archivwürdigkeit nicht durch eine Vorentscheidung festgelegt ist.
+
+            Die Aussonderungsart wird üblicherweise über die Aussonderungsart im Aktenplaneintrag gesetzt.
+          example: A – Archivwürdig
+        fileaccessdefinition:
+          type: string
+          description: Zugriffsdefinition für untergeordnete Akten
+          example: allgemein bearbeitbar
+    ArrayOfint:
+      type: object
+      description: Liste von Nummern
+      properties:
+        int:
+          type: array
+          items:
+            type: integer
+            format: int32
+      example:
+        int:
+          - 1
+          - 3
+          - 5
+    ReadUserFormsDataResponseDTO:
+      type: object
+      description: |
+        Rückgabe der Verfahrenseigenschaft bestehend aus
+        * dem Wert (oder Werteliste) der Verfahrenseigenschaft
+        * der internen lfd. Nummer des Wertes der Verfahrenseigenschaft (bei einer Liste jeweils die lfdNr. aller Werte)
+        * dem zugehörigen Referenznamen zur lfd. Nummer des Wertes der Verfahrenseigenschaft (bei einer Liste die Referenznamen aller Werte)
+      properties:
+        value:
+          type: string
+          description: Wert(e) der Verfahreneigenschaft als String
+          example: |-
+            Direktorium
+            IT-Referat,
+            Personal- und Organisationsreferat
+        enuminteger:
+          $ref: '#/components/schemas/ArrayOfint'
+        enumreference:
+          $ref: '#/components/schemas/ArrayOfstring'
+    UpdateUserFormsDataRequestDTO:
+      type: object
+      properties:
+        userformsdata:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserFormsReferenz'
+  responses:
+    '204':
+      description: Objekt wurde erfolgreich aktualisiert.
+    '400':
+      description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DmsErrorResponse'
+    '401':
+      description: Falscher oder fehlender technischer Nutzer.
+    '500':
+      description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
