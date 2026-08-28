@@ -202,3 +202,5 @@ v2/eakte-soap-calls/environments/*
 !v2/eakte-soap-calls/environments/example-env.bru
 
 *.p12
+
+**/package-lock.json

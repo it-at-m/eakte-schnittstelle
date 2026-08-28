@@ -1,7 +1,7 @@
 window.onload = function() {
 
   window.ui = SwaggerUIBundle({
-    url: "../specify/path/to/openapi-spec.yaml",
+    url: "../v2/eakte-api-v2/eakte-api-v2-spec-single-file/target/classes/eakte-rest-api-v2-spec-single-file.yaml",
     dom_id: '#swagger-ui',
     deepLinking: true,
     defaultModelsExpandDepth: 1,
