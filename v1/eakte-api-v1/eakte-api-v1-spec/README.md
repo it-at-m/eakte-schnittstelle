@@ -1,12 +1,14 @@
-## OpenAPI specification of the DMS API v2
+## OpenAPI specification of the DMS API v1
 
 In diesem Maven-Modul befindet sich die Schnittstellendefinition
-der eAkte-API-v2, basierend auf der Schnittstellenbeschreibungssprache
+der eAkte-API-v1, basierend auf der Schnittstellenbeschreibungssprache
 "OpenAPI" (V3).
 
 Die Einstiegsdatei ist
 
-    src/main/resources/eakte-rest-api-v2/__ServiceDefinition.yaml
+````text
+    src/main/resources/eakte-api-spec/eakte-api--main.yaml
+````
 
 Parallel dazu im selben Verzeichnis liegen weitere yaml-Dateien, die verschiedene Endpunkte bzw. verschiedene Datentypen innerhalb der REST-Schnittstelle beschreiben. Diese werden jeweils von der übergeordneten Datei über das Konstrukt mit dem Schlüsselwort '$ref' inkludiert.
 
