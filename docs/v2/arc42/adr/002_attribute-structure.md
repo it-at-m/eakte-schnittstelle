@@ -8,7 +8,7 @@ Date: TBD
 The resources contain both static attributes (required for every instance of a resource) and variable attributes that can differ across instances, tenants, or configurations.
 Some variable attributes can be optional in general but required in specific contexts.
 
-There are two architectural approaches for exposing this resources:
+There are two architectural approaches for exposing these resources:
 
 1. Mixed model: Keep static attributes explicitly defined and typed in the API specification; expose variable attributes through a generic container (for example, a map<string, object>) and document them separately.
 2. All-variable model: Treat every attribute as variable and expose them only through a generic container; the API specification does not enumerate any fields.
