@@ -26,4 +26,4 @@ In V1 Relax-Login was used, which is a custom MUCS-SOAP implementation.
 2. OpenShift / CAP as runtime environment
 3. Token-based Authentication with JWT (upstream)
 4. Keycloak / RedHat IAM as Identity Management System (token validation, token exchange)
-5. LDAP as User Database protocol (user groups/permissions)
+5. LDAP as user database protocol (user groups/permissions)
