@@ -16,6 +16,8 @@ onMounted(() => {
   SwaggerUI({
     dom_id: "#swagger-ui",
     url: props.specUrl,
+    // Disable "Try it out"
+    supportedSubmitMethods: [],
   });
 
   const html = document.documentElement;
