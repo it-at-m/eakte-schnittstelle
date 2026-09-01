@@ -11,7 +11,7 @@ src/main/resources
 We have put that under version control for easy access
 without running a build, and to be able to reproduce the history of the
 file. But note that after changing any API-related file in the module 'eakte-open-api-v1'
-there needs to run a mavne build to reconstruct the single-file api spec.
+there needs to run a maven build to reconstruct the single-file API spec.
 
 The generated single-file spec will be packed into a zip file in the `target` directory 
 (because ordinary files are not supported as maven artifacts):
