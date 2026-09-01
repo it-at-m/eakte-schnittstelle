@@ -19,3 +19,11 @@ For authentication with the FSCGOV-API Trusted-Application-Login must be used wh
 This allows the impersonation of users with a single client cert and therefore the gateway can implement a custom user authentication mapping.
 
 In V1 Relax-Login was used, which is a custom MUCS-SOAP implementation.
+
+### Other Constraints
+
+1. REST/OpenAPI for upstream API
+2. OpenShift / CAP as runtime environment
+3. Token-based Authentication with JWT (upstream)
+4. Keycloak / RedHat IAM as Identity Management System (token validation, token exchange)
+5. LDAP as User Database protocol (user groups/permissions)
