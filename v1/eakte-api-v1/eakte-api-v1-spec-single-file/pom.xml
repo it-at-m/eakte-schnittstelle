@@ -17,7 +17,7 @@
   <dependencies>
 
     <dependency>
-      <groupId>de.muenchen.eai</groupId>
+      <groupId>de.muenchen.oss.eakte</groupId>
       <artifactId>eakte-api-v1-spec</artifactId>
       <version>${project.version}</version>
       <type>zip</type>
@@ -48,7 +48,7 @@
             <configuration>
               <excludeGroupIds>*</excludeGroupIds>
               <excludeArtifactIds>*</excludeArtifactIds>
-              <includeGroupIds>de.muenchen.eai</includeGroupIds>
+              <includeGroupIds>de.muenchen.oss.eakte</includeGroupIds>
               <includeArtifactIds>eakte-api-v1-spec</includeArtifactIds>
               <includes>**/*.yaml</includes>
               <outputDirectory>${project.build.directory}/unpacked-dependencies</outputDirectory>

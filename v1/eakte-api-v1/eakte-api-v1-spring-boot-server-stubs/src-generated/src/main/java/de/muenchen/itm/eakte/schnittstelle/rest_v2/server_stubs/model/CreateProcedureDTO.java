@@ -238,11 +238,11 @@ public class CreateProcedureDTO {
   }
 
   /**
-   * Art des originalen Typs des Vorgangs (COOELAK@1.1001:filetype) Einer der drei Typen kann beim Anlegen eines Vorgangs angegeben werden: * Elektronisch * Papier * Hybrid  Wird ein falscher Wert angegeben, wird eine Fehlermeldung zurückgegeben:\\  Status -1 und \"Art des Vorgangs\" enthält einen ungültigen Wert.“<br> Wenn kein Wert eingetragen wird, wird „Elektronisch“ hinterlegt. 
+   * Art des originalen Typs des Vorgangs (COOELAK@1.1001:filetype) Einer der drei Typen kann beim Anlegen eines Vorgangs angegeben werden: * Elektronisch * Papier * Hybrid  Wird ein falscher Wert angegeben, wird eine Fehlermeldung zurückgegeben:<br> Status -1 und \"Art des Vorgangs\" enthält einen ungültigen Wert.“<br> Wenn kein Wert eingetragen wird, wird „Elektronisch“ hinterlegt. 
    * @return filetype
    */
   
-  @Schema(name = "filetype", example = "Elektronisch", description = "Art des originalen Typs des Vorgangs (COOELAK@1.1001:filetype) Einer der drei Typen kann beim Anlegen eines Vorgangs angegeben werden: * Elektronisch * Papier * Hybrid  Wird ein falscher Wert angegeben, wird eine Fehlermeldung zurückgegeben:\\  Status -1 und \"Art des Vorgangs\" enthält einen ungültigen Wert.“<br> Wenn kein Wert eingetragen wird, wird „Elektronisch“ hinterlegt. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "filetype", example = "Elektronisch", description = "Art des originalen Typs des Vorgangs (COOELAK@1.1001:filetype) Einer der drei Typen kann beim Anlegen eines Vorgangs angegeben werden: * Elektronisch * Papier * Hybrid  Wird ein falscher Wert angegeben, wird eine Fehlermeldung zurückgegeben:<br> Status -1 und \"Art des Vorgangs\" enthält einen ungültigen Wert.“<br> Wenn kein Wert eingetragen wird, wird „Elektronisch“ hinterlegt. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("filetype")
   public Optional<String> getFiletype() {
     return filetype;

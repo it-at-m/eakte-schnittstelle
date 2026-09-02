@@ -3481,7 +3481,7 @@ components:
         * Papier
         * Hybrid
 
-        Wird ein falscher Wert angegeben, wird eine Fehlermeldung zurückgegeben:\ 
+        Wird ein falscher Wert angegeben, wird eine Fehlermeldung zurückgegeben:<br>
         Status -1 und "Art des Vorgangs" enthält einen ungültigen Wert.“<br>
         Wenn kein Wert eingetragen wird, wird „Elektronisch“ hinterlegt.
       example: Elektronisch
