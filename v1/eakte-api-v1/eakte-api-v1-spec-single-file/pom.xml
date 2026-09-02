@@ -12,6 +12,7 @@
   </parent>
 
   <artifactId>eakte-api-v1-spec-single-file</artifactId>
+  <name>eakte-api-v1-spec-single-file</name>
   <packaging>jar</packaging>
 
   <dependencies>

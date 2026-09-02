@@ -12,6 +12,7 @@
   </parent>
 
   <artifactId>eakte-api-v1-spring-boot-server-stubs</artifactId>
+  <name>eakte-api-v1-spring-boot-server-stubs</name>
 
   <properties>
     <java.version>21</java.version>
