@@ -45,6 +45,7 @@ jobs:
           GPG_PRIVATE_KEY: ${{ secrets.gpg_private_key }}
 
   build-image:
+    if: ${{ contains('v1/eakte-eai', inputs.app-path) }}
     runs-on: ubuntu-latest
     needs: release-maven
     permissions:
