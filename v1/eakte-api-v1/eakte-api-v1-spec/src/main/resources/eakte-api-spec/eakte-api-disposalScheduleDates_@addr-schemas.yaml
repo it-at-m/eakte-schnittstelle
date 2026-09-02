@@ -9,7 +9,7 @@ components:
         offltscheduled:
           type: string
           description: |
-            Hier kann das Datum neu gesetzt werden, bis wann die Aufbewahrung dauern soll.\
+            Hier kann das Datum neu gesetzt werden, bis wann die Aufbewahrung dauern soll.<br>
             Nach Ablauf dieses Datums startet der Aussonderungsprozess und 
             die Akte / Vorgang können nicht mehr durch Sachbearbeitungen bearbeitet werden.
           example: 2017-07-21T17:32:28T01:00

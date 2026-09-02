@@ -4,7 +4,7 @@ get:
   summary: Liste aller Akten einer Betreffseinheit mit Metadaten auslesen
   description: |
     Stornierte Objekte können nicht ausgelesen werden, 
-    d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.\
+    d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.<br>
     Über die optionalen Parameter können Akten zur Anzeige gemäß der gewählten Kriterien ausgewählt werden.
   operationId: ReadSubjectAreaObjectsMetaData
   parameters:

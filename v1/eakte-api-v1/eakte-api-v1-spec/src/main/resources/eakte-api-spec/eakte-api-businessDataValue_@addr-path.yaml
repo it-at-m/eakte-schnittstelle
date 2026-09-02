@@ -3,7 +3,7 @@ put:
     - /businessDataValue
   summary: Setzen/Aktualisieren von Fachdaten
   description: |
-    Diese Funktion soll bei neuen Schnittstellen nicht mehr benutzt werden.\
+    Diese Funktion soll bei neuen Schnittstellen nicht mehr benutzt werden.<br>
     Dafür gibt es die neue Funktion für Verfahrensdaten PUT /userFormsData
   operationId: UpdateBusinessDataValue
   parameters:

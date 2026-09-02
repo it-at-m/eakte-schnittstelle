@@ -60,11 +60,11 @@ public class UpdateIncomingAntwortDTO {
   }
 
   /**
-   * Objektname des erzeugten/gefundenen Vorgangs\\ Der Name wird in der eAkte gebildet  aus dem \"Titel des Vorgangs\" (\"Aktenplankennzeichen\"-\"lfdNr der Akte\"/\"lfdNr des Vorgangs\"-\"lfdNr des Dokuments\") 
+   * Objektname des erzeugten/gefundenen Vorgangs<br> Der Name wird in der eAkte gebildet  aus dem \"Titel des Vorgangs\" (\"Aktenplankennzeichen\"-\"lfdNr der Akte\"/\"lfdNr des Vorgangs\"-\"lfdNr des Dokuments\") 
    * @return objname
    */
   
-  @Schema(name = "objname", example = "Eingangspost vom 28.05.2026 (0010-11/2-0006)", description = "Objektname des erzeugten/gefundenen Vorgangs\\ Der Name wird in der eAkte gebildet  aus dem \"Titel des Vorgangs\" (\"Aktenplankennzeichen\"-\"lfdNr der Akte\"/\"lfdNr des Vorgangs\"-\"lfdNr des Dokuments\") ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "objname", example = "Eingangspost vom 28.05.2026 (0010-11/2-0006)", description = "Objektname des erzeugten/gefundenen Vorgangs<br> Der Name wird in der eAkte gebildet  aus dem \"Titel des Vorgangs\" (\"Aktenplankennzeichen\"-\"lfdNr der Akte\"/\"lfdNr des Vorgangs\"-\"lfdNr des Dokuments\") ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("objname")
   public Optional<String> getObjname() {
     return objname;

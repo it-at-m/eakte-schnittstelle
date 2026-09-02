@@ -89,11 +89,11 @@ public class CreateIncomingAntwortDTO {
   }
 
   /**
-   * Auflistung aller Objekte, auf die der Suchstring zutrifft.\\ Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind  (Objektname und COO-Adresse) 
+   * Auflistung aller Objekte, auf die der Suchstring zutrifft.<br> Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind  (Objektname und COO-Adresse) 
    * @return giobjecttype
    */
   @Valid 
-  @Schema(name = "giobjecttype", example = "LHM-Sitzung 14.10.2016 COO.1.2301.1.1041875", description = "Auflistung aller Objekte, auf die der Suchstring zutrifft.\\ Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind  (Objektname und COO-Adresse) ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "giobjecttype", example = "LHM-Sitzung 14.10.2016 COO.1.2301.1.1041875", description = "Auflistung aller Objekte, auf die der Suchstring zutrifft.<br> Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind  (Objektname und COO-Adresse) ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("giobjecttype")
   public List<@Valid Objektreferenz> getGiobjecttype() {
     return giobjecttype;

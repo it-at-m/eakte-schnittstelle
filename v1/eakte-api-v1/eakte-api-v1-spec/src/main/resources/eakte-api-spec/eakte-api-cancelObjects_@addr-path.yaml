@@ -3,14 +3,14 @@ put:
     - /cancelObjects
   summary: Objekt stornieren (Vorgang, Dokument, Schriftstück)
   description: |
-    Stornieren wird verwendet, wenn fälschlicherweise ein Schriftgutobjekt erstellt worden ist.\
-    Nach dem Stornieren kann das stornierte Objekt über die Schnittstelle nicht mehr ausgelesen werden.\
+    Stornieren wird verwendet, wenn fälschlicherweise ein Schriftgutobjekt erstellt worden ist.<br>
+    Nach dem Stornieren kann das stornierte Objekt über die Schnittstelle nicht mehr ausgelesen werden.<br>
     Das Aufheben von stornierten Objekten ist nur in der GUI der eGov-Suite möglich, nicht über die Schnittstelle.
     
     Der Status [FSCFOLIO@1.1001:objdocstate] des Objekts wird auf „Storniert“ gesetzt. 
-    Zudem erfolgt gemäß dem Berechtigungskonzept ein Access Control List (ACL) Übergang.\
+    Zudem erfolgt gemäß dem Berechtigungskonzept ein Access Control List (ACL) Übergang.<br>
     Welcher ACL-Übergang beim Stornieren erfolgt, ist im Berechtigungskonzept definiert und 
-    ist abhängig von der hinterlegten ACL des zu stornierenden Objekts.\
+    ist abhängig von der hinterlegten ACL des zu stornierenden Objekts.<br>
     Beispiel: Eine Akte hat die ACL für Schriftgutobjekte des Eigentümers. 
     Im Rahmen der Stornierung erfolgt der ACL-Übergang und 
     die Akte erhält die ACL für abgeschlossene Schriftgutobjekte des Eigentümers.

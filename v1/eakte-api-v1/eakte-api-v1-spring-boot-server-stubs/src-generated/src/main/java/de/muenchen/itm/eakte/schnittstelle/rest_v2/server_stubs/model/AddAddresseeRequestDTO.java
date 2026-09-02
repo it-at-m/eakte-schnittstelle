@@ -78,11 +78,11 @@ public class AddAddresseeRequestDTO {
   }
 
   /**
-   * Versandart für den jeweiligen Adressaten\\ Folgende Werte sind möglich: * Papier * E-Fax * E-Mail * XML-Dokument * Intern Wenn kein Wert übertragen wird, soll Papier eingetragen werden. 
+   * Versandart für den jeweiligen Adressaten<br> Folgende Werte sind möglich: * Papier * E-Fax * E-Mail * XML-Dokument * Intern Wenn kein Wert übertragen wird, soll Papier eingetragen werden. 
    * @return addrtransmedia
    */
   
-  @Schema(name = "addrtransmedia", example = "Papier", description = "Versandart für den jeweiligen Adressaten\\ Folgende Werte sind möglich: * Papier * E-Fax * E-Mail * XML-Dokument * Intern Wenn kein Wert übertragen wird, soll Papier eingetragen werden. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "addrtransmedia", example = "Papier", description = "Versandart für den jeweiligen Adressaten<br> Folgende Werte sind möglich: * Papier * E-Fax * E-Mail * XML-Dokument * Intern Wenn kein Wert übertragen wird, soll Papier eingetragen werden. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("addrtransmedia")
   public Optional<String> getAddrtransmedia() {
     return addrtransmedia;

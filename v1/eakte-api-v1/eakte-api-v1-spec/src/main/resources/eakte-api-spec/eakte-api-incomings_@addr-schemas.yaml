@@ -11,7 +11,7 @@ components:
         objname:
           type: string
           description: |
-            Objektname des erzeugten/gefundenen Vorgangs\
+            Objektname des erzeugten/gefundenen Vorgangs<br>
             Der Name wird in der eAkte gebildet 
             aus dem "Titel des Vorgangs" ("Aktenplankennzeichen"-"lfdNr der Akte"/"lfdNr des Vorgangs"-"lfdNr des Dokuments")
           example: Eingangspost vom 28.05.2026 (0010-11/2-0006)
@@ -25,7 +25,7 @@ components:
 
     CreateIncomingBasisAnfrageDTO:
       description: |
-        Json Objekt, das die Parameter für den Eingang spezifiziert.\
+        Json Objekt, das die Parameter für den Eingang spezifiziert.<br>
         Das Objekt ist vom Typ `CreateIncomingBasisAnfrageDTO`.
       type: object
       properties:
@@ -60,7 +60,7 @@ components:
         foreignnr:
           type: string
           description: |
-            Fremdes Geschäftszeichen\
+            Fremdes Geschäftszeichen<br>
             In diesem Feld kann - falls erforderlich - das Geschäftszeichen einer anderen Organisation eingetragen werden.
           example: A2016-10-2016-Landeshauptstadt-München
         documentremarks:
@@ -95,13 +95,13 @@ components:
         foreignnr:
           type: string
           description: |
-            Fremdes Geschäftszeichen\
+            Fremdes Geschäftszeichen<br>
             In diesem Feld kann - falls erforderlich - das Geschäftszeichen einer anderen Organisation eingetragen werden.
           example: A2016-10-2016-Landeshauptstadt-München
         delivery:
           type: string
           description: |
-            Eingangsdatum des Objekts\
+            Eingangsdatum des Objekts<br>
             In diesem Feld wird vermerkt, wann das Dokument eingegangen ist.
           format: date-time
         documentremarks:
@@ -124,7 +124,7 @@ components:
         giattachmenttype:
           type: array
           description: |
-            Liste der Schriftstücke\
+            Liste der Schriftstücke<br>
             Schriftstücke können über diesen Aufruf nicht geändert bzw. ersetzt werden.
             Neue Schriftstücke können bei Bedarf (zum Beispiel zum nachträglichen Hinzufügen von Anhängen
             vor dem Postversand) über diesen Aufruf hinzugefügt werden.

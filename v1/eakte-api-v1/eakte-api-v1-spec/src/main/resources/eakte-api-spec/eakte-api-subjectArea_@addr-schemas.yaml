@@ -10,7 +10,7 @@ components:
         subjareascope:
           type: "string"
           description: |
-            Der neue Aktenplaneintragstyp.\
+            Der neue Aktenplaneintragstyp.<br>
             Folgende Werte sind möglich:
             * Hauptgruppe
             * Obergruppe

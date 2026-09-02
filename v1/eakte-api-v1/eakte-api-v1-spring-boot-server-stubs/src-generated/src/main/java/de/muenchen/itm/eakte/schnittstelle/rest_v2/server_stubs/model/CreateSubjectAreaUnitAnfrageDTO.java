@@ -140,11 +140,11 @@ public class CreateSubjectAreaUnitAnfrageDTO {
   }
 
   /**
-   * Standardmäßige Transferfrist für alle Objekte unterhalb der Betreffseinheit\\ Hinweis zur Transferfrist: siehe bei POST /files (Anlegen von Akten) 
+   * Standardmäßige Transferfrist für alle Objekte unterhalb der Betreffseinheit<br> Hinweis zur Transferfrist: siehe bei POST /files (Anlegen von Akten) 
    * @return subjarchiveschedule
    */
   
-  @Schema(name = "subjarchiveschedule", example = "10 Jahre", description = "Standardmäßige Transferfrist für alle Objekte unterhalb der Betreffseinheit\\ Hinweis zur Transferfrist: siehe bei POST /files (Anlegen von Akten) ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "subjarchiveschedule", example = "10 Jahre", description = "Standardmäßige Transferfrist für alle Objekte unterhalb der Betreffseinheit<br> Hinweis zur Transferfrist: siehe bei POST /files (Anlegen von Akten) ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("subjarchiveschedule")
   public Optional<String> getSubjarchiveschedule() {
     return subjarchiveschedule;

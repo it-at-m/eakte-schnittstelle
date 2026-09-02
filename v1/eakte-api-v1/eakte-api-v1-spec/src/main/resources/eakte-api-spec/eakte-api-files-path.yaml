@@ -18,11 +18,11 @@ post:
     Die Akte wird in der neu erzeugten Betreffseinheit angelegt.
 
     Ist der übergebene Aktenplaneintrag keine Betreffseinheit, 
-    eruiert das System die Liste der Betreffseinheiten, welche eine Ebene tiefer sind.\
+    eruiert das System die Liste der Betreffseinheiten, welche eine Ebene tiefer sind.<br>
     Das System prüft, ob eine dieser Betreffseinheiten frei ist.
     * Wenn eine freie Betreffseinheit gefunden wird, wird die Akte in der freien Betreffseinheit angelegt.
-    * Wenn keine freie Betreffseinheit gefunden wird, wird eine neue Betreffseinheit unterhalb des übergebenen Aktenplaneintrages mit folgendem Namen angelegt:\
-    „Name des darüberliegenden Aktenplaneintrags„ + „.„ + „Fortlaufende Nummer„\
+    * Wenn keine freie Betreffseinheit gefunden wird, wird eine neue Betreffseinheit unterhalb des übergebenen Aktenplaneintrages mit folgendem Namen angelegt:<br>
+    „Name des darüberliegenden Aktenplaneintrags„ + „.„ + „Fortlaufende Nummer„<br>
     Die Akte wird in der neu erzeugten Betreffseinheit erzeugt.
     
     Als Organisationseinheit der Sachakte (COOSYSTEM@1.1:objowngroup) wird 

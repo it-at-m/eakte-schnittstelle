@@ -19,10 +19,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Referenz der Verfahrenseigenschaft und der entsprechende Wert.\\ Folgende Typen für Verfahrenseigenschaft werden unterstützt: * Zeichenkette und Zeichenkettenliste (Textfeld) * Datum (und Zeit), z.B. \&quot;01.02.2003 12:00:00\&quot; * Boolean (\&quot;ja\&quot; für true) * Integer und Float (z.B. \&quot;3,14\&quot;) * Währung, z.B. \&quot;99,90\&quot; (\&quot;EUR\&quot; wir implizit mitgesetzt) * Aufzählungen (bzw. Optionsfelder) mittels Integer-Wert, wobei geprüft wird, ob der Integer Wert auch vorhanden ist. * Objektzeiger und Objektlisten mittels COO-Adresse 
+ * Referenz der Verfahrenseigenschaft und der entsprechende Wert.&lt;br&gt; Folgende Typen für Verfahrenseigenschaft werden unterstützt: * Zeichenkette und Zeichenkettenliste (Textfeld) * Datum (und Zeit), z.B. \&quot;01.02.2003 12:00:00\&quot; * Boolean (\&quot;ja\&quot; für true) * Integer und Float (z.B. \&quot;3,14\&quot;) * Währung, z.B. \&quot;99,90\&quot; (\&quot;EUR\&quot; wir implizit mitgesetzt) * Aufzählungen (bzw. Optionsfelder) mittels Integer-Wert, wobei geprüft wird, ob der Integer Wert auch vorhanden ist. * Objektzeiger und Objektlisten mittels COO-Adresse 
  */
 
-@Schema(name = "UserFormsReferenz", description = "Referenz der Verfahrenseigenschaft und der entsprechende Wert.\\ Folgende Typen für Verfahrenseigenschaft werden unterstützt: * Zeichenkette und Zeichenkettenliste (Textfeld) * Datum (und Zeit), z.B. \"01.02.2003 12:00:00\" * Boolean (\"ja\" für true) * Integer und Float (z.B. \"3,14\") * Währung, z.B. \"99,90\" (\"EUR\" wir implizit mitgesetzt) * Aufzählungen (bzw. Optionsfelder) mittels Integer-Wert, wobei geprüft wird, ob der Integer Wert auch vorhanden ist. * Objektzeiger und Objektlisten mittels COO-Adresse ")
+@Schema(name = "UserFormsReferenz", description = "Referenz der Verfahrenseigenschaft und der entsprechende Wert.<br> Folgende Typen für Verfahrenseigenschaft werden unterstützt: * Zeichenkette und Zeichenkettenliste (Textfeld) * Datum (und Zeit), z.B. \"01.02.2003 12:00:00\" * Boolean (\"ja\" für true) * Integer und Float (z.B. \"3,14\") * Währung, z.B. \"99,90\" (\"EUR\" wir implizit mitgesetzt) * Aufzählungen (bzw. Optionsfelder) mittels Integer-Wert, wobei geprüft wird, ob der Integer Wert auch vorhanden ist. * Objektzeiger und Objektlisten mittels COO-Adresse ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.21.0")
 public class UserFormsReferenz {
 

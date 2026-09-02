@@ -75,11 +75,11 @@ public class UpdateProcedureDTO {
   }
 
   /**
-   * Betreff (mehrzeilig)\\ Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &#10; in Abfragen unterstützt. 
+   * Betreff (mehrzeilig)<br> Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &amp;#10; in Abfragen unterstützt. 
    * @return filesubj
    */
   
-  @Schema(name = "filesubj", example = "Alle Anträge der Firma XY aus dem Jahr 2016", description = "Betreff (mehrzeilig)\\ Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &#10; in Abfragen unterstützt. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "filesubj", example = "Alle Anträge der Firma XY aus dem Jahr 2016", description = "Betreff (mehrzeilig)<br> Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &amp;#10; in Abfragen unterstützt. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("filesubj")
   public Optional<String> getFilesubj() {
     return filesubj;
@@ -96,11 +96,11 @@ public class UpdateProcedureDTO {
   }
 
   /**
-   * Angabe der Schlagworte getrennt mit „;“. Kein Semikola am Ende angeben.  Hinweis:\\ Aktuell ist es für Benutzer*innen nicht möglich, Schlagworte über die Schnittstelle anzulegen oder zu ändern. Bereits vorhandene Schlagworte in der eAkte können verwendet werden.\\ Dazu gibt es einen gemeinsamen Katalog von Schlagworten für Akten, Vorgänge,  die je OE durch Sachbearbeiter in der GUI angelegt werden können.\\ Wenn übergebene Schlagworte nicht gefunden werden, wird keine Fehlermeldung zurückgegeben. Das Anlegen erfolgt dann ohne die angegebenen Schlagworte.  Es ist in der Fachabteilung zu klären, ob und welche Schlagworte im Fachverfahren genutzt werden,  damit sie in der Akte vorab angelegt werden.\\ Für die Schnittstelle kann eine spezifische Schlagwortliste (Oberbegriff, z.B. \"Koi-Schlagworte\")  über die generische Suche abgerufen werden und  für die Verschlagwortung von Schriftgutobjekten im Fachverfahren verwendet werden. 
+   * Angabe der Schlagworte getrennt mit „;“. Kein Semikola am Ende angeben.  Hinweis:<br> Aktuell ist es für Benutzer*innen nicht möglich, Schlagworte über die Schnittstelle anzulegen oder zu ändern. Bereits vorhandene Schlagworte in der eAkte können verwendet werden.<br> Dazu gibt es einen gemeinsamen Katalog von Schlagworten für Akten, Vorgänge,  die je OE durch Sachbearbeiter in der GUI angelegt werden können.<br> Wenn übergebene Schlagworte nicht gefunden werden, wird keine Fehlermeldung zurückgegeben. Das Anlegen erfolgt dann ohne die angegebenen Schlagworte.  Es ist in der Fachabteilung zu klären, ob und welche Schlagworte im Fachverfahren genutzt werden,  damit sie in der Akte vorab angelegt werden.<br> Für die Schnittstelle kann eine spezifische Schlagwortliste (Oberbegriff, z.B. \"Koi-Schlagworte\")  über die generische Suche abgerufen werden und  für die Verschlagwortung von Schriftgutobjekten im Fachverfahren verwendet werden. 
    * @return objterms
    */
   
-  @Schema(name = "objterms", example = "Firma XY; Anträge; Anträge 2016", description = "Angabe der Schlagworte getrennt mit „;“. Kein Semikola am Ende angeben.  Hinweis:\\ Aktuell ist es für Benutzer*innen nicht möglich, Schlagworte über die Schnittstelle anzulegen oder zu ändern. Bereits vorhandene Schlagworte in der eAkte können verwendet werden.\\ Dazu gibt es einen gemeinsamen Katalog von Schlagworten für Akten, Vorgänge,  die je OE durch Sachbearbeiter in der GUI angelegt werden können.\\ Wenn übergebene Schlagworte nicht gefunden werden, wird keine Fehlermeldung zurückgegeben. Das Anlegen erfolgt dann ohne die angegebenen Schlagworte.  Es ist in der Fachabteilung zu klären, ob und welche Schlagworte im Fachverfahren genutzt werden,  damit sie in der Akte vorab angelegt werden.\\ Für die Schnittstelle kann eine spezifische Schlagwortliste (Oberbegriff, z.B. \"Koi-Schlagworte\")  über die generische Suche abgerufen werden und  für die Verschlagwortung von Schriftgutobjekten im Fachverfahren verwendet werden. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "objterms", example = "Firma XY; Anträge; Anträge 2016", description = "Angabe der Schlagworte getrennt mit „;“. Kein Semikola am Ende angeben.  Hinweis:<br> Aktuell ist es für Benutzer*innen nicht möglich, Schlagworte über die Schnittstelle anzulegen oder zu ändern. Bereits vorhandene Schlagworte in der eAkte können verwendet werden.<br> Dazu gibt es einen gemeinsamen Katalog von Schlagworten für Akten, Vorgänge,  die je OE durch Sachbearbeiter in der GUI angelegt werden können.<br> Wenn übergebene Schlagworte nicht gefunden werden, wird keine Fehlermeldung zurückgegeben. Das Anlegen erfolgt dann ohne die angegebenen Schlagworte.  Es ist in der Fachabteilung zu klären, ob und welche Schlagworte im Fachverfahren genutzt werden,  damit sie in der Akte vorab angelegt werden.<br> Für die Schnittstelle kann eine spezifische Schlagwortliste (Oberbegriff, z.B. \"Koi-Schlagworte\")  über die generische Suche abgerufen werden und  für die Verschlagwortung von Schriftgutobjekten im Fachverfahren verwendet werden. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("objterms")
   public Optional<String> getObjterms() {
     return objterms;
@@ -138,11 +138,11 @@ public class UpdateProcedureDTO {
   }
 
   /**
-   * Laufzeitbeginn\\ Tatsächliches Datum der Anlage der Akte (unabhängig von der Anlage der Akte im eAkte-System). Kann z.B. gesetzt werden, wenn das erste Schriftstück zu der neuen Akte bereits vor der Anlage der Akte im eAkte-System eingegangen ist.  Das Datum hat keine Auswirkungen im System, sondern dient nur zur Information. 
+   * Laufzeitbeginn<br> Tatsächliches Datum der Anlage der Akte (unabhängig von der Anlage der Akte im eAkte-System). Kann z.B. gesetzt werden, wenn das erste Schriftstück zu der neuen Akte bereits vor der Anlage der Akte im eAkte-System eingegangen ist.  Das Datum hat keine Auswirkungen im System, sondern dient nur zur Information. 
    * @return fileruntimefrom
    */
   @Valid 
-  @Schema(name = "fileruntimefrom", example = "2017-01-13T17:09:42.411+01:00", description = "Laufzeitbeginn\\ Tatsächliches Datum der Anlage der Akte (unabhängig von der Anlage der Akte im eAkte-System). Kann z.B. gesetzt werden, wenn das erste Schriftstück zu der neuen Akte bereits vor der Anlage der Akte im eAkte-System eingegangen ist.  Das Datum hat keine Auswirkungen im System, sondern dient nur zur Information. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "fileruntimefrom", example = "2017-01-13T17:09:42.411+01:00", description = "Laufzeitbeginn<br> Tatsächliches Datum der Anlage der Akte (unabhängig von der Anlage der Akte im eAkte-System). Kann z.B. gesetzt werden, wenn das erste Schriftstück zu der neuen Akte bereits vor der Anlage der Akte im eAkte-System eingegangen ist.  Das Datum hat keine Auswirkungen im System, sondern dient nur zur Information. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("fileruntimefrom")
   public Optional<OffsetDateTime> getFileruntimefrom() {
     return fileruntimefrom;
@@ -159,11 +159,11 @@ public class UpdateProcedureDTO {
   }
 
   /**
-   * Laufzeitende\\ Geplanter Abschluss der Akte.  Das Datum hat keine Auswirkungen im System, sondern dient nur zur Information. 
+   * Laufzeitende<br> Geplanter Abschluss der Akte.  Das Datum hat keine Auswirkungen im System, sondern dient nur zur Information. 
    * @return fileruntimetill
    */
   @Valid 
-  @Schema(name = "fileruntimetill", example = "2017-01-13T17:09:42.411+01:00", description = "Laufzeitende\\ Geplanter Abschluss der Akte.  Das Datum hat keine Auswirkungen im System, sondern dient nur zur Information. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "fileruntimetill", example = "2017-01-13T17:09:42.411+01:00", description = "Laufzeitende<br> Geplanter Abschluss der Akte.  Das Datum hat keine Auswirkungen im System, sondern dient nur zur Information. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("fileruntimetill")
   public Optional<OffsetDateTime> getFileruntimetill() {
     return fileruntimetill;
@@ -201,11 +201,11 @@ public class UpdateProcedureDTO {
   }
 
   /**
-   * Art des originalen Typs des Vorgangs (COOELAK@1.1001:filetype) Einer der drei Typen kann beim Anlegen eines Vorgangs angegeben werden: * Elektronisch * Papier * Hybrid  Wird ein falscher Wert angegeben, wird eine Fehlermeldung zurückgegeben:\\  Status -1 und \"Art des Vorgangs\" enthält einen ungültigen Wert.“\\ Wenn kein Wert eingetragen wird, wird „Elektronisch“ hinterlegt. 
+   * Art des originalen Typs des Vorgangs (COOELAK@1.1001:filetype) Einer der drei Typen kann beim Anlegen eines Vorgangs angegeben werden: * Elektronisch * Papier * Hybrid  Wird ein falscher Wert angegeben, wird eine Fehlermeldung zurückgegeben:\\  Status -1 und \"Art des Vorgangs\" enthält einen ungültigen Wert.“<br> Wenn kein Wert eingetragen wird, wird „Elektronisch“ hinterlegt. 
    * @return filetype
    */
   
-  @Schema(name = "filetype", example = "Elektronisch", description = "Art des originalen Typs des Vorgangs (COOELAK@1.1001:filetype) Einer der drei Typen kann beim Anlegen eines Vorgangs angegeben werden: * Elektronisch * Papier * Hybrid  Wird ein falscher Wert angegeben, wird eine Fehlermeldung zurückgegeben:\\  Status -1 und \"Art des Vorgangs\" enthält einen ungültigen Wert.“\\ Wenn kein Wert eingetragen wird, wird „Elektronisch“ hinterlegt. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "filetype", example = "Elektronisch", description = "Art des originalen Typs des Vorgangs (COOELAK@1.1001:filetype) Einer der drei Typen kann beim Anlegen eines Vorgangs angegeben werden: * Elektronisch * Papier * Hybrid  Wird ein falscher Wert angegeben, wird eine Fehlermeldung zurückgegeben:\\  Status -1 und \"Art des Vorgangs\" enthält einen ungültigen Wert.“<br> Wenn kein Wert eingetragen wird, wird „Elektronisch“ hinterlegt. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("filetype")
   public Optional<String> getFiletype() {
     return filetype;
@@ -264,11 +264,11 @@ public class UpdateProcedureDTO {
   }
 
   /**
-   * Folgende Aussonderungsarten sind möglich * „DISPSTATE_ARCHIVE“ - für „ A - Archivwürdig“ * „DISPSTATE_DESTROY“ - für „ V - Vernichten“ * „DISPSTATE_DM_B“ für „ B - Bewerten“  Ergänzende Erläuterungen: * „A - Archivwürdig“ - Dokumente, Vorgänge oder Akten sind nach Ablauf der Aufbewahrungsfrist dem zuständigen Archiv als archivwürdig zu übermitteln. * „V - Vernichten“ - Dokumente, Vorgänge oder Akten können nach Ablauf der Aufbewahrungsfrist vernichtet werden. * „B - Bewerten“ - Bewerten von Dokumenten, Vorgängen oder Akten, deren Archivwürdigkeit nicht durch eine Vorentscheidung festgelegt ist.  Hinweis:\\ Wird nicht beim Anlegen, sondern nur beim Ändern einer Betreffseinheit, Akte oder Vorgang gesetzt. 
+   * Folgende Aussonderungsarten sind möglich * „DISPSTATE_ARCHIVE“ - für „ A - Archivwürdig“ * „DISPSTATE_DESTROY“ - für „ V - Vernichten“ * „DISPSTATE_DM_B“ für „ B - Bewerten“  Ergänzende Erläuterungen: * „A - Archivwürdig“ - Dokumente, Vorgänge oder Akten sind nach Ablauf der Aufbewahrungsfrist dem zuständigen Archiv als archivwürdig zu übermitteln. * „V - Vernichten“ - Dokumente, Vorgänge oder Akten können nach Ablauf der Aufbewahrungsfrist vernichtet werden. * „B - Bewerten“ - Bewerten von Dokumenten, Vorgängen oder Akten, deren Archivwürdigkeit nicht durch eine Vorentscheidung festgelegt ist.  Hinweis:<br> Wird nicht beim Anlegen, sondern nur beim Ändern einer Betreffseinheit, Akte oder Vorgang gesetzt. 
    * @return offltdispstate
    */
   
-  @Schema(name = "offltdispstate", example = "DISPSTATE_ARCHIVE", description = "Folgende Aussonderungsarten sind möglich * „DISPSTATE_ARCHIVE“ - für „ A - Archivwürdig“ * „DISPSTATE_DESTROY“ - für „ V - Vernichten“ * „DISPSTATE_DM_B“ für „ B - Bewerten“  Ergänzende Erläuterungen: * „A - Archivwürdig“ - Dokumente, Vorgänge oder Akten sind nach Ablauf der Aufbewahrungsfrist dem zuständigen Archiv als archivwürdig zu übermitteln. * „V - Vernichten“ - Dokumente, Vorgänge oder Akten können nach Ablauf der Aufbewahrungsfrist vernichtet werden. * „B - Bewerten“ - Bewerten von Dokumenten, Vorgängen oder Akten, deren Archivwürdigkeit nicht durch eine Vorentscheidung festgelegt ist.  Hinweis:\\ Wird nicht beim Anlegen, sondern nur beim Ändern einer Betreffseinheit, Akte oder Vorgang gesetzt. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "offltdispstate", example = "DISPSTATE_ARCHIVE", description = "Folgende Aussonderungsarten sind möglich * „DISPSTATE_ARCHIVE“ - für „ A - Archivwürdig“ * „DISPSTATE_DESTROY“ - für „ V - Vernichten“ * „DISPSTATE_DM_B“ für „ B - Bewerten“  Ergänzende Erläuterungen: * „A - Archivwürdig“ - Dokumente, Vorgänge oder Akten sind nach Ablauf der Aufbewahrungsfrist dem zuständigen Archiv als archivwürdig zu übermitteln. * „V - Vernichten“ - Dokumente, Vorgänge oder Akten können nach Ablauf der Aufbewahrungsfrist vernichtet werden. * „B - Bewerten“ - Bewerten von Dokumenten, Vorgängen oder Akten, deren Archivwürdigkeit nicht durch eine Vorentscheidung festgelegt ist.  Hinweis:<br> Wird nicht beim Anlegen, sondern nur beim Ändern einer Betreffseinheit, Akte oder Vorgang gesetzt. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("offltdispstate")
   public Optional<String> getOffltdispstate() {
     return offltdispstate;

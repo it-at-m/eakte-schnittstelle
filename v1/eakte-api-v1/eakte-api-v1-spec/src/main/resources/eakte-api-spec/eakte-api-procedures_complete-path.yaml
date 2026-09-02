@@ -5,17 +5,17 @@ post:
   summary: Anlegen eines kompletten Vorgangs inkl. Dokument und Schriftstücke
   description: |
     Es wird ein kompletter Vorgang mit einem Dokument und Schrifstück neu angelegt 
-    bzw. es können auch einzelne Schriftstücke beim Vorgang ergänzt werden.\
+    bzw. es können auch einzelne Schriftstücke beim Vorgang ergänzt werden.<br>
     Sobald eine Sachakte lokalisiert wurde, wird folgendermaßen vorgegangen:
     
-    Eingangsparameter Vorgangstitel shortnameprocedure:\
+    Eingangsparameter Vorgangstitel shortnameprocedure:<br>
     Das System überprüft ob in der lokalisierten Akte bereits ein Vorgang mit dem Titel existiert.
     * Vorgang existiert bereits 
       - Navigieren in den Vorgang
     * Vorgang existiert noch nicht 
       - Ein neuer Vorgang mit dem übergebenen Titel wird angelegt und in den Vorgang navigiert.
     
-    Eingangsparameter Dokumenttitel shortnamedocument\
+    Eingangsparameter Dokumenttitel shortnamedocument<br>
     Das System überprüft, ob in dem lokalisierten Vorgang bereits 
     ein Eingangsdokument mit dem Titel existiert.
     * Eingangsdokument existiert bereits 
