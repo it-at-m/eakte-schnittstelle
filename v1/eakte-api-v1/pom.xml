@@ -9,16 +9,31 @@
   <version>1.2.7-SNAPSHOT</version>
   <packaging>pom</packaging>
 
+  <name>eakte-api-v1</name>
+  <description>eAkte V1 API specification components</description>
+  <url>https://github.com/it-at-m/eakte-schnittstelle</url>
   <licenses>
     <license>
-      <name>MIT License</name>
+      <name>MIT</name>
       <url>https://opensource.org/licenses/MIT</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
+  <developers>
+    <developer>
+      <email>opensource@muenchen.de</email>
+      <url>https://github.com/it-at-m</url>
+      <organization>it@M</organization>
+    </developer>
+  </developers>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- Release -->
+    <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
+    <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
+    <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
   </properties>
 
   <modules>
@@ -27,4 +42,99 @@
     <module>eakte-api-v1-spring-boot-server-stubs</module>
   </modules>
 
+
+  <scm child.scm.connection.inherit.append.path="false" child.scm.developerConnection.inherit.append.path="false" child.scm.url.inherit.append.path="false">
+    <connection>scm:git:https://github.com/it-at-m/eakte-schnittstelle.git</connection>
+    <developerConnection>scm:git:https://github.com/it-at-m/eakte-schnittstelle.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/it-at-m/eakte-schnittstelle.git</url>
+  </scm>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <doclint>accessibility,html,reference,syntax</doclint>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Release -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>${maven-release-plugin.version}</version>
+        <configuration>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <useReleaseProfile>false</useReleaseProfile>
+          <releaseProfiles>release</releaseProfiles>
+          <goals>deploy</goals>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <!-- Central Portal Publishing Plugin -->
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>${central-publishing-maven-plugin.version}</version>
+            <extensions>true</extensions>
+            <configuration>
+              <autoPublish>true</autoPublish>
+              <deploymentName>${project.groupId}:${project.artifactId}:${project.version}</deploymentName>
+            </configuration>
+          </plugin>
+          <!-- GPG plugin -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>${maven-gpg-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <phase>verify</phase>
+                <configuration>
+                  <!-- Prevent `gpg` from using pinentry programs -->
+                  <gpgArguments>
+                    <arg>--pinentry-mode</arg>
+                    <arg>loopback</arg>
+                  </gpgArguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

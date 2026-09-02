@@ -52,7 +52,8 @@ jobs:
       fail-fast: false
       matrix:
         build-path:
-          - "./v1/eakte-eai" # JSON array formatted as string, contains the paths to the java projects to build
+          - "./v1/eakte-eai"
+          - "./v1/eakte-api-v1"
           - "./v2"
     steps:
       - uses: it-at-m/lhm_actions/action-templates/actions/action-codeql@7cb754b2056cebda6c36db344434f85be398c493 # v1.0.25
