@@ -12,10 +12,10 @@ components:
         filereference:
           type: "string"
           description: | 
-            eindeutiges Geschäfts-/Aktenzeichen\
+            eindeutiges Geschäfts-/Aktenzeichen<br>
             Wird im eAkte-System automatisch gebildet aus dem Aktenplaneintrag und 
             einer fortlaufenden Nummer der Akte 
-            (bei Ableitungen mit .fortlaufende Nummer der Betreffseinheit im Aktenplan (siehe Beispiel)\
+            (bei Ableitungen mit .fortlaufende Nummer der Betreffseinheit im Aktenplan (siehe Beispiel)<br>
           example: "2002.1-36"
         objmlname:
           type: "string"
@@ -31,7 +31,7 @@ components:
       properties:
         giobjecttype:
           type: "array"
-          description: "Auflistung aller Objekte, auf die der Suchstring zutrifft.\n\
+          description: "Auflistung aller Objekte, auf die der Suchstring zutrifft.\n<br>
             Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind."
           example:
             - objname: "Beispielname"

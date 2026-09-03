@@ -80,23 +80,23 @@ paths:
         die gleiche Zugriffsdefinition gesetzt ist.
 
         Szenario 1: Die Sachakte sowie alle untergeordneten Vorgänge und Dokumente  
-        haben die gleiche Zugriffsdefinition.\
+        haben die gleiche Zugriffsdefinition.<br>
         Beim Setzen einer neuen Zugriffsdefinition der Sachakte ändern sich die Zugriffsdefinitionen 
         aller untergeordneten Vorgänge und Dokumente.
 
         Szenario 2: Die Sachakte und das Dokument haben die gleiche Zugriffsdefinition, 
-        der Vorgang eine andere.\
+        der Vorgang eine andere.<br>
         Beim Setzen einer neuen Zugriffsdefinition auf der Sachakte ändert sich 
         die Zugriffsdefinition des Vorgangs und des Dokumentes nicht, da der Vorgang eine andere Zugriffsdefinition als die Sachakte hat.
 
         Szenario 3: Die Sachakte und der Vorgang haben die gleiche Zugriffsdefinition. 
-        Das untergeordnete Dokument des Vorgangs hat eine andere Zugriffsdefinition.\
+        Das untergeordnete Dokument des Vorgangs hat eine andere Zugriffsdefinition.<br>
         Beim Setzen der Zugriffsdefinition für Schriftgutobjekte des Eigentümers auf der Sachakte 
         ändert sich die Zugriffsdefinition des Dokumentes nicht, 
         da das Dokument eine andere Zugriffsdefinition als der Vorgang hat. 
         Die Zugriffsdefinition des Vorgangs ändert sich.
 
-        Szenario 4: Der Vorgang und das Dokument haben die gleiche Zugriffsdefinition.\
+        Szenario 4: Der Vorgang und das Dokument haben die gleiche Zugriffsdefinition.<br>
         Beim Setzen einer neuen Zugriffsdefinition auf dem Vorgang 
         ändert sich die Zugriffsdefinition des Dokumentes, 
         da das Dokument die gleiche Zugriffsdefinition wie der Vorgang hat. 
@@ -183,9 +183,9 @@ paths:
       summary: Untergeordnete Aktenplaneinträge auslesen
       description: |
         Untergeordnete Aktenplaneinträge eines Aktenplaneintrags werden durch Übergabe der COO-Adresse abgefragt. 
-        Als Rückgabewerte erhält den Namen des Aktenplaneintrags und seine COO-Adresse.\
+        Als Rückgabewerte erhält den Namen des Aktenplaneintrags und seine COO-Adresse.<br>
         Ist die übergebene Objektadresse kein Aktenplaneintrag, 
-        so wird eine Fehlermeldung des Standardprodukts zurückgegeben.\
+        so wird eine Fehlermeldung des Standardprodukts zurückgegeben.<br>
         Wenn bei der Rückgabe der gesamten Objektliste auf bestimmte Objekte kein Zugriff besteht, 
         werden diese Objekte mit der Information „Zugriff verweigert“ mit ausgegeben.
       operationId: ReadApentry
@@ -244,7 +244,7 @@ paths:
         - /businessDataValue
       summary: Setzen/Aktualisieren von Fachdaten
       description: |
-        Diese Funktion soll bei neuen Schnittstellen nicht mehr benutzt werden.\
+        Diese Funktion soll bei neuen Schnittstellen nicht mehr benutzt werden.<br>
         Dafür gibt es die neue Funktion für Verfahrensdaten PUT /userFormsData
       operationId: UpdateBusinessDataValue
       parameters:
@@ -274,14 +274,14 @@ paths:
         - /cancelObjects
       summary: Objekt stornieren (Vorgang, Dokument, Schriftstück)
       description: |
-        Stornieren wird verwendet, wenn fälschlicherweise ein Schriftgutobjekt erstellt worden ist.\
-        Nach dem Stornieren kann das stornierte Objekt über die Schnittstelle nicht mehr ausgelesen werden.\
+        Stornieren wird verwendet, wenn fälschlicherweise ein Schriftgutobjekt erstellt worden ist.<br>
+        Nach dem Stornieren kann das stornierte Objekt über die Schnittstelle nicht mehr ausgelesen werden.<br>
         Das Aufheben von stornierten Objekten ist nur in der GUI der eGov-Suite möglich, nicht über die Schnittstelle.
 
         Der Status [FSCFOLIO@1.1001:objdocstate] des Objekts wird auf „Storniert“ gesetzt. 
-        Zudem erfolgt gemäß dem Berechtigungskonzept ein Access Control List (ACL) Übergang.\
+        Zudem erfolgt gemäß dem Berechtigungskonzept ein Access Control List (ACL) Übergang.<br>
         Welcher ACL-Übergang beim Stornieren erfolgt, ist im Berechtigungskonzept definiert und 
-        ist abhängig von der hinterlegten ACL des zu stornierenden Objekts.\
+        ist abhängig von der hinterlegten ACL des zu stornierenden Objekts.<br>
         Beispiel: Eine Akte hat die ACL für Schriftgutobjekte des Eigentümers. 
         Im Rahmen der Stornierung erfolgt der ACL-Übergang und 
         die Akte erhält die ACL für abgeschlossene Schriftgutobjekte des Eigentümers.
@@ -313,20 +313,20 @@ paths:
         (über die Parameter businessterm und businessvalue),
         wird folgendermaßen vorgegangen:
 
-        * Eingangsparameter Vorgangstitel (shortnameprocedure):\
+        * Eingangsparameter Vorgangstitel (shortnameprocedure):<br>
         Das System überprüft ob in der gefundenen Akte 
         bereits ein Vorgang mit dem Titel existiert.
-          - Vorgang existiert bereits\
+          - Vorgang existiert bereits<br>
         Das Dokument wird in dem Vorgang abgelegt
-          - Vorgang existiert noch nicht\
+          - Vorgang existiert noch nicht<br>
         Ein neuer Vorgang mit dem übergebenen Titel wird angelegt und das Dokument in dem Vorgang abgelegt.
 
-        * Eingangsparameter Dokumenttitel (shortnamedocument):\
+        * Eingangsparameter Dokumenttitel (shortnamedocument):<br>
         Das System überprüft, ob in dem gefundenen Vorgang 
         bereits ein Eingangsdokument mit dem Titel existiert.
-          - Eingangsdokument existiert bereits\
+          - Eingangsdokument existiert bereits<br>
         Navigieren in das Eingangsdokument
-          - Eingangsdokument existiert noch nicht\
+          - Eingangsdokument existiert noch nicht<br>
         Ein neues Eingangsdokument mit dem übergebenen Titel wird angelegt & 
         * Das Schriftstück wird im entsprechenden Eingangsdokument abgelegt.
       operationId: CreateCompleteProcedureBusinessData
@@ -417,7 +417,7 @@ paths:
       description: |
         Stornierte Objekte können nicht ausgelesen werden, 
         d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] 
-        werden gefiltert und nicht zurückgegeben.\
+        werden gefiltert und nicht zurückgegeben.<br>
         Vor dem Aufruf wird automatisiert überprüft, 
         ob die angefragte Datei größer als der angegebene Wert 
         in der Eigenschaft „Maximale Größe der Inhalte“ [FSCVAPP@1.1001:defaultimportlimit]\ 
@@ -517,7 +517,7 @@ paths:
         - /disposalScheduleDates
       summary: Aufbewahrungsdatum setzen
       description: |
-        Bei Akten und Vorgängen kann das vorgesehene Endedatum der Aufbewahrung geändert werden, nachdem sie z.A. gesetzt wurden.\
+        Bei Akten und Vorgängen kann das vorgesehene Endedatum der Aufbewahrung geändert werden, nachdem sie z.A. gesetzt wurden.<br>
         Das angegebene Datum in der Eigenschaft „Aufbewahrung.vorgesehen“ [COOELAK@1.1001:filelifetime.COOELAK@1.1001:offltscheduled] 
         wird überschrieben und das Datum (FSCSCHEDULE@1.1001:nddate) des Fristen-Objekts vom Typ Aufbewahrung.
       operationId: DisposalScheduleDate
@@ -553,7 +553,7 @@ paths:
       summary: Liste von Schriftstücken auslesen
       description: |
         Stornierte Objekte können nicht ausgelesen werden, 
-        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.\
+        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.<br>
         Über die optionalen Parameter kann das Fachverfahren vorab eine Selektierung der Liste vornehmen, 
         d.h. es sollten lediglich die Objekte übermittelt werden auf welche die optionalen Parameter zutreffen.
       operationId: ReadDocumentObject
@@ -598,11 +598,11 @@ paths:
         Die Akte wird in der neu erzeugten Betreffseinheit angelegt.
 
         Ist der übergebene Aktenplaneintrag keine Betreffseinheit, 
-        eruiert das System die Liste der Betreffseinheiten, welche eine Ebene tiefer sind.\
+        eruiert das System die Liste der Betreffseinheiten, welche eine Ebene tiefer sind.<br>
         Das System prüft, ob eine dieser Betreffseinheiten frei ist.
         * Wenn eine freie Betreffseinheit gefunden wird, wird die Akte in der freien Betreffseinheit angelegt.
-        * Wenn keine freie Betreffseinheit gefunden wird, wird eine neue Betreffseinheit unterhalb des übergebenen Aktenplaneintrages mit folgendem Namen angelegt:\
-        „Name des darüberliegenden Aktenplaneintrags„ + „.„ + „Fortlaufende Nummer„\
+        * Wenn keine freie Betreffseinheit gefunden wird, wird eine neue Betreffseinheit unterhalb des übergebenen Aktenplaneintrages mit folgendem Namen angelegt:<br>
+        „Name des darüberliegenden Aktenplaneintrags„ + „.„ + „Fortlaufende Nummer„<br>
         Die Akte wird in der neu erzeugten Betreffseinheit erzeugt.
 
         Als Organisationseinheit der Sachakte (COOSYSTEM@1.1:objowngroup) wird 
@@ -640,7 +640,7 @@ paths:
         - /files
       summary: Akte lesen
       description: |
-        Ausgabe der jeweiligen Metadaten der übergebenen Sachakte.\
+        Ausgabe der jeweiligen Metadaten der übergebenen Sachakte.<br>
         Stornierte Objekte können nicht ausgelesen werden. 
         D.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] 
         werden gefiltert und nicht zurückgegeben.
@@ -702,7 +702,7 @@ paths:
       tags:
         - /files
       summary: Anlegen einer kompletten Akte mit Vorgängen, Dokumenten und Schriftstücken
-      description: Es wird eine komplette Sachakte erstellt mit einem Vorgang, Dokument & Schrifstück) bzw. man kann auch einzelne Schriftstücke bei der Akte ergänzen.\ Bitte beachten Sie die Bedingungen beim Anlegen von einfachen Akten (POST /files)
+      description: Es wird eine komplette Sachakte erstellt mit einem Vorgang, Dokument & Schrifstück) bzw. man kann auch einzelne Schriftstücke bei der Akte ergänzen.<br> Bitte beachten Sie die Bedingungen beim Anlegen von einfachen Akten (POST /files)
       operationId: CreateCompleteFile
       parameters:
         - $ref: '#/components/parameters/x_anwendung'
@@ -764,7 +764,7 @@ paths:
         - /incomingFromInbox
       summary: Erfassen eines Eingangs aus dem Postkorb
       description: |
-        Schriftstücke eines Postkorbs werden als Eingangsdokument erfasst.\
+        Schriftstücke eines Postkorbs werden als Eingangsdokument erfasst.<br>
         Eingänge können nur in bereits bestehenden Vorgängen angelegt werden.
       operationId: CreateIncomingFromInbox
       parameters:
@@ -797,11 +797,11 @@ paths:
         - /incomings
       summary: Eingangsdokument anlegen
       description: |
-        Neues Eingangsdokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).\
+        Neues Eingangsdokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).<br>
         Wenn das Eingangsdokument keinem Vorgang zugeordnet ist (referrednumber == NULL), 
         wird eine neue Aktivität „Eingang“ im Arbeitsvorrat erzeugt.
 
-        Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.\
+        Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.<br>
         Sollte jedoch der Parameter useOE == true sein, 
         so soll die Aktivität „Eingang“ der OE (aus der Standardrolle des Benutzers) vorgeschrieben werden – 
         in diesem Fall, soll bei der Vorschreibung kein Benutzer eingetragen werden.
@@ -840,8 +840,8 @@ paths:
       summary: Eingang ändern
       description: |
         Die Werte werden mit den übergebenen Parametern überschrieben. 
-        Bei keiner Übergabe bleiben die bestehenden Werte erhalten.\
-        Ausnahme: Inhaltsobjekte können über diesen Aufruf nur hinzugefügt werden.\
+        Bei keiner Übergabe bleiben die bestehenden Werte erhalten.<br>
+        Ausnahme: Inhaltsobjekte können über diesen Aufruf nur hinzugefügt werden.<br>
         Dokumente können nur in bereits bestehenden Vorgängen angelegt werden.
         Bei jeder Änderung über die Schnittstelle wird in der eGov-Suite eine neue Version des Objekts erzeugt. Dies betrifft auch wiederholte Änderungen, die durch einen Benutzer durchgeführt werden.
       operationId: UpdateIncoming
@@ -876,11 +876,11 @@ paths:
         - /internal
       summary: Anlegen eines internen Dokuments
       description: |
-        Neues Internes Dokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).\
+        Neues Internes Dokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).<br>
         Wenn das Eingangsdokument keinem Vorgang zugeordnet ist (referrednumber == NULL), 
         wird eine neue Aktivität „Intern“ im Arbeitsvorrat erzeugt.
 
-        Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.\
+        Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.<br>
         Sollte jedoch der Parameter useOE == true sein, 
         so soll die Aktivität „Intern“ der OE (aus der Standardrolle des Benutzers) vorgeschrieben werden – 
         in diesem Fall, soll bei der Vorschreibung kein Benutzer eingetragen werden.
@@ -948,11 +948,11 @@ paths:
         - /outgoings
       summary: Erledigung anlegen
       description: |
-        Neues Ausgangsdokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).\
+        Neues Ausgangsdokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).<br>
         Wenn das Ausgangsdokument keinem Vorgang zugeordnet ist (referrednumber == NULL), 
         wird eine neue Aktivität „Ausgang“ im Arbeitsvorrat erzeugt.
 
-        Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.\
+        Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.<br>
         Sollte jedoch der Parameter useOE == true sein, 
         so soll die Aktivität „Ausgang“ der OE (aus der Standardrolle des Benutzers) vorgeschrieben werden – 
         in diesem Fall, soll bei der Vorschreibung kein Benutzer eingetragen werden.
@@ -1015,9 +1015,9 @@ paths:
       summary: Erledigung ändern
       description: |
         Bereits befüllte Werte werden überschrieben. 
-        Bei keiner Übergabe bleiben die bestehenden Werte erhalten.\
+        Bei keiner Übergabe bleiben die bestehenden Werte erhalten.<br>
         Ausnahme: Inhaltsobjekte können über diesen Aufruf nur hinzugefügt und 
-        nicht ersetzt werden.\
+        nicht ersetzt werden.<br>
         Bei jeder Änderung über die Schnittstelle 
         wird in der eGov-Suite eine neue Version des Objekts erzeugt. 
         Dies betrifft auch wiederholte Änderungen, 
@@ -1055,7 +1055,7 @@ paths:
       summary: Liste von Dokumenten auslesen
       description: |
         Stornierte Objekte können nicht ausgelesen werden, 
-        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.\
+        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.<br>
         Über die optionalen Parameter kann das Fachverfahren vorab eine Selektierung der Liste vornehmen, 
         d.h. es sollten lediglich die Objekte übermittelt werden auf welche die optionalen Parameter zutreffen.
       operationId: ReadProcedureObject
@@ -1085,7 +1085,7 @@ paths:
       summary: Liste aller Dokumente des Vorgangs mit Metadaten auslesen
       description: |
         Stornierte Objekte können nicht ausgelesen werden, 
-        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.\
+        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.<br>
         Über die optionalen Parameter können Dokumente zur Anzeige gemäß der gewählten Kriterien ausgewählt werden.
       operationId: ReadProcedureObjectsMetaData
       parameters:
@@ -1118,7 +1118,7 @@ paths:
       summary: Liste aller Akten einer Betreffseinheit mit Metadaten auslesen
       description: |
         Stornierte Objekte können nicht ausgelesen werden, 
-        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.\
+        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.<br>
         Über die optionalen Parameter können Akten zur Anzeige gemäß der gewählten Kriterien ausgewählt werden.
       operationId: ReadSubjectAreaObjectsMetaData
       parameters:
@@ -1150,7 +1150,7 @@ paths:
         - /procedures
       summary: Vorgang anlegen
       description: |
-        Unter der angegebenen Akte wird ein neuer Vorgang (ohne Laufweg) angelegt.\
+        Unter der angegebenen Akte wird ein neuer Vorgang (ohne Laufweg) angelegt.<br>
         Für neue Vorgängen wird die auf der Sachakte angegebene Zugriffsdefinition verwendet.
       operationId: CreateProcedure
       parameters:
@@ -1241,17 +1241,17 @@ paths:
       summary: Anlegen eines kompletten Vorgangs inkl. Dokument und Schriftstücke
       description: |
         Es wird ein kompletter Vorgang mit einem Dokument und Schrifstück neu angelegt 
-        bzw. es können auch einzelne Schriftstücke beim Vorgang ergänzt werden.\
+        bzw. es können auch einzelne Schriftstücke beim Vorgang ergänzt werden.<br>
         Sobald eine Sachakte lokalisiert wurde, wird folgendermaßen vorgegangen:
 
-        Eingangsparameter Vorgangstitel shortnameprocedure:\
+        Eingangsparameter Vorgangstitel shortnameprocedure:<br>
         Das System überprüft ob in der lokalisierten Akte bereits ein Vorgang mit dem Titel existiert.
         * Vorgang existiert bereits 
           - Navigieren in den Vorgang
         * Vorgang existiert noch nicht 
           - Ein neuer Vorgang mit dem übergebenen Titel wird angelegt und in den Vorgang navigiert.
 
-        Eingangsparameter Dokumenttitel shortnamedocument\
+        Eingangsparameter Dokumenttitel shortnamedocument<br>
         Das System überprüft, ob in dem lokalisierten Vorgang bereits 
         ein Eingangsdokument mit dem Titel existiert.
         * Eingangsdokument existiert bereits 
@@ -1350,7 +1350,7 @@ paths:
       summary: Liste aller Schriftstücke eines Dokuments mit Metadaten auslesen
       description: |
         Stornierte Objekte können nicht ausgelesen werden, 
-        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.\
+        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.<br>
         Über die optionalen Parameter können Schriftstücke zur Anzeige gemäß der gewählten Kriterien ausgewählt werden.
       operationId: ReadDocumentMetaData
       parameters:
@@ -1407,7 +1407,7 @@ paths:
         - /revokeDepositObjects
       summary: z.A. aufheben für Akten oder Vorgänge
       description: |
-        Die angegebene Akte oder Vorgang wird z.A. aufgehoben.\
+        Die angegebene Akte oder Vorgang wird z.A. aufgehoben.<br>
         Wenn die z.A.-Setzung einer "Akte" aufgehoben wird, dann 
         * wird in der eAkte für die betreffende Akte der Wert im Feld "gültig bis" geleert
         * bleiben enthaltene Vorgänge z.A., können dann aber ggf. wieder in Bearbeitung genommen werden
@@ -1441,7 +1441,7 @@ paths:
       summary: Suche nach Objektnamen
       description: |
         Mit diesem Aufruf ist eine generische Suche möglich, mit dem ein Objekt bzw. 
-        Objekte auf Basis des Objektnamens gesucht und zurückgegeben werden können.\
+        Objekte auf Basis des Objektnamens gesucht und zurückgegeben werden können.<br>
         Bei Bedarf kann die Suche in einer weiteren Ausbaustufe der Schnittstelle 
         erweitert werden, sodass beispielsweise die Suche auch auf das Erstellungsdatum 
         oder das letzte Änderungsdatum von Objekten eingeschränkt werden kann.
@@ -1483,7 +1483,7 @@ paths:
         deren Name entweder „Test-Eingangsstück“, „Tast-Eingangsstück“ oder 
         „T st-Eingangsstück“ ist. Dazu wird als Suchstring eingegeben: „T[e a]st-Eingangsstück“.
 
-        Hinweis:\
+        Hinweis:<br>
         Stornierte Objekte können nicht ausgelesen werden, d.h. Objekte mit dem Status „Storniert“ 
         [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.
       operationId: SearchObjName
@@ -1524,7 +1524,7 @@ paths:
 
         Bitte beachten Sie, dass beim Anbringen der Unterschrift 
         auch Folge-Aktivitäten ausgeführt werden 
-        (wie z.B. der Bearbeitungsstatus wird korrekt gesetzt).\
+        (wie z.B. der Bearbeitungsstatus wird korrekt gesetzt).<br>
         Unterschriften, in denen weitere GUI-Masken angezeigt werden (wie z.B. bei Umschreibungen), 
         können über diese Soap-Aktion natürlich nicht angebracht werden. 
         Für entsprechende Aktionen müssen bei Bedarf spezielle Soap-Aktionen entwickelt werden.
@@ -1533,7 +1533,7 @@ paths:
         nur die dafür freigegebenen Unterschriften „Löschmarkierung setzen“, „Löschmarkierung bestätigen“ 
         und „Löschmarkierung ablehnen“ über die Schnittstelle zulässig, 
         sofern sie in der gültigen Unterschriftenkonfiguration vorgesehen sind und 
-        alle fachlichen Vorbedingungen erfüllt sind.\
+        alle fachlichen Vorbedingungen erfüllt sind.<br>
         Die Aktivitäten im Arbeitsvorrat, die nach Löschmarkierung setzen gestartet werden, 
         werden im Arbeitsvorrat des Technischen Nutzers aufgeräumt, 
         wenn der AT-Job die bestätigten Löschaufträge aus dem Arbeitsvorrat entfernt.
@@ -1622,7 +1622,7 @@ paths:
       description: |
         Stornierte Objekte können nicht ausgelesen werden, 
         d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] 
-        werden gefiltert und nicht zurückgegeben.\
+        werden gefiltert und nicht zurückgegeben.<br>
         Über die optionalen Parameter kann die Liste vorgefiltert werden, 
         d.h. es werden lediglich die Objekte übermittelt, auf welche die optionalen Parameter zutreffen.
       operationId: ReadSubjectAreaFile
@@ -1653,10 +1653,10 @@ paths:
         - /subjectAreas
       summary: Liste von Sachakten auslesen
       description: |
-        Ausgabe aller Sachakten unter dem übergebenen Aktenplaneintrag.\
+        Ausgabe aller Sachakten unter dem übergebenen Aktenplaneintrag.<br>
         Stornierte Objekte können nicht ausgelesen werden, 
         d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] 
-        werden gefiltert und nicht zurückgegeben.\
+        werden gefiltert und nicht zurückgegeben.<br>
         Über die optionalen Parameter können die auszulesenden Akten vorgefiltert werden, 
         d.h. es werden lediglich die Objekte übermittelt, auf welche die optionalen Parameter zutreffen.
       operationId: ReadSubjectAreaObject
@@ -1686,7 +1686,7 @@ paths:
       summary: Betreffseinheit anlegen
       description: |
         Ein neuer Aktenplaneintrag [COOELAK@1.1001:SubjectArea] des Aktenplaneintragstyps „Betreffseinheit“ 
-        wird unter dem angegebenen übergeordneten Aktenplaneintrag erstellt.\
+        wird unter dem angegebenen übergeordneten Aktenplaneintrag erstellt.<br>
         Beim Anlegen von neuen Aktenplaneinträgen wird die 
         auf dem angegebenen übergeordneten Aktenplaneintrag angegebene Zugriffsdefinition übernommen.
       operationId: CreateSubjectAreaUnit
@@ -1725,8 +1725,8 @@ paths:
       parameters:
         - name: reference
           description: |
-            Referenz/Programmiername der Verfahrensdaten\
-            Die Referenz der Verfahrenseigenschaften sollte im Fachkonzept und Systemspezifikation vorgegeben werden.\
+            Referenz/Programmiername der Verfahrensdaten<br>
+            Die Referenz der Verfahrenseigenschaften sollte im Fachkonzept und Systemspezifikation vorgegeben werden.<br>
 
             Er kann in der GUI angezeigt werden, wenn man 
             * in den "Eigenschaften" des Objekts (Akte, Vorgang, Dokument) 
@@ -1819,7 +1819,7 @@ components:
       name: userlogin
       in: header
       description: |
-        **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\
+        **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)<br>
         Log-in-Name des Benutzerobjekts
       required: true
       schema:
@@ -1829,15 +1829,15 @@ components:
       name: joboe
       in: header
       description: |
-        COO-Adresse der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.\
-        \
+        COO-Adresse der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.<br>
+        <br>
         Ohne Angabe der joboe und jobposition 
-        wird die eingestellte Standardrolle und OE des Nutzers in der eAkte verwendet.\
+        wird die eingestellte Standardrolle und OE des Nutzers in der eAkte verwendet.<br>
         Wenn eine bestimmte jobposition angegeben wird, unter der dieser Aufruf ausgeführt werden soll 
         muss auch die entsprechende joboe des Nutzers mit angegeben werden. 
-        Das kann z.B. notwendig sein, wenn bestimmte Funktionen nur durch Schriftgutverwalter oder Registratur ausgeführt werden dürfen.\
-        Über die OE wird der Mandant zugeordnet und entsprechend die Berechtigungen geprüft.\
-        Hinweis:\
+        Das kann z.B. notwendig sein, wenn bestimmte Funktionen nur durch Schriftgutverwalter oder Registratur ausgeführt werden dürfen.<br>
+        Über die OE wird der Mandant zugeordnet und entsprechend die Berechtigungen geprüft.<br>
+        Hinweis:<br>
         Die COO-Adresse für die joboe muss im Fachverfahren in einer Konfigurationsdatei hintelegt werden, da sie nicht per Schnittstelle ausgelesen werden kann und sich ggf. ändern kann. 
         Meistens ist die joboe innerhalb eines Fachbereichs für alle Benutzer gleich, so dass sie bei Änderungen einfach zu verwalten ist.
       required: false
@@ -1859,7 +1859,7 @@ components:
         * Vorlagenadministrator - TemplateAdministrator
         * Vorlagenverwaltung - TemplateManager
 
-        Es dürfen ausschließlich die o.g. genannten Stellen der LHM verwendet werden.\
+        Es dürfen ausschließlich die o.g. genannten Stellen der LHM verwendet werden.<br>
         Bitte verwenden Sie die englische Bezeichnung.
 
         Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt!
@@ -1893,7 +1893,7 @@ components:
       name: propbostate
       in: header
       description: |
-        Bearbeitungsstatus der darunterliegenden Objekte\
+        Bearbeitungsstatus der darunterliegenden Objekte<br>
         Es muss die COO-Adresse des Bearbeitungsstatus übergeben werden. 
         Die Liste kann aus dem jeweiligen System generiert werden (Suche nach Status Komponentenobjekt im Verwaltungswerkzeug)
 
@@ -1965,11 +1965,11 @@ components:
         authinheritance:
           type: integer
           description: |
-            Rechtevererbung\
+            Rechtevererbung<br>
             Mögliche Werte: null,0,1,2
 
             0 oder leer (null): Die Rechtevererbung aus dem Standardprodukt wird
-            verwendet.\
+            verwendet.<br>
             Der neue Wert wird rekursiv gesetzt in Abhängigkeit von den
             jeweiligen aktuell gesetzten Werten der untergeordneten Objekte.
 
@@ -1982,7 +1982,7 @@ components:
             Hinweis:\ 
             Beim übergeben des Werts 1 auf einer Sachakte vererbt sich
             die Zugriffsdefinition auf alle in der Akte enthaltenen Vorgänge und wieder auf alle Dokumente, 
-            die in den Vorgängen enthalten sind.\
+            die in den Vorgängen enthalten sind.<br>
             Bei einer großen Anzahl von untergeordneten Objekten kann es zu Abbrüchen 
             aufgrund Objektsperren oder durch Timeouts kommen.
           format: int32
@@ -2010,7 +2010,7 @@ components:
         addrtransmedia:
           type: string
           description: |
-            Versandart für den jeweiligen Adressaten\
+            Versandart für den jeweiligen Adressaten<br>
             Folgende Werte sind möglich:
             * Papier
             * E-Fax
@@ -2100,7 +2100,7 @@ components:
         giobjecttype:
           type: array
           description: |
-            Auflistung aller Objekte, auf die der Suchstring zutrifft.\
+            Auflistung aller Objekte, auf die der Suchstring zutrifft.<br>
             Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind.
           items:
             $ref: '#/components/schemas/Objektreferenz'
@@ -2112,15 +2112,15 @@ components:
         reference:
           type: string
           description: |
-            Referenz des Fachdatums\
-            Hier kann die einfache Referenz des Komponentenobjektes angeführt werden ("FD_Position" anstelle "COOSYSTEM@1.1:FD_Position".\
+            Referenz des Fachdatums<br>
+            Hier kann die einfache Referenz des Komponentenobjektes angeführt werden ("FD_Position" anstelle "COOSYSTEM@1.1:FD_Position".<br>
             Die Komponentenobjekte können sowohl von Fabasoft in der CFGMUENCHEN-Komponente 
             sowie von Domänenadministratoren in einer lokalen Softwarekomponenten erzeugt werden. 
             Wenn das Fachdaten-Komponentenobjekt gefunden wird, 
             wird diese unabhängig von der darüberliegenden Konfiguration gesetzt 
             d.h. eine zusätzliche Prüfung, ob diese in den darüberliegenden Aktenplaneinträgen vorgesehen ist, 
             kann nicht erfolgen.
-            Dafür gibt es die neue Funktion /userFormsData, mit der Verfahrensdaten abgespeichert werden.\
+            Dafür gibt es die neue Funktion /userFormsData, mit der Verfahrensdaten abgespeichert werden.<br>
             Für vorhandene Schnittstellen werden ab MUCS26 Fachdaten automatisch in den Verfahrensdaten abgespeichert.
           example: data_dognumber
         value:
@@ -2129,7 +2129,7 @@ components:
             Wert des Fachdatums
 
             Der Wert kann nur gesetzt werden, 
-            wenn auch das Fachdatum-Komponenten-Objekt (mit dem Referenznamen) gefunden wurde.\
+            wenn auch das Fachdatum-Komponenten-Objekt (mit dem Referenznamen) gefunden wurde.<br>
             Folgende Fachdaten-Typen können übergeben werden – 
             je nach Datentyp, müssen die Werte im vorab definierten Format übergeben werden:
             * Zeichenkettentyp: String wird übergeben und direkt bei der Akte eingetragen
@@ -2194,7 +2194,7 @@ components:
         objnameprocedure:
           type: string
           description: |
-            Objektname des erzeugten/gefundenen Vorgangs\
+            Objektname des erzeugten/gefundenen Vorgangs<br>
             Der Name wird in der eAkte gebildet aus dem "Titel des Vorgangs" 
             ("Aktenplankennzeichen des Aktenplankennzeichens, in dem die Akte liegt"-
             "laufende Nummer der Akte innerhalb des Aktenplaneintrags"-
@@ -2324,17 +2324,17 @@ components:
           description: |
             erzeugt am/um
 
-            Datumsformat: YYYY-MM-DDTHH:MM:SS+TH:TM\
-            - = Trenner zusammengehörende Werte\
-            YYYY = 4 Stellen für das Jahr\
-            MM = 2 Stellen für den Monat\
-            DD = 4 Stellen für das Jahr\
-            T = Trenner Datum und Uhrzeit\
-            HH = 2 Stellen für die Stunden\
-            MM = 2 Stellen für die Minuten\
-            SS = 2 Stellen für die Sekunden\
-            + = Trenner Uhrzeit und Zeitzone\
-            TH = Zeitzone in Stunden\
+            Datumsformat: YYYY-MM-DDTHH:MM:SS+TH:TM<br>
+            - = Trenner zusammengehörende Werte<br>
+            YYYY = 4 Stellen für das Jahr<br>
+            MM = 2 Stellen für den Monat<br>
+            DD = 4 Stellen für das Jahr<br>
+            T = Trenner Datum und Uhrzeit<br>
+            HH = 2 Stellen für die Stunden<br>
+            MM = 2 Stellen für die Minuten<br>
+            SS = 2 Stellen für die Sekunden<br>
+            + = Trenner Uhrzeit und Zeitzone<br>
+            TH = Zeitzone in Stunden<br>
             TM = Zeitzone in Minuten
           example: '2018-07-23T08:59:52+01:00'
         objchangedby:
@@ -2345,17 +2345,17 @@ components:
           description: |
             Letzte Änderung am/um
 
-            Datumsformat: YYYY-MM-DDTHH:MM:SS+TH:TM\
-            - = Trenner zusammengehörende Werte\
-            YYYY = 4 Stellen für das Jahr\
-            MM = 2 Stellen für den Monat\
-            DD = 4 Stellen für das Jahr\
-            T = Trenner Datum und Uhrzeit\
-            HH = 2 Stellen für die Stunden\
-            MM = 2 Stellen für die Minuten\
-            SS = 2 Stellen für die Sekunden\
-            + = Trenner Uhrzeit und Zeitzone\
-            TH = Zeitzone in Stunden\
+            Datumsformat: YYYY-MM-DDTHH:MM:SS+TH:TM<br>
+            - = Trenner zusammengehörende Werte<br>
+            YYYY = 4 Stellen für das Jahr<br>
+            MM = 2 Stellen für den Monat<br>
+            DD = 4 Stellen für das Jahr<br>
+            T = Trenner Datum und Uhrzeit<br>
+            HH = 2 Stellen für die Stunden<br>
+            MM = 2 Stellen für die Minuten<br>
+            SS = 2 Stellen für die Sekunden<br>
+            + = Trenner Uhrzeit und Zeitzone<br>
+            TH = Zeitzone in Stunden<br>
             TM = Zeitzone in Minuten
           example: '2018-07-23T10:39:32+01:00'
     ReadContentObjectMetaDataAntwortDTO:
@@ -2491,7 +2491,7 @@ components:
         offltscheduled:
           type: string
           description: |
-            Hier kann das Datum neu gesetzt werden, bis wann die Aufbewahrung dauern soll.\
+            Hier kann das Datum neu gesetzt werden, bis wann die Aufbewahrung dauern soll.<br>
             Nach Ablauf dieses Datums startet der Aussonderungsprozess und 
             die Akte / Vorgang können nicht mehr durch Sachbearbeitungen bearbeitet werden.
           example: 2017-07-21T17:32:28T01:00
@@ -2522,24 +2522,24 @@ components:
     Betreff:
       type: string
       description: |
-        Betreff (mehrzeilig)\
-        Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &#10; in Abfragen unterstützt.
+        Betreff (mehrzeilig)<br>
+        Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &amp;#10; in Abfragen unterstützt.
       example: Alle Anträge der Firma XY aus dem Jahr 2016
     Schlagworte:
       type: string
       description: |
         Angabe der Schlagworte getrennt mit „;“. Kein Semikola am Ende angeben.
 
-        Hinweis:\
+        Hinweis:<br>
         Aktuell ist es für Benutzer*innen nicht möglich, Schlagworte über die Schnittstelle anzulegen oder zu ändern.
-        Bereits vorhandene Schlagworte in der eAkte können verwendet werden.\
+        Bereits vorhandene Schlagworte in der eAkte können verwendet werden.<br>
         Dazu gibt es einen gemeinsamen Katalog von Schlagworten für Akten, Vorgänge, 
-        die je OE durch Sachbearbeiter in der GUI angelegt werden können.\
+        die je OE durch Sachbearbeiter in der GUI angelegt werden können.<br>
         Wenn übergebene Schlagworte nicht gefunden werden, wird keine Fehlermeldung zurückgegeben.
         Das Anlegen erfolgt dann ohne die angegebenen Schlagworte.
 
         Es ist in der Fachabteilung zu klären, ob und welche Schlagworte im Fachverfahren genutzt werden, 
-        damit sie in der Akte vorab angelegt werden.\
+        damit sie in der Akte vorab angelegt werden.<br>
         Für die Schnittstelle kann eine spezifische Schlagwortliste (Oberbegriff, z.B. "Koi-Schlagworte") 
         über die generische Suche abgerufen werden und 
         für die Verschlagwortung von Schriftgutobjekten im Fachverfahren verwendet werden.
@@ -2547,7 +2547,7 @@ components:
     fileruntimefrom:
       type: string
       description: |
-        Laufzeitbeginn\
+        Laufzeitbeginn<br>
         Tatsächliches Datum der Anlage der Akte (unabhängig von der Anlage der Akte im eAkte-System).
         Kann z.B. gesetzt werden, wenn das erste Schriftstück zu der neuen Akte bereits vor der Anlage der Akte im eAkte-System eingegangen ist.
 
@@ -2557,7 +2557,7 @@ components:
     fileruntimetill:
       type: string
       description: |
-        Laufzeitende\
+        Laufzeitende<br>
         Geplanter Abschluss der Akte.
 
         Das Datum hat keine Auswirkungen im System, sondern dient nur zur Information.
@@ -2566,9 +2566,9 @@ components:
     fileouobj:
       type: string
       description: |
-        Objekt-ID (COO-Adresse) der aktenführenden Organisationseinheit.\
+        Objekt-ID (COO-Adresse) der aktenführenden Organisationseinheit.<br>
         Als Organisationseinheit der Akte wird die Organisationseinheit des
-        darüber liegenden Aktenplankennzeichens gesetzt.\
+        darüber liegenden Aktenplankennzeichens gesetzt.<br>
         Sofern keine Organisationseinheit auf dem Aktenplankennzeichen
         definiert ist, wird die Organisationseinheit der ersten Rolle des
         Benutzers verwendet.
@@ -2588,16 +2588,16 @@ components:
 
         Wenn kein Wert übergeben wird, wird die auf der Akte hinterlegte Zugriffsdefinition übernommen (empfohlen).
         Wenn Vorgänge die Zugriffsdefinition und zusätzlich berechtigte Organisationseinheiten
-        aus der übergeordneten Akte übernehmen sollen, muss "Aktengebunden" angegeben werden.\
+        aus der übergeordneten Akte übernehmen sollen, muss "Aktengebunden" angegeben werden.<br>
         Wenn eine Akte über die SST angelegt wird und 
         am Aktenplaneintrag zusätzlich berechtigte OE's eingetragen wurden 
         (im Reiter "Sicherheitseinstellungen" des Aktenplaneintrags), 
-        dann wird die Zugriffsdefinition "Aktengebunden" automatisch bei der Akte für Vorgänge gesetzt.\
+        dann wird die Zugriffsdefinition "Aktengebunden" automatisch bei der Akte für Vorgänge gesetzt.<br>
         Der Parameter procedureaccdef wird in solchen Fällen nicht berücksichtigt.
       example: Aktengebunden
     UserFormsReferenz:
       description: |
-        Referenz der Verfahrenseigenschaft und der entsprechende Wert.\
+        Referenz der Verfahrenseigenschaft und der entsprechende Wert.<br>
         Folgende Typen für Verfahrenseigenschaft werden unterstützt:
         * Zeichenkette und Zeichenkettenliste (Textfeld)
         * Datum (und Zeit), z.B. "01.02.2003 12:00:00"
@@ -2714,13 +2714,13 @@ components:
             Transferfrist
 
             Die Transferfrist beginnt gleichzeitig mit der Aufbewahrungsfrist, endet aber meist früher. 
-            Während der Transferfrist können Vorgänge wieder aufleben und fortgeführt werden.\
+            Während der Transferfrist können Vorgänge wieder aufleben und fortgeführt werden.<br>
             Die Vorgänge müssen nach Ende der Arbeiten erneut abgeschlossen werden und 
             die Aufbewahrungs- und die Transferfrist fangen wieder von Beginn an zu laufen.
 
-            Häufig werden Akten auf einen internen Langzeitspeicher oder in das Zwischenarchiv des Bundesarchivs ausgelagert.\
-            Bei der LHM wird die Transferfrist nicht eingesetzt, da die Akten bis zur Übergabe an das Stadtarchiv in der eAkte verbleiben!\
-            Die Fabasoft eGov Suite erlaubt auch nach Ablauf der Transferfrist bis zum Ende der Aufbewahrungsfrist "z.A. aufheben", um die Akte wieder bearbeiten zu können.\
+            Häufig werden Akten auf einen internen Langzeitspeicher oder in das Zwischenarchiv des Bundesarchivs ausgelagert.<br>
+            Bei der LHM wird die Transferfrist nicht eingesetzt, da die Akten bis zur Übergabe an das Stadtarchiv in der eAkte verbleiben!<br>
+            Die Fabasoft eGov Suite erlaubt auch nach Ablauf der Transferfrist bis zum Ende der Aufbewahrungsfrist "z.A. aufheben", um die Akte wieder bearbeiten zu können.<br>
             Daher wird die Transferfrist gleich der Aufbewahrungsfrist gesetzt und im Lebenszyklus nicht beachtet (auch keine Änderung der Zugriffsrechte).
           example: 10 Jahre
         filelifetimeOffltdeadline:
@@ -2734,15 +2734,15 @@ components:
             Für Vorgänge und Akten, deren Archivwürdigkeit nicht durch eine Vorabentscheidung im Bewertungsverzeichnis festgelegt ist oder für die kein Bewertungsverzeichnis vorliegt, 
             wird „B - Bewerten“ hinterlegt.
 
-            Hinweis:\
+            Hinweis:<br>
             In der eAkte wird beim Anlegen einer neuen Akte die definierte Aufbewahrungsfrist verwendet. 
             Wenn die Frist vom Standard abweichen soll, 
             muss sie in den Eigenschaften der Akte überschrieben werden (Anwendungsfall "Akte Eigenschaften bearbeiten").
 
-            Folgende Werte sind auswählbar:\
-            1 Jahr, 6 Monate, 3 Monate, 1 Monat, 1 Woche, 1 Tag,\
-            3, 5, 7, 10, 15, 20, 25, 30 Jahre,\
-            40, 50, 60, 70, 80, 90, 100, 110 Jahre\
+            Folgende Werte sind auswählbar:<br>
+            1 Jahr, 6 Monate, 3 Monate, 1 Monat, 1 Woche, 1 Tag,<br>
+            3, 5, 7, 10, 15, 20, 25, 30 Jahre,<br>
+            40, 50, 60, 70, 80, 90, 100, 110 Jahre<br>
             Die im System verwendeten Fristen finden Sie in der Suche auf dem Schreibtisch der eAkte, 
             wenn sie nach der Frist (Komponentenbjekt) suchen
           example: 5 Jahre
@@ -2843,10 +2843,10 @@ components:
         filereference:
           type: string
           description: |
-            eindeutiges Geschäfts-/Aktenzeichen\
+            eindeutiges Geschäfts-/Aktenzeichen<br>
             Wird im eAkte-System automatisch gebildet aus dem Aktenplaneintrag und 
             einer fortlaufenden Nummer der Akte 
-            (bei Ableitungen mit .fortlaufende Nummer der Betreffseinheit im Aktenplan (siehe Beispiel)\
+            (bei Ableitungen mit .fortlaufende Nummer der Betreffseinheit im Aktenplan (siehe Beispiel)<br>
           example: 2002.1-36
         objmlname:
           type: string
@@ -2863,7 +2863,7 @@ components:
           type: array
           description: |-
             Auflistung aller Objekte, auf die der Suchstring zutrifft.
-            Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind.
+            <br> Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind.
           example:
             - objname: Beispielname
               objaddress: COO.2150.9151.1.1206000
@@ -2909,7 +2909,7 @@ components:
           $ref: '#/components/schemas/Schlagworte'
     CreateIncomingBasisAnfrageDTO:
       description: |
-        Json Objekt, das die Parameter für den Eingang spezifiziert.\
+        Json Objekt, das die Parameter für den Eingang spezifiziert.<br>
         Das Objekt ist vom Typ `CreateIncomingBasisAnfrageDTO`.
       type: object
       properties:
@@ -2944,7 +2944,7 @@ components:
         foreignnr:
           type: string
           description: |
-            Fremdes Geschäftszeichen\
+            Fremdes Geschäftszeichen<br>
             In diesem Feld kann - falls erforderlich - das Geschäftszeichen einer anderen Organisation eingetragen werden.
           example: A2016-10-2016-Landeshauptstadt-München
         documentremarks:
@@ -2972,11 +2972,11 @@ components:
         giattachmenttype:
           type: array
           description: |
-            Liste von Schriftstücken\
+            Liste von Schriftstücken<br>
             Array im Format: COO-Adresse, Dateiname, Inhalt der Datei, Dateiendung, Größe der Datei (in KB), Betreff
 
-            Hinweis:\
-            Schriftstücke können über diesen Aufruf nicht geändert bzw. ersetzt werden.\
+            Hinweis:<br>
+            Schriftstücke können über diesen Aufruf nicht geändert bzw. ersetzt werden.<br>
             Neue Schriftstücke können bei Bedarf (zum Beispiel zum nachträglichen Hinzufügen
             von Anhängen vor dem Postversand) über diesen Aufruf hinzugefügt werden.
           example: null
@@ -2995,7 +2995,7 @@ components:
         giobjecttype:
           type: array
           description: |
-            Auflistung aller Objekte, auf die der Suchstring zutrifft.\
+            Auflistung aller Objekte, auf die der Suchstring zutrifft.<br>
             Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind 
             (Objektname und COO-Adresse)
           example: LHM-Sitzung 14.10.2016 COO.1.2301.1.1041875
@@ -3017,13 +3017,13 @@ components:
         foreignnr:
           type: string
           description: |
-            Fremdes Geschäftszeichen\
+            Fremdes Geschäftszeichen<br>
             In diesem Feld kann - falls erforderlich - das Geschäftszeichen einer anderen Organisation eingetragen werden.
           example: A2016-10-2016-Landeshauptstadt-München
         delivery:
           type: string
           description: |
-            Eingangsdatum des Objekts\
+            Eingangsdatum des Objekts<br>
             In diesem Feld wird vermerkt, wann das Dokument eingegangen ist.
           format: date-time
         documentremarks:
@@ -3045,7 +3045,7 @@ components:
         giattachmenttype:
           type: array
           description: |
-            Liste der Schriftstücke\
+            Liste der Schriftstücke<br>
             Schriftstücke können über diesen Aufruf nicht geändert bzw. ersetzt werden.
             Neue Schriftstücke können bei Bedarf (zum Beispiel zum nachträglichen Hinzufügen von Anhängen
             vor dem Postversand) über diesen Aufruf hinzugefügt werden.
@@ -3062,7 +3062,7 @@ components:
         objname:
           type: string
           description: |
-            Objektname des erzeugten/gefundenen Vorgangs\
+            Objektname des erzeugten/gefundenen Vorgangs<br>
             Der Name wird in der eAkte gebildet 
             aus dem "Titel des Vorgangs" ("Aktenplankennzeichen"-"lfdNr der Akte"/"lfdNr des Vorgangs"-"lfdNr des Dokuments")
           example: Eingangspost vom 28.05.2026 (0010-11/2-0006)
@@ -3076,10 +3076,10 @@ components:
     subfiletype:
       type: string
       description: |
-        Dokumenttyp (COOELAK@1.1001:subfiletyp)\
+        Dokumenttyp (COOELAK@1.1001:subfiletyp)<br>
         Plausibilitätsprüfung: Der Name eines im System vorhandenen
-        Dokumenttyps muss angegeben werden.\
-        Eine dazugehörige Vorlage (doctemplate) muss nicht verwendet werden.\
+        Dokumenttyps muss angegeben werden.<br>
+        Eine dazugehörige Vorlage (doctemplate) muss nicht verwendet werden.<br>
         Es können auch finalisierte Schriftstücke der Fachanwendung 
         über GiAttachmentType übertragen und verwendet werden.
       example: Vorlagen
@@ -3090,8 +3090,8 @@ components:
         referrednumber:
           type: string
           description: |
-            Objekt-ID (COO-Adresse) des Vorgangs\
-            Zugehöriger Vorgang (COOELAK@1.1001:referrednumber)\
+            Objekt-ID (COO-Adresse) des Vorgangs<br>
+            Zugehöriger Vorgang (COOELAK@1.1001:referrednumber)<br>
             Wenn kein Vorgang angegeben wird, soll das erzeugte interne Dokument am Schreibtisch des Benutzers abgelegt werden.
           example: COO.1.2301.1.1042432
         shortname:
@@ -3111,10 +3111,10 @@ components:
         doctemplate:
           type: string
           description: |
-            Vorlage\
-            Der Name einer im System vorhandenen Vorlage kann angegeben werden.\
+            Vorlage<br>
+            Der Name einer im System vorhandenen Vorlage kann angegeben werden.<br>
             In dieser Vorlage können beispielsweise Metadaten 
-            automatisiert über DocProperty ausgegeben werden.\
+            automatisiert über DocProperty ausgegeben werden.<br>
             Die angegebene Vorlage muss im angegebenen Dokumenttyp enthalten
             sein.
 
@@ -3221,14 +3221,14 @@ components:
         referrednumber:
           type: string
           description: |
-            Objekt-ID (COO-Adresse) des Vorgangs\
+            Objekt-ID (COO-Adresse) des Vorgangs<br>
             Wenn kein Vorgang angegeben wird, soll das erzeugte Erledigungsdokument
             am Schreibtisch des Benutzers abgelegt werden.
           example: COO.1.2301.1.1042432
         referredincoming:
           type: string
           description: |
-            Bezug zum Eingang\
+            Bezug zum Eingang<br>
             Bei Bedarf kann die COO-Adresse des Eingangs angegeben werden,
             damit ein direkter Bezug zwischen Eingang und Erledigung hergestellt
             werden kann.
@@ -3242,9 +3242,9 @@ components:
         doctemplate:
           type: string
           description: |
-            Der Name einer im System vorhandenen Vorlage kann angegeben werden (COOELAK@1.1001:doctemplate).\
+            Der Name einer im System vorhandenen Vorlage kann angegeben werden (COOELAK@1.1001:doctemplate).<br>
             In dieser Vorlage können beispielsweise Metadaten automatisiert über
-            DocProperty ausgegeben werden.\
+            DocProperty ausgegeben werden.<br>
             Die angegebene Vorlage muss im angegebenen Dokumenttyp enthalten
             sein.
             Alternativ können finalisierte Schriftstücke auch über GiAttachmentType übertragen werden.
@@ -3252,7 +3252,7 @@ components:
         incattachments:
           type: string
           description: |
-            Sonstige Anlagen\
+            Sonstige Anlagen<br>
             Freitextfeld, um zusätzliche Anlagen zu benennen, die nicht elektronisch erfasst wurden (z.B. Baupläne)
           example: Ausfüllhilfe Antrag auf Baugenehmigung
         definition:
@@ -3371,7 +3371,7 @@ components:
         referredincoming:
           type: string
           description: |
-            Bezug zum Eingang\
+            Bezug zum Eingang<br>
             Bei Bedarf kann die COO-Adresse des Eingangs geändert werden,
             damit ein direkter Bezug zwischen Eingang und Erledigung hergestellt werden kann.
           example: COO.1.2301.1.1042441
@@ -3481,8 +3481,8 @@ components:
         * Papier
         * Hybrid
 
-        Wird ein falscher Wert angegeben, wird eine Fehlermeldung zurückgegeben:\ 
-        Status -1 und "Art des Vorgangs" enthält einen ungültigen Wert.“\
+        Wird ein falscher Wert angegeben, wird eine Fehlermeldung zurückgegeben:<br>
+        Status -1 und "Art des Vorgangs" enthält einen ungültigen Wert.“<br>
         Wenn kein Wert eingetragen wird, wird „Elektronisch“ hinterlegt.
       example: Elektronisch
     CreateProcedureDTO:
@@ -3620,7 +3620,7 @@ components:
             * „V - Vernichten“ - Dokumente, Vorgänge oder Akten können nach Ablauf der Aufbewahrungsfrist vernichtet werden.
             * „B - Bewerten“ - Bewerten von Dokumenten, Vorgängen oder Akten, deren Archivwürdigkeit nicht durch eine Vorentscheidung festgelegt ist.
 
-            Hinweis:\
+            Hinweis:<br>
             Wird nicht beim Anlegen, sondern nur beim Ändern einer Betreffseinheit, Akte oder Vorgang gesetzt.
           example: DISPSTATE_ARCHIVE
     CreateCompleteProcedureBodyParams:
@@ -3691,7 +3691,7 @@ components:
         filereference:
           type: string
           description: |
-            eindeutiges Geschäfts-/Aktenzeichen\
+            eindeutiges Geschäfts-/Aktenzeichen<br>
             Wird im eAkte-System automatisch gebildet aus dem Aktenplaneintrag 
             und einer fortlaufenden Nummer der Akte 
             (oder "Aktenplankennzeichen"."fortlaufende Nummer der Betreffseinheit"-"fortlaufende Nummer der Akte" wie im Beispiel)
@@ -3711,7 +3711,7 @@ components:
           type: array
           description: |-
             Auflistung aller Objekte, auf die der Suchstring zutrifft.
-            Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind.
+            <br> Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind.
           example:
             - objname: Beispielname
               objaddress: COO.2150.9151.1.1206000
@@ -3764,31 +3764,31 @@ components:
         Hinweise zum Suchstring:
 
         Der Suchstring kann folgenden Operatoren verwendet werden:
-        * „*“ oder „%“ Der Stern „*“ steht für eine beliebige Zeichenfolge.\
-        Optional zum Zeichen „*“ kann auch das Prozentzeichen „%“ verwendet werden.\
-        Beispiel: \
+        * „*“ oder „%“ Der Stern „*“ steht für eine beliebige Zeichenfolge.<br>
+        Optional zum Zeichen „*“ kann auch das Prozentzeichen „%“ verwendet werden.<br>
+        Beispiel: <br>
         Eine Suche nach „*berg“ liefert Ergebnisse, die eine beliebige 
-        Zeichenfolge gefolgt von der Zeichenfolge „berg“ enthalten – „Eisberg“, „Zauberberg“, „Erzberg“.\
+        Zeichenfolge gefolgt von der Zeichenfolge „berg“ enthalten – „Eisberg“, „Zauberberg“, „Erzberg“.<br>
         Eine Suche nach „Berg*“ liefert Ergebnisse, die „Berg“ gefolgt von einer beliebigen Zeichenfolge enthalten – „Berger“, 
-        „Bergsteiger“, „Berghotel“.\
+        „Bergsteiger“, „Berghotel“.<br>
         Eine Suche nach „Ber*er“ liefert Ergebnisse, die „Ber“ gefolgt von einer 
         beliebigen Zeichenfolge sowie gefolgt von „er“ enthalten – „Berger“, „Bergsteiger“, „Berliner“.
-        * „?“ oder „_“\
-        Das Fragezeichen „?“ steht für exakt ein Zeichen.\
-        Optional zum Zeichen „?“ kann auch das Zeichen Unterstrich „_“ verwendet werden.\
+        * „?“ oder „_“<br>
+        Das Fragezeichen „?“ steht für exakt ein Zeichen.<br>
+        Optional zum Zeichen „?“ kann auch das Zeichen Unterstrich „_“ verwendet werden.<br>
         Beispiel: Eine Suche nach „_atterbauer“ liefert Ergebnisse, die 
         exakt ein (beliebiges) Zeichen gefolgt von der Zeichenkette „atterbauer“ enthalten – „Katterbauer“, „Patterbauer“, „Natterbauer“.
-        * „~“ Die Tilde „~“ (erreichbar über die Tastenkombination AltGr +)\
+        * „~“ Die Tilde „~“ (erreichbar über die Tastenkombination AltGr +)<br>
         steht für eine phonetische Suche.\ 
         Es werden alle Objekte gefunden, bei denen die Aussprache der im Suchkriterium angegebenen Zeichenkette 
-        ähnlich ist. Eine Tilde muss genau am Beginn des Suchkriteriums eingegeben werden.\
+        ähnlich ist. Eine Tilde muss genau am Beginn des Suchkriteriums eingegeben werden.<br>
         Beispiel: Eine Suche nach „~Maier“ liefert ähnlich klingende Ergebnisse wie „Maier“ und „Meier“.
         * „[ ] „ Für mehrere Zeichen, von denen genau eines vorhanden sein muss, können eckige Klammern „[ ]“ 
-        verwendet werden.\
-        Die in Frage kommenden Zeichen werden ohne Leerzeichen und ohne Komma eingegeben\
-        Hinweis: Die genaue Funktionalität hängt von der verwendeten Datenbank ab.\
+        verwendet werden.<br>
+        Die in Frage kommenden Zeichen werden ohne Leerzeichen und ohne Komma eingegeben<br>
+        Hinweis: Die genaue Funktionalität hängt von der verwendeten Datenbank ab.<br>
         Wenn ein Leerzeichen zwischen Zeichen eingegeben wird, 
-        so wird auch das Leerzeichen als mögliches Zeichen gewertet.\
+        so wird auch das Leerzeichen als mögliches Zeichen gewertet.<br>
         Beispiel: Es werden Word-Objekte gesucht, deren Name entweder „Test-Eingangsstück“, „Tast-Eingangsstück“ oder 
         „T st-Eingangsstück“ ist. Dazu wird als Suchstring eingegeben: „T[e a]st-Eingangsstück“.
       example: Test*
@@ -3896,10 +3896,10 @@ components:
         signaturetype:
           type: string
           description: |
-            COO-Adresse der Unterschriftenart\
-            Anmerkung:\
+            COO-Adresse der Unterschriftenart<br>
+            Anmerkung:<br>
             Titel ist nicht eindeutig, da es im System mehrere
-            Unterschriftenarten mit dem gleichen Namen/Titel gibt.\
+            Unterschriftenarten mit dem gleichen Namen/Titel gibt.<br>
             In den jeweiligen Anwendungsfällen 
             (z.B. Vorgang stornieren, Eingang sperren, Eingang weglegen, Erledigung unterschreiben) 
             sind die Referenzen für Unterschriftsarten (signaturetype) definiert
@@ -3916,10 +3916,10 @@ components:
         workflowpattern:
           type: string
           description: |
-            COO-Adresse der Muster für Verfügung (COOWF@1.1:PrescriptionTemplate)\
+            COO-Adresse der Muster für Verfügung (COOWF@1.1:PrescriptionTemplate)<br>
             Die COO-Adresse findet man über die GUI der eAkte, wenn man im Schreibtisch "Suche" ausführt, nach Muster für Verfügungen sucht. 
             In den Eigenschaften (im Tab Erstellung) der entsprechenden Mustervorlage steht die COO-Adresse. 
-            Anmerkung: \
+            Anmerkung: <br>
             Der Titel ist nicht eindeutig, da es im System mehrere
             „Muster für Verfügung“ mit dem gleichen Namen geben kann.
           example: COO.1.1001.1.6485
@@ -3931,7 +3931,7 @@ components:
         subjareascope:
           type: string
           description: |
-            Der neue Aktenplaneintragstyp.\
+            Der neue Aktenplaneintragstyp.<br>
             Folgende Werte sind möglich:
             * Hauptgruppe
             * Obergruppe
@@ -3990,7 +3990,7 @@ components:
         subjarchiveschedule:
           type: string
           description: |
-            Standardmäßige Transferfrist für alle Objekte unterhalb der Betreffseinheit\
+            Standardmäßige Transferfrist für alle Objekte unterhalb der Betreffseinheit<br>
             Hinweis zur Transferfrist: siehe bei POST /files (Anlegen von Akten)
           example: 10 Jahre
         subjschedule:

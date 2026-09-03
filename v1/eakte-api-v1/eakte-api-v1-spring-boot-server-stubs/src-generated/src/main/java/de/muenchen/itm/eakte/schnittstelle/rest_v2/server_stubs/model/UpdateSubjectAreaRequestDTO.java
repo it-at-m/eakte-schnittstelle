@@ -41,11 +41,11 @@ public class UpdateSubjectAreaRequestDTO {
   }
 
   /**
-   * Der neue Aktenplaneintragstyp.\\ Folgende Werte sind möglich: * Hauptgruppe * Obergruppe * Gruppe * Untergruppe * Betreffseinheit.  Eine Änderung darf nur erfolgen wenn der Aktenplaneintragstyp leer ist. 
+   * Der neue Aktenplaneintragstyp.<br> Folgende Werte sind möglich: * Hauptgruppe * Obergruppe * Gruppe * Untergruppe * Betreffseinheit.  Eine Änderung darf nur erfolgen wenn der Aktenplaneintragstyp leer ist. 
    * @return subjareascope
    */
   @NotNull 
-  @Schema(name = "subjareascope", example = "\"subjareascope\": \"Betreffseinheit\"", description = "Der neue Aktenplaneintragstyp.\\ Folgende Werte sind möglich: * Hauptgruppe * Obergruppe * Gruppe * Untergruppe * Betreffseinheit.  Eine Änderung darf nur erfolgen wenn der Aktenplaneintragstyp leer ist. ", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "subjareascope", example = "\"subjareascope\": \"Betreffseinheit\"", description = "Der neue Aktenplaneintragstyp.<br> Folgende Werte sind möglich: * Hauptgruppe * Obergruppe * Gruppe * Untergruppe * Betreffseinheit.  Eine Änderung darf nur erfolgen wenn der Aktenplaneintragstyp leer ist. ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("subjareascope")
   public String getSubjareascope() {
     return subjareascope;

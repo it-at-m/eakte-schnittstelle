@@ -3,10 +3,10 @@ get:
     - /subjectAreas
   summary: Liste von Sachakten auslesen
   description: |
-    Ausgabe aller Sachakten unter dem übergebenen Aktenplaneintrag.\
+    Ausgabe aller Sachakten unter dem übergebenen Aktenplaneintrag.<br>
     Stornierte Objekte können nicht ausgelesen werden, 
     d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] 
-    werden gefiltert und nicht zurückgegeben.\
+    werden gefiltert und nicht zurückgegeben.<br>
     Über die optionalen Parameter können die auszulesenden Akten vorgefiltert werden, 
     d.h. es werden lediglich die Objekte übermittelt, auf welche die optionalen Parameter zutreffen.
   operationId: ReadSubjectAreaObject

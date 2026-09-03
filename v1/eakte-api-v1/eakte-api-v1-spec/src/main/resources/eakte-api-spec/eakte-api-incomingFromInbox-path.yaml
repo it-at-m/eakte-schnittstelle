@@ -4,7 +4,7 @@ post:
     - /incomingFromInbox
   summary: Erfassen eines Eingangs aus dem Postkorb
   description: |
-    Schriftstücke eines Postkorbs werden als Eingangsdokument erfasst.\
+    Schriftstücke eines Postkorbs werden als Eingangsdokument erfasst.<br>
     Eingänge können nur in bereits bestehenden Vorgängen angelegt werden.
   operationId: CreateIncomingFromInbox
   parameters:

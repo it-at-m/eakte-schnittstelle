@@ -57,11 +57,11 @@ public class SearchFileRequestDTO {
   }
 
   /**
-   * eindeutiges Geschäfts-/Aktenzeichen\\ Wird im eAkte-System automatisch gebildet aus dem Aktenplaneintrag und  einer fortlaufenden Nummer der Akte  (bei Ableitungen mit .fortlaufende Nummer der Betreffseinheit im Aktenplan (siehe Beispiel)\\ 
+   * eindeutiges Geschäfts-/Aktenzeichen<br> Wird im eAkte-System automatisch gebildet aus dem Aktenplaneintrag und  einer fortlaufenden Nummer der Akte  (bei Ableitungen mit .fortlaufende Nummer der Betreffseinheit im Aktenplan (siehe Beispiel)<br> 
    * @return filereference
    */
   
-  @Schema(name = "filereference", example = "2002.1-36", description = "eindeutiges Geschäfts-/Aktenzeichen\\ Wird im eAkte-System automatisch gebildet aus dem Aktenplaneintrag und  einer fortlaufenden Nummer der Akte  (bei Ableitungen mit .fortlaufende Nummer der Betreffseinheit im Aktenplan (siehe Beispiel)\\ ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "filereference", example = "2002.1-36", description = "eindeutiges Geschäfts-/Aktenzeichen<br> Wird im eAkte-System automatisch gebildet aus dem Aktenplaneintrag und  einer fortlaufenden Nummer der Akte  (bei Ableitungen mit .fortlaufende Nummer der Betreffseinheit im Aktenplan (siehe Beispiel)<br> ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("filereference")
   public Optional<String> getFilereference() {
     return filereference;

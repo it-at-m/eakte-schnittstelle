@@ -10,7 +10,7 @@ components:
         addrtransmedia:
           type: string
           description: |
-            Versandart für den jeweiligen Adressaten\
+            Versandart für den jeweiligen Adressaten<br>
             Folgende Werte sind möglich:
             * Papier
             * E-Fax

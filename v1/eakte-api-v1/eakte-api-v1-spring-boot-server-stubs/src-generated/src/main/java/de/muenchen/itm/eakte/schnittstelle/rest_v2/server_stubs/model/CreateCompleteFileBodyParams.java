@@ -123,11 +123,11 @@ public class CreateCompleteFileBodyParams {
   }
 
   /**
-   * Objekt-ID (COO-Adresse) der aktenführenden Organisationseinheit.\\ Als Organisationseinheit der Akte wird die Organisationseinheit des darüber liegenden Aktenplankennzeichens gesetzt.\\ Sofern keine Organisationseinheit auf dem Aktenplankennzeichen definiert ist, wird die Organisationseinheit der ersten Rolle des Benutzers verwendet. 
+   * Objekt-ID (COO-Adresse) der aktenführenden Organisationseinheit.<br> Als Organisationseinheit der Akte wird die Organisationseinheit des darüber liegenden Aktenplankennzeichens gesetzt.<br> Sofern keine Organisationseinheit auf dem Aktenplankennzeichen definiert ist, wird die Organisationseinheit der ersten Rolle des Benutzers verwendet. 
    * @return fileouobj
    */
   
-  @Schema(name = "fileouobj", example = "COO.1.2300.1.847", description = "Objekt-ID (COO-Adresse) der aktenführenden Organisationseinheit.\\ Als Organisationseinheit der Akte wird die Organisationseinheit des darüber liegenden Aktenplankennzeichens gesetzt.\\ Sofern keine Organisationseinheit auf dem Aktenplankennzeichen definiert ist, wird die Organisationseinheit der ersten Rolle des Benutzers verwendet. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "fileouobj", example = "COO.1.2300.1.847", description = "Objekt-ID (COO-Adresse) der aktenführenden Organisationseinheit.<br> Als Organisationseinheit der Akte wird die Organisationseinheit des darüber liegenden Aktenplankennzeichens gesetzt.<br> Sofern keine Organisationseinheit auf dem Aktenplankennzeichen definiert ist, wird die Organisationseinheit der ersten Rolle des Benutzers verwendet. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("fileouobj")
   public Optional<String> getFileouobj() {
     return fileouobj;

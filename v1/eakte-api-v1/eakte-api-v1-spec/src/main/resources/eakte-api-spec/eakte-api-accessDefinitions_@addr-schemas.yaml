@@ -11,11 +11,11 @@ components:
         authinheritance:
           type: integer
           description: |
-            Rechtevererbung\
+            Rechtevererbung<br>
             Mögliche Werte: null,0,1,2
             
             0 oder leer (null): Die Rechtevererbung aus dem Standardprodukt wird
-            verwendet.\
+            verwendet.<br>
             Der neue Wert wird rekursiv gesetzt in Abhängigkeit von den
             jeweiligen aktuell gesetzten Werten der untergeordneten Objekte.
 
@@ -28,7 +28,7 @@ components:
             Hinweis:\ 
             Beim übergeben des Werts 1 auf einer Sachakte vererbt sich
             die Zugriffsdefinition auf alle in der Akte enthaltenen Vorgänge und wieder auf alle Dokumente, 
-            die in den Vorgängen enthalten sind.\
+            die in den Vorgängen enthalten sind.<br>
             Bei einer großen Anzahl von untergeordneten Objekten kann es zu Abbrüchen 
             aufgrund Objektsperren oder durch Timeouts kommen.
           format: int32

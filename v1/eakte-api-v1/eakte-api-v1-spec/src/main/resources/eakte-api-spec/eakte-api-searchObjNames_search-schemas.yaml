@@ -77,31 +77,31 @@ components:
         Hinweise zum Suchstring:
         
         Der Suchstring kann folgenden Operatoren verwendet werden:
-        * „*“ oder „%“ Der Stern „*“ steht für eine beliebige Zeichenfolge.\
-        Optional zum Zeichen „*“ kann auch das Prozentzeichen „%“ verwendet werden.\
-        Beispiel: \
+        * „*“ oder „%“ Der Stern „*“ steht für eine beliebige Zeichenfolge.<br>
+        Optional zum Zeichen „*“ kann auch das Prozentzeichen „%“ verwendet werden.<br>
+        Beispiel: <br>
         Eine Suche nach „*berg“ liefert Ergebnisse, die eine beliebige 
-        Zeichenfolge gefolgt von der Zeichenfolge „berg“ enthalten – „Eisberg“, „Zauberberg“, „Erzberg“.\
+        Zeichenfolge gefolgt von der Zeichenfolge „berg“ enthalten – „Eisberg“, „Zauberberg“, „Erzberg“.<br>
         Eine Suche nach „Berg*“ liefert Ergebnisse, die „Berg“ gefolgt von einer beliebigen Zeichenfolge enthalten – „Berger“, 
-        „Bergsteiger“, „Berghotel“.\
+        „Bergsteiger“, „Berghotel“.<br>
         Eine Suche nach „Ber*er“ liefert Ergebnisse, die „Ber“ gefolgt von einer 
         beliebigen Zeichenfolge sowie gefolgt von „er“ enthalten – „Berger“, „Bergsteiger“, „Berliner“.
-        * „?“ oder „_“\
-        Das Fragezeichen „?“ steht für exakt ein Zeichen.\
-        Optional zum Zeichen „?“ kann auch das Zeichen Unterstrich „_“ verwendet werden.\
+        * „?“ oder „_“<br>
+        Das Fragezeichen „?“ steht für exakt ein Zeichen.<br>
+        Optional zum Zeichen „?“ kann auch das Zeichen Unterstrich „_“ verwendet werden.<br>
         Beispiel: Eine Suche nach „_atterbauer“ liefert Ergebnisse, die 
         exakt ein (beliebiges) Zeichen gefolgt von der Zeichenkette „atterbauer“ enthalten – „Katterbauer“, „Patterbauer“, „Natterbauer“.
-        * „~“ Die Tilde „~“ (erreichbar über die Tastenkombination AltGr +)\
+        * „~“ Die Tilde „~“ (erreichbar über die Tastenkombination AltGr +)<br>
         steht für eine phonetische Suche.\ 
         Es werden alle Objekte gefunden, bei denen die Aussprache der im Suchkriterium angegebenen Zeichenkette 
-        ähnlich ist. Eine Tilde muss genau am Beginn des Suchkriteriums eingegeben werden.\
+        ähnlich ist. Eine Tilde muss genau am Beginn des Suchkriteriums eingegeben werden.<br>
         Beispiel: Eine Suche nach „~Maier“ liefert ähnlich klingende Ergebnisse wie „Maier“ und „Meier“.
         * „[ ] „ Für mehrere Zeichen, von denen genau eines vorhanden sein muss, können eckige Klammern „[ ]“ 
-        verwendet werden.\
-        Die in Frage kommenden Zeichen werden ohne Leerzeichen und ohne Komma eingegeben\
-        Hinweis: Die genaue Funktionalität hängt von der verwendeten Datenbank ab.\
+        verwendet werden.<br>
+        Die in Frage kommenden Zeichen werden ohne Leerzeichen und ohne Komma eingegeben<br>
+        Hinweis: Die genaue Funktionalität hängt von der verwendeten Datenbank ab.<br>
         Wenn ein Leerzeichen zwischen Zeichen eingegeben wird, 
-        so wird auch das Leerzeichen als mögliches Zeichen gewertet.\
+        so wird auch das Leerzeichen als mögliches Zeichen gewertet.<br>
         Beispiel: Es werden Word-Objekte gesucht, deren Name entweder „Test-Eingangsstück“, „Tast-Eingangsstück“ oder 
         „T st-Eingangsstück“ ist. Dazu wird als Suchstring eingegeben: „T[e a]st-Eingangsstück“.
       example: Test*

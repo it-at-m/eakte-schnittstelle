@@ -4,7 +4,7 @@ get:
   summary: Liste von Schriftstücken auslesen
   description: |
     Stornierte Objekte können nicht ausgelesen werden, 
-    d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.\
+    d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.<br>
     Über die optionalen Parameter kann das Fachverfahren vorab eine Selektierung der Liste vornehmen, 
     d.h. es sollten lediglich die Objekte übermittelt werden auf welche die optionalen Parameter zutreffen.
   operationId: ReadDocumentObject

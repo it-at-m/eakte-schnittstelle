@@ -5,13 +5,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>de.muenchen.eai</groupId>
+    <groupId>de.muenchen.oss.eakte</groupId>
     <artifactId>eakte-api-v1</artifactId>
     <version>1.2.7-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>eakte-api-v1-spring-boot-server-stubs</artifactId>
+  <name>eakte-api-v1-spring-boot-server-stubs</name>
 
   <properties>
     <java.version>21</java.version>
@@ -22,7 +23,7 @@
   <dependencies>
 
     <dependency>
-      <groupId>de.muenchen.eai</groupId>
+      <groupId>de.muenchen.oss.eakte</groupId>
       <artifactId>eakte-api-v1-spec</artifactId>
       <version>${project.version}</version>
       <type>zip</type>
@@ -107,7 +108,7 @@
             <configuration>
               <excludeGroupIds>*</excludeGroupIds>
               <excludeArtifactIds>*</excludeArtifactIds>
-              <includeGroupIds>de.muenchen.eai</includeGroupIds>
+              <includeGroupIds>de.muenchen.oss.eakte</includeGroupIds>
               <includeArtifactIds>eakte-api-v1-spec</includeArtifactIds>
               <includes>**/*.yaml</includes>
               <outputDirectory>${project.build.directory}/unpacked-dependencies</outputDirectory>

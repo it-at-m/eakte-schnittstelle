@@ -177,11 +177,11 @@ public class MetadataReferenz {
   }
 
   /**
-   * erzeugt am/um  Datumsformat: YYYY-MM-DDTHH:MM:SS+TH:TM\\ - = Trenner zusammengehörende Werte\\ YYYY = 4 Stellen für das Jahr\\ MM = 2 Stellen für den Monat\\ DD = 4 Stellen für das Jahr\\ T = Trenner Datum und Uhrzeit\\ HH = 2 Stellen für die Stunden\\ MM = 2 Stellen für die Minuten\\ SS = 2 Stellen für die Sekunden\\ + = Trenner Uhrzeit und Zeitzone\\ TH = Zeitzone in Stunden\\ TM = Zeitzone in Minuten 
+   * erzeugt am/um  Datumsformat: YYYY-MM-DDTHH:MM:SS+TH:TM<br> - = Trenner zusammengehörende Werte<br> YYYY = 4 Stellen für das Jahr<br> MM = 2 Stellen für den Monat<br> DD = 4 Stellen für das Jahr<br> T = Trenner Datum und Uhrzeit<br> HH = 2 Stellen für die Stunden<br> MM = 2 Stellen für die Minuten<br> SS = 2 Stellen für die Sekunden<br> + = Trenner Uhrzeit und Zeitzone<br> TH = Zeitzone in Stunden<br> TM = Zeitzone in Minuten 
    * @return objcreatedat
    */
   @Valid 
-  @Schema(name = "objcreatedat", example = "2018-07-23T08:59:52+01:00", description = "erzeugt am/um  Datumsformat: YYYY-MM-DDTHH:MM:SS+TH:TM\\ - = Trenner zusammengehörende Werte\\ YYYY = 4 Stellen für das Jahr\\ MM = 2 Stellen für den Monat\\ DD = 4 Stellen für das Jahr\\ T = Trenner Datum und Uhrzeit\\ HH = 2 Stellen für die Stunden\\ MM = 2 Stellen für die Minuten\\ SS = 2 Stellen für die Sekunden\\ + = Trenner Uhrzeit und Zeitzone\\ TH = Zeitzone in Stunden\\ TM = Zeitzone in Minuten ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "objcreatedat", example = "2018-07-23T08:59:52+01:00", description = "erzeugt am/um  Datumsformat: YYYY-MM-DDTHH:MM:SS+TH:TM<br> - = Trenner zusammengehörende Werte<br> YYYY = 4 Stellen für das Jahr<br> MM = 2 Stellen für den Monat<br> DD = 4 Stellen für das Jahr<br> T = Trenner Datum und Uhrzeit<br> HH = 2 Stellen für die Stunden<br> MM = 2 Stellen für die Minuten<br> SS = 2 Stellen für die Sekunden<br> + = Trenner Uhrzeit und Zeitzone<br> TH = Zeitzone in Stunden<br> TM = Zeitzone in Minuten ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("objcreatedat")
   public Optional<OffsetDateTime> getObjcreatedat() {
     return objcreatedat;
@@ -219,11 +219,11 @@ public class MetadataReferenz {
   }
 
   /**
-   * Letzte Änderung am/um  Datumsformat: YYYY-MM-DDTHH:MM:SS+TH:TM\\ - = Trenner zusammengehörende Werte\\ YYYY = 4 Stellen für das Jahr\\ MM = 2 Stellen für den Monat\\ DD = 4 Stellen für das Jahr\\ T = Trenner Datum und Uhrzeit\\ HH = 2 Stellen für die Stunden\\ MM = 2 Stellen für die Minuten\\ SS = 2 Stellen für die Sekunden\\ + = Trenner Uhrzeit und Zeitzone\\ TH = Zeitzone in Stunden\\ TM = Zeitzone in Minuten 
+   * Letzte Änderung am/um  Datumsformat: YYYY-MM-DDTHH:MM:SS+TH:TM<br> - = Trenner zusammengehörende Werte<br> YYYY = 4 Stellen für das Jahr<br> MM = 2 Stellen für den Monat<br> DD = 4 Stellen für das Jahr<br> T = Trenner Datum und Uhrzeit<br> HH = 2 Stellen für die Stunden<br> MM = 2 Stellen für die Minuten<br> SS = 2 Stellen für die Sekunden<br> + = Trenner Uhrzeit und Zeitzone<br> TH = Zeitzone in Stunden<br> TM = Zeitzone in Minuten 
    * @return objmodifiedat
    */
   @Valid 
-  @Schema(name = "objmodifiedat", example = "2018-07-23T10:39:32+01:00", description = "Letzte Änderung am/um  Datumsformat: YYYY-MM-DDTHH:MM:SS+TH:TM\\ - = Trenner zusammengehörende Werte\\ YYYY = 4 Stellen für das Jahr\\ MM = 2 Stellen für den Monat\\ DD = 4 Stellen für das Jahr\\ T = Trenner Datum und Uhrzeit\\ HH = 2 Stellen für die Stunden\\ MM = 2 Stellen für die Minuten\\ SS = 2 Stellen für die Sekunden\\ + = Trenner Uhrzeit und Zeitzone\\ TH = Zeitzone in Stunden\\ TM = Zeitzone in Minuten ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "objmodifiedat", example = "2018-07-23T10:39:32+01:00", description = "Letzte Änderung am/um  Datumsformat: YYYY-MM-DDTHH:MM:SS+TH:TM<br> - = Trenner zusammengehörende Werte<br> YYYY = 4 Stellen für das Jahr<br> MM = 2 Stellen für den Monat<br> DD = 4 Stellen für das Jahr<br> T = Trenner Datum und Uhrzeit<br> HH = 2 Stellen für die Stunden<br> MM = 2 Stellen für die Minuten<br> SS = 2 Stellen für die Sekunden<br> + = Trenner Uhrzeit und Zeitzone<br> TH = Zeitzone in Stunden<br> TM = Zeitzone in Minuten ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("objmodifiedat")
   public Optional<OffsetDateTime> getObjmodifiedat() {
     return objmodifiedat;

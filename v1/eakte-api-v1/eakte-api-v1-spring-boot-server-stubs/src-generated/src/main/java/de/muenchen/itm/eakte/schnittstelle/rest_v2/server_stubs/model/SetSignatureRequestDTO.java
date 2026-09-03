@@ -43,11 +43,11 @@ public class SetSignatureRequestDTO {
   }
 
   /**
-   * COO-Adresse der Unterschriftenart\\ Anmerkung:\\ Titel ist nicht eindeutig, da es im System mehrere Unterschriftenarten mit dem gleichen Namen/Titel gibt.\\ In den jeweiligen Anwendungsfällen  (z.B. Vorgang stornieren, Eingang sperren, Eingang weglegen, Erledigung unterschreiben)  sind die Referenzen für Unterschriftsarten (signaturetype) definiert 
+   * COO-Adresse der Unterschriftenart<br> Anmerkung:<br> Titel ist nicht eindeutig, da es im System mehrere Unterschriftenarten mit dem gleichen Namen/Titel gibt.<br> In den jeweiligen Anwendungsfällen  (z.B. Vorgang stornieren, Eingang sperren, Eingang weglegen, Erledigung unterschreiben)  sind die Referenzen für Unterschriftsarten (signaturetype) definiert 
    * @return signaturetype
    */
   @NotNull 
-  @Schema(name = "signaturetype", example = "COO.1.1001.1.6485", description = "COO-Adresse der Unterschriftenart\\ Anmerkung:\\ Titel ist nicht eindeutig, da es im System mehrere Unterschriftenarten mit dem gleichen Namen/Titel gibt.\\ In den jeweiligen Anwendungsfällen  (z.B. Vorgang stornieren, Eingang sperren, Eingang weglegen, Erledigung unterschreiben)  sind die Referenzen für Unterschriftsarten (signaturetype) definiert ", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "signaturetype", example = "COO.1.1001.1.6485", description = "COO-Adresse der Unterschriftenart<br> Anmerkung:<br> Titel ist nicht eindeutig, da es im System mehrere Unterschriftenarten mit dem gleichen Namen/Titel gibt.<br> In den jeweiligen Anwendungsfällen  (z.B. Vorgang stornieren, Eingang sperren, Eingang weglegen, Erledigung unterschreiben)  sind die Referenzen für Unterschriftsarten (signaturetype) definiert ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("signaturetype")
   public String getSignaturetype() {
     return signaturetype;

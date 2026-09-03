@@ -5,7 +5,7 @@ get:
   description: |
     Stornierte Objekte können nicht ausgelesen werden, 
     d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] 
-    werden gefiltert und nicht zurückgegeben.\
+    werden gefiltert und nicht zurückgegeben.<br>
     Vor dem Aufruf wird automatisiert überprüft, 
     ob die angefragte Datei größer als der angegebene Wert 
     in der Eigenschaft „Maximale Größe der Inhalte“ [FSCVAPP@1.1001:defaultimportlimit]\ 

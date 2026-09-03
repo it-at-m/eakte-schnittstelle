@@ -104,7 +104,7 @@ components:
         referredincoming:
           type: string
           description: |
-            Bezug zum Eingang\
+            Bezug zum Eingang<br>
             Bei Bedarf kann die COO-Adresse des Eingangs geändert werden,
             damit ein direkter Bezug zwischen Eingang und Erledigung hergestellt werden kann.
           example: COO.1.2301.1.1042441
