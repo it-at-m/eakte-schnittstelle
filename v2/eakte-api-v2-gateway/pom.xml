@@ -70,7 +70,7 @@
         <springdoc-openapi-starter-webmvc-ui.version>3.0.3</springdoc-openapi-starter-webmvc-ui.version>
         <eakte-api-v2-stubs.verion>2.0.1-SNAPSHOT</eakte-api-v2-stubs.verion>
         <eakte-fsgov-client.verion>2.0.1-SNAPSHOT</eakte-fsgov-client.verion>
-        <cxf.version>4.2.2</cxf.version>
+        <cxf.version>4.2.3</cxf.version>
 
         <!-- Spotless P2 Mirror configuration (e.g. required when using company internal registry -->
         <p2.username /> <!-- must be empty, override via Maven settings.xml if needed -->
