@@ -4,7 +4,7 @@ services:
     # start with image built locally:
     #image: localhost/eakte-rest-eai:1.2.4
     # start with image built within GiHub build pipeline:
-    image: ghcr.io/it-at-m/eakte-schnittstelle/v1/eakte-eai:dev
+    image: ghcr.io/it-at-m/eakte-schnittstelle/v1/eakte-eai:dev@sha256:6c1676332c1edd09291d48226e1c4ba6ee2af63d67b2c8206bd2d96c0ea74f93
     hostname: eakte-eai-adapter
     ports:
       - 8080:8080
