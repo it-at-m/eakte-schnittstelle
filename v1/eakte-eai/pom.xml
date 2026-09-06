@@ -32,7 +32,7 @@
 	<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 
 	<!-- SonarQube -->
-	<sonar.scanner.version>3.9.0.2155</sonar.scanner.version>
+	<sonar.scanner.version>3.11.0.3922</sonar.scanner.version>
 	<sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
 
 	<!-- Java 11 Features, Java 11 JVM -->
