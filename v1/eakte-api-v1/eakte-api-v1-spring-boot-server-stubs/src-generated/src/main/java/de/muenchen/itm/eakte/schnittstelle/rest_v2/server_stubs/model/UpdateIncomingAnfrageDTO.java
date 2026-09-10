@@ -69,11 +69,11 @@ public class UpdateIncomingAnfrageDTO {
   }
 
   /**
-   * Betreff (mehrzeilig)\\ Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &#10; in Abfragen unterstützt. 
+   * Betreff (mehrzeilig)<br> Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &amp;#10; in Abfragen unterstützt. 
    * @return filesubj
    */
   
-  @Schema(name = "filesubj", example = "Alle Anträge der Firma XY aus dem Jahr 2016", description = "Betreff (mehrzeilig)\\ Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &#10; in Abfragen unterstützt. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "filesubj", example = "Alle Anträge der Firma XY aus dem Jahr 2016", description = "Betreff (mehrzeilig)<br> Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &amp;#10; in Abfragen unterstützt. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("filesubj")
   public Optional<String> getFilesubj() {
     return filesubj;
@@ -90,11 +90,11 @@ public class UpdateIncomingAnfrageDTO {
   }
 
   /**
-   * Angabe der Schlagworte getrennt mit „;“. Kein Semikola am Ende angeben.  Hinweis:\\ Aktuell ist es für Benutzer*innen nicht möglich, Schlagworte über die Schnittstelle anzulegen oder zu ändern. Bereits vorhandene Schlagworte in der eAkte können verwendet werden.\\ Dazu gibt es einen gemeinsamen Katalog von Schlagworten für Akten, Vorgänge,  die je OE durch Sachbearbeiter in der GUI angelegt werden können.\\ Wenn übergebene Schlagworte nicht gefunden werden, wird keine Fehlermeldung zurückgegeben. Das Anlegen erfolgt dann ohne die angegebenen Schlagworte.  Es ist in der Fachabteilung zu klären, ob und welche Schlagworte im Fachverfahren genutzt werden,  damit sie in der Akte vorab angelegt werden.\\ Für die Schnittstelle kann eine spezifische Schlagwortliste (Oberbegriff, z.B. \"Koi-Schlagworte\")  über die generische Suche abgerufen werden und  für die Verschlagwortung von Schriftgutobjekten im Fachverfahren verwendet werden. 
+   * Angabe der Schlagworte getrennt mit „;“. Kein Semikola am Ende angeben.  Hinweis:<br> Aktuell ist es für Benutzer*innen nicht möglich, Schlagworte über die Schnittstelle anzulegen oder zu ändern. Bereits vorhandene Schlagworte in der eAkte können verwendet werden.<br> Dazu gibt es einen gemeinsamen Katalog von Schlagworten für Akten, Vorgänge,  die je OE durch Sachbearbeiter in der GUI angelegt werden können.<br> Wenn übergebene Schlagworte nicht gefunden werden, wird keine Fehlermeldung zurückgegeben. Das Anlegen erfolgt dann ohne die angegebenen Schlagworte.  Es ist in der Fachabteilung zu klären, ob und welche Schlagworte im Fachverfahren genutzt werden,  damit sie in der Akte vorab angelegt werden.<br> Für die Schnittstelle kann eine spezifische Schlagwortliste (Oberbegriff, z.B. \"Koi-Schlagworte\")  über die generische Suche abgerufen werden und  für die Verschlagwortung von Schriftgutobjekten im Fachverfahren verwendet werden. 
    * @return objterms
    */
   
-  @Schema(name = "objterms", example = "Firma XY; Anträge; Anträge 2016", description = "Angabe der Schlagworte getrennt mit „;“. Kein Semikola am Ende angeben.  Hinweis:\\ Aktuell ist es für Benutzer*innen nicht möglich, Schlagworte über die Schnittstelle anzulegen oder zu ändern. Bereits vorhandene Schlagworte in der eAkte können verwendet werden.\\ Dazu gibt es einen gemeinsamen Katalog von Schlagworten für Akten, Vorgänge,  die je OE durch Sachbearbeiter in der GUI angelegt werden können.\\ Wenn übergebene Schlagworte nicht gefunden werden, wird keine Fehlermeldung zurückgegeben. Das Anlegen erfolgt dann ohne die angegebenen Schlagworte.  Es ist in der Fachabteilung zu klären, ob und welche Schlagworte im Fachverfahren genutzt werden,  damit sie in der Akte vorab angelegt werden.\\ Für die Schnittstelle kann eine spezifische Schlagwortliste (Oberbegriff, z.B. \"Koi-Schlagworte\")  über die generische Suche abgerufen werden und  für die Verschlagwortung von Schriftgutobjekten im Fachverfahren verwendet werden. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "objterms", example = "Firma XY; Anträge; Anträge 2016", description = "Angabe der Schlagworte getrennt mit „;“. Kein Semikola am Ende angeben.  Hinweis:<br> Aktuell ist es für Benutzer*innen nicht möglich, Schlagworte über die Schnittstelle anzulegen oder zu ändern. Bereits vorhandene Schlagworte in der eAkte können verwendet werden.<br> Dazu gibt es einen gemeinsamen Katalog von Schlagworten für Akten, Vorgänge,  die je OE durch Sachbearbeiter in der GUI angelegt werden können.<br> Wenn übergebene Schlagworte nicht gefunden werden, wird keine Fehlermeldung zurückgegeben. Das Anlegen erfolgt dann ohne die angegebenen Schlagworte.  Es ist in der Fachabteilung zu klären, ob und welche Schlagworte im Fachverfahren genutzt werden,  damit sie in der Akte vorab angelegt werden.<br> Für die Schnittstelle kann eine spezifische Schlagwortliste (Oberbegriff, z.B. \"Koi-Schlagworte\")  über die generische Suche abgerufen werden und  für die Verschlagwortung von Schriftgutobjekten im Fachverfahren verwendet werden. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("objterms")
   public Optional<String> getObjterms() {
     return objterms;
@@ -132,11 +132,11 @@ public class UpdateIncomingAnfrageDTO {
   }
 
   /**
-   * Fremdes Geschäftszeichen\\ In diesem Feld kann - falls erforderlich - das Geschäftszeichen einer anderen Organisation eingetragen werden. 
+   * Fremdes Geschäftszeichen<br> In diesem Feld kann - falls erforderlich - das Geschäftszeichen einer anderen Organisation eingetragen werden. 
    * @return foreignnr
    */
   
-  @Schema(name = "foreignnr", example = "A2016-10-2016-Landeshauptstadt-München", description = "Fremdes Geschäftszeichen\\ In diesem Feld kann - falls erforderlich - das Geschäftszeichen einer anderen Organisation eingetragen werden. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "foreignnr", example = "A2016-10-2016-Landeshauptstadt-München", description = "Fremdes Geschäftszeichen<br> In diesem Feld kann - falls erforderlich - das Geschäftszeichen einer anderen Organisation eingetragen werden. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("foreignnr")
   public Optional<String> getForeignnr() {
     return foreignnr;
@@ -153,11 +153,11 @@ public class UpdateIncomingAnfrageDTO {
   }
 
   /**
-   * Eingangsdatum des Objekts\\ In diesem Feld wird vermerkt, wann das Dokument eingegangen ist. 
+   * Eingangsdatum des Objekts<br> In diesem Feld wird vermerkt, wann das Dokument eingegangen ist. 
    * @return delivery
    */
   @Valid 
-  @Schema(name = "delivery", description = "Eingangsdatum des Objekts\\ In diesem Feld wird vermerkt, wann das Dokument eingegangen ist. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "delivery", description = "Eingangsdatum des Objekts<br> In diesem Feld wird vermerkt, wann das Dokument eingegangen ist. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("delivery")
   public Optional<OffsetDateTime> getDelivery() {
     return delivery;

@@ -44,11 +44,11 @@ public class SetDisposalScheduleDateAnfrageDTO {
   }
 
   /**
-   * Hier kann das Datum neu gesetzt werden, bis wann die Aufbewahrung dauern soll.\\ Nach Ablauf dieses Datums startet der Aussonderungsprozess und  die Akte / Vorgang können nicht mehr durch Sachbearbeitungen bearbeitet werden. 
+   * Hier kann das Datum neu gesetzt werden, bis wann die Aufbewahrung dauern soll.<br> Nach Ablauf dieses Datums startet der Aussonderungsprozess und  die Akte / Vorgang können nicht mehr durch Sachbearbeitungen bearbeitet werden. 
    * @return offltscheduled
    */
   @NotNull @Valid 
-  @Schema(name = "offltscheduled", description = "Hier kann das Datum neu gesetzt werden, bis wann die Aufbewahrung dauern soll.\\ Nach Ablauf dieses Datums startet der Aussonderungsprozess und  die Akte / Vorgang können nicht mehr durch Sachbearbeitungen bearbeitet werden. ", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "offltscheduled", description = "Hier kann das Datum neu gesetzt werden, bis wann die Aufbewahrung dauern soll.<br> Nach Ablauf dieses Datums startet der Aussonderungsprozess und  die Akte / Vorgang können nicht mehr durch Sachbearbeitungen bearbeitet werden. ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("offltscheduled")
   public OffsetDateTime getOffltscheduled() {
     return offltscheduled;

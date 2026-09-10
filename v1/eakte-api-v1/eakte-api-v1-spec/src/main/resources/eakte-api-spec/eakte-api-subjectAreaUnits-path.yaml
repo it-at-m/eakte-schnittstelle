@@ -5,7 +5,7 @@ post:
   summary: Betreffseinheit anlegen
   description: |
     Ein neuer Aktenplaneintrag [COOELAK@1.1001:SubjectArea] des Aktenplaneintragstyps „Betreffseinheit“ 
-    wird unter dem angegebenen übergeordneten Aktenplaneintrag erstellt.\
+    wird unter dem angegebenen übergeordneten Aktenplaneintrag erstellt.<br>
     Beim Anlegen von neuen Aktenplaneinträgen wird die 
     auf dem angegebenen übergeordneten Aktenplaneintrag angegebene Zugriffsdefinition übernommen.
   operationId: CreateSubjectAreaUnit

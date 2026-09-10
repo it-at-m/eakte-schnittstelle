@@ -9,10 +9,10 @@ components:
         signaturetype:
           type: string
           description: |
-            COO-Adresse der Unterschriftenart\
-            Anmerkung:\
+            COO-Adresse der Unterschriftenart<br>
+            Anmerkung:<br>
             Titel ist nicht eindeutig, da es im System mehrere
-            Unterschriftenarten mit dem gleichen Namen/Titel gibt.\
+            Unterschriftenarten mit dem gleichen Namen/Titel gibt.<br>
             In den jeweiligen Anwendungsfällen 
             (z.B. Vorgang stornieren, Eingang sperren, Eingang weglegen, Erledigung unterschreiben) 
             sind die Referenzen für Unterschriftsarten (signaturetype) definiert

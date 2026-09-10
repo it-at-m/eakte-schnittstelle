@@ -26,7 +26,7 @@ components:
         subjarchiveschedule:
           type: string
           description: | 
-            Standardmäßige Transferfrist für alle Objekte unterhalb der Betreffseinheit\
+            Standardmäßige Transferfrist für alle Objekte unterhalb der Betreffseinheit<br>
             Hinweis zur Transferfrist: siehe bei POST /files (Anlegen von Akten)
           example: 10 Jahre
         subjschedule:

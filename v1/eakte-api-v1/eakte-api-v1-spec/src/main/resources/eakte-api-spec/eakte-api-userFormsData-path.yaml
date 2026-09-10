@@ -9,8 +9,8 @@ get:
   parameters:
     - name: "reference"
       description: |
-        Referenz/Programmiername der Verfahrensdaten\
-        Die Referenz der Verfahrenseigenschaften sollte im Fachkonzept und Systemspezifikation vorgegeben werden.\
+        Referenz/Programmiername der Verfahrensdaten<br>
+        Die Referenz der Verfahrenseigenschaften sollte im Fachkonzept und Systemspezifikation vorgegeben werden.<br>
         
         Er kann in der GUI angezeigt werden, wenn man 
         * in den "Eigenschaften" des Objekts (Akte, Vorgang, Dokument) 

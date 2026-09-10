@@ -11,11 +11,11 @@ components:
         giattachmenttype:
           type: array
           description: |
-            Liste von Schriftstücken\
+            Liste von Schriftstücken<br>
             Array im Format: COO-Adresse, Dateiname, Inhalt der Datei, Dateiendung, Größe der Datei (in KB), Betreff
             
-            Hinweis:\
-            Schriftstücke können über diesen Aufruf nicht geändert bzw. ersetzt werden.\
+            Hinweis:<br>
+            Schriftstücke können über diesen Aufruf nicht geändert bzw. ersetzt werden.<br>
             Neue Schriftstücke können bei Bedarf (zum Beispiel zum nachträglichen Hinzufügen
             von Anhängen vor dem Postversand) über diesen Aufruf hinzugefügt werden.
           example:
@@ -35,7 +35,7 @@ components:
         giobjecttype:
           type: array
           description: |
-            Auflistung aller Objekte, auf die der Suchstring zutrifft.\
+            Auflistung aller Objekte, auf die der Suchstring zutrifft.<br>
             Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind 
             (Objektname und COO-Adresse)
           example: LHM-Sitzung 14.10.2016 COO.1.2301.1.1041875

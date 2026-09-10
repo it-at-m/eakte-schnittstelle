@@ -8,8 +8,8 @@ components:
         referrednumber:
           type: string
           description: |
-            Objekt-ID (COO-Adresse) des Vorgangs\
-            Zugehöriger Vorgang (COOELAK@1.1001:referrednumber)\
+            Objekt-ID (COO-Adresse) des Vorgangs<br>
+            Zugehöriger Vorgang (COOELAK@1.1001:referrednumber)<br>
             Wenn kein Vorgang angegeben wird, soll das erzeugte interne Dokument am Schreibtisch des Benutzers abgelegt werden.
           example: COO.1.2301.1.1042432
         shortname:
@@ -29,10 +29,10 @@ components:
         doctemplate:
           type: string
           description: |
-            Vorlage\
-            Der Name einer im System vorhandenen Vorlage kann angegeben werden.\
+            Vorlage<br>
+            Der Name einer im System vorhandenen Vorlage kann angegeben werden.<br>
             In dieser Vorlage können beispielsweise Metadaten 
-            automatisiert über DocProperty ausgegeben werden.\
+            automatisiert über DocProperty ausgegeben werden.<br>
             Die angegebene Vorlage muss im angegebenen Dokumenttyp enthalten
             sein.
 

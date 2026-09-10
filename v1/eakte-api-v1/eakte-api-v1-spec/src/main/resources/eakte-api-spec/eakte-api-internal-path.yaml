@@ -3,11 +3,11 @@ post:
     - /internal
   summary: Anlegen eines internen Dokuments
   description: |
-    Neues Internes Dokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).\
+    Neues Internes Dokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).<br>
     Wenn das Eingangsdokument keinem Vorgang zugeordnet ist (referrednumber == NULL), 
     wird eine neue Aktivität „Intern“ im Arbeitsvorrat erzeugt.
     
-    Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.\
+    Standardmäßig wird diese dem Benutzer mit dessen Standardrolle in dessen Arbeitsvorrat vorgeschrieben.<br>
     Sollte jedoch der Parameter useOE == true sein, 
     so soll die Aktivität „Intern“ der OE (aus der Standardrolle des Benutzers) vorgeschrieben werden – 
     in diesem Fall, soll bei der Vorschreibung kein Benutzer eingetragen werden.

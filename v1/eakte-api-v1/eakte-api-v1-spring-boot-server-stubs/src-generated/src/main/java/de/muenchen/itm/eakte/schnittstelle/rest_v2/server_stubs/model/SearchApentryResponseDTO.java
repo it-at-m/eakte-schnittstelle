@@ -43,11 +43,11 @@ public class SearchApentryResponseDTO {
   }
 
   /**
-   * Auflistung aller Objekte, auf die der Suchstring zutrifft.\\ Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind. 
+   * Auflistung aller Objekte, auf die der Suchstring zutrifft.<br> Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind. 
    * @return giobjecttype
    */
   @Valid 
-  @Schema(name = "giobjecttype", description = "Auflistung aller Objekte, auf die der Suchstring zutrifft.\\ Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "giobjecttype", description = "Auflistung aller Objekte, auf die der Suchstring zutrifft.<br> Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind. ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("giobjecttype")
   public List<@Valid Objektreferenz> getGiobjecttype() {
     return giobjecttype;

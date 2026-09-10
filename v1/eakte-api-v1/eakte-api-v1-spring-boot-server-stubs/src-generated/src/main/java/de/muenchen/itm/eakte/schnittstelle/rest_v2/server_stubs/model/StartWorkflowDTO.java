@@ -41,11 +41,11 @@ public class StartWorkflowDTO {
   }
 
   /**
-   * COO-Adresse der Muster für Verfügung (COOWF@1.1:PrescriptionTemplate)\\ Die COO-Adresse findet man über die GUI der eAkte, wenn man im Schreibtisch \"Suche\" ausführt, nach Muster für Verfügungen sucht.  In den Eigenschaften (im Tab Erstellung) der entsprechenden Mustervorlage steht die COO-Adresse.  Anmerkung: \\ Der Titel ist nicht eindeutig, da es im System mehrere „Muster für Verfügung“ mit dem gleichen Namen geben kann. 
+   * COO-Adresse der Muster für Verfügung (COOWF@1.1:PrescriptionTemplate)<br> Die COO-Adresse findet man über die GUI der eAkte, wenn man im Schreibtisch \"Suche\" ausführt, nach Muster für Verfügungen sucht.  In den Eigenschaften (im Tab Erstellung) der entsprechenden Mustervorlage steht die COO-Adresse.  Anmerkung: <br> Der Titel ist nicht eindeutig, da es im System mehrere „Muster für Verfügung“ mit dem gleichen Namen geben kann. 
    * @return workflowpattern
    */
   @NotNull 
-  @Schema(name = "workflowpattern", example = "COO.1.1001.1.6485", description = "COO-Adresse der Muster für Verfügung (COOWF@1.1:PrescriptionTemplate)\\ Die COO-Adresse findet man über die GUI der eAkte, wenn man im Schreibtisch \"Suche\" ausführt, nach Muster für Verfügungen sucht.  In den Eigenschaften (im Tab Erstellung) der entsprechenden Mustervorlage steht die COO-Adresse.  Anmerkung: \\ Der Titel ist nicht eindeutig, da es im System mehrere „Muster für Verfügung“ mit dem gleichen Namen geben kann. ", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "workflowpattern", example = "COO.1.1001.1.6485", description = "COO-Adresse der Muster für Verfügung (COOWF@1.1:PrescriptionTemplate)<br> Die COO-Adresse findet man über die GUI der eAkte, wenn man im Schreibtisch \"Suche\" ausführt, nach Muster für Verfügungen sucht.  In den Eigenschaften (im Tab Erstellung) der entsprechenden Mustervorlage steht die COO-Adresse.  Anmerkung: <br> Der Titel ist nicht eindeutig, da es im System mehrere „Muster für Verfügung“ mit dem gleichen Namen geben kann. ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("workflowpattern")
   public String getWorkflowpattern() {
     return workflowpattern;

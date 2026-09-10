@@ -5,13 +5,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>de.muenchen.eai</groupId>
+    <groupId>de.muenchen.oss.eakte</groupId>
     <artifactId>eakte-api-v1</artifactId>
     <version>1.2.7-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>eakte-api-v1-spec</artifactId>
+  <name>eakte-api-v1-spec</name>
 
   <build>
     <plugins>

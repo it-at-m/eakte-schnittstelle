@@ -4,9 +4,9 @@ get:
   summary: Untergeordnete Aktenplaneinträge auslesen
   description: |
     Untergeordnete Aktenplaneinträge eines Aktenplaneintrags werden durch Übergabe der COO-Adresse abgefragt. 
-    Als Rückgabewerte erhält den Namen des Aktenplaneintrags und seine COO-Adresse.\
+    Als Rückgabewerte erhält den Namen des Aktenplaneintrags und seine COO-Adresse.<br>
     Ist die übergebene Objektadresse kein Aktenplaneintrag, 
-    so wird eine Fehlermeldung des Standardprodukts zurückgegeben.\
+    so wird eine Fehlermeldung des Standardprodukts zurückgegeben.<br>
     Wenn bei der Rückgabe der gesamten Objektliste auf bestimmte Objekte kein Zugriff besteht, 
     werden diese Objekte mit der Information „Zugriff verweigert“ mit ausgegeben.
   operationId: ReadApentry

@@ -1,0 +1,40 @@
+meta {
+  name: SOAPSearch 2026-09-02 - eAkte-Fehlermessages
+  type: http
+  seq: 7
+}
+
+post {
+  url: https://eakte26-k2-authldap.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: inherit
+}
+
+params:query {
+  WEBSVC: FSCGOVXML_1_1001_DefaultWebServiceDefinition
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPSearch
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fsc="http://schemas.fabasoft.com/websvc/FSCGOVXML_1_1001_DefaultWebServiceDefinition/" xmlns:urn="urn:schemas-fabasoft-com:bai:search">
+      <soapenv:Body>
+          <urn:SOAPSearchRequest>
+              <urn:query>
+                SELECT COOSYSTEM@1.1:objname 
+                FROM COOSYSTEM@1.1:ErrorMessage
+                WHERE .COOSYSTEM@1.1:component IN (COO.1.1001.1.124100,COO.1.1001.1.58700, COO.1.1001.1.63100)
+              </urn:query>
+              <urn:attrlist>
+                  <urn:attr>COOSYSTEM@1.1:errtext</urn:attr>
+                  <urn:attr>COOSYSTEM@1.1:islowlevelerror</urn:attr>
+                  <urn:attr>COOSYSTEM@1.1:component.COOSYSTEM@1.1:objname</urn:attr>
+                  <urn:attr>COOSYSTEM@1.1:fullreference</urn:attr>
+              </urn:attrlist>
+          </urn:SOAPSearchRequest>
+      </soapenv:Body>
+  </soapenv:Envelope>
+}

@@ -20,14 +20,14 @@ components:
         referrednumber:
           type: string
           description: |
-            Objekt-ID (COO-Adresse) des Vorgangs\
+            Objekt-ID (COO-Adresse) des Vorgangs<br>
             Wenn kein Vorgang angegeben wird, soll das erzeugte Erledigungsdokument
             am Schreibtisch des Benutzers abgelegt werden.
           example: COO.1.2301.1.1042432
         referredincoming:
           type: string
           description: |
-            Bezug zum Eingang\
+            Bezug zum Eingang<br>
             Bei Bedarf kann die COO-Adresse des Eingangs angegeben werden,
             damit ein direkter Bezug zwischen Eingang und Erledigung hergestellt
             werden kann.
@@ -41,9 +41,9 @@ components:
         doctemplate:
           type: string
           description: |
-            Der Name einer im System vorhandenen Vorlage kann angegeben werden (COOELAK@1.1001:doctemplate).\
+            Der Name einer im System vorhandenen Vorlage kann angegeben werden (COOELAK@1.1001:doctemplate).<br>
             In dieser Vorlage können beispielsweise Metadaten automatisiert über
-            DocProperty ausgegeben werden.\
+            DocProperty ausgegeben werden.<br>
             Die angegebene Vorlage muss im angegebenen Dokumenttyp enthalten
             sein.
             Alternativ können finalisierte Schriftstücke auch über GiAttachmentType übertragen werden.
@@ -51,7 +51,7 @@ components:
         incattachments:
           type: string
           description: |
-            Sonstige Anlagen\
+            Sonstige Anlagen<br>
             Freitextfeld, um zusätzliche Anlagen zu benennen, die nicht elektronisch erfasst wurden (z.B. Baupläne)
           example: Ausfüllhilfe Antrag auf Baugenehmigung
         definition:

@@ -5,7 +5,7 @@ post:
   summary: Suche nach Objektnamen
   description: |
     Mit diesem Aufruf ist eine generische Suche möglich, mit dem ein Objekt bzw. 
-    Objekte auf Basis des Objektnamens gesucht und zurückgegeben werden können.\
+    Objekte auf Basis des Objektnamens gesucht und zurückgegeben werden können.<br>
     Bei Bedarf kann die Suche in einer weiteren Ausbaustufe der Schnittstelle 
     erweitert werden, sodass beispielsweise die Suche auch auf das Erstellungsdatum 
     oder das letzte Änderungsdatum von Objekten eingeschränkt werden kann.
@@ -47,7 +47,7 @@ post:
     deren Name entweder „Test-Eingangsstück“, „Tast-Eingangsstück“ oder 
     „T st-Eingangsstück“ ist. Dazu wird als Suchstring eingegeben: „T[e a]st-Eingangsstück“.
     
-    Hinweis:\
+    Hinweis:<br>
     Stornierte Objekte können nicht ausgelesen werden, d.h. Objekte mit dem Status „Storniert“ 
     [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.
   operationId: SearchObjName

@@ -3,7 +3,7 @@ put:
     - /revokeDepositObjects
   summary: z.A. aufheben für Akten oder Vorgänge
   description: |
-    Die angegebene Akte oder Vorgang wird z.A. aufgehoben.\
+    Die angegebene Akte oder Vorgang wird z.A. aufgehoben.<br>
     Wenn die z.A.-Setzung einer "Akte" aufgehoben wird, dann 
     * wird in der eAkte für die betreffende Akte der Wert im Feld "gültig bis" geleert
     * bleiben enthaltene Vorgänge z.A., können dann aber ggf. wieder in Bearbeitung genommen werden

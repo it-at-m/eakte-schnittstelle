@@ -9,10 +9,10 @@ components:
         workflowpattern:
           type: string
           description: |
-            COO-Adresse der Muster für Verfügung (COOWF@1.1:PrescriptionTemplate)\
+            COO-Adresse der Muster für Verfügung (COOWF@1.1:PrescriptionTemplate)<br>
             Die COO-Adresse findet man über die GUI der eAkte, wenn man im Schreibtisch "Suche" ausführt, nach Muster für Verfügungen sucht. 
             In den Eigenschaften (im Tab Erstellung) der entsprechenden Mustervorlage steht die COO-Adresse. 
-            Anmerkung: \
+            Anmerkung: <br>
             Der Titel ist nicht eindeutig, da es im System mehrere
             „Muster für Verfügung“ mit dem gleichen Namen geben kann.
           example: COO.1.1001.1.6485

@@ -26,7 +26,7 @@ components:
       name: userlogin
       in: header
       description: |
-        **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\
+        **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)<br>
         Log-in-Name des Benutzerobjekts
       required: true
       schema:
@@ -37,15 +37,15 @@ components:
       name: joboe
       in: header
       description: |
-        COO-Adresse der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.\
-        \
+        COO-Adresse der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.<br>
+        <br>
         Ohne Angabe der joboe und jobposition 
-        wird die eingestellte Standardrolle und OE des Nutzers in der eAkte verwendet.\
+        wird die eingestellte Standardrolle und OE des Nutzers in der eAkte verwendet.<br>
         Wenn eine bestimmte jobposition angegeben wird, unter der dieser Aufruf ausgeführt werden soll 
         muss auch die entsprechende joboe des Nutzers mit angegeben werden. 
-        Das kann z.B. notwendig sein, wenn bestimmte Funktionen nur durch Schriftgutverwalter oder Registratur ausgeführt werden dürfen.\
-        Über die OE wird der Mandant zugeordnet und entsprechend die Berechtigungen geprüft.\
-        Hinweis:\
+        Das kann z.B. notwendig sein, wenn bestimmte Funktionen nur durch Schriftgutverwalter oder Registratur ausgeführt werden dürfen.<br>
+        Über die OE wird der Mandant zugeordnet und entsprechend die Berechtigungen geprüft.<br>
+        Hinweis:<br>
         Die COO-Adresse für die joboe muss im Fachverfahren in einer Konfigurationsdatei hintelegt werden, da sie nicht per Schnittstelle ausgelesen werden kann und sich ggf. ändern kann. 
         Meistens ist die joboe innerhalb eines Fachbereichs für alle Benutzer gleich, so dass sie bei Änderungen einfach zu verwalten ist.
       required: false
@@ -68,7 +68,7 @@ components:
         * Vorlagenadministrator - TemplateAdministrator
         * Vorlagenverwaltung - TemplateManager
         
-        Es dürfen ausschließlich die o.g. genannten Stellen der LHM verwendet werden.\
+        Es dürfen ausschließlich die o.g. genannten Stellen der LHM verwendet werden.<br>
         Bitte verwenden Sie die englische Bezeichnung.
         
         Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt!
@@ -106,7 +106,7 @@ components:
       name: propbostate
       in: header
       description: |
-        Bearbeitungsstatus der darunterliegenden Objekte\
+        Bearbeitungsstatus der darunterliegenden Objekte<br>
         Es muss die COO-Adresse des Bearbeitungsstatus übergeben werden. 
         Die Liste kann aus dem jeweiligen System generiert werden (Suche nach Status Komponentenobjekt im Verwaltungswerkzeug)
         

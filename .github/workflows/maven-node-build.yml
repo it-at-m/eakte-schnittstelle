@@ -22,6 +22,8 @@ jobs:
         include: # hier müssen die Pfade angegeben werden
           - app-path: v1/eakte-eai
             build-image: true
+          - app-path: v1/eakte-api-v1
+            build-image: false
           - app-path: v2
             build-image: false # temporary as in the future there are multiple images for v2
 

@@ -3,7 +3,7 @@ get:
     - /files
   summary: Akte lesen
   description: |
-    Ausgabe der jeweiligen Metadaten der übergebenen Sachakte.\
+    Ausgabe der jeweiligen Metadaten der übergebenen Sachakte.<br>
     Stornierte Objekte können nicht ausgelesen werden. 
     D.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] 
     werden gefiltert und nicht zurückgegeben.

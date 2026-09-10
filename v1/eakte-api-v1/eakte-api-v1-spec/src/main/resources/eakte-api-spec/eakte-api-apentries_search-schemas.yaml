@@ -19,7 +19,7 @@ components:
         giobjecttype:
           type: array
           description: |
-            Auflistung aller Objekte, auf die der Suchstring zutrifft.\
+            Auflistung aller Objekte, auf die der Suchstring zutrifft.<br>
             Rückgabe der Eigenschaften, die im Datentyp GIObjectType definiert sind.
           items:
             $ref: 'eakte-api--global-schemas.yaml#/components/schemas/Objektreferenz'

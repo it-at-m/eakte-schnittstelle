@@ -25,7 +25,7 @@ components:
         objnameprocedure:
           type: "string"
           description: | 
-            Objektname des erzeugten/gefundenen Vorgangs\
+            Objektname des erzeugten/gefundenen Vorgangs<br>
             Der Name wird in der eAkte gebildet aus dem "Titel des Vorgangs" 
             ("Aktenplankennzeichen des Aktenplankennzeichens, in dem die Akte liegt"-
             "laufende Nummer der Akte innerhalb des Aktenplaneintrags"-

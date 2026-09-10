@@ -61,11 +61,11 @@ public class CreateCompleteProcedureBusinessDataResponseDTO {
   }
 
   /**
-   * Objektname des erzeugten/gefundenen Vorgangs\\ Der Name wird in der eAkte gebildet aus dem \"Titel des Vorgangs\"  (\"Aktenplankennzeichen des Aktenplankennzeichens, in dem die Akte liegt\"- \"laufende Nummer der Akte innerhalb des Aktenplaneintrags\"- laufende Nummer des Vorgangs innerhalb des Akte\") 
+   * Objektname des erzeugten/gefundenen Vorgangs<br> Der Name wird in der eAkte gebildet aus dem \"Titel des Vorgangs\"  (\"Aktenplankennzeichen des Aktenplankennzeichens, in dem die Akte liegt\"- \"laufende Nummer der Akte innerhalb des Aktenplaneintrags\"- laufende Nummer des Vorgangs innerhalb des Akte\") 
    * @return objnameprocedure
    */
   
-  @Schema(name = "objnameprocedure", example = "2026-05-28 Anträge Firma XY-4 (2002-10-0004)", description = "Objektname des erzeugten/gefundenen Vorgangs\\ Der Name wird in der eAkte gebildet aus dem \"Titel des Vorgangs\"  (\"Aktenplankennzeichen des Aktenplankennzeichens, in dem die Akte liegt\"- \"laufende Nummer der Akte innerhalb des Aktenplaneintrags\"- laufende Nummer des Vorgangs innerhalb des Akte\") ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "objnameprocedure", example = "2026-05-28 Anträge Firma XY-4 (2002-10-0004)", description = "Objektname des erzeugten/gefundenen Vorgangs<br> Der Name wird in der eAkte gebildet aus dem \"Titel des Vorgangs\"  (\"Aktenplankennzeichen des Aktenplankennzeichens, in dem die Akte liegt\"- \"laufende Nummer der Akte innerhalb des Aktenplaneintrags\"- laufende Nummer des Vorgangs innerhalb des Akte\") ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("objnameprocedure")
   public Optional<String> getObjnameprocedure() {
     return objnameprocedure;

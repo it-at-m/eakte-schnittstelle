@@ -4,7 +4,7 @@ post:
     - /procedures
   summary: Vorgang anlegen
   description: |
-    Unter der angegebenen Akte wird ein neuer Vorgang (ohne Laufweg) angelegt.\
+    Unter der angegebenen Akte wird ein neuer Vorgang (ohne Laufweg) angelegt.<br>
     Für neue Vorgängen wird die auf der Sachakte angegebene Zugriffsdefinition verwendet.
   operationId: CreateProcedure
   parameters:
