@@ -2,10 +2,11 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft;
 
 import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.DmsException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.DmsResponseException;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.DmsTimeoutException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import jakarta.xml.ws.WebServiceException;
+import java.net.http.HttpConnectTimeoutException;
 import java.util.concurrent.Callable;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.cxf.binding.soap.SoapFault;
@@ -55,19 +56,23 @@ public class FabasoftRequestHandler {
      * @param e The exception which contains the error response.
      * @return An exception containing the extracted error response information.
      */
-    private DmsResponseException handleSoapFault(final String name, final WebServiceException e) {
-        if (e.getCause() instanceof SoapFault sf) {
+    private DmsException handleSoapFault(final String name, final WebServiceException e) {
+        return switch (e.getCause()) {
+        case SoapFault sf -> {
             if (sf.getDetail() == null) {
-                return new DmsResponseException(null, sf.getMessage(), e);
+                yield new DmsResponseException(null, sf.getMessage(), e);
             }
             final NodeList codeNodes = sf.getDetail().getElementsByTagNameNS(FS_NAMESPACE, TAG_ERROR_REFERENCE);
             final String code = codeNodes.getLength() == 1 ? codeNodes.item(0).getTextContent() : null;
-            return new DmsResponseException(code, sf.getMessage(), e);
+            yield new DmsResponseException(code, sf.getMessage(), e);
         }
-        throw fallbackEx(name, e);
+        case HttpConnectTimeoutException ignored -> new DmsTimeoutException(e);
+        case null, default -> fallbackEx(name, e);
+        };
     }
 
     private DmsException fallbackEx(final String name, final Exception e) {
+        log.debug("Falling back to default for exception {}", e.getClass().getName());
         return new DmsException("Error occurred during %s".formatted(name), e);
     }
 }
