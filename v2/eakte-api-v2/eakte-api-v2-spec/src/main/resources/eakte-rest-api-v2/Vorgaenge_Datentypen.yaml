@@ -14,45 +14,63 @@ components:
         Endpunktes, in diesem Fall die Verwendung des Filters 'Schriftgutebene=Vorgang').
       required:
         - id
-        - sachakte_id
+        - sachakteId
         - name
-        - eigenschaften_map
-        - eigenschaften_liste
+        - langname
+        - status
+        - acl
+        - organisationseinheit
+        - eigenschaftenMap
+        - eigenschaftenListe
       properties:
         id:
           type: string
-        sachakte_id:
+        sachakteId:
           type: string
         name:
           type: string
+        langname:
+          type: string
         betreff:
           type: string
-        eigenschaften_map:
-          type: object
-          additionalProperties: true
-        eigenschaften_liste:
+        # TODO use object references (coo and name) instead of only name?
+        schlagworte:
           type: array
           items:
-            $ref: 'Vorgaenge_Datentypen.yaml#/components/schemas/EigenschaftEintrag'
+            type: string
+        geschaeftsgangvermerk:
+          type: string
+          description: Geschäftsgangvermerk für Prozessverantwortlichen
+          example: Warte auf Rückmeldung
+        originalMedium:
+          type: string
+          enum:
+            - "elektronisch"
+            - "hybrid"
+            - "papier"
+        status:
+          type: string
+        bearbeitungsstatus:
+          type: string
+        acl:
+          type: string
+        organisationseinheit:
+          type: string
+        eigenschaftenMap:
+          type: object
+          additionalProperties: true
+        eigenschaftenListe:
+          type: array
+          items:
+            $ref: '_SucheDatentypen.yaml#/components/schemas/EigenschaftEintrag'
 
     VorgangListeResponse:
       type: object
       properties:
         anzahl:
-          $ref: '_GlobaleDatentypen.yaml#/components/schemas/AnzahlListenElemente'
+          $ref: '_SucheDatentypen.yaml#/components/schemas/AnzahlListenElemente'
         elemente:
           type: array
           description: Liste von Vorgängen
           items:
             $ref: 'Vorgaenge_Datentypen.yaml#/components/schemas/Vorgang'
-
-    EigenschaftEintrag:
-      type: object
-      required:
-        - reference
-        - value
-      properties:
-        reference:
-          type: string
-        value:
-          type: object

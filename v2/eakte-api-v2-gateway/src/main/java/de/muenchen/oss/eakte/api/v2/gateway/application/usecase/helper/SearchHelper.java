@@ -37,6 +37,7 @@ public class SearchHelper {
         final SearchResult result = searchOutPort.searchObject(context, new SearchRequest(
                 SearchType.SUBJECT_AREA,
                 null,
+                SearchRequest.LIMIT_MAX,
                 "EGOVTEMPLATE@15.1001:availabledefinitions is not null",
                 Set.of(fullreferenceAttr)));
         // extract attribute keys from result

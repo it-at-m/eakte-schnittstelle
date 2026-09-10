@@ -32,8 +32,8 @@ logging:
   level:
     root: INFO
     de.muenchen.oss.eakte: DEBUG
-    org.springframework.cache: TRACE
-    org.springframework.web: DEBUG
+#    org.springframework.cache: TRACE
+#    org.springframework.web: DEBUG
 
 # Define the local keycloak configuration here
 # Deduplication-only property
