@@ -33,19 +33,19 @@ class VorgangE2ETest extends VorgangE2eSupport {
 
             mockMvc.perform(get("/api/v2/vorgaenge")
                     .header("Authorization", "Bearer authenticatedUser")
-                    .header("Login-Name", "login")
-                    .header("Stelle", "role")
-                    .header("Organisationseinheit", "ou")
-                    .queryParam("scope", "scope-value")
+                    .header("EAkte-Login-Name", "login")
+                    .header("EAkte-Rolle", "role")
+                    .header("EAkte-Organisationseinheit", "ou")
+                    .queryParam("limit", "123")
                     .queryParam("bedingungen", "where query")
                     .queryParam("eigenschaften", "custom.attribute"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.anzahl").value(1))
                     .andExpect(jsonPath("$.elemente[0].id").value("COO.1.2.3"))
-                    .andExpect(jsonPath("$.elemente[0].sachakte_id").value("file-id"))
-                    .andExpect(jsonPath("$.elemente[0].name").value("procedure-name"))
+                    .andExpect(jsonPath("$.elemente[0].sachakteId").value("file-id"))
+                    .andExpect(jsonPath("$.elemente[0].name").value("short-name"))
                     .andExpect(jsonPath("$.elemente[0].betreff").value("subject"))
-                    .andExpect(jsonPath("$.elemente[0].eigenschaften_map['custom.attribute_1']")
+                    .andExpect(jsonPath("$.elemente[0].eigenschaftenMap['custom.attribute_1']")
                             .value("custom-value"));
 
             verifySearchRequest("where query", "custom.attribute");
@@ -57,11 +57,11 @@ class VorgangE2ETest extends VorgangE2eSupport {
 
             mockMvc.perform(get("/api/v2/vorgaenge")
                     .header("Authorization", "Bearer authenticatedUser")
-                    .header("Login-Name", "login")
+                    .header("EAkte-Login-Name", "login")
                     .queryParam("bedingungen", "where query"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.anzahl").value(1))
-                    .andExpect(jsonPath("$.elemente[0].eigenschaften_map['custom.attribute_1']")
+                    .andExpect(jsonPath("$.elemente[0].eigenschaftenMap['custom.attribute_1']")
                             .value("custom-value"));
 
             verifySearchRequest("availabledefinitions is not null", "fullreference");
@@ -80,7 +80,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
 
             mockMvc.perform(get("/api/v2/vorgaenge")
                     .header("Authorization", "Bearer authenticatedUser")
-                    .header("Login-Name", "login")
+                    .header("EAkte-Login-Name", "login")
                     .queryParam("bedingungen", "where query")
                     .queryParam("eigenschaften", "custom.attribute"))
                     .andExpect(status().isInternalServerError());

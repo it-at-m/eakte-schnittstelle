@@ -1,7 +1,5 @@
 package de.muenchen.oss.eakte.api.v2.gateway.application.usecase;
 
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.PARENT_ID;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.SUBJECT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.any;
@@ -17,6 +15,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.StringAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +37,8 @@ class VorgangUseCaseTest {
 
     @Nested
     class SearchVorgang {
+        public static final int EXAMPLE_LIMIT = 123;
+
         @Test
         void givenClientAttributes_thenSearchWithDefaultAndClientAttributes() {
             final SearchResult expectedResult = new SearchResult(List.of(new SearchResult.ResultObject(
@@ -46,17 +47,19 @@ class VorgangUseCaseTest {
 
             final SearchResult result = useCase.searchVorgang(
                     REQUEST_CONTEXT,
-                    "scope-value",
+                    EXAMPLE_LIMIT,
                     "query-value",
                     Set.of("custom.attribute"));
 
             assertSame(expectedResult, result);
             final SearchRequest request = verifySearchRequest();
             assertEquals(REQUEST_CONTEXT, capturedContext());
-            assertEquals("scope-value", request.scope());
+            assertEquals(EXAMPLE_LIMIT, request.limit());
             assertEquals("query-value", request.query());
+            final Set<String> expectedAttrs = new HashSet<>(VorgangUseCase.DEFAULT_ATTRIBUTES);
+            expectedAttrs.add("custom.attribute");
             assertEquals(
-                    Set.of(PARENT_ID.getReference(), SUBJECT.getReference(), "custom.attribute"),
+                    expectedAttrs,
                     request.attributes());
             verify(searchOutPort).searchObject(any(), any());
         }
@@ -75,7 +78,7 @@ class VorgangUseCaseTest {
                                     new StringAttribute(fullReference, java.math.BigInteger.ONE, dfvAttribute))))),
                             expectedResult);
 
-            final SearchResult result = useCase.searchVorgang(REQUEST_CONTEXT, null, "query-value", null);
+            final SearchResult result = useCase.searchVorgang(REQUEST_CONTEXT, EXAMPLE_LIMIT, "query-value", null);
 
             final ArgumentCaptor<SearchRequest> requestCaptor = ArgumentCaptor.forClass(SearchRequest.class);
             verify(searchOutPort, times(2)).searchObject(eq(REQUEST_CONTEXT), requestCaptor.capture());
@@ -85,7 +88,9 @@ class VorgangUseCaseTest {
             assertEquals(Set.of(fullReference),
                     requests.get(0).attributes());
             assertEquals("query-value", requests.get(1).query());
-            assertEquals(Set.of(PARENT_ID.getReference(), SUBJECT.getReference(), dfvAttribute),
+            final Set<String> expectedAttrs = new HashSet<>(VorgangUseCase.DEFAULT_ATTRIBUTES);
+            expectedAttrs.add(dfvAttribute);
+            assertEquals(expectedAttrs,
                     requests.get(1).attributes());
             assertSame(expectedResult, result);
             verify(searchOutPort, times(2)).searchObject(any(), any());
