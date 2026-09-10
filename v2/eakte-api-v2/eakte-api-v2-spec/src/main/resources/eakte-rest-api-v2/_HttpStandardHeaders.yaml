@@ -1,8 +1,0 @@
-components:
-  headers:
-
-    Location:
-      description: URL der neu angelegten Ressource
-      schema:
-        type: string
-      example: /v2/Akten/COO.1.2.3.4
