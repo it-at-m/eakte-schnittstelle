@@ -39,7 +39,7 @@
       <plugin>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-codegen-plugin</artifactId>
-        <version>4.2.0</version>  <!-- upgraded from 3.5.7 -->
+        <version>4.2.3</version>  <!-- upgraded from 3.5.7 -->
         <executions>
           <execution>
             <id>generate-sources-faba</id>
