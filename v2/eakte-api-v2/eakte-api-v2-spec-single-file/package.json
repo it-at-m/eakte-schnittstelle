@@ -1,7 +1,7 @@
 {
   "private": true,
   "devDependencies": {
-    "@redocly/cli": "^2.0.0"
+    "@redocly/cli": "^2.30.1"
   },
   "scripts": {
     "openapi:bundle": "redocly bundle target/unpacked-dependencies/eakte-rest-api-v2/__ServiceDefinition.yaml -o src/main/resources/eakte-rest-api-v2-spec-single-file.yaml",
