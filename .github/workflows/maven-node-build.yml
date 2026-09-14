@@ -21,11 +21,10 @@ jobs:
       matrix:
         include: # hier müssen die Pfade angegeben werden
           - app-path: v1/eakte-eai
-            build-image: true
+            image-path: v1/eakte-eai
           - app-path: v1/eakte-api-v1
-            build-image: false
           - app-path: v2
-            build-image: false # temporary as in the future there are multiple images for v2
+            image-path: v2/eakte-api-v2-gateway
 
     steps:
       - uses: it-at-m/lhm_actions/action-templates/actions/action-checkout@7cb754b2056cebda6c36db344434f85be398c493 # v1.0.25
@@ -49,10 +48,10 @@ jobs:
           app-path: ${{ matrix.app-path }}
           java-version: "21"
       - uses: it-at-m/lhm_actions/action-templates/actions/action-build-image@7cb754b2056cebda6c36db344434f85be398c493 # v1.0.25
-        if: github.ref == 'refs/heads/main' && matrix.build-image
+        if: github.ref == 'refs/heads/main' && matrix.image-path
         with:
-          path: ${{ matrix.app-path }}
-          image-name: ${{ matrix.app-path }}
+          path: ${{ matrix.image-path }}
+          image-name: ${{ matrix.image-path }}
           artifact-name: ${{ join(steps.*.outputs.artifact-name) }}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
           registry-username: ${{ github.actor }}
