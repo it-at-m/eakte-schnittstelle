@@ -24,7 +24,7 @@
 	<dms-eai.version>1.10</dms-eai.version>
 	<wsdl.version>1.11</wsdl.version>
 	<api.version>1.2.6</api.version>
-	<spotless.version>2.43.0</spotless.version>
+	<spotless.version>2.46.1</spotless.version>
 	<api.path>/api</api.path>
 	<!-- Rückschritte im Pfad um die Angabe im api.path wieder rückwärts zu überspringen -->
 	<api.back-to-root>../..</api.back-to-root>
