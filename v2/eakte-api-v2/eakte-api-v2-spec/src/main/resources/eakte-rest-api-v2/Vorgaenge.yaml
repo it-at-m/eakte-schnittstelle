@@ -9,11 +9,11 @@ get:
   operationId: SucheVorgaenge
   parameters:
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
-    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Rolle'
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
-    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Scope'
-    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Bedingungen'
-    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Eigenschaften'
+    - $ref: '_SucheDatentypen.yaml#/components/parameters/Limit'
+    - $ref: '_SucheDatentypen.yaml#/components/parameters/Bedingungen'
+    - $ref: '_SucheDatentypen.yaml#/components/parameters/Eigenschaften'
   responses:
     '200':
       description: OK
