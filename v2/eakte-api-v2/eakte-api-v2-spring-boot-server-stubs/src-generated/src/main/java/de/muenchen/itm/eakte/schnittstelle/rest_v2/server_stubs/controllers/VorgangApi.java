@@ -60,7 +60,7 @@ public interface VorgangApi {
      * @param eigenschaften  (optional)
      * @return OK (status code 200)
      *         or Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten. (status code 400)
-     *         or Falscher oder fehlende Anmeldeinformationen. (status code 401)
+     *         or Falsche oder fehlende Anmeldeinformationen. (status code 401)
      *         or Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten. (status code 500)
      */
     @Operation(
@@ -75,7 +75,7 @@ public interface VorgangApi {
             @ApiResponse(responseCode = "400", description = "Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Falscher oder fehlende Anmeldeinformationen.", content = {
+            @ApiResponse(responseCode = "401", description = "Falsche oder fehlende Anmeldeinformationen.", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             }),
             @ApiResponse(responseCode = "500", description = "Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.", content = {

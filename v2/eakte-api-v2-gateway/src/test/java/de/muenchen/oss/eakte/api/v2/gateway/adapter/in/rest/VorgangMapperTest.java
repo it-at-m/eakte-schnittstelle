@@ -45,9 +45,9 @@ class VorgangMapperTest {
         assertEquals("subject", result.getBetreff().orElseThrow());
         assertEquals(List.of("keyword"), result.getSchlagworte());
         assertEquals("note", result.getGeschaeftsgangvermerk().orElseThrow());
-        assertEquals(Vorgang.OriginalMediumEnum.ELEKTRONISCH, result.getOriginalMedium().orElseThrow());
+        assertEquals(Vorgang.OriginalMediumEnum.ELEKTRONISCH, result.getOriginalMedium());
         assertEquals("1", result.getStatus());
-        assertEquals("processing", result.getBearbeitungsstatus().orElseThrow());
+        assertEquals("processing", result.getBearbeitungsstatus());
         assertEquals("acl", result.getAcl());
         assertEquals("ou", result.getOrganisationseinheit());
         assertEquals(Map.of("custom.attribute_1", "custom-value"), result.getEigenschaftenMap());

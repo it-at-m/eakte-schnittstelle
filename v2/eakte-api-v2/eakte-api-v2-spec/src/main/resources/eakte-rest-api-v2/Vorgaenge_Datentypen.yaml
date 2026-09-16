@@ -17,7 +17,9 @@ components:
         - sachakteId
         - name
         - langname
+        - originalMedium
         - status
+        - bearbeitungsstatus
         - acl
         - organisationseinheit
         - eigenschaftenMap

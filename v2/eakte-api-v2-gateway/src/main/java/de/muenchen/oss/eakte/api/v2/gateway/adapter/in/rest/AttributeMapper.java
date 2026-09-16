@@ -96,11 +96,12 @@ class AttributeMapper {
         if (values == null || values.isEmpty()) {
             return Optional.empty();
         }
-        if (!type.isInstance(values.getFirst())) {
-            throw new IllegalArgumentException(
-                    "Value type mismatch for key: %s. Expected %s but got %s"
-                            .formatted(key, type.getName(), values.getFirst().getClass().getName()));
-        }
+        values.stream().filter(i -> !type.isInstance(i)).findFirst()
+                .ifPresent(i -> {
+                    throw new IllegalArgumentException(
+                            "Value type mismatch for key: %s. Expected %s but got %s"
+                                    .formatted(key, type.getName(), i.getClass().getName()));
+                });
         @SuppressWarnings("unchecked")
         final List<T> typedValues = (List<T>) values;
         return Optional.of(typedValues);

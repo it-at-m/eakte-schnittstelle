@@ -82,11 +82,11 @@ public class Vorgang {
     }
   }
 
-  private Optional<OriginalMediumEnum> originalMedium = Optional.empty();
+  private OriginalMediumEnum originalMedium;
 
   private String status;
 
-  private Optional<String> bearbeitungsstatus = Optional.empty();
+  private String bearbeitungsstatus;
 
   private String acl;
 
@@ -105,12 +105,14 @@ public class Vorgang {
   /**
    * Constructor with only required parameters
    */
-  public Vorgang(String id, String sachakteId, String name, String langname, String status, String acl, String organisationseinheit, Map<String, Object> eigenschaftenMap, List<@Valid EigenschaftEintrag> eigenschaftenListe) {
+  public Vorgang(String id, String sachakteId, String name, String langname, OriginalMediumEnum originalMedium, String status, String bearbeitungsstatus, String acl, String organisationseinheit, Map<String, Object> eigenschaftenMap, List<@Valid EigenschaftEintrag> eigenschaftenListe) {
     this.id = id;
     this.sachakteId = sachakteId;
     this.name = name;
     this.langname = langname;
+    this.originalMedium = originalMedium;
     this.status = status;
+    this.bearbeitungsstatus = bearbeitungsstatus;
     this.acl = acl;
     this.organisationseinheit = organisationseinheit;
     this.eigenschaftenMap = eigenschaftenMap;
@@ -273,7 +275,7 @@ public class Vorgang {
   }
 
   public Vorgang originalMedium(OriginalMediumEnum originalMedium) {
-    this.originalMedium = Optional.ofNullable(originalMedium);
+    this.originalMedium = originalMedium;
     return this;
   }
 
@@ -281,15 +283,15 @@ public class Vorgang {
    * Get originalMedium
    * @return originalMedium
    */
-  
-  @Schema(name = "originalMedium", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @NotNull 
+  @Schema(name = "originalMedium", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("originalMedium")
-  public Optional<OriginalMediumEnum> getOriginalMedium() {
+  public OriginalMediumEnum getOriginalMedium() {
     return originalMedium;
   }
 
   @JsonProperty("originalMedium")
-  public void setOriginalMedium(Optional<OriginalMediumEnum> originalMedium) {
+  public void setOriginalMedium(OriginalMediumEnum originalMedium) {
     this.originalMedium = originalMedium;
   }
 
@@ -315,7 +317,7 @@ public class Vorgang {
   }
 
   public Vorgang bearbeitungsstatus(String bearbeitungsstatus) {
-    this.bearbeitungsstatus = Optional.ofNullable(bearbeitungsstatus);
+    this.bearbeitungsstatus = bearbeitungsstatus;
     return this;
   }
 
@@ -323,15 +325,15 @@ public class Vorgang {
    * Get bearbeitungsstatus
    * @return bearbeitungsstatus
    */
-  
-  @Schema(name = "bearbeitungsstatus", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @NotNull 
+  @Schema(name = "bearbeitungsstatus", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("bearbeitungsstatus")
-  public Optional<String> getBearbeitungsstatus() {
+  public String getBearbeitungsstatus() {
     return bearbeitungsstatus;
   }
 
   @JsonProperty("bearbeitungsstatus")
-  public void setBearbeitungsstatus(Optional<String> bearbeitungsstatus) {
+  public void setBearbeitungsstatus(String bearbeitungsstatus) {
     this.bearbeitungsstatus = bearbeitungsstatus;
   }
 
