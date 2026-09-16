@@ -38,6 +38,7 @@ public class FabasoftConfiguration {
         final BindingProvider bp = (BindingProvider) soapClient;
         final Map<String, Object> ctx = bp.getRequestContext();
         ctx.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, fabasoftProperties.getUrl());
+        ctx.put(HTTPConduit.PROCESS_FAULT_ON_HTTP_400, true);
         @SuppressWarnings("PMD.CloseResource")
         final Client client = ClientProxy.getClient(soapClient);
         final HTTPConduit conduit = (HTTPConduit) client.getConduit();

@@ -28,7 +28,10 @@ abstract class VorgangE2eSupport extends AbstractWireMockE2eTest {
 
     protected void stubSoapFailure() {
         wireMock.stubFor(post(urlPathEqualTo("/"))
-                .willReturn(aResponse().withStatus(500).withHeader("Content-Type", SOAP_CONTENT_TYPE)));
+                .willReturn(aResponse()
+                        .withStatus(500)
+                        .withHeader("Content-Type", SOAP_CONTENT_TYPE)
+                        .withBody(soapFault())));
     }
 
     protected void verifySearchRequest(final String query, final String attribute) {
@@ -90,5 +93,23 @@ abstract class VorgangE2eSupport extends AbstractWireMockE2eTest {
                   <soapenv:Body>%s</soapenv:Body>
                 </soapenv:Envelope>
                 """.formatted(body);
+    }
+
+    private String soapFault() {
+        return """
+                <?xml version="1.0" encoding="UTF-8"?>
+                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                        xmlns:fs="http://schemas.fabasoft.com/faultdetails">
+                  <soapenv:Body>
+                    <soapenv:Fault>
+                      <faultcode>soapenv:Server</faultcode>
+                      <faultstring>Fabasoft service failure</faultstring>
+                      <detail>
+                        <fs:ErrorReference>TEST_ERROR</fs:ErrorReference>
+                      </detail>
+                    </soapenv:Fault>
+                  </soapenv:Body>
+                </soapenv:Envelope>
+                """;
     }
 }

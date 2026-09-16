@@ -3,7 +3,11 @@ package de.muenchen.oss.eakte.api.v2.gateway.application.port.out;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.validation.annotation.Validated;
 
+@Validated
 public interface SearchOutPort {
     /**
      * Search for objects matching the conditions.
@@ -12,5 +16,5 @@ public interface SearchOutPort {
      * @param request The parameters for the search.
      * @return The search result including the found objects.
      */
-    SearchResult searchObject(RequestContext requestContext, SearchRequest request);
+    SearchResult searchObject(@NotNull @Valid RequestContext requestContext, @NotNull @Valid SearchRequest request);
 }
