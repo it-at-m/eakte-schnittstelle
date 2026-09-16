@@ -148,9 +148,9 @@
               <output>${project.basedir}/src-generated</output>
 
               <generatorName>spring</generatorName>
-              <apiPackage>de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.controllers</apiPackage>
-              <modelPackage>de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model</modelPackage>
-              <invokerPackage>de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.invokers</invokerPackage>
+              <apiPackage>de.muenchen.itm.eakte.schnittstelle.rest_v1.server_stubs.controllers</apiPackage>
+              <modelPackage>de.muenchen.itm.eakte.schnittstelle.rest_v1.server_stubs.model</modelPackage>
+              <invokerPackage>de.muenchen.itm.eakte.schnittstelle.rest_v1.server_stubs.invokers</invokerPackage>
 
               <configOptions>
                 <!-- See https://openapi-generator.tech/docs/generators/spring/#config-options -->
