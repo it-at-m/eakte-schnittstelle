@@ -42,6 +42,8 @@
     <module>eakte-api-v1-spec</module>
     <module>eakte-api-v1-spec-single-file</module>
     <module>eakte-api-v1-spring-boot-server-stubs</module>
+    <module>eakte-api-v1-spring-client</module>
+    <module>eakte-api-v1-spring-starter</module>
   </modules>
 
 
