@@ -16,3 +16,24 @@ Quelltext und lauffähiges Image des eAkte-EAI-Adapters:
 
 - **Source Code:** [v1/eakte-eai](https://github.com/it-at-m/eakte-schnittstelle/tree/main/v1/eakte-eai])
 - **Container Image:** [ghcr.io/it-at-m/eakte-schnittstelle/v1/eakte-eai](https://github.com/it-at-m/eakte-schnittstelle/pkgs/container/eakte-schnittstelle%2Fv1%2Feakte-eai)
+
+## Spring Boot Client
+
+```xml
+<dependencies>
+    <dependency>de.muenchen.oss.eakte</dependency>
+    <dependency>eakte-api-v1-spring-starter</dependency>
+    <version>...</version>
+</dependencies>
+```
+
+### Configuration
+
+```yaml
+eakte:
+  base-url: https://example.com/api
+  username:
+  password:
+  connection-timeout: 30s # default
+  read-timeout: 2m # default
+```
