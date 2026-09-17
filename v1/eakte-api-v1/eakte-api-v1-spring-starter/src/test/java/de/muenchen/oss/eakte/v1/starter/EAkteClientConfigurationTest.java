@@ -15,12 +15,18 @@ import de.muenchen.oss.eakte.v1.generated.model.CreateContentObjectAnfrageDTO;
 import de.muenchen.oss.eakte.v1.generated.model.CreateContentObjectAntwortDTO;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Set;
+import java.util.regex.Pattern;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.type.filter.RegexPatternTypeFilter;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
@@ -31,6 +37,9 @@ class EAkteClientConfigurationTest {
 
     @Autowired
     private ContentObjectsApi contentObjectsApi;
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @BeforeAll
     static void startWireMock() {
@@ -80,5 +89,28 @@ class EAkteClientConfigurationTest {
                 .withHeader("jobposition", equalTo("Official"))
                 .withRequestBody(containing("COO.1.2301.1.1042432"))
                 .withRequestBody(containing("file-content")));
+    }
+
+    @Test
+    void giveGeneratedApiClasses_thenEachIsRegisteredAsBean() {
+        final ClassPathScanningCandidateComponentProvider scanner =
+                new ClassPathScanningCandidateComponentProvider(false);
+        scanner.addIncludeFilter(new RegexPatternTypeFilter(Pattern.compile(".*Api")));
+
+        final Set<BeanDefinition> apiCandidates =
+                scanner.findCandidateComponents("de.muenchen.oss.eakte.v1.generated.api");
+        assertThat(apiCandidates).isNotEmpty();
+
+        apiCandidates
+                .forEach(candidate -> {
+                    try {
+                        final Class<?> apiClass = Class.forName(candidate.getBeanClassName());
+                        assertThat(applicationContext.getBeansOfType(apiClass))
+                                .as("Expected a bean for %s", apiClass.getName())
+                                .isNotEmpty();
+                    } catch (final ClassNotFoundException exception) {
+                        throw new IllegalStateException(exception);
+                    }
+                });
     }
 }
