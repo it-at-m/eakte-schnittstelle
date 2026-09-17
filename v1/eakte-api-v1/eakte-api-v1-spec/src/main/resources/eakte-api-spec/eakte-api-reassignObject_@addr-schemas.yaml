@@ -9,7 +9,8 @@ components:
         newtarget:
           type: string
           description: |
-            COO-Adresse des neuen darüberliegenden Objektes (Betreffseinheit oder Akte)
+            COO-Adresse des neuen darüberliegenden Objektes 
+            (Betreffseinheit bei einer Akte oder Akte bei einem Vorgang)
           example: COO.1.2302.1.76
         newoe:
           type: string
