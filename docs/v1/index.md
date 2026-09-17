@@ -35,5 +35,5 @@ eakte:
   username:
   password:
   connection-timeout: 30s # default
-  read-timeout: 2m # default
+  response-timeout: 120s # default
 ```
