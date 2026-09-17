@@ -26,14 +26,14 @@ public class VorgangController implements VorgangApi {
             final Optional<String> loginName,
             final Optional<String> stelle,
             final Optional<String> organisationseinheit,
-            final Optional<String> scope,
+            final Optional<Integer> limit,
             final Optional<String> bedingungen,
             final Optional<List<String>> eigenschaften,
             final HttpServletRequest servletRequest) {
         // call
         final RequestContext requestContext = new RequestContext(loginName, organisationseinheit, stelle);
         final SearchResult result = vorgangInPort.searchVorgang(requestContext,
-                scope.orElse(null),
+                limit.orElseThrow(),
                 bedingungen.orElseThrow(),
                 eigenschaften.map(HashSet::new).orElse(null));
         // respond

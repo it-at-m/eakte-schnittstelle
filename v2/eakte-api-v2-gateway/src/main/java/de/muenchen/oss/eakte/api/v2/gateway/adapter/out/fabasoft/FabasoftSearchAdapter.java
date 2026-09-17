@@ -54,10 +54,12 @@ public class FabasoftSearchAdapter implements SearchOutPort {
 
     private String buildQuery(final SearchRequest request) {
         final StringJoiner query = new StringJoiner(" ");
-        query.add("NOCHECK SELECT * FROM %s".formatted(request.type().getFabasoftReference()));
+        query.add("NOCHECK");
+        query.add("LIMIT %d".formatted(request.limit()));
         if (StringUtils.hasText(request.scope())) {
             query.add("SCOPE %s".formatted(request.scope()));
         }
+        query.add("SELECT * FROM %s".formatted(request.type().getFabasoftReference()));
         if (StringUtils.hasText(request.query())) {
             query.add("WHERE %s".formatted(request.query()));
         }
