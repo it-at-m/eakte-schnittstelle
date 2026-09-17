@@ -68,8 +68,7 @@ class EAkteClientConfigurationTest {
                             public String getFilename() {
                                 return "test.txt";
                             }
-                        }))
-                .block();
+                        }));
 
         assertThat(response.getObjid()).isEqualTo("COO.1.2301.1.1042465");
         WIREMOCK.verify(postRequestedFor(urlEqualTo("/contentObjects"))

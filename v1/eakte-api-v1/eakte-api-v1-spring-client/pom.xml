@@ -44,7 +44,7 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-webclient</artifactId>
+            <artifactId>spring-boot-restclient</artifactId>
         </dependency>
         <dependency>
             <groupId>jakarta.annotation</groupId>
@@ -106,14 +106,15 @@
                         </goals>
                         <configuration>
                             <inputSpec>${project.build.directory}/unpacked-dependencies/eakte-rest-api-v1/eakte-api--main.yaml</inputSpec>
-                            <library>webclient</library>
+                            <library>restclient</library>
                             <generatorName>java</generatorName>
 
                             <apiPackage>de.muenchen.oss.eakte.v1.generated.api</apiPackage>
                             <modelPackage>de.muenchen.oss.eakte.v1.generated.model</modelPackage>
                             <invokerPackage>de.muenchen.oss.eakte.v1.generated.dms</invokerPackage>
 
-                            <serverVariableOverrides />
+                            <generateModelTests>false</generateModelTests>
+                            <generateApiTests>false</generateApiTests>
                             <configOptions>
                                 <useJakartaEe>true</useJakartaEe>
                                 <useAbstractionForFiles>true</useAbstractionForFiles>

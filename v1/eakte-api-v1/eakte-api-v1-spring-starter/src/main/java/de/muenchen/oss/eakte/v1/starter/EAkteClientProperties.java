@@ -38,5 +38,5 @@ public class EAkteClientProperties {
      */
     @NotNull
     @DurationMin(millis = 1)
-    private Duration readTimeout = Duration.ofSeconds(120);
+    private Duration responseTimeout = Duration.ofSeconds(120);
 }

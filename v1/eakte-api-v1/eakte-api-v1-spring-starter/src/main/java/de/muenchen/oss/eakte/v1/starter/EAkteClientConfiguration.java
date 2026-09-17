@@ -2,27 +2,38 @@ package de.muenchen.oss.eakte.v1.starter;
 
 import de.muenchen.oss.eakte.v1.generated.api.*;
 import de.muenchen.oss.eakte.v1.generated.dms.ApiClient;
-import io.netty.channel.ChannelOption;
+import org.apache.hc.client5.http.config.ConnectionConfig;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
+import org.apache.hc.core5.util.Timeout;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.client.reactive.ReactorClientHttpConnector;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.netty.http.client.HttpClient;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.client.RestClient;
 
 @Configuration
 @EnableConfigurationProperties({EAkteClientProperties.class})
 public class EAkteClientConfiguration {
     @Bean
     protected ApiClient eakteApiClient(final EAkteClientProperties clientProperties) {
-        final HttpClient httpClient = HttpClient.create()
-                .responseTimeout(clientProperties.getReadTimeout())
-                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS,
-                        Math.toIntExact(clientProperties.getConnectionTimeout().toMillis()));
-        final WebClient webClient = WebClient.builder()
-                .clientConnector(new ReactorClientHttpConnector(httpClient))
+        final PoolingHttpClientConnectionManager connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
+                .setDefaultConnectionConfig(ConnectionConfig.custom()
+                        .setConnectTimeout(Timeout.of(clientProperties.getConnectionTimeout())).build())
                 .build();
-        final ApiClient apiClient = new ApiClient(webClient);
+        final CloseableHttpClient httpClient = HttpClients.custom()
+                .setConnectionManager(connectionManager)
+                .setDefaultRequestConfig(RequestConfig.custom()
+                        .setResponseTimeout(Timeout.of(clientProperties.getResponseTimeout()))
+                        .build())
+                .build();
+        final RestClient restClient = RestClient.builder()
+                .requestFactory(new HttpComponentsClientHttpRequestFactory(httpClient))
+                .build();
+        final ApiClient apiClient = new ApiClient(restClient);
         apiClient.setBasePath(clientProperties.getBaseUrl());
         apiClient.setUsername(clientProperties.getUsername());
         apiClient.setPassword(clientProperties.getPassword());
