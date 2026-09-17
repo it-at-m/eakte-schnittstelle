@@ -295,7 +295,7 @@
 						<groupId>org.projectlombok</groupId>
 						<artifactId>lombok</artifactId>
 						<!-- Version muss mit der in den spring-boot-dependencies bereitgestellten Lombok-Version übereinstimmen -->
-						<version>1.18.38</version>
+						<version>1.18.48</version>
 					</path>
 					<path>
 						<groupId>org.projectlombok</groupId>
