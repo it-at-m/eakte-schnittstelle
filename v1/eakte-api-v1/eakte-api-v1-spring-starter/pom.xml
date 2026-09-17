@@ -56,6 +56,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -86,6 +87,10 @@
                 <configuration>
                     <release>${java.version}</release>
                     <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.springframework.boot</groupId>                                                                                                                                         LSP
+                            <artifactId>spring-boot-configuration-processor</artifactId>                                                                                                                        LSPs will activate as files are read
+                        </path>
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>

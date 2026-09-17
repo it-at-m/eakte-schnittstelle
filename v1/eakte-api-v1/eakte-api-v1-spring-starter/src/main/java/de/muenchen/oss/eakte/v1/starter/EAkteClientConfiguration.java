@@ -16,7 +16,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
 
 @AutoConfiguration
-@EnableConfigurationProperties({EAkteClientProperties.class})
+@EnableConfigurationProperties(EAkteClientProperties.class)
 public class EAkteClientConfiguration {
     @Bean
     protected ApiClient eakteApiClient(final EAkteClientProperties clientProperties) {
