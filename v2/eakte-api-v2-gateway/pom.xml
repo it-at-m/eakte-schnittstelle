@@ -67,7 +67,7 @@
 
         <!-- Additional required dependencies -->
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version> <!-- Needed to make MapStruct and Lombok work together -->
-        <springdoc-openapi-starter-webmvc-ui.version>3.0.3</springdoc-openapi-starter-webmvc-ui.version>
+        <springdoc-openapi-starter-webmvc-ui.version>3.1.1</springdoc-openapi-starter-webmvc-ui.version>
         <eakte-api-v2-stubs.verion>2.0.1-SNAPSHOT</eakte-api-v2-stubs.verion>
         <eakte-fsgov-client.verion>2.0.1-SNAPSHOT</eakte-fsgov-client.verion>
         <cxf.version>4.2.2</cxf.version>
