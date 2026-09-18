@@ -35,7 +35,7 @@ Die gewünschte Version kann über Maven-Central ermittelt werden und die Depend
 </dependencies>
 ```
 
-Spätere automatische Upgrades auf verfügbare neuere Versionen können, wenn gewünscht, durch Aktivierung des Renovate-Bots bewerkstelligt werden (s. <https://github.com/renovatebot/renovate>).
+Spätere automatische Upgrades auf verfügbare neuere Versionen können, wenn gewünscht, durch Aktivierung des Renovate-Bots bewerkstelligt werden (s. https://refarch.oss.muenchen.de/templates/develop.html#lifecycle-management-lcm).
 
 ### Konfiguration der Verbindungsparameter
 
@@ -46,8 +46,8 @@ eakte:
   base-url: https://eakte-eai-adapter.your-domain.de
   username: eai-user
   password: eai-password
-  connection-timeout: 30s # default
-  response-timeout: 120s # default
+  connection-timeout: 30s  # default
+  response-timeout: 120s   # default
 ```
 
 ### Ausführung von Schnittstellen-Aufrufen im Java-Code
