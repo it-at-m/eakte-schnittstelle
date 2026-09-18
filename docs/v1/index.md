@@ -35,7 +35,7 @@ https://central.sonatype.com/search?q=eakte-api-v1-spring-starter
 </dependencies>
 ```
 
-Spätere automatische Upgrades auf verfügbare neuere Versionen können, wenn gewünscht, durch Aktivierung des Renovate-Bots bewerkstelligt werden (s. https://github.com/renovatebot/renovate).
+Spätere automatische Upgrades auf verfügbare neuere Versionen können, wenn gewünscht, durch Aktivierung des Renovate-Bots bewerkstelligt werden (s. https://refarch.oss.muenchen.de/templates/develop.html#lifecycle-management-lcm).
 
 ### Konfiguration der Verbindungsparameter
 
