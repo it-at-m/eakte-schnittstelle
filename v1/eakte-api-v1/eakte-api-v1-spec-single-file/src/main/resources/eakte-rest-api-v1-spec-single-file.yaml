@@ -834,6 +834,30 @@ paths:
         '500':
           $ref: '#/components/responses/500'
   /incomings/{objaddress}:
+    get:
+      tags:
+        - /incomings
+      summary: Eingang lesen
+      operationId: ReadIncoming
+      parameters:
+        - $ref: '#/components/parameters/x_anwendung'
+        - $ref: '#/components/parameters/userlogin'
+        - $ref: '#/components/parameters/joboe'
+        - $ref: '#/components/parameters/jobposition'
+        - $ref: '#/components/parameters/objaddress'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadIncomingAntwortDTO'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
     put:
       tags:
         - /incomings
@@ -3001,6 +3025,80 @@ components:
           example: LHM-Sitzung 14.10.2016 COO.1.2301.1.1041875
           items:
             $ref: '#/components/schemas/Objektreferenz'
+    ReadIncomingAntwortDTO:
+      type: object
+      properties:
+        shortname:
+          type: string
+          description: Titel
+          example: 2016 Anträge Firma XY
+        filesubj:
+          type: string
+          description: |
+            Betreff (mehrzeilig)
+            Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &amp;#10; in Abfragen unterstützt.
+          example: Alle Anträge der Firma XY aus dem Jahr 2016
+        objterms:
+          type: string
+          description: |
+            Schlagworte, Angabe der Schlagworte getrennt mit „;“. Kein Semikola
+            am Ende angeben.
+          example: Firma XY; Anträge; Anträge 2016
+        accdef:
+          type: string
+          description: |-
+            Zugriffsdefinition
+            Eindeutiger Name der Zugriffsdefinition. z.B.:
+            • Zugriffsdefinition für Schriftgutobjekte (allgemein lesbar)
+            • Zugriffsdefinition für Schriftgutobjekte der Organisationseinheit
+            • Zugriffsdefinition für Schriftgutobjekte der Organisationseinheit und Zentralregistratur
+            • Zugriffsdefinition für Schriftgutobjekte des Eigentümers
+            Hinweis: Hierbei kann die gewünschte Zugriffsdefinition der Akte gesetzt werden. Wenn kein Wert übergeben wird, wird die auf dem Aktenplaneintrag hinterlegte Zugriffsdefinition initialisiert.
+          example: Zugriffsdefinition für Schriftgutobjekte (allgemein lesbar)
+        objname:
+          type: string
+          description: Eingangskennzeichen
+          example: Eingangspost vom 21.10.2016 (0010 A20 011-4-0006-0001)
+        referrednumber:
+          type: string
+          description: Objekt-ID (COO-Adresse) der zugehörigen Vorgangs
+          example: COO.1.2301.1.1042432
+        foreignnr:
+          type: string
+          description: Fremdes Geschäftszeichen
+          example: A2016-10-2016-Landeshauptstadt-München
+        delivery:
+          type: string
+          description: Termin (Datum/Uhrzeit)
+          format: date-time
+          example: '2016-10-26T18:16:29+01:00'
+        documentremarks:
+          type: string
+          description: Dokumentbezogene Hinweise
+          example: Antrag auf Baugenehmigung
+        incattachments:
+          type: string
+          description: Sonstige Anlagen
+          example: Ausfüllhilfe Antrag auf Baugenehmigung
+        gimetadatatype:
+          type: array
+          description: Schriftstücke
+          example:
+            objaddress: COO.1.2301.1.1041875
+            filename: Antrag auf Baugenehmigung
+            fileextension: pdf
+            objclass: PDF-Dokument
+            contsize: '243'
+            objcreatedby:
+              string:
+                - musterfraum
+            objcreatedat: '2018-07-23T08:59:52+01:00'
+            objchangedby:
+              string:
+                - mustermannm
+            objmodifiedat: '2018-07-23T09:23:52+01:00'
+          items:
+            $ref: '#/components/schemas/MetadataReferenz'
     UpdateIncomingAnfrageDTO:
       type: object
       properties:

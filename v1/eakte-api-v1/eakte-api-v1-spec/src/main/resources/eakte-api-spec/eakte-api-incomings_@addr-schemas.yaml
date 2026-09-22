@@ -10,13 +10,13 @@ components:
           example: 2016 Anträge Firma XY
         filesubj:
           type: string
-          description: |2
+          description: |
                       Betreff (mehrzeilig)
-                      Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &#10; in Abfragen unterstützt.
+                      Mehrzeilige Felder werden mit Zeilenumbrüchen oder HTML Kodierung &amp;#10; in Abfragen unterstützt.
           example: Alle Anträge der Firma XY aus dem Jahr 2016
         objterms:
           type: string
-          description: >-
+          description: |
             Schlagworte, Angabe der Schlagworte getrennt mit „;“. Kein Semikola
             am Ende angeben.
           example: Firma XY; Anträge; Anträge 2016

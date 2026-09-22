@@ -9,6 +9,7 @@ import de.muenchen.itm.eakte.schnittstelle.rest_v1.server_stubs.model.CreateInco
 import de.muenchen.itm.eakte.schnittstelle.rest_v1.server_stubs.model.CreateIncomingBasisAnfrageDTO;
 import de.muenchen.itm.eakte.schnittstelle.rest_v1.server_stubs.model.DmsErrorResponse;
 import org.springframework.lang.Nullable;
+import de.muenchen.itm.eakte.schnittstelle.rest_v1.server_stubs.model.ReadIncomingAntwortDTO;
 import de.muenchen.itm.eakte.schnittstelle.rest_v1.server_stubs.model.UpdateIncomingAnfrageDTO;
 import de.muenchen.itm.eakte.schnittstelle.rest_v1.server_stubs.model.UpdateIncomingAntwortDTO;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
@@ -104,6 +105,70 @@ public interface IncomingsApi {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
                     String exampleString = "{ \"objname\" : \"objname\", \"giobjecttype\" : \"LHM-Sitzung 14.10.2016 COO.1.2301.1.1041875\", \"objid\" : \"objid\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"fehlerQuelle\" : \"INTERN\", \"text\" : \"text\", \"status\" : 0 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_READ_INCOMING = "/incomings/{objaddress}";
+    /**
+     * GET /incomings/{objaddress} : Eingang lesen
+     *
+     * @param userlogin **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)&lt;br&gt; Log-in-Name des Benutzerobjekts  (required)
+     * @param objaddress Objekt-ID (COO-Adresse) des Objekts (required)
+     * @param xAnwendung **Aufrufende Fachanwendung**  Für jeden Aufruf soll ersichtlich sein,  welche Fachanwendung den Aufruf getätigt hat.  Dies soll es ermöglichen, Requests und Responses den entsprechenden Fachverfahren zuzuordnen.  Für diesen Zweck wird sowohl im Request,  als auch im Response ein Parameter „businessapp“ angegeben.  Dieser Parameter ist optional und kann mit einem Namen befüllt werden.  Sofern der Aufruf einen Wert enthält, wird dieser auch im Response zurückgegeben.  Somit ist ein nachträgliches Filtern von Aufrufen möglich.  (optional)
+     * @param joboe COO-Adresse der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.&lt;br&gt; &lt;br&gt; Ohne Angabe der joboe und jobposition  wird die eingestellte Standardrolle und OE des Nutzers in der eAkte verwendet.&lt;br&gt; Wenn eine bestimmte jobposition angegeben wird, unter der dieser Aufruf ausgeführt werden soll  muss auch die entsprechende joboe des Nutzers mit angegeben werden.  Das kann z.B. notwendig sein, wenn bestimmte Funktionen nur durch Schriftgutverwalter oder Registratur ausgeführt werden dürfen.&lt;br&gt; Über die OE wird der Mandant zugeordnet und entsprechend die Berechtigungen geprüft.&lt;br&gt; Hinweis:&lt;br&gt; Die COO-Adresse für die joboe muss im Fachverfahren in einer Konfigurationsdatei hintelegt werden, da sie nicht per Schnittstelle ausgelesen werden kann und sich ggf. ändern kann.  Meistens ist die joboe innerhalb eines Fachbereichs für alle Benutzer gleich, so dass sie bei Änderungen einfach zu verwalten ist.  (optional)
+     * @param jobposition Referenz der Stelle (**Rolle des Nutzers** in der eAkte). * Schriftgutverwaltung - DocumentManager * Sachbearbeitung - OfficialInCharge * Fachadministration - OpAdm * Registratur - Official * Sekretariat - Secretary * Leitung - Head * Archivar - Registrar * Vorlagenadministrator - TemplateAdministrator * Vorlagenverwaltung - TemplateManager  Es dürfen ausschließlich die o.g. genannten Stellen der LHM verwendet werden.&lt;br&gt; Bitte verwenden Sie die englische Bezeichnung.  Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt!  (optional)
+     * @return OK (status code 200)
+     *         or Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten. (status code 400)
+     *         or Falscher oder fehlender technischer Nutzer. (status code 401)
+     *         or Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten. (status code 500)
+     */
+    @Operation(
+        operationId = "readIncoming",
+        summary = "Eingang lesen",
+        tags = { "/incomings" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ReadIncomingAntwortDTO.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = DmsErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Falscher oder fehlender technischer Nutzer."),
+            @ApiResponse(responseCode = "500", description = "Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.")
+        },
+        security = {
+            @SecurityRequirement(name = "basicAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = IncomingsApi.PATH_READ_INCOMING,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<ReadIncomingAntwortDTO> readIncoming(
+        @NotNull @Parameter(name = "userlogin", description = "**Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)<br> Log-in-Name des Benutzerobjekts ", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "userlogin", required = true) String userlogin,
+        @Parameter(name = "objaddress", description = "Objekt-ID (COO-Adresse) des Objekts", required = true, in = ParameterIn.PATH) @PathVariable("objaddress") String objaddress,
+        @Parameter(name = "x-anwendung", description = "**Aufrufende Fachanwendung**  Für jeden Aufruf soll ersichtlich sein,  welche Fachanwendung den Aufruf getätigt hat.  Dies soll es ermöglichen, Requests und Responses den entsprechenden Fachverfahren zuzuordnen.  Für diesen Zweck wird sowohl im Request,  als auch im Response ein Parameter „businessapp“ angegeben.  Dieser Parameter ist optional und kann mit einem Namen befüllt werden.  Sofern der Aufruf einen Wert enthält, wird dieser auch im Response zurückgegeben.  Somit ist ein nachträgliches Filtern von Aufrufen möglich. ", in = ParameterIn.HEADER) @RequestHeader(value = "x-anwendung", required = false) Optional<String> xAnwendung,
+        @Parameter(name = "joboe", description = "COO-Adresse der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.<br> <br> Ohne Angabe der joboe und jobposition  wird die eingestellte Standardrolle und OE des Nutzers in der eAkte verwendet.<br> Wenn eine bestimmte jobposition angegeben wird, unter der dieser Aufruf ausgeführt werden soll  muss auch die entsprechende joboe des Nutzers mit angegeben werden.  Das kann z.B. notwendig sein, wenn bestimmte Funktionen nur durch Schriftgutverwalter oder Registratur ausgeführt werden dürfen.<br> Über die OE wird der Mandant zugeordnet und entsprechend die Berechtigungen geprüft.<br> Hinweis:<br> Die COO-Adresse für die joboe muss im Fachverfahren in einer Konfigurationsdatei hintelegt werden, da sie nicht per Schnittstelle ausgelesen werden kann und sich ggf. ändern kann.  Meistens ist die joboe innerhalb eines Fachbereichs für alle Benutzer gleich, so dass sie bei Änderungen einfach zu verwalten ist. ", in = ParameterIn.HEADER) @RequestHeader(value = "joboe", required = false) Optional<String> joboe,
+        @Parameter(name = "jobposition", description = "Referenz der Stelle (**Rolle des Nutzers** in der eAkte). * Schriftgutverwaltung - DocumentManager * Sachbearbeitung - OfficialInCharge * Fachadministration - OpAdm * Registratur - Official * Sekretariat - Secretary * Leitung - Head * Archivar - Registrar * Vorlagenadministrator - TemplateAdministrator * Vorlagenverwaltung - TemplateManager  Es dürfen ausschließlich die o.g. genannten Stellen der LHM verwendet werden.<br> Bitte verwenden Sie die englische Bezeichnung.  Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt! ", in = ParameterIn.HEADER) @RequestHeader(value = "jobposition", required = false) Optional<String> jobposition,
+        @Parameter(hidden = true) final HttpServletRequest servletRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"filesubj\" : \"Alle Anträge der Firma XY aus dem Jahr 2016\", \"delivery\" : \"2016-10-26T18:16:29+01:00\", \"accdef\" : \"Zugriffsdefinition für Schriftgutobjekte (allgemein lesbar)\", \"objname\" : \"Eingangspost vom 21.10.2016 (0010 A20 011-4-0006-0001)\", \"gimetadatatype\" : { \"objaddress\" : \"COO.1.2301.1.1041875\", \"filename\" : \"Antrag auf Baugenehmigung\", \"fileextension\" : \"pdf\", \"objclass\" : \"PDF-Dokument\", \"contsize\" : \"243\", \"objcreatedby\" : { \"string\" : [ \"musterfraum\" ] }, \"objcreatedat\" : \"2018-07-23T08:59:52+01:00\", \"objchangedby\" : { \"string\" : [ \"mustermannm\" ] }, \"objmodifiedat\" : \"2018-07-23T09:23:52+01:00\" }, \"foreignnr\" : \"A2016-10-2016-Landeshauptstadt-München\", \"objterms\" : \"Firma XY; Anträge; Anträge 2016\", \"incattachments\" : \"Ausfüllhilfe Antrag auf Baugenehmigung\", \"documentremarks\" : \"Antrag auf Baugenehmigung\", \"shortname\" : \"2016 Anträge Firma XY\", \"referrednumber\" : \"COO.1.2301.1.1042432\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
