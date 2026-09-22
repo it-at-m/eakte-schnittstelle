@@ -17,12 +17,12 @@ management:
     health:
       show-details: always
 
-# Enable swagger-ui
 springdoc:
   swagger-ui:
-    enabled: true
-  api-docs:
-    enabled: true
+    oauth:
+      scopes: openid
+      realm: ${sso.realm}
+      client-id: ${sso.client}
 
 logging:
   include-application-group: false # disabled because application group is only relevant when deployed
@@ -40,9 +40,10 @@ logging:
 sso:
   url: http://keycloak:8100
   realm: local_realm
-  client: local
+  client: public_local
 
 refarch:
   security:
     logging-mode: all
     client-id: ${sso.client}
+    open-id-connect-url: ${sso.url}/auth/realms/${sso.realm}/.well-known/openid-configuration

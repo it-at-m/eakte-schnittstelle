@@ -14,10 +14,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.EnumAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.StringAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;

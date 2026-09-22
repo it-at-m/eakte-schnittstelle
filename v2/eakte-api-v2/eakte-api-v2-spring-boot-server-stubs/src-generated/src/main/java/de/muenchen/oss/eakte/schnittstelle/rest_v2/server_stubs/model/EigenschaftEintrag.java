@@ -1,4 +1,4 @@
-package de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model;
+package de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model;
 
 import java.net.URI;
 import java.util.Objects;

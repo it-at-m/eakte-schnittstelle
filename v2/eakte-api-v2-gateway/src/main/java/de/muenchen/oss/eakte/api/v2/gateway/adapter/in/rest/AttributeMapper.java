@@ -1,14 +1,12 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
-import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.EigenschaftEintrag;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.Attribute;
-
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.EigenschaftEintrag;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Component;
 
 @Component
