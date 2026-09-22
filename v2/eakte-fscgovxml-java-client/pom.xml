@@ -57,6 +57,7 @@
                   -->
                   <!-- aus eAS-Quelltext: -->
                   <wsdl>${project.basedir}/src/main/resources/2026-04-08_eakte26.wsdl</wsdl>
+                  <wsdlLocation>classpath:2026-04-08_eakte26.wsdl</wsdlLocation>
 
                   <extendedSoapHeaders>true</extendedSoapHeaders>
                   <!-- ,,,fh commented
