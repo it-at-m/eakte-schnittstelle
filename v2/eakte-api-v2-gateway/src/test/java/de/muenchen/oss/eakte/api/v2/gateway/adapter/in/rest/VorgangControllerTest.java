@@ -17,12 +17,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.VorgangListeResponse;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.in.VorgangInPort;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.EnumAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.StringAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.VorgangListeResponse;
 import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;

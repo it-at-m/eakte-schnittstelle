@@ -1,4 +1,4 @@
-package de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.controllers;
+package de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.controllers;
 
 import org.springframework.web.context.request.NativeWebRequest;
 

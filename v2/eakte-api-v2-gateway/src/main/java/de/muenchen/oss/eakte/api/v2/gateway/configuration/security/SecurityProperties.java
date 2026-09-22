@@ -27,6 +27,11 @@ public class SecurityProperties {
     @NotBlank private String clientId;
 
     /**
+     * URL for OpenID Connect auto configuration.
+     */
+    @NotBlank private String openIdConnectUrl;
+
+    /**
      * URI of the endpoint used for fetching permissions,
      * see also {@link KeycloakPermissionsAuthoritiesConverter}.
      */

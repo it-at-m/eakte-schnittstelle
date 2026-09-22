@@ -24,19 +24,19 @@ components:
         Die 'bedingungen' werden als WHERE-Klausel der Fabasoft-Query-Language intepretiert, mit folgenden Abweichungen:
         
         * Attributreferenzen werden als URI angegeben und nicht mit der Fabasoft-internen kryptischenSchreibweise. Diese URIs
-        sind als Makros der Form "${...}" zu schreiben (zu klammern). Die in den geschweiften Klammern angegebenen URIs
+        sind als Makros der Form "\${...}" zu schreiben (zu klammern). Die in den geschweiften Klammern angegebenen URIs
         können unter dem Endpunkt "/Attributbeschreibungen" zusammen mit Meta-Informationen zu allen verfügbaren Attributen
-        abgerufen werden. Statt ".COOSYSTEM@1.1:objowner" wird also ".${Eigentümer}" geschrieben. Man beachte den notwendigen 
+        abgerufen werden. Statt ".COOSYSTEM@1.1:objowner" wird also ".\${Eigentümer}" geschrieben. Man beachte den notwendigen 
         Punkt ('.') vor der Attributbenennung, was in der Fabasoft Query Language anzeigt, dass es sich um eine
         Attributbenennung im Kontext der abgefrakten Objektklasse handelt.
         
-        * Anstelle von COO-Adressen in den WHERE-Bedingungen (z.B. ".${Eigentümer} = 'COO.2150.8800.1.230497'" kan bzw.
+        * Anstelle von COO-Adressen in den WHERE-Bedingungen (z.B. ".\${Eigentümer} = 'COO.2150.8800.1.230497'" kan bzw.
         soll eie andere Art von Makro benutzt werden: "#{...}". Dieses enthält in den geschweiften Klammern nicht die
         Fabasoft COO-Adresse, sondern die jedem Schnittstellen-Objekt zueigene URI, z.B. "#{/Akten/COO.1.2.3.4}". Damit 
         wird grundsätzlich nur mit "opaquen" (nicht zu interpretierenden) URIs hantiert und nicht mit Primärschlüsseln
         oder Objekt-Ids aus dem Zielsystem.
       example: |
-        ${/Attributbeschreibungen/lhmdfvpublic-fh_attr_auf_Formularebene}="Orangen"
+        \${/Attributbeschreibungen/lhmdfvpublic-fh_attr_auf_Formularebene}="Orangen"
 
     Eigenschaften:
       name: eigenschaften
