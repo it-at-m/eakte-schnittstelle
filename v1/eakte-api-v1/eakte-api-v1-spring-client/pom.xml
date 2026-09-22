@@ -63,6 +63,7 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -71,6 +72,7 @@
                     <release>${java.version}</release>
                 </configuration>
             </plugin>
+
             <!-- Extract OpenAPI Spec -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -95,6 +97,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
@@ -120,11 +123,13 @@
                                 <useAbstractionForFiles>true</useAbstractionForFiles>
                                 <useSpringBoot4>true</useSpringBoot4>
                                 <useJackson3>true</useJackson3>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
                             </configOptions>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 
