@@ -1,16 +1,14 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
-import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.controllers.VorgangApi;
-import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.VorgangListeResponse;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.in.VorgangInPort;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.controllers.VorgangApi;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.VorgangListeResponse;
 import jakarta.servlet.http.HttpServletRequest;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -34,7 +32,7 @@ public class VorgangController implements VorgangApi {
         final RequestContext requestContext = new RequestContext(loginName, organisationseinheit, stelle);
         final SearchResult result = vorgangInPort.searchVorgang(requestContext,
                 limit.orElseThrow(),
-                bedingungen.orElseThrow(),
+                bedingungen.orElse(null),
                 eigenschaften.map(HashSet::new).orElse(null));
         // respond
         final VorgangListeResponse response = VorgangListeResponse.builder()

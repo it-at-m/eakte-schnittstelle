@@ -1,5 +1,6 @@
 package de.muenchen.oss.eakte.api.v2.gateway.configuration;
 
+import de.muenchen.oss.eakte.api.v2.gateway.configuration.security.SecurityProperties;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.security.SecurityScheme;
@@ -10,18 +11,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RequiredArgsConstructor
 public class OpenAPIDocumentationConfiguration {
-    public static final String SECURITY_SCHEME_NAME = "bearerAuth";
+    private final SecurityProperties securityProperties;
 
     @Bean
     public OpenAPI customOpenAPI() {
 
         return new OpenAPI()
                 .components(new Components()
-                        .addSecuritySchemes(SECURITY_SCHEME_NAME, new SecurityScheme()
-                                .name(SECURITY_SCHEME_NAME)
-                                .type(SecurityScheme.Type.HTTP)
-                                .scheme("bearer")
-                                .bearerFormat("JWT")));
+                        .addSecuritySchemes("bearerAuth", new SecurityScheme()
+                                .type(SecurityScheme.Type.OPENIDCONNECT)
+                                .openIdConnectUrl(securityProperties.getOpenIdConnectUrl())));
     }
 
 }

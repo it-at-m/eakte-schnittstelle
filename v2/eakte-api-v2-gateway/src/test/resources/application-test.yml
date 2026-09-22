@@ -15,3 +15,4 @@ refarch:
     logging-mode: all
     client-id: test-client
     permissions-uri: http://localhost/permissions
+    open-id-connect-url: http://localhost/openIdConnect

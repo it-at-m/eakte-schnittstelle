@@ -1,8 +1,8 @@
 README.md
 pom.xml
-src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/controllers/ApiUtil.java
-src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/controllers/VorgangApi.java
-src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/EigenschaftEintrag.java
-src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/ErrorResponse.java
-src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/Vorgang.java
-src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v2/server_stubs/model/VorgangListeResponse.java
+src/main/java/de/muenchen/oss/eakte/schnittstelle/rest_v2/server_stubs/controllers/ApiUtil.java
+src/main/java/de/muenchen/oss/eakte/schnittstelle/rest_v2/server_stubs/controllers/VorgangApi.java
+src/main/java/de/muenchen/oss/eakte/schnittstelle/rest_v2/server_stubs/model/EigenschaftEintrag.java
+src/main/java/de/muenchen/oss/eakte/schnittstelle/rest_v2/server_stubs/model/ErrorResponse.java
+src/main/java/de/muenchen/oss/eakte/schnittstelle/rest_v2/server_stubs/model/Vorgang.java
+src/main/java/de/muenchen/oss/eakte/schnittstelle/rest_v2/server_stubs/model/VorgangListeResponse.java

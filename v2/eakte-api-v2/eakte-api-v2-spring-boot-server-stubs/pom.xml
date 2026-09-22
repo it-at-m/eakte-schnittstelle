@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>de.muenchen.eai</groupId>
+    <groupId>de.muenchen.oss.eakte</groupId>
     <artifactId>eakte-api-v2</artifactId>
     <version>2.0.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
@@ -22,7 +22,7 @@
   <dependencies>
 
     <dependency>
-      <groupId>de.muenchen.eai</groupId>
+      <groupId>de.muenchen.oss.eakte</groupId>
       <artifactId>eakte-api-v2-spec</artifactId>
       <version>${project.version}</version>
       <type>zip</type>
@@ -107,7 +107,7 @@
             <configuration>
               <excludeGroupIds>*</excludeGroupIds>
               <excludeArtifactIds>*</excludeArtifactIds>
-              <includeGroupIds>de.muenchen.eai</includeGroupIds>
+              <includeGroupIds>de.muenchen.oss.eakte</includeGroupIds>
               <includeArtifactIds>eakte-api-v2-spec</includeArtifactIds>
               <includes>**/*.yaml</includes>
               <outputDirectory>${project.build.directory}/unpacked-dependencies</outputDirectory>
@@ -147,9 +147,9 @@
               <output>${project.basedir}/src-generated</output>
 
               <generatorName>spring</generatorName>
-              <apiPackage>de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.controllers</apiPackage>
-              <modelPackage>de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model</modelPackage>
-              <invokerPackage>de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.invokers</invokerPackage>
+              <apiPackage>de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.controllers</apiPackage>
+              <modelPackage>de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model</modelPackage>
+              <invokerPackage>de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.invokers</invokerPackage>
 
               <configOptions>
                 <!-- See https://openapi-generator.tech/docs/generators/spring/#config-options -->

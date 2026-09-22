@@ -48,13 +48,11 @@ management:
         enabled: false
 
 springdoc:
-  show-actuator: true
-  # Disable swagger-ui as default
   swagger-ui:
-    enabled: false
+    enabled: true
   api-docs:
     version: openapi_3_0
-    enabled: false
+    enabled: true
 
 logging:
   level:

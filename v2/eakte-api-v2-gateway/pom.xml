@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>de.muenchen.oss.eakte.api.v2</groupId>
+    <groupId>de.muenchen.oss.eakte</groupId>
     <artifactId>eakte-api-v2-gateway</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
@@ -83,12 +83,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>de.muenchen.eai</groupId>
+            <groupId>de.muenchen.oss.eakte</groupId>
             <artifactId>eakte-api-v2-spring-boot-server-stubs</artifactId>
             <version>${eakte-api-v2-stubs.verion}</version>
         </dependency>
         <dependency>
-            <groupId>de.muenchen.eai</groupId>
+            <groupId>de.muenchen.oss.eakte</groupId>
             <artifactId>eakte-fscgovxml-java-client</artifactId>
             <version>${eakte-fsgov-client.verion}</version>
         </dependency>

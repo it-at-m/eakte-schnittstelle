@@ -20,7 +20,9 @@ servers:
 components:
   securitySchemes:
     bearerAuth:
-      $ref: '_SicherheitsSchemata.yaml#/components/securitySchemes/bearerAuth'
+      type: http
+      scheme: bearer
+      bearerFormat: jwt
 
 security:
   - bearerAuth: []

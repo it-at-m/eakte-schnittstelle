@@ -11,9 +11,9 @@ import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttribut
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.STATE;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.SUBJECT;
 
-import de.muenchen.itm.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import de.muenchen.oss.eakte.api.v2.gateway.application.usecase.VorgangUseCase;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
