@@ -25,7 +25,7 @@ See the [docs][documentation] and the following component list for further infor
 
 ## Components
 
-- [v1/eakte-api](../v1/eakte-api): The OpenAPI specification of the v1 eakte-api-gateway
+- [v1/eakte-api](../v1/eakte-api-v1): The OpenAPI specification of the v1 eakte-api-gateway
 - [v1/eakte-eai](../v1/eakte-eai): The v1 eakte-api-gateway, see according [README](../v1/eakte-eai/README.md) for information on how to use it
 
 ## Roadmap
