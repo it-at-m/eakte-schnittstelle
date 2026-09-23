@@ -26,59 +26,59 @@ import jakarta.annotation.Generated;
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.21.0")
 public class UserFormsReferenz {
 
-  private Optional<String> lhmbai151700Ufreference = Optional.empty();
+  private Optional<String> lhMBAI151700Ufreference = Optional.empty();
 
   @Valid
-  private List<String> lhmbai151700Ufvalue = new ArrayList<>();
+  private List<String> lhMBAI151700Ufvalue = new ArrayList<>();
 
-  public UserFormsReferenz lhmbai151700Ufreference(String lhmbai151700Ufreference) {
-    this.lhmbai151700Ufreference = Optional.ofNullable(lhmbai151700Ufreference);
+  public UserFormsReferenz lhMBAI151700Ufreference(String lhMBAI151700Ufreference) {
+    this.lhMBAI151700Ufreference = Optional.ofNullable(lhMBAI151700Ufreference);
     return this;
   }
 
   /**
    * Programmiername der Verfahrenseigenschaft
-   * @return lhmbai151700Ufreference
+   * @return lhMBAI151700Ufreference
    */
   
-  @Schema(name = "lhmbai_15_1700_ufreference", description = "Programmiername der Verfahrenseigenschaft", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("lhmbai_15_1700_ufreference")
-  public Optional<String> getLhmbai151700Ufreference() {
-    return lhmbai151700Ufreference;
+  @Schema(name = "LHMBAI_15_1700_ufreference", description = "Programmiername der Verfahrenseigenschaft", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("LHMBAI_15_1700_ufreference")
+  public Optional<String> getLhMBAI151700Ufreference() {
+    return lhMBAI151700Ufreference;
   }
 
-  @JsonProperty("lhmbai_15_1700_ufreference")
-  public void setLhmbai151700Ufreference(Optional<String> lhmbai151700Ufreference) {
-    this.lhmbai151700Ufreference = lhmbai151700Ufreference;
+  @JsonProperty("LHMBAI_15_1700_ufreference")
+  public void setLhMBAI151700Ufreference(Optional<String> lhMBAI151700Ufreference) {
+    this.lhMBAI151700Ufreference = lhMBAI151700Ufreference;
   }
 
-  public UserFormsReferenz lhmbai151700Ufvalue(List<String> lhmbai151700Ufvalue) {
-    this.lhmbai151700Ufvalue = lhmbai151700Ufvalue;
+  public UserFormsReferenz lhMBAI151700Ufvalue(List<String> lhMBAI151700Ufvalue) {
+    this.lhMBAI151700Ufvalue = lhMBAI151700Ufvalue;
     return this;
   }
 
-  public UserFormsReferenz addLhmbai151700UfvalueItem(String lhmbai151700UfvalueItem) {
-    if (this.lhmbai151700Ufvalue == null) {
-      this.lhmbai151700Ufvalue = new ArrayList<>();
+  public UserFormsReferenz addLhMBAI151700UfvalueItem(String lhMBAI151700UfvalueItem) {
+    if (this.lhMBAI151700Ufvalue == null) {
+      this.lhMBAI151700Ufvalue = new ArrayList<>();
     }
-    this.lhmbai151700Ufvalue.add(lhmbai151700UfvalueItem);
+    this.lhMBAI151700Ufvalue.add(lhMBAI151700UfvalueItem);
     return this;
   }
 
   /**
    * Wert(e) der Verfahrenseigenschaft
-   * @return lhmbai151700Ufvalue
+   * @return lhMBAI151700Ufvalue
    */
   
-  @Schema(name = "lhmbai_15_1700_ufvalue", description = "Wert(e) der Verfahrenseigenschaft", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("lhmbai_15_1700_ufvalue")
-  public List<String> getLhmbai151700Ufvalue() {
-    return lhmbai151700Ufvalue;
+  @Schema(name = "LHMBAI_15_1700_ufvalue", description = "Wert(e) der Verfahrenseigenschaft", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("LHMBAI_15_1700_ufvalue")
+  public List<String> getLhMBAI151700Ufvalue() {
+    return lhMBAI151700Ufvalue;
   }
 
-  @JsonProperty("lhmbai_15_1700_ufvalue")
-  public void setLhmbai151700Ufvalue(List<String> lhmbai151700Ufvalue) {
-    this.lhmbai151700Ufvalue = lhmbai151700Ufvalue;
+  @JsonProperty("LHMBAI_15_1700_ufvalue")
+  public void setLhMBAI151700Ufvalue(List<String> lhMBAI151700Ufvalue) {
+    this.lhMBAI151700Ufvalue = lhMBAI151700Ufvalue;
   }
 
   @Override
@@ -90,21 +90,21 @@ public class UserFormsReferenz {
       return false;
     }
     UserFormsReferenz userFormsReferenz = (UserFormsReferenz) o;
-    return Objects.equals(this.lhmbai151700Ufreference, userFormsReferenz.lhmbai151700Ufreference) &&
-        Objects.equals(this.lhmbai151700Ufvalue, userFormsReferenz.lhmbai151700Ufvalue);
+    return Objects.equals(this.lhMBAI151700Ufreference, userFormsReferenz.lhMBAI151700Ufreference) &&
+        Objects.equals(this.lhMBAI151700Ufvalue, userFormsReferenz.lhMBAI151700Ufvalue);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(lhmbai151700Ufreference, lhmbai151700Ufvalue);
+    return Objects.hash(lhMBAI151700Ufreference, lhMBAI151700Ufvalue);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class UserFormsReferenz {\n");
-    sb.append("    lhmbai151700Ufreference: ").append(toIndentedString(lhmbai151700Ufreference)).append("\n");
-    sb.append("    lhmbai151700Ufvalue: ").append(toIndentedString(lhmbai151700Ufvalue)).append("\n");
+    sb.append("    lhMBAI151700Ufreference: ").append(toIndentedString(lhMBAI151700Ufreference)).append("\n");
+    sb.append("    lhMBAI151700Ufvalue: ").append(toIndentedString(lhMBAI151700Ufvalue)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -130,18 +130,18 @@ public class UserFormsReferenz {
     }
 
     protected Builder copyOf(UserFormsReferenz value) { 
-      this.instance.setLhmbai151700Ufreference(value.lhmbai151700Ufreference);
-      this.instance.setLhmbai151700Ufvalue(value.lhmbai151700Ufvalue);
+      this.instance.setLhMBAI151700Ufreference(value.lhMBAI151700Ufreference);
+      this.instance.setLhMBAI151700Ufvalue(value.lhMBAI151700Ufvalue);
       return this;
     }
 
-    public UserFormsReferenz.Builder lhmbai151700Ufreference(String lhmbai151700Ufreference) {
-      this.instance.lhmbai151700Ufreference(lhmbai151700Ufreference);
+    public UserFormsReferenz.Builder lhMBAI151700Ufreference(String lhMBAI151700Ufreference) {
+      this.instance.lhMBAI151700Ufreference(lhMBAI151700Ufreference);
       return this;
     }
     
-    public UserFormsReferenz.Builder lhmbai151700Ufvalue(List<String> lhmbai151700Ufvalue) {
-      this.instance.lhmbai151700Ufvalue(lhmbai151700Ufvalue);
+    public UserFormsReferenz.Builder lhMBAI151700Ufvalue(List<String> lhMBAI151700Ufvalue) {
+      this.instance.lhMBAI151700Ufvalue(lhMBAI151700Ufvalue);
       return this;
     }
     

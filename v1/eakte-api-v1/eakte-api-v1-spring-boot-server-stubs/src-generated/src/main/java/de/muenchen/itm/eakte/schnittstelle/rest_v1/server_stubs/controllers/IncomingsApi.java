@@ -239,7 +239,7 @@ public interface IncomingsApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"objname\" : \"Eingangspost vom 28.05.2026 (0010-11/2-0006)\", \"giobjecttype\" : [ [ { \"name\" : \"Beispielname\", \"id\" : \"COO.2150.9151.1.1206000\" } ], [ { \"name\" : \"Beispielname\", \"id\" : \"COO.2150.9151.1.1206000\" } ] ], \"objid\" : \"COO.1.2301.1.1042441\" }";
+                    String exampleString = "{ \"objname\" : \"Eingangspost vom 28.05.2026 (0010-11/2-0006)\", \"giobjecttype\" : [ [ { \"objname\" : \"Beispielname\", \"objaddress\" : \"COO.2150.9151.1.1206000\" } ], [ { \"objname\" : \"Beispielname\", \"objaddress\" : \"COO.2150.9151.1.1206000\" } ] ], \"objid\" : \"COO.1.2301.1.1042441\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

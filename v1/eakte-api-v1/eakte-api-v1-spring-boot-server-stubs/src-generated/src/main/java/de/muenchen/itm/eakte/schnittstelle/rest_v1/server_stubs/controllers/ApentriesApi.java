@@ -99,7 +99,7 @@ public interface ApentriesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"giobjecttype\" : [ [ { \"name\" : \"Beispielname\", \"id\" : \"COO.2150.9151.1.1206000\" } ], [ { \"name\" : \"Beispielname\", \"id\" : \"COO.2150.9151.1.1206000\" } ] ] }";
+                    String exampleString = "{ \"giobjecttype\" : [ [ { \"objname\" : \"Beispielname\", \"objaddress\" : \"COO.2150.9151.1.1206000\" } ], [ { \"objname\" : \"Beispielname\", \"objaddress\" : \"COO.2150.9151.1.1206000\" } ] ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -164,7 +164,7 @@ public interface ApentriesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"giobjecttype\" : [ [ { \"name\" : \"Beispielname\", \"id\" : \"COO.2150.9151.1.1206000\" } ], [ { \"name\" : \"Beispielname\", \"id\" : \"COO.2150.9151.1.1206000\" } ] ] }";
+                    String exampleString = "{ \"giobjecttype\" : [ [ { \"objname\" : \"Beispielname\", \"objaddress\" : \"COO.2150.9151.1.1206000\" } ], [ { \"objname\" : \"Beispielname\", \"objaddress\" : \"COO.2150.9151.1.1206000\" } ] ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

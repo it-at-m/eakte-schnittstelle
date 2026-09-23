@@ -23,50 +23,50 @@ import jakarta.annotation.Generated;
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.21.0")
 public class Objektreferenz {
 
-  private Optional<String> name = Optional.empty();
+  private Optional<String> objname = Optional.empty();
 
-  private Optional<String> id = Optional.empty();
+  private Optional<String> objaddress = Optional.empty();
 
-  public Objektreferenz name(String name) {
-    this.name = Optional.ofNullable(name);
+  public Objektreferenz objname(String objname) {
+    this.objname = Optional.ofNullable(objname);
     return this;
   }
 
   /**
-   * Get name
-   * @return name
+   * Get objname
+   * @return objname
    */
   
-  @Schema(name = "name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("name")
-  public Optional<String> getName() {
-    return name;
+  @Schema(name = "objname", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("objname")
+  public Optional<String> getObjname() {
+    return objname;
   }
 
-  @JsonProperty("name")
-  public void setName(Optional<String> name) {
-    this.name = name;
+  @JsonProperty("objname")
+  public void setObjname(Optional<String> objname) {
+    this.objname = objname;
   }
 
-  public Objektreferenz id(String id) {
-    this.id = Optional.ofNullable(id);
+  public Objektreferenz objaddress(String objaddress) {
+    this.objaddress = Optional.ofNullable(objaddress);
     return this;
   }
 
   /**
-   * Get id
-   * @return id
+   * Get objaddress
+   * @return objaddress
    */
   
-  @Schema(name = "id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("id")
-  public Optional<String> getId() {
-    return id;
+  @Schema(name = "objaddress", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("objaddress")
+  public Optional<String> getObjaddress() {
+    return objaddress;
   }
 
-  @JsonProperty("id")
-  public void setId(Optional<String> id) {
-    this.id = id;
+  @JsonProperty("objaddress")
+  public void setObjaddress(Optional<String> objaddress) {
+    this.objaddress = objaddress;
   }
 
   @Override
@@ -78,21 +78,21 @@ public class Objektreferenz {
       return false;
     }
     Objektreferenz objektreferenz = (Objektreferenz) o;
-    return Objects.equals(this.name, objektreferenz.name) &&
-        Objects.equals(this.id, objektreferenz.id);
+    return Objects.equals(this.objname, objektreferenz.objname) &&
+        Objects.equals(this.objaddress, objektreferenz.objaddress);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, id);
+    return Objects.hash(objname, objaddress);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Objektreferenz {\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    objname: ").append(toIndentedString(objname)).append("\n");
+    sb.append("    objaddress: ").append(toIndentedString(objaddress)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -118,18 +118,18 @@ public class Objektreferenz {
     }
 
     protected Builder copyOf(Objektreferenz value) { 
-      this.instance.setName(value.name);
-      this.instance.setId(value.id);
+      this.instance.setObjname(value.objname);
+      this.instance.setObjaddress(value.objaddress);
       return this;
     }
 
-    public Objektreferenz.Builder name(String name) {
-      this.instance.name(name);
+    public Objektreferenz.Builder objname(String objname) {
+      this.instance.objname(objname);
       return this;
     }
     
-    public Objektreferenz.Builder id(String id) {
-      this.instance.id(id);
+    public Objektreferenz.Builder objaddress(String objaddress) {
+      this.instance.objaddress(objaddress);
       return this;
     }
     
