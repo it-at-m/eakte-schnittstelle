@@ -2,9 +2,19 @@
 
 ## API-Spezifikation (gemäß OpenAPI-Standard)
 
-- **aktuelle Version:** 1.2.5
-- **Source Code der Spec:** [v1/eakte-api](https://github.com/it-at-m/eakte-schnittstelle/tree/main/v1/eakte-api)
-- **Swagger-UI zur interaktiven Erkundung:** [SwaggerUI](./swagger-ui.md)
+- **aktuelle Version:**
+
+  siehe Information in Kopfzeilen der API-Spezifikation (im Source-Code oder in Swagger-UI)
+
+- **Source Code der Spec:**
+
+  [v1/eakte-api-v1](https://github.com/it-at-m/eakte-schnittstelle/tree/main/v1/eakte-api-v1)
+
+  Einstiegspunkt ist die Datei: [eakte-api--main.yaml](https://github.com/it-at-m/eakte-schnittstelle/blob/main/v1/eakte-api-v1/eakte-api-v1-spec/src/main/resources/eakte-api-spec/eakte-api--main.yaml)
+
+- **Swagger-UI zur interaktiven Erkundung:**
+
+  [SwaggerUI](./swagger-ui.md)
 
 ## Beschreibung der Schnittstellen-Anwendungsfälle
 
@@ -30,7 +40,7 @@ Die gewünschte Version kann über Maven-Central ermittelt werden und die Depend
   <dependency>
     <groupId>de.muenchen.oss.eakte</groupId>
     <artifactId>eakte-api-v1-spring-starter</artifactId>
-    <version>1.2.7</version>
+    <version>1.2.8</version>
   </dependency>
 </dependencies>
 ```
