@@ -22,12 +22,6 @@
       <type>zip</type>
     </dependency>
 
-    <dependency>
-      <groupId>io.swagger.codegen.v3</groupId>
-      <artifactId>swagger-codegen-cli</artifactId>
-      <version>3.0.68</version>
-    </dependency>
-
   </dependencies>
 
   <build>
