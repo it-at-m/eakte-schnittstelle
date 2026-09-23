@@ -16,7 +16,7 @@ there needs to run a maven build to reconstruct the single-file API spec.
 The generated single-file spec will be packed into a zip file in the `target` directory 
 (because ordinary files are not supported as maven artifacts):
 
-    eakte-api-v1-spec-1.2.7.zip
+    eakte-api-v1-spec-1.2.8.zip
 
 (the version suffix of course can and will vary).
 
