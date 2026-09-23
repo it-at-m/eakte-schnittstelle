@@ -2,17 +2,17 @@
 
 ## API-Spezifikation (gemäß OpenAPI-Standard)
 
-- **aktuelle Version:** 
-  
+- **aktuelle Version:**
+
   siehe Information in Kopfzeilen der API-Spezifikation (im Source-Code oder in Swagger-UI)
 
 - **Source Code der Spec:**
 
   [v1/eakte-api-v1](https://github.com/it-at-m/eakte-schnittstelle/tree/main/v1/eakte-api-v1)
-  
+
   Einstiegspunkt ist die Datei: [eakte-api--main.yaml](https://github.com/it-at-m/eakte-schnittstelle/blob/main/v1/eakte-api-v1/eakte-api-v1-spec/src/main/resources/eakte-api-spec/eakte-api--main.yaml)
 
-- **Swagger-UI zur interaktiven Erkundung:** 
+- **Swagger-UI zur interaktiven Erkundung:**
 
   [SwaggerUI](./swagger-ui.md)
 
