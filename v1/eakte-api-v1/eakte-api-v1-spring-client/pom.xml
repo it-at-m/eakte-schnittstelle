@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>de.muenchen.oss.eakte</groupId>
         <artifactId>eakte-api-v1</artifactId>
-        <version>1.3.0-SNAPSHOT</version>
+        <version>1.2.8-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -37,8 +38,8 @@
     <dependencies>
         <dependency>
             <groupId>de.muenchen.oss.eakte</groupId>
-            <artifactId>eakte-api-v1-spec</artifactId>
-            <version>1.3.0-SNAPSHOT</version>
+            <artifactId>eakte-api-v1-spec-single-file</artifactId>
+            <version>1.2.8-SNAPSHOT</version>
             <type>zip</type>
         </dependency>
 
@@ -63,6 +64,7 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -71,6 +73,7 @@
                     <release>${java.version}</release>
                 </configuration>
             </plugin>
+
             <!-- Extract OpenAPI Spec -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -86,7 +89,7 @@
                             <excludeGroupIds>*</excludeGroupIds>
                             <excludeArtifactIds>*</excludeArtifactIds>
                             <includeGroupIds>de.muenchen.oss.eakte</includeGroupIds>
-                            <includeArtifactIds>eakte-api-v1-spec</includeArtifactIds>
+                            <includeArtifactIds>eakte-api-v1-spec-single-file</includeArtifactIds>
                             <includes>**/*.yaml</includes>
                             <outputDirectory>${project.build.directory}/unpacked-dependencies</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
@@ -95,6 +98,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
@@ -105,7 +109,9 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.build.directory}/unpacked-dependencies/eakte-rest-api-v1/eakte-api--main.yaml</inputSpec>
+                            <inputSpec>
+                                ${project.build.directory}/unpacked-dependencies/eakte-rest-api-v1-spec-single-file.yaml
+                            </inputSpec>
                             <library>restclient</library>
                             <generatorName>java</generatorName>
 
@@ -120,11 +126,13 @@
                                 <useAbstractionForFiles>true</useAbstractionForFiles>
                                 <useSpringBoot4>true</useSpringBoot4>
                                 <useJackson3>true</useJackson3>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
                             </configOptions>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 

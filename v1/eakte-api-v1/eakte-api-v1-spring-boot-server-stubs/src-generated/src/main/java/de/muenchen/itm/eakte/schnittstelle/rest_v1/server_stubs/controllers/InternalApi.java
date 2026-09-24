@@ -101,7 +101,7 @@ public interface InternalApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"objname\" : \"Internes Dokument zum Antrag auf Baugenehmigung Firma Mustermann (0010 A20 011-4-0006-0006)\", \"giobjecttype\" : [ [ { \"name\" : \"Beispielname\", \"id\" : \"COO.2150.9151.1.1206000\" } ], [ { \"name\" : \"Beispielname\", \"id\" : \"COO.2150.9151.1.1206000\" } ] ], \"objid\" : \"COO.1.2301.1.1042465\" }";
+                    String exampleString = "{ \"objname\" : \"Internes Dokument zum Antrag auf Baugenehmigung Firma Mustermann (0010 A20 011-4-0006-0006)\", \"giobjecttype\" : [ [ { \"objname\" : \"Beispielname\", \"objaddress\" : \"COO.2150.9151.1.1206000\" } ], [ { \"objname\" : \"Beispielname\", \"objaddress\" : \"COO.2150.9151.1.1206000\" } ] ], \"objid\" : \"COO.1.2301.1.1042465\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

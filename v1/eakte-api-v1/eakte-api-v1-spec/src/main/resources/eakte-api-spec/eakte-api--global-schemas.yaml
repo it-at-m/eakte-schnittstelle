@@ -201,18 +201,19 @@ components:
         über die generische Suche abgerufen werden und 
         für die Verschlagwortung von Schriftgutobjekten im Fachverfahren verwendet werden.
       example: Firma XY; Anträge; Anträge 2016
+
     Objektreferenz:
       type: object
       properties:
-        name:
+        objname:
           type: string
-        id:
+        objaddress:
           type: string
       description:
         Name und ID (COO-Adresse) des Schriftgutobjekts
       example:
-        - name: Beispielname
-          id: COO.2150.9151.1.1206000
+        - objname: Beispielname
+          objaddress: COO.2150.9151.1.1206000
 
     UserFormsReferenz:
       description: |
@@ -227,10 +228,10 @@ components:
         * Objektzeiger und Objektlisten mittels COO-Adresse
       type: "object"
       properties:
-        lhmbai_15_1700_ufreference:
+        LHMBAI_15_1700_ufreference:
           description: Programmiername der Verfahrenseigenschaft
           type: "string"
-        lhmbai_15_1700_ufvalue:
+        LHMBAI_15_1700_ufvalue:
           description: Wert(e) der Verfahrenseigenschaft
           type: "array"
           items:

@@ -73,6 +73,7 @@ src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/Rea
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/ReadDocumentObjectMetaDataResponseDTO.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/ReadDocumentObjectsAntwortDTO.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/ReadFileResponseDTO.java
+src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/ReadIncomingAntwortDTO.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/ReadOutgoingAntwortDTO.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/ReadProcedureObjectsAntwortDTO.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/ReadProcedureResponseDTO.java
