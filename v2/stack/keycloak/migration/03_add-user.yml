@@ -2,6 +2,7 @@ id: add first user to work with keycloak
 author: Default
 realm: local_realm
 changes:
+  # create user user
   - addUser:
       name: user
       lastName: user

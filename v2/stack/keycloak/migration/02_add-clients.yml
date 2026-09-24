@@ -2,6 +2,7 @@ id: add client
 author: Default
 realm: local_realm
 changes:
+  # create local client
   - addSimpleClient:
       clientId: local
       secret: client_secret
@@ -10,15 +11,19 @@ changes:
       redirectUris:
         - http://*
         - https://*
+  - updateClient:
+      clientId: local
+      fullScopeAllowed: false
 
+  # create public_local client
   - addSimpleClient:
       clientId: public_local
       publicClient: true
       redirectUris:
         - http://*
         - https://*
-
   - updateClient:
       clientId: public_local
+      fullScopeAllowed: false
       webOrigins:
         - "*"
