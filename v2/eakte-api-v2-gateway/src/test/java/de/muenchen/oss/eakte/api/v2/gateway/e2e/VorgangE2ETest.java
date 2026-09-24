@@ -1,6 +1,8 @@
 package de.muenchen.oss.eakte.api.v2.gateway.e2e;
 
 import static de.muenchen.oss.eakte.api.v2.gateway.TestConstants.SPRING_TEST_PROFILE;
+import static de.muenchen.oss.eakte.api.v2.gateway.TestSecurityConfiguration.USER;
+import static de.muenchen.oss.eakte.api.v2.gateway.TestSecurityConfiguration.USER_IMPERSONATE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,7 +34,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
             stubVorgangResponse();
 
             mockMvc.perform(get("/api/v2/vorgaenge")
-                    .header("Authorization", "Bearer authenticatedUser")
+                    .header("Authorization", "Bearer %s".formatted(USER_IMPERSONATE))
                     .header("EAkte-Login-Name", "login")
                     .header("EAkte-Rolle", "role")
                     .header("EAkte-Organisationseinheit", "ou")
@@ -48,7 +50,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
                     .andExpect(jsonPath("$.elemente[0].eigenschaftenMap['custom.attribute_1']")
                             .value("custom-value"));
 
-            verifySearchRequest("where query", "custom.attribute");
+            verifySearchRequest("where query", "custom.attribute", true);
         }
 
         @Test
@@ -56,16 +58,15 @@ class VorgangE2ETest extends VorgangE2eSupport {
             stubDfVAndVorgangResponse();
 
             mockMvc.perform(get("/api/v2/vorgaenge")
-                    .header("Authorization", "Bearer authenticatedUser")
-                    .header("EAkte-Login-Name", "login")
+                    .header("Authorization", "Bearer %s".formatted(USER))
                     .queryParam("bedingungen", "where query"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.anzahl").value(1))
                     .andExpect(jsonPath("$.elemente[0].eigenschaftenMap['custom.attribute_1']")
                             .value("custom-value"));
 
-            verifySearchRequest("availabledefinitions is not null", "fullreference");
-            verifySearchRequest("where query", VorgangE2eSupport.DFV_ATTRIBUTE);
+            verifySearchRequest("availabledefinitions is not null", "fullreference", false);
+            verifySearchRequest("where query", VorgangE2eSupport.DFV_ATTRIBUTE, false);
         }
 
         @Test
@@ -75,12 +76,20 @@ class VorgangE2ETest extends VorgangE2eSupport {
         }
 
         @Test
+        void givenImpersonationHeaderButNoRole_thenRejectRequest() throws Exception {
+            mockMvc.perform(get("/api/v2/vorgaenge")
+                    .header("Authorization", "Bearer %s".formatted(USER))
+                    .header("EAkte-Login-Name", "login")
+                    .queryParam("bedingungen", "where query"))
+                    .andExpect(status().isForbidden());
+        }
+
+        @Test
         void givenFabasoftFailure_thenReturnServerError() throws Exception {
             stubSoapFailure();
 
             mockMvc.perform(get("/api/v2/vorgaenge")
-                    .header("Authorization", "Bearer authenticatedUser")
-                    .header("EAkte-Login-Name", "login")
+                    .header("Authorization", "Bearer %s".formatted(USER))
                     .queryParam("bedingungen", "where query")
                     .queryParam("eigenschaften", "custom.attribute"))
                     .andExpect(status().isInternalServerError());

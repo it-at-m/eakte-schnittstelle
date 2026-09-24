@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class VorgangController implements VorgangApi {
     private final VorgangInPort vorgangInPort;
     private final VorgangMapper vorgangMapper;
+    private final RequestContextFactory requestContextFactory;
 
     @Override
     public ResponseEntity<VorgangListeResponse> sucheVorgaenge(
@@ -29,7 +30,7 @@ public class VorgangController implements VorgangApi {
             final Optional<List<String>> eigenschaften,
             final HttpServletRequest servletRequest) {
         // call
-        final RequestContext requestContext = new RequestContext(loginName, organisationseinheit, stelle);
+        final RequestContext requestContext = requestContextFactory.create(loginName, organisationseinheit, stelle);
         final SearchResult result = vorgangInPort.searchVorgang(requestContext,
                 limit.orElseThrow(),
                 bedingungen.orElse(null),

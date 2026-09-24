@@ -7,6 +7,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
+import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder;
 
 abstract class VorgangE2eSupport extends AbstractWireMockE2eTest {
     public static final String DFV_ATTRIBUTE = "custom.dfv.attribute";
@@ -34,12 +35,18 @@ abstract class VorgangE2eSupport extends AbstractWireMockE2eTest {
                         .withBody(soapFault())));
     }
 
-    protected void verifySearchRequest(final String query, final String attribute) {
-        wireMock.verify(postRequestedFor(urlPathEqualTo("/"))
+    protected void verifySearchRequest(final String query, final String attribute, final boolean impersonate) {
+        RequestPatternBuilder pattern = postRequestedFor(urlPathEqualTo("/"))
                 .withHeader("SOAPAction", WireMock.containing(SOAP_SEARCH_ACTION))
-                .withHeader("X-FSC-Authenticated-User", equalTo("login"))
                 .withRequestBody(WireMock.containing(query))
-                .withRequestBody(WireMock.containing(attribute)));
+                .withRequestBody(WireMock.containing(attribute));
+        if (impersonate) {
+            pattern = pattern
+                    .withHeader("X-FSC-Authenticated-User", equalTo("login"))
+                    .withQueryParam("px", equalTo("role"))
+                    .withQueryParam("gx", equalTo("ou"));
+        }
+        wireMock.verify(pattern);
     }
 
     private void stubSearchRequestContaining(final String query, final String response) {
