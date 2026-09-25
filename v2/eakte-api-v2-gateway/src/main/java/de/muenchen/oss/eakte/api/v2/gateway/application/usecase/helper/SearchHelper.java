@@ -2,21 +2,74 @@ package de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper;
 
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.SearchOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchType;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 @RequiredArgsConstructor
 public class SearchHelper {
+    private static final String PARENT_QUERY = ".COOELAK@1.1001:referrednumber.COOSYSTEM@1.1:objaddress = '%s'";
+
     private final SearchOutPort searchOutPort;
+
+    /**
+     * Build an attribute set to use for searching.
+     * Starts with default attributes of the given resource type and loads either DfV attributes or adds
+     * client attributes if provided.
+     *
+     * @param context The context used for DfV load, see {@link #loadDfVAttributes}.
+     * @param searchType The resource type the attributes should be built for.
+     * @param clientAttrs The attributes which were provided by the client.
+     * @return A unified enriched set of client attributes.
+     */
+    public Set<String> buildAttributes(final RequestContext context, final SearchType searchType, final Set<String> clientAttrs) {
+        final Set<String> attributes = new HashSet<>(switch (searchType) {
+        case SUBJECT_AREA -> null;
+        case VORGANG -> VorgangAttribute.getReferences();
+        case DOKUMENT -> DokumentAttribute.getReferences();
+        });
+        attributes.addAll(clientAttrs != null ? clientAttrs : this.loadDfVAttributes(context, searchType));
+        return attributes;
+    }
+
+    /**
+     * Concat two search queries.
+     *
+     * @param query1 The first query.
+     * @param query2 The second query.
+     * @return The concatenated query.
+     */
+    public String concatQuery(final String query1, final String query2) {
+        if (StringUtils.hasText(query1) && !StringUtils.hasText(query2)) {
+            return query1;
+        }
+        if (!StringUtils.hasText(query1) && StringUtils.hasText(query2)) {
+            return query2;
+        }
+        return "%s AND %s".formatted(query1, query2);
+    }
+
+    /**
+     * Build a query for searching for objects under a given parent id.
+     *
+     * @param id The parent id.
+     * @return The built query.
+     */
+    public String buildParentIdQuery(final String id) {
+        return PARENT_QUERY.formatted(id);
+    }
 
     /**
      * Load all available DfV attributes for the given context and searchType
@@ -29,6 +82,8 @@ public class SearchHelper {
         // build attribute key
         final String attrPrefix = switch (searchType) {
         case VORGANG -> "EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0]";
+        case DOKUMENT ->
+            "EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0]";
         default -> throw new IllegalArgumentException("Type %s is not supported for DfV resolution".formatted(searchType));
         };
         final String fullreferenceAttr = attrPrefix

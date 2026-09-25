@@ -10,6 +10,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.SearchOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.AttributeType;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
 
@@ -41,10 +42,10 @@ public class FabasoftSearchAdapter implements SearchOutPort {
         final SOAPSearchResponseType response = requestHandler.handleRequest("searchObject", requestContext, () -> soapClient.soapSearch(requestType, null));
         // map response
         Objects.requireNonNull(response, "Response can't be null");
-        final List<SearchResult.ResultObject> result;
+        final List<ResultObject> result;
         if (response.getQueryresult() != null) {
             result = response.getQueryresult().getObject().stream()
-                    .map(i -> new SearchResult.ResultObject(i.getObjname(), i.getObjaddress(), this.parseAttributes(i.getAttrlist())))
+                    .map(i -> new ResultObject(i.getObjname(), i.getObjaddress(), this.parseAttributes(i.getAttrlist())))
                     .toList();
         } else {
             result = List.of();

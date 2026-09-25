@@ -1,6 +1,7 @@
 package de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -9,8 +10,10 @@ import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.SearchOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.AttributeType;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchType;
@@ -43,7 +46,7 @@ class SearchHelperTest {
         @Test
         void givenMatchingStringAttributes_thenReturnTheirValues() {
             when(searchOutPort.searchObject(eq(REQUEST_CONTEXT), any()))
-                    .thenReturn(new SearchResult(List.of(new SearchResult.ResultObject(
+                    .thenReturn(new SearchResult(List.of(new ResultObject(
                             "subject-area", "address", List.of(
                                     new Attribute(AttributeType.STRING, FULL_REFERENCE, BigInteger.ONE, "attribute.one"),
                                     new Attribute(AttributeType.STRING, FULL_REFERENCE, BigInteger.TWO, "attribute.two"),
@@ -58,6 +61,53 @@ class SearchHelperTest {
             assertEquals(SearchType.SUBJECT_AREA, requestCaptor.getValue().type());
             assertEquals("EGOVTEMPLATE@15.1001:availabledefinitions is not null", requestCaptor.getValue().query());
             assertEquals(Set.of(FULL_REFERENCE), requestCaptor.getValue().attributes());
+        }
+
+        @Test
+        void givenDocumentSearch_thenUseDocumentDfvReference() {
+            when(searchOutPort.searchObject(eq(REQUEST_CONTEXT), any()))
+                    .thenReturn(new SearchResult(List.of()));
+
+            searchHelper.loadDfVAttributes(REQUEST_CONTEXT, SearchType.DOKUMENT);
+
+            final ArgumentCaptor<SearchRequest> requestCaptor = ArgumentCaptor.forClass(SearchRequest.class);
+            verify(searchOutPort).searchObject(eq(REQUEST_CONTEXT), requestCaptor.capture());
+            assertEquals(SearchType.SUBJECT_AREA, requestCaptor.getValue().type());
+            assertEquals(Set.of("EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:"
+                    + "availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:"
+                    + "definitionuseform.FSCUSERFORMS@1.1001:releasecategory.COOTC@1.1001:categoryattributes."
+                    + "COOSYSTEM@1.1:fullreference"), requestCaptor.getValue().attributes());
+        }
+    }
+
+    @Nested
+    class ConcatQuery {
+        @Test
+        void givenBothQueries_thenJoinWithAnd() {
+            assertEquals("first AND second", searchHelper.concatQuery("first", "second"));
+        }
+
+        @Test
+        void givenOnlyFirstQuery_thenReturnFirstQuery() {
+            assertEquals("first", searchHelper.concatQuery("first", null));
+        }
+
+        @Test
+        void givenOnlySecondQuery_thenReturnSecondQuery() {
+            assertEquals("second", searchHelper.concatQuery(null, "second"));
+        }
+
+    }
+
+    @Nested
+    class BuildAttributes {
+        @Test
+        void givenDocumentClientAttributes_thenBuildDocumentDefaultsAndClientAttributes() {
+            final Set<String> attributes = searchHelper.buildAttributes(
+                    REQUEST_CONTEXT, SearchType.DOKUMENT, Set.of("custom.attribute"));
+
+            assertTrue(attributes.containsAll(DokumentAttribute.getReferences()));
+            assertTrue(attributes.contains("custom.attribute"));
         }
     }
 }

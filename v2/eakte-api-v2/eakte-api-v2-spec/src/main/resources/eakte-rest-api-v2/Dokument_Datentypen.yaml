@@ -1,0 +1,77 @@
+components:
+  schemas:
+    Dokument:
+      type: object
+      required:
+        - klasse
+        - id
+        - parent
+        - name
+        - langname
+        - betreff
+        - acl
+        - organisationseinheit
+        - eigenschaftenMap
+        - eigenschaftenListe
+      properties:
+        klasse:
+          type: string
+          enum:
+            - Eingang
+            - Erledigung
+            - Intern
+        id:
+          type: string
+        parent:
+          $ref: './Dokument_Datentypen.yaml#/components/schemas/ParentReference'
+        name:
+          type: string
+        langname:
+          type: string
+        betreff:
+          type: string
+        # TODO use object references (coo and name) instead of only name?
+        schlagworte:
+          type: array
+          items:
+            type: string
+        # TODO
+        # anlagenBeschreibung:
+        #   type: string
+        acl:
+          type: string
+        organisationseinheit:
+          type: string
+        eigenschaftenMap:
+          type: object
+          additionalProperties: true
+        eigenschaftenListe:
+          type: array
+          items:
+            $ref: '_SucheDatentypen.yaml#/components/schemas/EigenschaftEintrag'
+
+    DokumentListeResponse:
+      type: object
+      properties:
+        anzahl:
+          $ref: '_SucheDatentypen.yaml#/components/schemas/AnzahlListenElemente'
+        elemente:
+          type: array
+          description: Liste von Vorgängen
+          items:
+            $ref: 'Dokument_Datentypen.yaml#/components/schemas/Dokument'
+
+    ParentReference:
+      type: object
+      required:
+        - type
+        - id
+      properties:
+        type:
+          type: string
+          enum:
+            - Vorgang
+            - Postkorb
+            - Arbeitsvorrat
+        id:
+          type: string

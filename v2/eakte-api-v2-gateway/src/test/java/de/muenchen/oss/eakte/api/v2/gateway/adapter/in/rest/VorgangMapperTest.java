@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.AttributeType;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.ResultObject;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import java.math.BigInteger;
 import java.util.List;
@@ -65,7 +65,7 @@ class VorgangMapperTest {
 
     @Test
     void givenMissingRequiredAttribute_thenThrowException() {
-        final SearchResult.ResultObject result = new SearchResult.ResultObject(
+        final ResultObject result = new ResultObject(
                 "procedure-name", "COO.1.2.3", List.of());
 
         assertThrows(java.util.NoSuchElementException.class, () -> mapper.mapResult(result));
@@ -93,7 +93,7 @@ class VorgangMapperTest {
         }
     }
 
-    private SearchResult.ResultObject resultWithAttributes(final boolean optionalAttributes) {
+    private ResultObject resultWithAttributes(final boolean optionalAttributes) {
         final List<Attribute> attributes = new java.util.ArrayList<>(List.of(
                 new Attribute(AttributeType.STRING, PARENT_ID.getReference(), INDEX, "file-id"),
                 new Attribute(AttributeType.STRING, NAME.getReference(), INDEX, "short-name"),
@@ -108,6 +108,6 @@ class VorgangMapperTest {
             attributes.add(new Attribute(AttributeType.STRING, SCHLAGWORTE_NAME.getReference(), INDEX, "keyword"));
             attributes.add(new Attribute(AttributeType.STRING, GESCHAEFTSGANGVERMERK.getReference(), INDEX, "note"));
         }
-        return new SearchResult.ResultObject("procedure-name", "COO.1.2.3", attributes);
+        return new ResultObject("procedure-name", "COO.1.2.3", attributes);
     }
 }

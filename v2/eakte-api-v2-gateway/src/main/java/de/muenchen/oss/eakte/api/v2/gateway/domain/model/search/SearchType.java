@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum SearchType {
     VORGANG("DEPRECONFIG@15.1001:Procedure"),
-    SUBJECT_AREA("COOELAK@1.1001:SubjectArea");
+    SUBJECT_AREA("COOELAK@1.1001:SubjectArea"),
+    DOKUMENT("SOLEGOVCOREMODEL@111.100:EGovCoreDocument");
 
     private final String fabasoftReference;
 }

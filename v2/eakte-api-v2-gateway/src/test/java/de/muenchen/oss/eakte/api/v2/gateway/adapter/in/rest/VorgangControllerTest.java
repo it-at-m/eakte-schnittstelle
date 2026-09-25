@@ -19,9 +19,13 @@ import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.in.VorgangInPort;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.AttributeType;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.DokumentListeResponse;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.VorgangListeResponse;
 import java.math.BigInteger;
 import java.util.Collections;
@@ -41,9 +45,11 @@ class VorgangControllerTest {
     @BeforeEach
     void setUp() {
         vorgangInPort = mock(VorgangInPort.class);
+        final AttributeMapper attributeMapper = new AttributeMapper();
         controller = new VorgangController(
                 vorgangInPort,
-                new VorgangMapper(new AttributeMapper()));
+                new VorgangMapper(attributeMapper),
+                new DokumentMapper(attributeMapper));
     }
 
     @Nested
@@ -52,7 +58,7 @@ class VorgangControllerTest {
 
         @Test
         void givenSearchParameters_thenForwardContextAndReturnMappedResults() {
-            final SearchResult result = new SearchResult(List.of(new SearchResult.ResultObject(
+            final SearchResult result = new SearchResult(List.of(new ResultObject(
                     "procedure-name",
                     "COO.1.2.3",
                     List.of(
@@ -67,7 +73,7 @@ class VorgangControllerTest {
                             new Attribute(AttributeType.STRING, "custom.attribute", BigInteger.ZERO, "custom-value")))));
             when(vorgangInPort.searchVorgang(any(), anyInt(), any(), any())).thenReturn(result);
 
-            final VorgangListeResponse response = controller.sucheVorgaenge(
+            final VorgangListeResponse response = controller.searchVorgaenge(
                     Optional.of("login"),
                     Optional.of("role"),
                     Optional.of("ou"),
@@ -97,7 +103,7 @@ class VorgangControllerTest {
         void givenNoClientAttributes_thenForwardNullAndReturnEmptyResponse() {
             when(vorgangInPort.searchVorgang(any(), anyInt(), any(), isNull())).thenReturn(new SearchResult(List.of()));
 
-            final VorgangListeResponse response = controller.sucheVorgaenge(
+            final VorgangListeResponse response = controller.searchVorgaenge(
                     Optional.empty(),
                     Optional.empty(),
                     Optional.empty(),
@@ -121,7 +127,7 @@ class VorgangControllerTest {
             final RuntimeException failure = new RuntimeException("search failed");
             when(vorgangInPort.searchVorgang(any(), anyInt(), any(), any())).thenThrow(failure);
 
-            assertThrows(RuntimeException.class, () -> controller.sucheVorgaenge(
+            assertThrows(RuntimeException.class, () -> controller.searchVorgaenge(
                     Optional.of("login"),
                     Optional.of("role"),
                     Optional.of("ou"),
@@ -129,6 +135,68 @@ class VorgangControllerTest {
                     Optional.of("condition"),
                     Optional.of(List.of("custom.attribute")),
                     null));
+        }
+    }
+
+    @Nested
+    class SucheVorgangsDokumente {
+        private static final int EXAMPLE_LIMIT = 123;
+
+        @Test
+        void givenSearchParameters_thenForwardContextAndReturnMappedResults() {
+            final SearchResult result = new SearchResult(List.of(new ResultObject(
+                    "document-name",
+                    "COO.2.3.4",
+                    List.of(
+                            new Attribute(AttributeType.STRING, DokumentAttribute.KLASSE.getReference(), BigInteger.ZERO,
+                                    DokumentClass.EINGANG.getReference()),
+                            new Attribute(AttributeType.STRING, DokumentAttribute.PARENT_ID.getReference(), BigInteger.ZERO, "parent-id"),
+                            new Attribute(AttributeType.STRING, DokumentAttribute.PARENT_TYPE.getReference(), BigInteger.ZERO,
+                                    "DEPRECONFIG@15.1001:Procedure"),
+                            new Attribute(AttributeType.STRING, DokumentAttribute.NAME.getReference(), BigInteger.ZERO, "short-name"),
+                            new Attribute(AttributeType.STRING, DokumentAttribute.BETREFF.getReference(), BigInteger.ZERO, "subject"),
+                            new Attribute(AttributeType.STRING, DokumentAttribute.ACL.getReference(), BigInteger.ZERO, "acl"),
+                            new Attribute(AttributeType.STRING, DokumentAttribute.ORGANISATIONSEINHEIT.getReference(), BigInteger.ZERO, "ou"),
+                            new Attribute(AttributeType.STRING, "custom.attribute", BigInteger.ZERO, "custom-value")))));
+            when(vorgangInPort.searchVorgangsDokumente(any(), any(), anyInt(), any(), any())).thenReturn(result);
+
+            final DokumentListeResponse response = controller.searchVorgangsDokumente(
+                    "vorgang-id",
+                    Optional.of("login"),
+                    Optional.of("role"),
+                    Optional.of("ou"),
+                    Optional.of(EXAMPLE_LIMIT),
+                    Optional.of("condition"),
+                    Optional.of(List.of("custom.attribute")),
+                    null)
+                    .getBody();
+
+            verify(vorgangInPort).searchVorgangsDokumente(
+                    new RequestContext(Optional.of("login"), Optional.of("ou"), Optional.of("role")),
+                    "vorgang-id",
+                    EXAMPLE_LIMIT,
+                    "condition",
+                    Set.of("custom.attribute"));
+            assertEquals(Optional.of(1), response.getAnzahl());
+            assertEquals("COO.2.3.4", response.getElemente().getFirst().getId());
+            assertEquals("parent-id", response.getElemente().getFirst().getParent().getId());
+            assertEquals("custom-value", response.getElemente().getFirst().getEigenschaftenMap().get("custom.attribute_0"));
+        }
+
+        @Test
+        void givenNoClientAttributes_thenForwardNullAndReturnEmptyResponse() {
+            when(vorgangInPort.searchVorgangsDokumente(any(), any(), anyInt(), any(), isNull()))
+                    .thenReturn(new SearchResult(List.of()));
+
+            final DokumentListeResponse response = controller.searchVorgangsDokumente(
+                    "vorgang-id", Optional.empty(), Optional.empty(), Optional.empty(), Optional.of(EXAMPLE_LIMIT),
+                    Optional.empty(), Optional.empty(), null).getBody();
+
+            verify(vorgangInPort).searchVorgangsDokumente(
+                    new RequestContext(Optional.empty(), Optional.empty(), Optional.empty()),
+                    "vorgang-id", EXAMPLE_LIMIT, null, null);
+            assertEquals(Optional.of(0), response.getAnzahl());
+            assertEquals(Collections.emptyList(), response.getElemente());
         }
     }
 }

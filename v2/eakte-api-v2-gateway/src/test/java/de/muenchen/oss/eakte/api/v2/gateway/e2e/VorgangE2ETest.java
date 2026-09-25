@@ -86,4 +86,36 @@ class VorgangE2ETest extends VorgangE2eSupport {
                     .andExpect(status().isInternalServerError());
         }
     }
+
+    @Nested
+    class GetVorgangsDokumente {
+        @Test
+        void givenAuthenticatedRequest_thenReturnDokumenteAndForwardSoapRequest() throws Exception {
+            stubDokumentResponse();
+
+            mockMvc.perform(get("/api/v2/vorgaenge/vorgang-id/dokumente")
+                    .header("Authorization", "Bearer authenticatedUser")
+                    .header("EAkte-Login-Name", "login")
+                    .header("EAkte-Rolle", "role")
+                    .header("EAkte-Organisationseinheit", "ou")
+                    .queryParam("limit", "123")
+                    .queryParam("bedingungen", "document query")
+                    .queryParam("eigenschaften", "custom.attribute"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.anzahl").value(1))
+                    .andExpect(jsonPath("$.elemente[0].id").value("COO.2.3.4"))
+                    .andExpect(jsonPath("$.elemente[0].parent.id").value("parent-id"))
+                    .andExpect(jsonPath("$.elemente[0].name").value("short-name"))
+                    .andExpect(jsonPath("$.elemente[0].eigenschaftenMap['custom.attribute_1']")
+                            .value("custom-value"));
+
+            verifyDokumentSearchRequest("document query", "custom.attribute");
+        }
+
+        @Test
+        void givenNoAuthentication_thenRejectRequest() throws Exception {
+            mockMvc.perform(get("/api/v2/vorgaenge/vorgang-id/dokumente"))
+                    .andExpect(status().isUnauthorized());
+        }
+    }
 }

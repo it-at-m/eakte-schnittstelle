@@ -24,7 +24,7 @@ paths:
         Mit diesem Aufruf können Vorgänge gesucht werden auf Basis von Bedingungen, die sich auf beliebige
         Attribute des Vorgangs beziehen (Standard-Metadaten der eGov-Suite oder auch Attribute aus der 
         "Definition von Verfahren").
-      operationId: SucheVorgaenge
+      operationId: SearchVorgaenge
       parameters:
         - $ref: '#/components/parameters/LoginName'
         - $ref: '#/components/parameters/Rolle'
@@ -39,6 +39,49 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VorgangListeResponse'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v2/vorgaenge/{vorgangsId}/dokumente:
+    get:
+      tags:
+        - Vorgang
+      summary: Dokumente eines Vorgangs
+      operationId: SearchVorgangsDokumente
+      parameters:
+        - in: path
+          name: vorgangsId
+          schema:
+            type: string
+          required: true
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Bedingungen'
+        - $ref: '#/components/parameters/Eigenschaften'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DokumentListeResponse'
         '400':
           description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
           content:
@@ -268,3 +311,72 @@ components:
           type: string
         dmsErrorReference:
           type: string
+    ParentReference:
+      type: object
+      required:
+        - type
+        - id
+      properties:
+        type:
+          type: string
+          enum:
+            - Vorgang
+            - Postkorb
+            - Arbeitsvorrat
+        id:
+          type: string
+    Dokument:
+      type: object
+      required:
+        - klasse
+        - id
+        - parent
+        - name
+        - langname
+        - betreff
+        - acl
+        - organisationseinheit
+        - eigenschaftenMap
+        - eigenschaftenListe
+      properties:
+        klasse:
+          type: string
+          enum:
+            - Eingang
+            - Erledigung
+            - Intern
+        id:
+          type: string
+        parent:
+          $ref: '#/components/schemas/ParentReference'
+        name:
+          type: string
+        langname:
+          type: string
+        betreff:
+          type: string
+        schlagworte:
+          type: array
+          items:
+            type: string
+        acl:
+          type: string
+        organisationseinheit:
+          type: string
+        eigenschaftenMap:
+          type: object
+          additionalProperties: true
+        eigenschaftenListe:
+          type: array
+          items:
+            $ref: '#/components/schemas/EigenschaftEintrag'
+    DokumentListeResponse:
+      type: object
+      properties:
+        anzahl:
+          $ref: '#/components/schemas/AnzahlListenElemente'
+        elemente:
+          type: array
+          description: Liste von Vorgängen
+          items:
+            $ref: '#/components/schemas/Dokument'

@@ -1,18 +1,7 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ACL;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.BEARBEITUNGSSTATUS;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.BETREFF;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.GESCHAEFTSGANGVERMERK;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.NAME;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ORGANISATIONSEINHEIT;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ORIGINAL_MEDIUM;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.PARENT_ID;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.SCHLAGWORTE_NAME;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.STATUS;
-
-import de.muenchen.oss.eakte.api.v2.gateway.application.usecase.VorgangUseCase;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.ResultObject;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import java.math.BigInteger;
 import java.util.List;
@@ -25,32 +14,36 @@ import org.springframework.stereotype.Component;
 class VorgangMapper {
     private final AttributeMapper attributeMapper;
 
-    protected List<Vorgang> mapResults(final List<SearchResult.ResultObject> results) {
+    protected List<Vorgang> mapResults(final List<ResultObject> results) {
         return results.stream().map(this::mapResult).toList();
     }
 
-    protected Vorgang mapResult(final SearchResult.ResultObject result) {
+    protected Vorgang mapResult(final ResultObject result) {
         final Map<String, List<Object>> referenceValueMap = attributeMapper.toReferenceValueMap(result.attributes());
         return Vorgang.builder()
                 .id(result.coo())
-                .sachakteId(attributeMapper.getTypedSingle(referenceValueMap, PARENT_ID.getReference(), String.class).orElseThrow())
+                .sachakteId(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.PARENT_ID.getReference(), String.class).orElseThrow())
                 .langname(result.name())
-                .name(attributeMapper.getTypedSingle(referenceValueMap, NAME.getReference(), String.class).orElseThrow())
-                .betreff(attributeMapper.getTypedSingle(referenceValueMap, BETREFF.getReference(), String.class).orElse(null))
-                .schlagworte(attributeMapper.getTypedList(referenceValueMap, SCHLAGWORTE_NAME.getReference(), String.class).orElse(List.of()))
-                .geschaeftsgangvermerk(attributeMapper.getTypedSingle(referenceValueMap, GESCHAEFTSGANGVERMERK.getReference(), String.class).orElse(null))
+                .name(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.NAME.getReference(), String.class).orElseThrow())
+                .betreff(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.BETREFF.getReference(), String.class).orElse(null))
+                .schlagworte(attributeMapper.getTypedList(referenceValueMap, VorgangAttribute.SCHLAGWORTE_NAME.getReference(), String.class).orElse(List.of()))
+                .geschaeftsgangvermerk(
+                        attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.GESCHAEFTSGANGVERMERK.getReference(), String.class).orElse(null))
                 .originalMedium(mapMedium(referenceValueMap))
-                .status(attributeMapper.getTypedSingle(referenceValueMap, STATUS.getReference(), BigInteger.class).orElseThrow().toString())
-                .bearbeitungsstatus(attributeMapper.getTypedSingle(referenceValueMap, BEARBEITUNGSSTATUS.getReference(), String.class).orElseThrow())
-                .acl(attributeMapper.getTypedSingle(referenceValueMap, ACL.getReference(), String.class).orElseThrow())
-                .organisationseinheit(attributeMapper.getTypedSingle(referenceValueMap, ORGANISATIONSEINHEIT.getReference(), String.class).orElseThrow())
-                .eigenschaftenMap(attributeMapper.toMap(result.attributes(), VorgangUseCase.DEFAULT_ATTRIBUTES))
-                .eigenschaftenListe(attributeMapper.toList(result.attributes(), VorgangUseCase.DEFAULT_ATTRIBUTES))
+                .status(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.STATUS.getReference(), BigInteger.class).orElseThrow().toString())
+                .bearbeitungsstatus(
+                        attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.BEARBEITUNGSSTATUS.getReference(), String.class).orElseThrow())
+                .acl(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.ACL.getReference(), String.class).orElseThrow())
+                .organisationseinheit(
+                        attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.ORGANISATIONSEINHEIT.getReference(), String.class).orElseThrow())
+                .eigenschaftenMap(attributeMapper.toMap(result.attributes(), VorgangAttribute.getReferences()))
+                .eigenschaftenListe(attributeMapper.toList(result.attributes(), VorgangAttribute.getReferences()))
                 .build();
     }
 
-    protected Vorgang.OriginalMediumEnum mapMedium(final Map<String, List<Object>> uniqueReferenceValueMap) {
-        return switch (attributeMapper.getTypedSingle(uniqueReferenceValueMap, ORIGINAL_MEDIUM.getReference(), BigInteger.class).orElseThrow().intValue()) {
+    protected Vorgang.OriginalMediumEnum mapMedium(final Map<String, List<Object>> referenceValueMap) {
+        return switch (attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.ORIGINAL_MEDIUM.getReference(), BigInteger.class).orElseThrow()
+                .intValue()) {
         case 1 -> Vorgang.OriginalMediumEnum.ELEKTRONISCH;
         case 2 -> Vorgang.OriginalMediumEnum.PAPIER;
         case 3 -> Vorgang.OriginalMediumEnum.HYBRID;
