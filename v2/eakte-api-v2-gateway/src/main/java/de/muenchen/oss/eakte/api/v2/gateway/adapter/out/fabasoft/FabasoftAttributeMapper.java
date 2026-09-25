@@ -9,38 +9,42 @@ import com.fabasoft.schemas.bai.search.FLOATType;
 import com.fabasoft.schemas.bai.search.INTEGERType;
 import com.fabasoft.schemas.bai.search.OBJECTPointerType;
 import com.fabasoft.schemas.bai.search.STRINGType;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.BooleanAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.ContentAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.DateAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.DatetimeAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.EnumAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.FloatAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.IntegerAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.ObjectAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.StringAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribute;
 import java.time.OffsetDateTime;
 import javax.xml.datatype.XMLGregorianCalendar;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper
 public abstract class FabasoftAttributeMapper {
-    protected abstract StringAttribute mapString(STRINGType type);
+    private static final String FABASOFT_TYPE = "fabasoftType";
 
-    protected abstract BooleanAttribute mapBoolean(BOOLEANType type);
+    @Mapping(target = FABASOFT_TYPE, constant = "STRING")
+    protected abstract Attribute mapString(STRINGType type);
 
-    protected abstract FloatAttribute mapFloat(FLOATType type);
+    @Mapping(target = FABASOFT_TYPE, constant = "BOOLEAN")
+    protected abstract Attribute mapBoolean(BOOLEANType type);
 
-    protected abstract IntegerAttribute mapInt(INTEGERType type);
+    @Mapping(target = FABASOFT_TYPE, constant = "FLOAT")
+    protected abstract Attribute mapFloat(FLOATType type);
 
-    protected abstract DateAttribute mapDate(DATEType type);
+    @Mapping(target = FABASOFT_TYPE, constant = "INTEGER")
+    protected abstract Attribute mapInt(INTEGERType type);
 
-    protected abstract DatetimeAttribute mapDatetime(DATETIMEType type);
+    @Mapping(target = FABASOFT_TYPE, constant = "DATE")
+    protected abstract Attribute mapDate(DATEType type);
 
-    protected abstract EnumAttribute mapEnum(ENUMType type);
+    @Mapping(target = FABASOFT_TYPE, constant = "DATETIME")
+    protected abstract Attribute mapDatetime(DATETIMEType type);
 
-    protected abstract ContentAttribute mapContent(CONTENTType type);
+    @Mapping(target = FABASOFT_TYPE, constant = "ENUM")
+    protected abstract Attribute mapEnum(ENUMType type);
 
-    protected abstract ObjectAttribute mapObject(OBJECTPointerType type);
+    @Mapping(target = FABASOFT_TYPE, constant = "CONTENT")
+    protected abstract Attribute mapContent(CONTENTType type);
+
+    @Mapping(target = FABASOFT_TYPE, constant = "OBJECT")
+    protected abstract Attribute mapObject(OBJECTPointerType type);
 
     protected OffsetDateTime mapGregorianCalendar(final XMLGregorianCalendar xmlGregorianCalendar) {
         return xmlGregorianCalendar.toGregorianCalendar().toZonedDateTime().toOffsetDateTime();

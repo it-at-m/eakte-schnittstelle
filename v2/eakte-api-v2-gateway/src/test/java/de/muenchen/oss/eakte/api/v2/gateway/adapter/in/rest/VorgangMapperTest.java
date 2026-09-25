@@ -1,21 +1,21 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.ACL;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.KEYWORDS_NAME;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.OE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.ORIGINAL_MEDIUM;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.PARENT_ID;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.PROCESSING_STATE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.PROCESS_NOTE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.SHORTNAME;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.STATE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.SUBJECT;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ACL;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.BEARBEITUNGSSTATUS;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.BETREFF;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.GESCHAEFTSGANGVERMERK;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.NAME;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ORGANISATIONSEINHEIT;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ORIGINAL_MEDIUM;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.PARENT_ID;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.SCHLAGWORTE_NAME;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.STATUS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.EnumAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.StringAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import java.math.BigInteger;
@@ -94,19 +94,19 @@ class VorgangMapperTest {
     }
 
     private SearchResult.ResultObject resultWithAttributes(final boolean optionalAttributes) {
-        final List<de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.Attribute<?>> attributes = new java.util.ArrayList<>(List.of(
-                new StringAttribute(PARENT_ID.getReference(), INDEX, "file-id"),
-                new StringAttribute(SHORTNAME.getReference(), INDEX, "short-name"),
-                new EnumAttribute(STATE.getReference(), INDEX, BigInteger.ONE),
-                new StringAttribute(PROCESSING_STATE.getReference(), INDEX, "processing"),
-                new StringAttribute(ACL.getReference(), INDEX, "acl"),
-                new StringAttribute(OE.getReference(), INDEX, "ou"),
-                new EnumAttribute(ORIGINAL_MEDIUM.getReference(), INDEX, BigInteger.ONE),
-                new StringAttribute("custom.attribute", INDEX, "custom-value")));
+        final List<Attribute> attributes = new java.util.ArrayList<>(List.of(
+                new Attribute(AttributeType.STRING, PARENT_ID.getReference(), INDEX, "file-id"),
+                new Attribute(AttributeType.STRING, NAME.getReference(), INDEX, "short-name"),
+                new Attribute(AttributeType.ENUM, STATUS.getReference(), INDEX, BigInteger.ONE),
+                new Attribute(AttributeType.STRING, BEARBEITUNGSSTATUS.getReference(), INDEX, "processing"),
+                new Attribute(AttributeType.STRING, ACL.getReference(), INDEX, "acl"),
+                new Attribute(AttributeType.STRING, ORGANISATIONSEINHEIT.getReference(), INDEX, "ou"),
+                new Attribute(AttributeType.ENUM, ORIGINAL_MEDIUM.getReference(), INDEX, BigInteger.ONE),
+                new Attribute(AttributeType.STRING, "custom.attribute", INDEX, "custom-value")));
         if (optionalAttributes) {
-            attributes.add(new StringAttribute(SUBJECT.getReference(), INDEX, "subject"));
-            attributes.add(new StringAttribute(KEYWORDS_NAME.getReference(), INDEX, "keyword"));
-            attributes.add(new StringAttribute(PROCESS_NOTE.getReference(), INDEX, "note"));
+            attributes.add(new Attribute(AttributeType.STRING, BETREFF.getReference(), INDEX, "subject"));
+            attributes.add(new Attribute(AttributeType.STRING, SCHLAGWORTE_NAME.getReference(), INDEX, "keyword"));
+            attributes.add(new Attribute(AttributeType.STRING, GESCHAEFTSGANGVERMERK.getReference(), INDEX, "note"));
         }
         return new SearchResult.ResultObject("procedure-name", "COO.1.2.3", attributes);
     }

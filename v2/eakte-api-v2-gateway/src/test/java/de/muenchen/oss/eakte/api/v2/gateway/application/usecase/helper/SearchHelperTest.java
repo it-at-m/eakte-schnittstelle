@@ -9,8 +9,8 @@ import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.SearchOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.IntegerAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.StringAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchType;
@@ -45,10 +45,10 @@ class SearchHelperTest {
             when(searchOutPort.searchObject(eq(REQUEST_CONTEXT), any()))
                     .thenReturn(new SearchResult(List.of(new SearchResult.ResultObject(
                             "subject-area", "address", List.of(
-                                    new StringAttribute(FULL_REFERENCE, BigInteger.ONE, "attribute.one"),
-                                    new StringAttribute(FULL_REFERENCE, BigInteger.TWO, "attribute.two"),
-                                    new StringAttribute("other.reference", BigInteger.ONE, "ignored"),
-                                    new IntegerAttribute(FULL_REFERENCE, BigInteger.ONE, 42))))));
+                                    new Attribute(AttributeType.STRING, FULL_REFERENCE, BigInteger.ONE, "attribute.one"),
+                                    new Attribute(AttributeType.STRING, FULL_REFERENCE, BigInteger.TWO, "attribute.two"),
+                                    new Attribute(AttributeType.STRING, "other.reference", BigInteger.ONE, "ignored"),
+                                    new Attribute(AttributeType.INTEGER, FULL_REFERENCE, BigInteger.ONE, 42))))));
 
             final List<String> attributes = searchHelper.loadDfVAttributes(REQUEST_CONTEXT, SearchType.VORGANG);
 

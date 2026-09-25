@@ -2,7 +2,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper;
 
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.SearchOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.AttributeType;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchType;
@@ -43,8 +43,8 @@ public class SearchHelper {
         // extract attribute keys from result
         return result.results().stream()
                 .flatMap(i -> i.attributes().stream())
-                .filter(i -> i.getReference().equals(fullreferenceAttr))
-                .filter(i -> i.getFabasoftType().equals(AttributeType.STRING))
-                .map(i -> (String) i.getValue()).toList();
+                .filter(i -> i.reference().equals(fullreferenceAttr))
+                .filter(i -> i.fabasoftType().equals(AttributeType.STRING))
+                .map(i -> (String) i.value()).toList();
     }
 }

@@ -1,15 +1,15 @@
 package de.muenchen.oss.eakte.api.v2.gateway.application.usecase;
 
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.ACL;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.KEYWORDS_NAME;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.OE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.ORIGINAL_MEDIUM;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.PARENT_ID;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.PROCESSING_STATE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.PROCESS_NOTE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.SHORTNAME;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.STATE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.SUBJECT;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ACL;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.BEARBEITUNGSSTATUS;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.BETREFF;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.GESCHAEFTSGANGVERMERK;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.NAME;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ORGANISATIONSEINHEIT;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ORIGINAL_MEDIUM;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.PARENT_ID;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.SCHLAGWORTE_NAME;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.STATUS;
 
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.in.VorgangInPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.SearchOutPort;
@@ -30,9 +30,9 @@ public class VorgangUseCase implements VorgangInPort {
     private final SearchHelper searchHelper;
 
     public static final Set<String> DEFAULT_ATTRIBUTES = Set.of(
-            PARENT_ID.getReference(), SUBJECT.getReference(), SHORTNAME.getReference(), STATE.getReference(),
-            PROCESSING_STATE.getReference(), KEYWORDS_NAME.getReference(), ACL.getReference(), OE.getReference(),
-            ORIGINAL_MEDIUM.getReference(), PROCESS_NOTE.getReference());
+            PARENT_ID.getReference(), BETREFF.getReference(), NAME.getReference(), STATUS.getReference(),
+            BEARBEITUNGSSTATUS.getReference(), SCHLAGWORTE_NAME.getReference(), ACL.getReference(), ORGANISATIONSEINHEIT.getReference(),
+            ORIGINAL_MEDIUM.getReference(), GESCHAEFTSGANGVERMERK.getReference());
 
     @Override
     public SearchResult searchVorgang(final RequestContext context, final int limit, final String query, final Set<String> clientAttrs) {

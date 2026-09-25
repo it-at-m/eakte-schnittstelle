@@ -12,7 +12,8 @@ import static org.mockito.Mockito.when;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.SearchOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper.SearchHelper;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.StringAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
 import java.util.HashSet;
@@ -75,7 +76,7 @@ class VorgangUseCaseTest {
             when(searchOutPort.searchObject(any(), any()))
                     .thenReturn(new SearchResult(List.of(new SearchResult.ResultObject(
                             "subject-area", "subject-area-address", List.of(
-                                    new StringAttribute(fullReference, java.math.BigInteger.ONE, dfvAttribute))))),
+                                    new Attribute(AttributeType.STRING, fullReference, java.math.BigInteger.ONE, dfvAttribute))))),
                             expectedResult);
 
             final SearchResult result = useCase.searchVorgang(REQUEST_CONTEXT, EXAMPLE_LIMIT, "query-value", null);

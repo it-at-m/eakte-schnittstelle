@@ -1,15 +1,15 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.ACL;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.KEYWORDS_NAME;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.OE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.ORIGINAL_MEDIUM;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.PARENT_ID;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.PROCESSING_STATE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.PROCESS_NOTE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.SHORTNAME;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.STATE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.SUBJECT;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ACL;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.BEARBEITUNGSSTATUS;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.BETREFF;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.GESCHAEFTSGANGVERMERK;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.NAME;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ORGANISATIONSEINHEIT;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ORIGINAL_MEDIUM;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.PARENT_ID;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.SCHLAGWORTE_NAME;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.STATUS;
 
 import de.muenchen.oss.eakte.api.v2.gateway.application.usecase.VorgangUseCase;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
@@ -35,15 +35,15 @@ class VorgangMapper {
                 .id(result.coo())
                 .sachakteId(attributeMapper.getTypedSingle(referenceValueMap, PARENT_ID.getReference(), String.class).orElseThrow())
                 .langname(result.name())
-                .name(attributeMapper.getTypedSingle(referenceValueMap, SHORTNAME.getReference(), String.class).orElseThrow())
-                .betreff(attributeMapper.getTypedSingle(referenceValueMap, SUBJECT.getReference(), String.class).orElse(null))
-                .schlagworte(attributeMapper.getTypedList(referenceValueMap, KEYWORDS_NAME.getReference(), String.class).orElse(List.of()))
-                .geschaeftsgangvermerk(attributeMapper.getTypedSingle(referenceValueMap, PROCESS_NOTE.getReference(), String.class).orElse(null))
+                .name(attributeMapper.getTypedSingle(referenceValueMap, NAME.getReference(), String.class).orElseThrow())
+                .betreff(attributeMapper.getTypedSingle(referenceValueMap, BETREFF.getReference(), String.class).orElse(null))
+                .schlagworte(attributeMapper.getTypedList(referenceValueMap, SCHLAGWORTE_NAME.getReference(), String.class).orElse(List.of()))
+                .geschaeftsgangvermerk(attributeMapper.getTypedSingle(referenceValueMap, GESCHAEFTSGANGVERMERK.getReference(), String.class).orElse(null))
                 .originalMedium(mapMedium(referenceValueMap))
-                .status(attributeMapper.getTypedSingle(referenceValueMap, STATE.getReference(), BigInteger.class).orElseThrow().toString())
-                .bearbeitungsstatus(attributeMapper.getTypedSingle(referenceValueMap, PROCESSING_STATE.getReference(), String.class).orElseThrow())
+                .status(attributeMapper.getTypedSingle(referenceValueMap, STATUS.getReference(), BigInteger.class).orElseThrow().toString())
+                .bearbeitungsstatus(attributeMapper.getTypedSingle(referenceValueMap, BEARBEITUNGSSTATUS.getReference(), String.class).orElseThrow())
                 .acl(attributeMapper.getTypedSingle(referenceValueMap, ACL.getReference(), String.class).orElseThrow())
-                .organisationseinheit(attributeMapper.getTypedSingle(referenceValueMap, OE.getReference(), String.class).orElseThrow())
+                .organisationseinheit(attributeMapper.getTypedSingle(referenceValueMap, ORGANISATIONSEINHEIT.getReference(), String.class).orElseThrow())
                 .eigenschaftenMap(attributeMapper.toMap(result.attributes(), VorgangUseCase.DEFAULT_ATTRIBUTES))
                 .eigenschaftenListe(attributeMapper.toList(result.attributes(), VorgangUseCase.DEFAULT_ATTRIBUTES))
                 .build();

@@ -8,8 +8,8 @@ import com.fabasoft.schemas.bai.search.SOAPSearchResponseType;
 import com.fabasoft.schemas.websvc.fscgovxml_1_1001_defaultwebservicedefinition.FSCGOVXML11001DefaultWebServiceDefinitionSoap;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.SearchOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.AggregateAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.Attribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
 
@@ -66,8 +66,8 @@ public class FabasoftSearchAdapter implements SearchOutPort {
         return query.toString();
     }
 
-    private List<Attribute<?>> parseAttributes(final AttrListResultType attrs) {
-        final List<Attribute<?>> result = new ArrayList<>();
+    private List<Attribute> parseAttributes(final AttrListResultType attrs) {
+        final List<Attribute> result = new ArrayList<>();
         // STRING
         result.addAll(attrs.getSTRING().stream().map(attributeMapper::mapString).toList());
         // BOOLEAN
@@ -91,8 +91,8 @@ public class FabasoftSearchAdapter implements SearchOutPort {
         return result;
     }
 
-    private AggregateAttribute mapAggregateType(final AGGREGATEType aggregateType) {
-        final List<Attribute<?>> attributes = new ArrayList<>();
+    private Attribute mapAggregateType(final AGGREGATEType aggregateType) {
+        final List<Attribute> attributes = new ArrayList<>();
         // STRING
         attributes.addAll(aggregateType.getSTRING().stream().map(attributeMapper::mapString).toList());
         // BOOLEAN
@@ -113,6 +113,6 @@ public class FabasoftSearchAdapter implements SearchOutPort {
         attributes.addAll(aggregateType.getOBJECT().stream().map(attributeMapper::mapObject).toList());
         // AGGREGATE
         attributes.addAll(aggregateType.getAGGREGATE().stream().map(this::mapAggregateType).toList());
-        return new AggregateAttribute(aggregateType.getReference(), aggregateType.getIndex(), attributes);
+        return new Attribute(AttributeType.AGGREGATE, aggregateType.getReference(), aggregateType.getIndex(), attributes);
     }
 }

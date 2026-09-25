@@ -1,13 +1,13 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.ACL;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.OE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.ORIGINAL_MEDIUM;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.PARENT_ID;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.PROCESSING_STATE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.SHORTNAME;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.STATE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftAttributeReferences.SUBJECT;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ACL;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.BEARBEITUNGSSTATUS;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.BETREFF;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.NAME;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ORGANISATIONSEINHEIT;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ORIGINAL_MEDIUM;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.PARENT_ID;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.STATUS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -19,8 +19,8 @@ import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.in.VorgangInPort;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.EnumAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.StringAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.VorgangListeResponse;
 import java.math.BigInteger;
@@ -56,15 +56,15 @@ class VorgangControllerTest {
                     "procedure-name",
                     "COO.1.2.3",
                     List.of(
-                            new StringAttribute(PARENT_ID.getReference(), BigInteger.ZERO, "file-id"),
-                            new StringAttribute(SUBJECT.getReference(), BigInteger.ZERO, "subject"),
-                            new StringAttribute(SHORTNAME.getReference(), BigInteger.ZERO, "short-name"),
-                            new EnumAttribute(STATE.getReference(), BigInteger.ZERO, BigInteger.ONE),
-                            new StringAttribute(PROCESSING_STATE.getReference(), BigInteger.ZERO, "processing"),
-                            new StringAttribute(ACL.getReference(), BigInteger.ZERO, "acl"),
-                            new StringAttribute(OE.getReference(), BigInteger.ZERO, "ou"),
-                            new EnumAttribute(ORIGINAL_MEDIUM.getReference(), BigInteger.ZERO, BigInteger.TWO),
-                            new StringAttribute("custom.attribute", BigInteger.ZERO, "custom-value")))));
+                            new Attribute(AttributeType.STRING, PARENT_ID.getReference(), BigInteger.ZERO, "file-id"),
+                            new Attribute(AttributeType.STRING, BETREFF.getReference(), BigInteger.ZERO, "subject"),
+                            new Attribute(AttributeType.STRING, NAME.getReference(), BigInteger.ZERO, "short-name"),
+                            new Attribute(AttributeType.ENUM, STATUS.getReference(), BigInteger.ZERO, BigInteger.ONE),
+                            new Attribute(AttributeType.STRING, BEARBEITUNGSSTATUS.getReference(), BigInteger.ZERO, "processing"),
+                            new Attribute(AttributeType.STRING, ACL.getReference(), BigInteger.ZERO, "acl"),
+                            new Attribute(AttributeType.STRING, ORGANISATIONSEINHEIT.getReference(), BigInteger.ZERO, "ou"),
+                            new Attribute(AttributeType.ENUM, ORIGINAL_MEDIUM.getReference(), BigInteger.ZERO, BigInteger.TWO),
+                            new Attribute(AttributeType.STRING, "custom.attribute", BigInteger.ZERO, "custom-value")))));
             when(vorgangInPort.searchVorgang(any(), anyInt(), any(), any())).thenReturn(result);
 
             final VorgangListeResponse response = controller.sucheVorgaenge(

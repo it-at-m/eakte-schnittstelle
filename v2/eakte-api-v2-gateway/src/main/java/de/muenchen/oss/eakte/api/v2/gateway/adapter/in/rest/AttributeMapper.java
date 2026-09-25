@@ -1,6 +1,6 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.Attribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribute;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.EigenschaftEintrag;
 import java.util.List;
 import java.util.Map;
@@ -11,27 +11,27 @@ import org.springframework.stereotype.Component;
 
 @Component
 class AttributeMapper {
-    protected Map<String, Object> toMap(final List<Attribute<?>> attributes, final Set<String> exclude) {
+    protected Map<String, Object> toMap(final List<Attribute> attributes, final Set<String> exclude) {
         return attributes.stream()
-                .filter(i -> !exclude.contains(i.getReference()))
+                .filter(i -> !exclude.contains(i.reference()))
                 .collect(Collectors.toMap(
-                        i -> String.format("%s_%s", i.getReference(), i.getIndex()),
-                        Attribute::getValue));
+                        i -> String.format("%s_%s", i.reference(), i.index()),
+                        Attribute::value));
     }
 
-    protected List<EigenschaftEintrag> toList(final List<Attribute<?>> attributes, final Set<String> exclude) {
+    protected List<EigenschaftEintrag> toList(final List<Attribute> attributes, final Set<String> exclude) {
         return attributes.stream()
-                .filter(i -> !exclude.contains(i.getReference()))
+                .filter(i -> !exclude.contains(i.reference()))
                 .map(this::toListEntry).toList();
     }
 
-    protected EigenschaftEintrag toListEntry(final Attribute<?> attribute) {
-        return new EigenschaftEintrag(attribute.getReference(), attribute.getValue());
+    protected EigenschaftEintrag toListEntry(final Attribute attribute) {
+        return new EigenschaftEintrag(attribute.reference(), attribute.value());
     }
 
     /**
-     * Map attributes to a Map where the key is the {@link Attribute#getReference()}
-     * and the value is the {@link Attribute#getValue()}.
+     * Map attributes to a Map where the key is the {@link Attribute#reference()}
+     * and the value is the {@link Attribute#value()}.
      * <p>
      * See {@link #getTypedSingle} for extracting typed arguments.
      *
@@ -39,11 +39,11 @@ class AttributeMapper {
      * @return The mapped attributes.
      */
     protected Map<String, List<Object>> toReferenceValueMap(
-            final List<Attribute<?>> attributes) {
+            final List<Attribute> attributes) {
         return attributes.stream()
                 // map to multi value map
-                .collect(Collectors.groupingBy(Attribute::getReference,
-                        Collectors.mapping(Attribute::getValue, Collectors.toList())));
+                .collect(Collectors.groupingBy(Attribute::reference,
+                        Collectors.mapping(Attribute::value, Collectors.toList())));
     }
 
     /**

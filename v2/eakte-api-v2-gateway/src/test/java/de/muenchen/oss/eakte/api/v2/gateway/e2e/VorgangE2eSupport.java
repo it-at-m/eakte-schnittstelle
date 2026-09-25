@@ -59,7 +59,7 @@ abstract class VorgangE2eSupport extends AbstractWireMockE2eTest {
                       <urn:objname>procedure-name</urn:objname>
                       <urn:objaddress>COO.1.2.3</urn:objaddress>
                       <urn:attrlist>
-                        <urn:STRING urn:reference="COOELAK@1.1001:referrednumber.address" urn:index="1">file-id</urn:STRING>
+                        <urn:OBJECT urn:reference="COOELAK@1.1001:referrednumber" urn:index="1">file-id</urn:OBJECT>
                         <urn:STRING urn:reference="COOELAK@1.1001:filesubj" urn:index="1">subject</urn:STRING>
                         <urn:STRING urn:reference="COOELAK@1.1001:objmlname.langstring" urn:index="1">short-name</urn:STRING>
                         <urn:ENUM urn:reference="FSCFOLIO@1.1001:objdocstate" urn:index="1">1</urn:ENUM>
