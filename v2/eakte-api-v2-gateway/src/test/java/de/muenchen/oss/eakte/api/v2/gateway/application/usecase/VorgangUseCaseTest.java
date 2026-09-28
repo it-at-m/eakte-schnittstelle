@@ -131,7 +131,7 @@ class VorgangUseCaseTest {
             final SearchRequest request = requestCaptor.getValue();
             assertEquals(SearchType.DOKUMENT, request.type());
             assertEquals(123, request.limit());
-            assertEquals(".COOELAK@1.1001:referrednumber.COOSYSTEM@1.1:objaddress = 'vorgang-id' AND client query",
+            assertEquals("(.COOELAK@1.1001:referrednumber.COOSYSTEM@1.1:objaddress = 'vorgang-id') AND (client query)",
                     request.query());
             assertTrue(request.attributes().containsAll(DokumentAttribute.getReferences()));
             assertTrue(request.attributes().contains("custom.attribute"));

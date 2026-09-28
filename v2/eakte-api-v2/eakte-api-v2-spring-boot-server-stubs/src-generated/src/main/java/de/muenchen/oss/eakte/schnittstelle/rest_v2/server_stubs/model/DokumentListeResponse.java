@@ -66,11 +66,11 @@ public class DokumentListeResponse {
   }
 
   /**
-   * Liste von Vorgängen
+   * Liste von Dokumenten
    * @return elemente
    */
   @Valid 
-  @Schema(name = "elemente", description = "Liste von Vorgängen", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "elemente", description = "Liste von Dokumenten", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("elemente")
   public List<@Valid Dokument> getElemente() {
     return elemente;

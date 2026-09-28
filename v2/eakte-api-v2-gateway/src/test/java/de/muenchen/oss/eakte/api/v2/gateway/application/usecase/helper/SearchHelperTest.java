@@ -84,7 +84,7 @@ class SearchHelperTest {
     class ConcatQuery {
         @Test
         void givenBothQueries_thenJoinWithAnd() {
-            assertEquals("first AND second", searchHelper.concatQuery("first", "second"));
+            assertEquals("(first) AND (second)", searchHelper.concatQuery("first", "second"));
         }
 
         @Test

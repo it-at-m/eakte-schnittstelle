@@ -77,7 +77,7 @@ public class Dokument {
 
   private String langname;
 
-  private String betreff;
+  private Optional<String> betreff = Optional.empty();
 
   @Valid
   private List<String> schlagworte = new ArrayList<>();
@@ -99,13 +99,12 @@ public class Dokument {
   /**
    * Constructor with only required parameters
    */
-  public Dokument(KlasseEnum klasse, String id, ParentReference parent, String name, String langname, String betreff, String acl, String organisationseinheit, Map<String, Object> eigenschaftenMap, List<@Valid EigenschaftEintrag> eigenschaftenListe) {
+  public Dokument(KlasseEnum klasse, String id, ParentReference parent, String name, String langname, String acl, String organisationseinheit, Map<String, Object> eigenschaftenMap, List<@Valid EigenschaftEintrag> eigenschaftenListe) {
     this.klasse = klasse;
     this.id = id;
     this.parent = parent;
     this.name = name;
     this.langname = langname;
-    this.betreff = betreff;
     this.acl = acl;
     this.organisationseinheit = organisationseinheit;
     this.eigenschaftenMap = eigenschaftenMap;
@@ -218,7 +217,7 @@ public class Dokument {
   }
 
   public Dokument betreff(String betreff) {
-    this.betreff = betreff;
+    this.betreff = Optional.ofNullable(betreff);
     return this;
   }
 
@@ -226,15 +225,15 @@ public class Dokument {
    * Get betreff
    * @return betreff
    */
-  @NotNull 
-  @Schema(name = "betreff", requiredMode = Schema.RequiredMode.REQUIRED)
+  
+  @Schema(name = "betreff", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("betreff")
-  public String getBetreff() {
+  public Optional<String> getBetreff() {
     return betreff;
   }
 
   @JsonProperty("betreff")
-  public void setBetreff(String betreff) {
+  public void setBetreff(Optional<String> betreff) {
     this.betreff = betreff;
   }
 

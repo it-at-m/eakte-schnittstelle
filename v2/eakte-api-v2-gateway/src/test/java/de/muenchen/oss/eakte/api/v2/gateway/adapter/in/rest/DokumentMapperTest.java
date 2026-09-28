@@ -12,7 +12,6 @@ import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mappin
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass.ERLEDIGUNG;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass.INTERN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribute;
@@ -24,6 +23,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +47,7 @@ class DokumentMapperTest {
         assertEquals(Dokument.KlasseEnum.EINGANG, result.getKlasse());
         assertEquals(new ParentReference().id("parent-id").type(ParentReference.TypeEnum.VORGANG), result.getParent());
         assertEquals("short-name", result.getName());
-        assertEquals("subject", result.getBetreff());
+        assertEquals("subject", result.getBetreff().orElseThrow());
         assertEquals(List.of("keyword"), result.getSchlagworte());
         assertEquals("acl", result.getAcl());
         assertEquals("ou", result.getOrganisationseinheit());
@@ -59,7 +59,7 @@ class DokumentMapperTest {
     void givenMissingOptionalAttributes_thenUseOptionalDefaults() {
         final Dokument result = mapper.mapResult(resultWithAttributes(false));
 
-        assertNull(result.getBetreff());
+        assertEquals(Optional.empty(), result.getBetreff());
         assertEquals(List.of(), result.getSchlagworte());
     }
 

@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -20,6 +22,7 @@ import org.springframework.util.StringUtils;
 @Component
 @RequiredArgsConstructor
 public class SearchHelper {
+    private static final String COO_PATTERN = "^COO[.\\d]+$";
     private static final String PARENT_QUERY = ".COOELAK@1.1001:referrednumber.COOSYSTEM@1.1:objaddress = '%s'";
 
     private final SearchOutPort searchOutPort;
@@ -45,7 +48,7 @@ public class SearchHelper {
     }
 
     /**
-     * Concat two search queries.
+     * Concat two search queries with AND.
      *
      * @param query1 The first query.
      * @param query2 The second query.
@@ -58,7 +61,7 @@ public class SearchHelper {
         if (!StringUtils.hasText(query1) && StringUtils.hasText(query2)) {
             return query2;
         }
-        return "%s AND %s".formatted(query1, query2);
+        return "(%s) AND (%s)".formatted(query1, query2);
     }
 
     /**
@@ -67,7 +70,7 @@ public class SearchHelper {
      * @param id The parent id.
      * @return The built query.
      */
-    public String buildParentIdQuery(final String id) {
+    public String buildParentIdQuery(@NotBlank @Pattern(regexp = COO_PATTERN) final String id) {
         return PARENT_QUERY.formatted(id);
     }
 

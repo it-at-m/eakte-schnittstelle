@@ -8,7 +8,6 @@ components:
         - parent
         - name
         - langname
-        - betreff
         - acl
         - organisationseinheit
         - eigenschaftenMap
@@ -57,7 +56,7 @@ components:
           $ref: '_SucheDatentypen.yaml#/components/schemas/AnzahlListenElemente'
         elemente:
           type: array
-          description: Liste von Vorgängen
+          description: Liste von Dokumenten
           items:
             $ref: 'Dokument_Datentypen.yaml#/components/schemas/Dokument'
 
