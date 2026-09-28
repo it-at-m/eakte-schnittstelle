@@ -8,13 +8,11 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribut
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchType;
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
