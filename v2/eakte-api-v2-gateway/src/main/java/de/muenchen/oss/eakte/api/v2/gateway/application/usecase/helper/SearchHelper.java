@@ -36,7 +36,7 @@ public class SearchHelper {
      */
     public Set<String> buildAttributes(final RequestContext context, final SearchType searchType, final Set<String> clientAttrs) {
         final Set<String> attributes = new HashSet<>(switch (searchType) {
-        case SUBJECT_AREA -> null;
+        case SUBJECT_AREA -> throw new IllegalStateException("Not implemented");
         case VORGANG -> VorgangAttribute.getReferences();
         case DOKUMENT -> DokumentAttribute.getReferences();
         });
