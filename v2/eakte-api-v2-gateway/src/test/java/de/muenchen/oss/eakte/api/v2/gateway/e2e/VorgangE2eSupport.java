@@ -5,6 +5,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
+import static de.muenchen.oss.eakte.api.v2.gateway.TestSecurityConfiguration.USER;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder;
@@ -45,6 +46,11 @@ abstract class VorgangE2eSupport extends AbstractWireMockE2eTest {
                     .withHeader("X-FSC-Authenticated-User", equalTo("login"))
                     .withQueryParam("px", equalTo("role"))
                     .withQueryParam("gx", equalTo("ou"));
+        } else {
+            pattern = pattern
+                    .withHeader("X-FSC-Authenticated-User", equalTo(USER))
+                    .withoutQueryParam("px")
+                    .withoutQueryParam("gx");
         }
         wireMock.verify(pattern);
     }
