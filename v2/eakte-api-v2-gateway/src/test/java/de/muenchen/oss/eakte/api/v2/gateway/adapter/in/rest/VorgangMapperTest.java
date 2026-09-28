@@ -8,7 +8,6 @@ import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mappin
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ORGANISATIONSEINHEIT;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ORIGINAL_MEDIUM;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.PARENT_ID;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.SCHLAGWORTE_NAME;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.STATUS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -43,10 +42,9 @@ class VorgangMapperTest {
         assertEquals("short-name", result.getName());
         assertEquals("file-id", result.getSachakteId());
         assertEquals("subject", result.getBetreff().orElseThrow());
-        assertEquals(List.of("keyword"), result.getSchlagworte());
         assertEquals("note", result.getGeschaeftsgangvermerk().orElseThrow());
         assertEquals(Vorgang.OriginalMediumEnum.ELEKTRONISCH, result.getOriginalMedium());
-        assertEquals("1", result.getStatus());
+        assertEquals(Vorgang.StatusEnum.IN_BEARBEITUNG, result.getStatus());
         assertEquals("processing", result.getBearbeitungsstatus());
         assertEquals("acl", result.getAcl());
         assertEquals("ou", result.getOrganisationseinheit());
@@ -58,7 +56,6 @@ class VorgangMapperTest {
     void givenMissingOptionalAttributes_thenUseOptionalDefaults() {
         final Vorgang result = mapper.mapResult(resultWithAttributes(false));
 
-        assertEquals(List.of(), result.getSchlagworte());
         assertEquals(java.util.Optional.empty(), result.getBetreff());
         assertEquals(java.util.Optional.empty(), result.getGeschaeftsgangvermerk());
     }
@@ -97,7 +94,7 @@ class VorgangMapperTest {
         final List<Attribute> attributes = new java.util.ArrayList<>(List.of(
                 new Attribute(AttributeType.STRING, PARENT_ID.getReference(), INDEX, "file-id"),
                 new Attribute(AttributeType.STRING, NAME.getReference(), INDEX, "short-name"),
-                new Attribute(AttributeType.ENUM, STATUS.getReference(), INDEX, BigInteger.ONE),
+                new Attribute(AttributeType.ENUM, STATUS.getReference(), INDEX, BigInteger.valueOf(10)),
                 new Attribute(AttributeType.STRING, BEARBEITUNGSSTATUS.getReference(), INDEX, "processing"),
                 new Attribute(AttributeType.STRING, ACL.getReference(), INDEX, "acl"),
                 new Attribute(AttributeType.STRING, ORGANISATIONSEINHEIT.getReference(), INDEX, "ou"),
@@ -105,7 +102,6 @@ class VorgangMapperTest {
                 new Attribute(AttributeType.STRING, "custom.attribute", INDEX, "custom-value")));
         if (optionalAttributes) {
             attributes.add(new Attribute(AttributeType.STRING, BETREFF.getReference(), INDEX, "subject"));
-            attributes.add(new Attribute(AttributeType.STRING, SCHLAGWORTE_NAME.getReference(), INDEX, "keyword"));
             attributes.add(new Attribute(AttributeType.STRING, GESCHAEFTSGANGVERMERK.getReference(), INDEX, "note"));
         }
         return new ResultObject("procedure-name", "COO.1.2.3", attributes);

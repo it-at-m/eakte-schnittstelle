@@ -40,9 +40,6 @@ public class Vorgang {
 
   private Optional<String> betreff = Optional.empty();
 
-  @Valid
-  private List<String> schlagworte = new ArrayList<>();
-
   private Optional<String> geschaeftsgangvermerk = Optional.empty();
 
   /**
@@ -84,7 +81,48 @@ public class Vorgang {
 
   private OriginalMediumEnum originalMedium;
 
-  private String status;
+  /**
+   * Gets or Sets status
+   */
+  public enum StatusEnum {
+    IN_BEARBEITUNG("In Bearbeitung"),
+    
+    SUSPENDIERT("Suspendiert"),
+    
+    ABGESCHLOSSEN("Abgeschlossen"),
+    
+    STORNIERT("Storniert"),
+    
+    ARCHIVIERT("Archiviert");
+
+    private final String value;
+
+    StatusEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static StatusEnum fromValue(String value) {
+      for (StatusEnum b : StatusEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+  }
+
+  private StatusEnum status;
 
   private String bearbeitungsstatus;
 
@@ -105,7 +143,7 @@ public class Vorgang {
   /**
    * Constructor with only required parameters
    */
-  public Vorgang(String id, String sachakteId, String name, String langname, OriginalMediumEnum originalMedium, String status, String bearbeitungsstatus, String acl, String organisationseinheit, Map<String, Object> eigenschaftenMap, List<@Valid EigenschaftEintrag> eigenschaftenListe) {
+  public Vorgang(String id, String sachakteId, String name, String langname, OriginalMediumEnum originalMedium, StatusEnum status, String bearbeitungsstatus, String acl, String organisationseinheit, Map<String, Object> eigenschaftenMap, List<@Valid EigenschaftEintrag> eigenschaftenListe) {
     this.id = id;
     this.sachakteId = sachakteId;
     this.name = name;
@@ -224,35 +262,6 @@ public class Vorgang {
     this.betreff = betreff;
   }
 
-  public Vorgang schlagworte(List<String> schlagworte) {
-    this.schlagworte = schlagworte;
-    return this;
-  }
-
-  public Vorgang addSchlagworteItem(String schlagworteItem) {
-    if (this.schlagworte == null) {
-      this.schlagworte = new ArrayList<>();
-    }
-    this.schlagworte.add(schlagworteItem);
-    return this;
-  }
-
-  /**
-   * Get schlagworte
-   * @return schlagworte
-   */
-  
-  @Schema(name = "schlagworte", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("schlagworte")
-  public List<String> getSchlagworte() {
-    return schlagworte;
-  }
-
-  @JsonProperty("schlagworte")
-  public void setSchlagworte(List<String> schlagworte) {
-    this.schlagworte = schlagworte;
-  }
-
   public Vorgang geschaeftsgangvermerk(String geschaeftsgangvermerk) {
     this.geschaeftsgangvermerk = Optional.ofNullable(geschaeftsgangvermerk);
     return this;
@@ -295,7 +304,7 @@ public class Vorgang {
     this.originalMedium = originalMedium;
   }
 
-  public Vorgang status(String status) {
+  public Vorgang status(StatusEnum status) {
     this.status = status;
     return this;
   }
@@ -307,12 +316,12 @@ public class Vorgang {
   @NotNull 
   @Schema(name = "status", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("status")
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
   @JsonProperty("status")
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 
@@ -451,7 +460,6 @@ public class Vorgang {
         Objects.equals(this.name, vorgang.name) &&
         Objects.equals(this.langname, vorgang.langname) &&
         Objects.equals(this.betreff, vorgang.betreff) &&
-        Objects.equals(this.schlagworte, vorgang.schlagworte) &&
         Objects.equals(this.geschaeftsgangvermerk, vorgang.geschaeftsgangvermerk) &&
         Objects.equals(this.originalMedium, vorgang.originalMedium) &&
         Objects.equals(this.status, vorgang.status) &&
@@ -464,7 +472,7 @@ public class Vorgang {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, sachakteId, name, langname, betreff, schlagworte, geschaeftsgangvermerk, originalMedium, status, bearbeitungsstatus, acl, organisationseinheit, eigenschaftenMap, eigenschaftenListe);
+    return Objects.hash(id, sachakteId, name, langname, betreff, geschaeftsgangvermerk, originalMedium, status, bearbeitungsstatus, acl, organisationseinheit, eigenschaftenMap, eigenschaftenListe);
   }
 
   @Override
@@ -476,7 +484,6 @@ public class Vorgang {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    langname: ").append(toIndentedString(langname)).append("\n");
     sb.append("    betreff: ").append(toIndentedString(betreff)).append("\n");
-    sb.append("    schlagworte: ").append(toIndentedString(schlagworte)).append("\n");
     sb.append("    geschaeftsgangvermerk: ").append(toIndentedString(geschaeftsgangvermerk)).append("\n");
     sb.append("    originalMedium: ").append(toIndentedString(originalMedium)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
@@ -515,7 +522,6 @@ public class Vorgang {
       this.instance.setName(value.name);
       this.instance.setLangname(value.langname);
       this.instance.setBetreff(value.betreff);
-      this.instance.setSchlagworte(value.schlagworte);
       this.instance.setGeschaeftsgangvermerk(value.geschaeftsgangvermerk);
       this.instance.setOriginalMedium(value.originalMedium);
       this.instance.setStatus(value.status);
@@ -552,11 +558,6 @@ public class Vorgang {
       return this;
     }
     
-    public Vorgang.Builder schlagworte(List<String> schlagworte) {
-      this.instance.schlagworte(schlagworte);
-      return this;
-    }
-    
     public Vorgang.Builder geschaeftsgangvermerk(String geschaeftsgangvermerk) {
       this.instance.geschaeftsgangvermerk(geschaeftsgangvermerk);
       return this;
@@ -567,7 +568,7 @@ public class Vorgang {
       return this;
     }
     
-    public Vorgang.Builder status(String status) {
+    public Vorgang.Builder status(StatusEnum status) {
       this.instance.status(status);
       return this;
     }

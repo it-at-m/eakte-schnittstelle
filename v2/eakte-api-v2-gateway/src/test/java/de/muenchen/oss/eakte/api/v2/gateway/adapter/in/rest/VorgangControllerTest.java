@@ -73,7 +73,7 @@ class VorgangControllerTest {
                             new Attribute(AttributeType.STRING, PARENT_ID.getReference(), BigInteger.ZERO, "file-id"),
                             new Attribute(AttributeType.STRING, BETREFF.getReference(), BigInteger.ZERO, "subject"),
                             new Attribute(AttributeType.STRING, NAME.getReference(), BigInteger.ZERO, "short-name"),
-                            new Attribute(AttributeType.ENUM, STATUS.getReference(), BigInteger.ZERO, BigInteger.ONE),
+                            new Attribute(AttributeType.ENUM, STATUS.getReference(), BigInteger.ZERO, BigInteger.valueOf(10)),
                             new Attribute(AttributeType.STRING, BEARBEITUNGSSTATUS.getReference(), BigInteger.ZERO, "processing"),
                             new Attribute(AttributeType.STRING, ACL.getReference(), BigInteger.ZERO, "acl"),
                             new Attribute(AttributeType.STRING, ORGANISATIONSEINHEIT.getReference(), BigInteger.ZERO, "ou"),

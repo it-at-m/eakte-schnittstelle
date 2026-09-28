@@ -311,10 +311,6 @@ components:
           type: string
         betreff:
           type: string
-        schlagworte:
-          type: array
-          items:
-            type: string
         geschaeftsgangvermerk:
           type: string
           description: Geschäftsgangvermerk für Prozessverantwortlichen
@@ -327,6 +323,12 @@ components:
             - papier
         status:
           type: string
+          enum:
+            - In Bearbeitung
+            - Suspendiert
+            - Abgeschlossen
+            - Storniert
+            - Archiviert
         bearbeitungsstatus:
           type: string
         acl:
