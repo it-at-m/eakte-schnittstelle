@@ -19,6 +19,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.in.VorgangInPort;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.ResourceNotFoundException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass;
@@ -27,6 +28,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribut
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.DokumentListeResponse;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.VorgangListeResponse;
 import java.math.BigInteger;
 import java.util.Collections;
@@ -97,6 +99,7 @@ class VorgangControllerTest {
                     ArgumentMatchers.eq("condition"),
                     ArgumentMatchers.eq(Set.of("custom.attribute")));
             assertEquals(new RequestContext("login", "ou", "role"), contextCaptor.getValue());
+            assert response != null;
             assertEquals(Optional.of(1), response.getAnzahl());
             assertEquals("COO.1.2.3", response.getElemente().getFirst().getId());
             assertEquals("file-id", response.getElemente().getFirst().getSachakteId());
@@ -128,6 +131,7 @@ class VorgangControllerTest {
                     EXAMPLE_LIMIT,
                     "condition",
                     null);
+            assert response != null;
             assertEquals(Optional.of(0), response.getAnzahl());
             assertEquals(Collections.emptyList(), response.getElemente());
         }
@@ -192,6 +196,7 @@ class VorgangControllerTest {
                     EXAMPLE_LIMIT,
                     "condition",
                     Set.of("custom.attribute"));
+            assert response != null;
             assertEquals(Optional.of(1), response.getAnzahl());
             assertEquals("COO.2.3.4", response.getElemente().getFirst().getId());
             assertEquals("parent-id", response.getElemente().getFirst().getParent().getId());
@@ -212,8 +217,56 @@ class VorgangControllerTest {
             verify(vorgangInPort).searchVorgangsDokumente(
                     new RequestContext(null, null, null),
                     "vorgang-id", EXAMPLE_LIMIT, null, null);
+            assert response != null;
             assertEquals(Optional.of(0), response.getAnzahl());
             assertEquals(Collections.emptyList(), response.getElemente());
         }
+    }
+
+    @Nested
+    class GetVorgang {
+        @Test
+        void givenVorgangId_thenForwardContextAndReturnMappedResult() {
+            when(vorgangInPort.getVorgang(any(), any(), any())).thenReturn(
+                    Optional.of(vorgangResult()));
+
+            final Vorgang response = controller.getVorgang(
+                    "COO.1.2.3",
+                    Optional.of("login"),
+                    Optional.of("role"),
+                    Optional.of("ou"),
+                    Optional.of(List.of("custom.attribute")),
+                    null)
+                    .getBody();
+
+            verify(vorgangInPort).getVorgang(
+                    new RequestContext(Optional.of("login"), Optional.of("ou"), Optional.of("role")),
+                    "COO.1.2.3",
+                    Set.of("custom.attribute"));
+            assertEquals("COO.1.2.3", response.getId());
+            assertEquals("short-name", response.getName());
+        }
+
+        @Test
+        void givenUnknownVorgangId_thenThrowNotFoundException() {
+            when(vorgangInPort.getVorgang(any(), any(), any())).thenReturn(Optional.empty());
+
+            assertThrows(ResourceNotFoundException.class, () -> controller.getVorgang(
+                    "COO.1.2.3", Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(), null));
+        }
+    }
+
+    private ResultObject vorgangResult() {
+        return new ResultObject(
+                "procedure-name",
+                "COO.1.2.3",
+                List.of(
+                        new Attribute(AttributeType.STRING, PARENT_ID.getReference(), BigInteger.ZERO, "file-id"),
+                        new Attribute(AttributeType.STRING, NAME.getReference(), BigInteger.ZERO, "short-name"),
+                        new Attribute(AttributeType.ENUM, STATUS.getReference(), BigInteger.ZERO, BigInteger.valueOf(10)),
+                        new Attribute(AttributeType.STRING, BEARBEITUNGSSTATUS.getReference(), BigInteger.ZERO, "processing"),
+                        new Attribute(AttributeType.STRING, ACL.getReference(), BigInteger.ZERO, "acl"),
+                        new Attribute(AttributeType.STRING, ORGANISATIONSEINHEIT.getReference(), BigInteger.ZERO, "ou"),
+                        new Attribute(AttributeType.ENUM, ORIGINAL_MEDIUM.getReference(), BigInteger.ZERO, BigInteger.ONE)));
     }
 }

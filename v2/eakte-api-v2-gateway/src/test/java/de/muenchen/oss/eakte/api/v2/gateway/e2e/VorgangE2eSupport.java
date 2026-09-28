@@ -23,6 +23,14 @@ abstract class VorgangE2eSupport extends AbstractWireMockE2eTest {
         stubSearchRequestContaining("where query", vorgangResponse());
     }
 
+    protected void stubGetVorgangResponse() {
+        stubSearchRequestContaining("COOSYSTEM@1.1:objaddress", vorgangResponse());
+    }
+
+    protected void stubGetVorgangNotFoundResponse() {
+        stubSearchRequestContaining("COOSYSTEM@1.1:objaddress", emptySearchResponse());
+    }
+
     protected void stubDfVAndVorgangResponse() {
         stubSearchRequestContaining("availabledefinitions is not null", dfvResponse());
         stubSearchRequestContaining("where query", vorgangResponse());
@@ -130,6 +138,14 @@ abstract class VorgangE2eSupport extends AbstractWireMockE2eTest {
                           </urn:queryresult>
                         </urn:SOAPSearchResponse>
                         """);
+    }
+
+    private String emptySearchResponse() {
+        return soapEnvelope("""
+                <urn:SOAPSearchResponse>
+                  <urn:queryresult/>
+                </urn:SOAPSearchResponse>
+                """);
     }
 
     private String soapEnvelope(final String body) {

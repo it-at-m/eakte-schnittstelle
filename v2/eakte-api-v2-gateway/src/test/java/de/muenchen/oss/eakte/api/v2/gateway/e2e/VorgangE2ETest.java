@@ -97,6 +97,45 @@ class VorgangE2ETest extends VorgangE2eSupport {
     }
 
     @Nested
+    class GetVorgang {
+        @Test
+        void givenAuthenticatedRequest_thenReturnVorgangAndForwardSoapRequest() throws Exception {
+            stubGetVorgangResponse();
+
+            mockMvc.perform(get("/api/v2/vorgaenge/COO.1.2.3")
+                    .header("Authorization", "Bearer authenticatedUser")
+                    .header("EAkte-Login-Name", "login")
+                    .header("EAkte-Rolle", "role")
+                    .header("EAkte-Organisationseinheit", "ou")
+                    .queryParam("eigenschaften", "custom.attribute"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.id").value("COO.1.2.3"))
+                    .andExpect(jsonPath("$.name").value("short-name"))
+                    .andExpect(jsonPath("$.eigenschaftenMap['custom.attribute_1']")
+                            .value("custom-value"));
+
+            verifySearchRequest("COOSYSTEM@1.1:objaddress", "custom.attribute");
+        }
+
+        @Test
+        void givenUnknownVorgangId_thenReturnNotFound() throws Exception {
+            stubGetVorgangNotFoundResponse();
+
+            mockMvc.perform(get("/api/v2/vorgaenge/COO.1.2.3")
+                    .header("Authorization", "Bearer authenticatedUser")
+                    .header("EAkte-Login-Name", "login")
+                    .queryParam("eigenschaften", "custom.attribute"))
+                    .andExpect(status().isNotFound());
+        }
+
+        @Test
+        void givenNoAuthentication_thenRejectRequest() throws Exception {
+            mockMvc.perform(get("/api/v2/vorgaenge/COO.1.2.3"))
+                    .andExpect(status().isUnauthorized());
+        }
+    }
+
+    @Nested
     class GetVorgangsDokumente {
         @Test
         void givenAuthenticatedRequest_thenReturnDokumenteAndForwardSoapRequest() throws Exception {

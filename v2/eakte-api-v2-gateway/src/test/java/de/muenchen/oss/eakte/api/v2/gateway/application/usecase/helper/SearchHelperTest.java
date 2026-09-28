@@ -1,6 +1,7 @@
 package de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -108,6 +109,46 @@ class SearchHelperTest {
 
             assertTrue(attributes.containsAll(DokumentAttribute.getReferences()));
             assertTrue(attributes.contains("custom.attribute"));
+        }
+    }
+
+    @Nested
+    class GetObject {
+        @Test
+        void givenOneResult_thenReturnResultAndBuildIdSearchRequest() {
+            final ResultObject expectedResult = new ResultObject("name", "COO.1.2.3", List.of());
+            when(searchOutPort.searchObject(eq(REQUEST_CONTEXT), any()))
+                    .thenReturn(new SearchResult(List.of(expectedResult)));
+
+            final ResultObject result = searchHelper.getObject(
+                    REQUEST_CONTEXT, SearchType.VORGANG, "COO.1.2.3", Set.of("attribute"))
+                    .orElseThrow();
+
+            assertEquals(expectedResult, result);
+            final ArgumentCaptor<SearchRequest> requestCaptor = ArgumentCaptor.forClass(SearchRequest.class);
+            verify(searchOutPort).searchObject(eq(REQUEST_CONTEXT), requestCaptor.capture());
+            assertEquals(SearchType.VORGANG, requestCaptor.getValue().type());
+            assertEquals(2, requestCaptor.getValue().limit());
+            assertEquals(".COOSYSTEM@1.1:objaddress = 'COO.1.2.3'", requestCaptor.getValue().query());
+            assertEquals(Set.of("attribute"), requestCaptor.getValue().attributes());
+        }
+
+        @Test
+        void givenNoResults_thenReturnEmpty() {
+            when(searchOutPort.searchObject(eq(REQUEST_CONTEXT), any()))
+                    .thenReturn(new SearchResult(List.of()));
+
+            assertTrue(searchHelper.getObject(REQUEST_CONTEXT, SearchType.VORGANG, "COO.1.2.3", Set.of()).isEmpty());
+        }
+
+        @Test
+        void givenMultipleResults_thenThrowException() {
+            final ResultObject result = new ResultObject("name", "COO.1.2.3", List.of());
+            when(searchOutPort.searchObject(eq(REQUEST_CONTEXT), any()))
+                    .thenReturn(new SearchResult(List.of(result, result)));
+
+            assertThrows(IllegalStateException.class,
+                    () -> searchHelper.getObject(REQUEST_CONTEXT, SearchType.VORGANG, "COO.1.2.3", Set.of()));
         }
     }
 }
