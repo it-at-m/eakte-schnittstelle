@@ -14,6 +14,11 @@ servers:
   - url: http://localhost:8080
 security:
   - bearerAuth: []
+tags:
+  - name: Vorgang
+    description: Procedure
+  - name: Dokument
+    description: Parent-Klasse von Eingang (Incoming) / Erledigung (Outgoing) / Internes Dokument (Internal)
 paths:
   /api/v2/vorgaenge:
     get:
