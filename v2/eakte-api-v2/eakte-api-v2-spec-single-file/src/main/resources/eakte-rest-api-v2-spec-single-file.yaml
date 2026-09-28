@@ -354,10 +354,6 @@ components:
           type: string
         betreff:
           type: string
-        schlagworte:
-          type: array
-          items:
-            type: string
         acl:
           type: string
         organisationseinheit:

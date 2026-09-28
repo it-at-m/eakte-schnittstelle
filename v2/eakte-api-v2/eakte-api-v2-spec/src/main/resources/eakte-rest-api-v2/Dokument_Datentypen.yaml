@@ -29,11 +29,6 @@ components:
           type: string
         betreff:
           type: string
-        # TODO use object references (coo and name) instead of only name?
-        schlagworte:
-          type: array
-          items:
-            type: string
         # TODO
         # anlagenBeschreibung:
         #   type: string

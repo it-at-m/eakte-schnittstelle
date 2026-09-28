@@ -7,7 +7,6 @@ import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mappin
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.ORGANISATIONSEINHEIT;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.PARENT_ID;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.PARENT_TYPE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.SCHLAGWORTE_NAME;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass.EINGANG;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass.ERLEDIGUNG;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass.INTERN;
@@ -48,7 +47,6 @@ class DokumentMapperTest {
         assertEquals(new ParentReference().id("parent-id").type(ParentReference.TypeEnum.VORGANG), result.getParent());
         assertEquals("short-name", result.getName());
         assertEquals("subject", result.getBetreff().orElseThrow());
-        assertEquals(List.of("keyword"), result.getSchlagworte());
         assertEquals("acl", result.getAcl());
         assertEquals("ou", result.getOrganisationseinheit());
         assertEquals(Map.of("custom.attribute_1", "custom-value"), result.getEigenschaftenMap());
@@ -60,7 +58,6 @@ class DokumentMapperTest {
         final Dokument result = mapper.mapResult(resultWithAttributes(false));
 
         assertEquals(Optional.empty(), result.getBetreff());
-        assertEquals(List.of(), result.getSchlagworte());
     }
 
     @Test
@@ -92,7 +89,6 @@ class DokumentMapperTest {
                 new Attribute(AttributeType.STRING, "custom.attribute", INDEX, "custom-value")));
         if (optionalAttributes) {
             attributes.add(new Attribute(AttributeType.STRING, BETREFF.getReference(), INDEX, "subject"));
-            attributes.add(new Attribute(AttributeType.STRING, SCHLAGWORTE_NAME.getReference(), INDEX, "keyword"));
         }
         return new ResultObject("document-name", "COO.1.2.3", attributes);
     }

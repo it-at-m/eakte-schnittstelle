@@ -79,9 +79,6 @@ public class Dokument {
 
   private Optional<String> betreff = Optional.empty();
 
-  @Valid
-  private List<String> schlagworte = new ArrayList<>();
-
   private String acl;
 
   private String organisationseinheit;
@@ -237,35 +234,6 @@ public class Dokument {
     this.betreff = betreff;
   }
 
-  public Dokument schlagworte(List<String> schlagworte) {
-    this.schlagworte = schlagworte;
-    return this;
-  }
-
-  public Dokument addSchlagworteItem(String schlagworteItem) {
-    if (this.schlagworte == null) {
-      this.schlagworte = new ArrayList<>();
-    }
-    this.schlagworte.add(schlagworteItem);
-    return this;
-  }
-
-  /**
-   * Get schlagworte
-   * @return schlagworte
-   */
-  
-  @Schema(name = "schlagworte", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("schlagworte")
-  public List<String> getSchlagworte() {
-    return schlagworte;
-  }
-
-  @JsonProperty("schlagworte")
-  public void setSchlagworte(List<String> schlagworte) {
-    this.schlagworte = schlagworte;
-  }
-
   public Dokument acl(String acl) {
     this.acl = acl;
     return this;
@@ -381,7 +349,6 @@ public class Dokument {
         Objects.equals(this.name, dokument.name) &&
         Objects.equals(this.langname, dokument.langname) &&
         Objects.equals(this.betreff, dokument.betreff) &&
-        Objects.equals(this.schlagworte, dokument.schlagworte) &&
         Objects.equals(this.acl, dokument.acl) &&
         Objects.equals(this.organisationseinheit, dokument.organisationseinheit) &&
         Objects.equals(this.eigenschaftenMap, dokument.eigenschaftenMap) &&
@@ -390,7 +357,7 @@ public class Dokument {
 
   @Override
   public int hashCode() {
-    return Objects.hash(klasse, id, parent, name, langname, betreff, schlagworte, acl, organisationseinheit, eigenschaftenMap, eigenschaftenListe);
+    return Objects.hash(klasse, id, parent, name, langname, betreff, acl, organisationseinheit, eigenschaftenMap, eigenschaftenListe);
   }
 
   @Override
@@ -403,7 +370,6 @@ public class Dokument {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    langname: ").append(toIndentedString(langname)).append("\n");
     sb.append("    betreff: ").append(toIndentedString(betreff)).append("\n");
-    sb.append("    schlagworte: ").append(toIndentedString(schlagworte)).append("\n");
     sb.append("    acl: ").append(toIndentedString(acl)).append("\n");
     sb.append("    organisationseinheit: ").append(toIndentedString(organisationseinheit)).append("\n");
     sb.append("    eigenschaftenMap: ").append(toIndentedString(eigenschaftenMap)).append("\n");
@@ -439,7 +405,6 @@ public class Dokument {
       this.instance.setName(value.name);
       this.instance.setLangname(value.langname);
       this.instance.setBetreff(value.betreff);
-      this.instance.setSchlagworte(value.schlagworte);
       this.instance.setAcl(value.acl);
       this.instance.setOrganisationseinheit(value.organisationseinheit);
       this.instance.setEigenschaftenMap(value.eigenschaftenMap);
@@ -474,11 +439,6 @@ public class Dokument {
     
     public Dokument.Builder betreff(String betreff) {
       this.instance.betreff(betreff);
-      return this;
-    }
-    
-    public Dokument.Builder schlagworte(List<String> schlagworte) {
-      this.instance.schlagworte(schlagworte);
       return this;
     }
     
