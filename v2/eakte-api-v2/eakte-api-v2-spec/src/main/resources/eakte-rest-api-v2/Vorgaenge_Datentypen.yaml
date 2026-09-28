@@ -20,7 +20,7 @@ components:
         - originalMedium
         - status
         - bearbeitungsstatus
-        - acl
+        - zugriffsdefinition
         - organisationseinheit
         - eigenschaftenMap
         - eigenschaftenListe
@@ -55,7 +55,7 @@ components:
             - Archiviert
         bearbeitungsstatus:
           type: string
-        acl:
+        zugriffsdefinition:
           type: string
         organisationseinheit:
           type: string

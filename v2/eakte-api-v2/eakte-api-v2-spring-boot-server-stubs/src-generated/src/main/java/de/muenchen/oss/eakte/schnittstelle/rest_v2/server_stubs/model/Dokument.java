@@ -79,7 +79,7 @@ public class Dokument {
 
   private Optional<String> betreff = Optional.empty();
 
-  private String acl;
+  private String zugriffsdefinition;
 
   private String organisationseinheit;
 
@@ -96,13 +96,13 @@ public class Dokument {
   /**
    * Constructor with only required parameters
    */
-  public Dokument(KlasseEnum klasse, String id, ParentReference parent, String name, String langname, String acl, String organisationseinheit, Map<String, Object> eigenschaftenMap, List<@Valid EigenschaftEintrag> eigenschaftenListe) {
+  public Dokument(KlasseEnum klasse, String id, ParentReference parent, String name, String langname, String zugriffsdefinition, String organisationseinheit, Map<String, Object> eigenschaftenMap, List<@Valid EigenschaftEintrag> eigenschaftenListe) {
     this.klasse = klasse;
     this.id = id;
     this.parent = parent;
     this.name = name;
     this.langname = langname;
-    this.acl = acl;
+    this.zugriffsdefinition = zugriffsdefinition;
     this.organisationseinheit = organisationseinheit;
     this.eigenschaftenMap = eigenschaftenMap;
     this.eigenschaftenListe = eigenschaftenListe;
@@ -234,25 +234,25 @@ public class Dokument {
     this.betreff = betreff;
   }
 
-  public Dokument acl(String acl) {
-    this.acl = acl;
+  public Dokument zugriffsdefinition(String zugriffsdefinition) {
+    this.zugriffsdefinition = zugriffsdefinition;
     return this;
   }
 
   /**
-   * Get acl
-   * @return acl
+   * Get zugriffsdefinition
+   * @return zugriffsdefinition
    */
   @NotNull 
-  @Schema(name = "acl", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("acl")
-  public String getAcl() {
-    return acl;
+  @Schema(name = "zugriffsdefinition", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("zugriffsdefinition")
+  public String getZugriffsdefinition() {
+    return zugriffsdefinition;
   }
 
-  @JsonProperty("acl")
-  public void setAcl(String acl) {
-    this.acl = acl;
+  @JsonProperty("zugriffsdefinition")
+  public void setZugriffsdefinition(String zugriffsdefinition) {
+    this.zugriffsdefinition = zugriffsdefinition;
   }
 
   public Dokument organisationseinheit(String organisationseinheit) {
@@ -349,7 +349,7 @@ public class Dokument {
         Objects.equals(this.name, dokument.name) &&
         Objects.equals(this.langname, dokument.langname) &&
         Objects.equals(this.betreff, dokument.betreff) &&
-        Objects.equals(this.acl, dokument.acl) &&
+        Objects.equals(this.zugriffsdefinition, dokument.zugriffsdefinition) &&
         Objects.equals(this.organisationseinheit, dokument.organisationseinheit) &&
         Objects.equals(this.eigenschaftenMap, dokument.eigenschaftenMap) &&
         Objects.equals(this.eigenschaftenListe, dokument.eigenschaftenListe);
@@ -357,7 +357,7 @@ public class Dokument {
 
   @Override
   public int hashCode() {
-    return Objects.hash(klasse, id, parent, name, langname, betreff, acl, organisationseinheit, eigenschaftenMap, eigenschaftenListe);
+    return Objects.hash(klasse, id, parent, name, langname, betreff, zugriffsdefinition, organisationseinheit, eigenschaftenMap, eigenschaftenListe);
   }
 
   @Override
@@ -370,7 +370,7 @@ public class Dokument {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    langname: ").append(toIndentedString(langname)).append("\n");
     sb.append("    betreff: ").append(toIndentedString(betreff)).append("\n");
-    sb.append("    acl: ").append(toIndentedString(acl)).append("\n");
+    sb.append("    zugriffsdefinition: ").append(toIndentedString(zugriffsdefinition)).append("\n");
     sb.append("    organisationseinheit: ").append(toIndentedString(organisationseinheit)).append("\n");
     sb.append("    eigenschaftenMap: ").append(toIndentedString(eigenschaftenMap)).append("\n");
     sb.append("    eigenschaftenListe: ").append(toIndentedString(eigenschaftenListe)).append("\n");
@@ -405,7 +405,7 @@ public class Dokument {
       this.instance.setName(value.name);
       this.instance.setLangname(value.langname);
       this.instance.setBetreff(value.betreff);
-      this.instance.setAcl(value.acl);
+      this.instance.setZugriffsdefinition(value.zugriffsdefinition);
       this.instance.setOrganisationseinheit(value.organisationseinheit);
       this.instance.setEigenschaftenMap(value.eigenschaftenMap);
       this.instance.setEigenschaftenListe(value.eigenschaftenListe);
@@ -442,8 +442,8 @@ public class Dokument {
       return this;
     }
     
-    public Dokument.Builder acl(String acl) {
-      this.instance.acl(acl);
+    public Dokument.Builder zugriffsdefinition(String zugriffsdefinition) {
+      this.instance.zugriffsdefinition(zugriffsdefinition);
       return this;
     }
     

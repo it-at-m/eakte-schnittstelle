@@ -126,7 +126,7 @@ public class Vorgang {
 
   private String bearbeitungsstatus;
 
-  private String acl;
+  private String zugriffsdefinition;
 
   private String organisationseinheit;
 
@@ -143,7 +143,7 @@ public class Vorgang {
   /**
    * Constructor with only required parameters
    */
-  public Vorgang(String id, String sachakteId, String name, String langname, OriginalMediumEnum originalMedium, StatusEnum status, String bearbeitungsstatus, String acl, String organisationseinheit, Map<String, Object> eigenschaftenMap, List<@Valid EigenschaftEintrag> eigenschaftenListe) {
+  public Vorgang(String id, String sachakteId, String name, String langname, OriginalMediumEnum originalMedium, StatusEnum status, String bearbeitungsstatus, String zugriffsdefinition, String organisationseinheit, Map<String, Object> eigenschaftenMap, List<@Valid EigenschaftEintrag> eigenschaftenListe) {
     this.id = id;
     this.sachakteId = sachakteId;
     this.name = name;
@@ -151,7 +151,7 @@ public class Vorgang {
     this.originalMedium = originalMedium;
     this.status = status;
     this.bearbeitungsstatus = bearbeitungsstatus;
-    this.acl = acl;
+    this.zugriffsdefinition = zugriffsdefinition;
     this.organisationseinheit = organisationseinheit;
     this.eigenschaftenMap = eigenschaftenMap;
     this.eigenschaftenListe = eigenschaftenListe;
@@ -346,25 +346,25 @@ public class Vorgang {
     this.bearbeitungsstatus = bearbeitungsstatus;
   }
 
-  public Vorgang acl(String acl) {
-    this.acl = acl;
+  public Vorgang zugriffsdefinition(String zugriffsdefinition) {
+    this.zugriffsdefinition = zugriffsdefinition;
     return this;
   }
 
   /**
-   * Get acl
-   * @return acl
+   * Get zugriffsdefinition
+   * @return zugriffsdefinition
    */
   @NotNull 
-  @Schema(name = "acl", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("acl")
-  public String getAcl() {
-    return acl;
+  @Schema(name = "zugriffsdefinition", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("zugriffsdefinition")
+  public String getZugriffsdefinition() {
+    return zugriffsdefinition;
   }
 
-  @JsonProperty("acl")
-  public void setAcl(String acl) {
-    this.acl = acl;
+  @JsonProperty("zugriffsdefinition")
+  public void setZugriffsdefinition(String zugriffsdefinition) {
+    this.zugriffsdefinition = zugriffsdefinition;
   }
 
   public Vorgang organisationseinheit(String organisationseinheit) {
@@ -464,7 +464,7 @@ public class Vorgang {
         Objects.equals(this.originalMedium, vorgang.originalMedium) &&
         Objects.equals(this.status, vorgang.status) &&
         Objects.equals(this.bearbeitungsstatus, vorgang.bearbeitungsstatus) &&
-        Objects.equals(this.acl, vorgang.acl) &&
+        Objects.equals(this.zugriffsdefinition, vorgang.zugriffsdefinition) &&
         Objects.equals(this.organisationseinheit, vorgang.organisationseinheit) &&
         Objects.equals(this.eigenschaftenMap, vorgang.eigenschaftenMap) &&
         Objects.equals(this.eigenschaftenListe, vorgang.eigenschaftenListe);
@@ -472,7 +472,7 @@ public class Vorgang {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, sachakteId, name, langname, betreff, geschaeftsgangvermerk, originalMedium, status, bearbeitungsstatus, acl, organisationseinheit, eigenschaftenMap, eigenschaftenListe);
+    return Objects.hash(id, sachakteId, name, langname, betreff, geschaeftsgangvermerk, originalMedium, status, bearbeitungsstatus, zugriffsdefinition, organisationseinheit, eigenschaftenMap, eigenschaftenListe);
   }
 
   @Override
@@ -488,7 +488,7 @@ public class Vorgang {
     sb.append("    originalMedium: ").append(toIndentedString(originalMedium)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    bearbeitungsstatus: ").append(toIndentedString(bearbeitungsstatus)).append("\n");
-    sb.append("    acl: ").append(toIndentedString(acl)).append("\n");
+    sb.append("    zugriffsdefinition: ").append(toIndentedString(zugriffsdefinition)).append("\n");
     sb.append("    organisationseinheit: ").append(toIndentedString(organisationseinheit)).append("\n");
     sb.append("    eigenschaftenMap: ").append(toIndentedString(eigenschaftenMap)).append("\n");
     sb.append("    eigenschaftenListe: ").append(toIndentedString(eigenschaftenListe)).append("\n");
@@ -526,7 +526,7 @@ public class Vorgang {
       this.instance.setOriginalMedium(value.originalMedium);
       this.instance.setStatus(value.status);
       this.instance.setBearbeitungsstatus(value.bearbeitungsstatus);
-      this.instance.setAcl(value.acl);
+      this.instance.setZugriffsdefinition(value.zugriffsdefinition);
       this.instance.setOrganisationseinheit(value.organisationseinheit);
       this.instance.setEigenschaftenMap(value.eigenschaftenMap);
       this.instance.setEigenschaftenListe(value.eigenschaftenListe);
@@ -578,8 +578,8 @@ public class Vorgang {
       return this;
     }
     
-    public Vorgang.Builder acl(String acl) {
-      this.instance.acl(acl);
+    public Vorgang.Builder zugriffsdefinition(String zugriffsdefinition) {
+      this.instance.zugriffsdefinition(zugriffsdefinition);
       return this;
     }
     

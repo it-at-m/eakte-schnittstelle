@@ -1,6 +1,5 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ACL;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.BEARBEITUNGSSTATUS;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.BETREFF;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.GESCHAEFTSGANGVERMERK;
@@ -9,6 +8,7 @@ import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mappin
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ORIGINAL_MEDIUM;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.PARENT_ID;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.STATUS;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ZUGRIFFSDEFINITION;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -46,7 +46,7 @@ class VorgangMapperTest {
         assertEquals(Vorgang.OriginalMediumEnum.ELEKTRONISCH, result.getOriginalMedium());
         assertEquals(Vorgang.StatusEnum.IN_BEARBEITUNG, result.getStatus());
         assertEquals("processing", result.getBearbeitungsstatus());
-        assertEquals("acl", result.getAcl());
+        assertEquals("acl", result.getZugriffsdefinition());
         assertEquals("ou", result.getOrganisationseinheit());
         assertEquals(Map.of("custom.attribute_1", "custom-value"), result.getEigenschaftenMap());
         assertEquals("custom.attribute", result.getEigenschaftenListe().getFirst().getReference());
@@ -96,7 +96,7 @@ class VorgangMapperTest {
                 new Attribute(AttributeType.STRING, NAME.getReference(), INDEX, "short-name"),
                 new Attribute(AttributeType.ENUM, STATUS.getReference(), INDEX, BigInteger.valueOf(10)),
                 new Attribute(AttributeType.STRING, BEARBEITUNGSSTATUS.getReference(), INDEX, "processing"),
-                new Attribute(AttributeType.STRING, ACL.getReference(), INDEX, "acl"),
+                new Attribute(AttributeType.STRING, ZUGRIFFSDEFINITION.getReference(), INDEX, "acl"),
                 new Attribute(AttributeType.STRING, ORGANISATIONSEINHEIT.getReference(), INDEX, "ou"),
                 new Attribute(AttributeType.ENUM, ORIGINAL_MEDIUM.getReference(), INDEX, BigInteger.ONE),
                 new Attribute(AttributeType.STRING, "custom.attribute", INDEX, "custom-value")));

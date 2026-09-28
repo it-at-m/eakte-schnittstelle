@@ -1,6 +1,5 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ACL;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.BEARBEITUNGSSTATUS;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.BETREFF;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.NAME;
@@ -8,6 +7,7 @@ import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mappin
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ORIGINAL_MEDIUM;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.PARENT_ID;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.STATUS;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute.ZUGRIFFSDEFINITION;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -75,7 +75,7 @@ class VorgangControllerTest {
                             new Attribute(AttributeType.STRING, NAME.getReference(), BigInteger.ZERO, "short-name"),
                             new Attribute(AttributeType.ENUM, STATUS.getReference(), BigInteger.ZERO, BigInteger.valueOf(10)),
                             new Attribute(AttributeType.STRING, BEARBEITUNGSSTATUS.getReference(), BigInteger.ZERO, "processing"),
-                            new Attribute(AttributeType.STRING, ACL.getReference(), BigInteger.ZERO, "acl"),
+                            new Attribute(AttributeType.STRING, ZUGRIFFSDEFINITION.getReference(), BigInteger.ZERO, "acl"),
                             new Attribute(AttributeType.STRING, ORGANISATIONSEINHEIT.getReference(), BigInteger.ZERO, "ou"),
                             new Attribute(AttributeType.ENUM, ORIGINAL_MEDIUM.getReference(), BigInteger.ZERO, BigInteger.TWO),
                             new Attribute(AttributeType.STRING, "custom.attribute", BigInteger.ZERO, "custom-value")))));
@@ -174,7 +174,7 @@ class VorgangControllerTest {
                                     "DEPRECONFIG@15.1001:Procedure"),
                             new Attribute(AttributeType.STRING, DokumentAttribute.NAME.getReference(), BigInteger.ZERO, "short-name"),
                             new Attribute(AttributeType.STRING, DokumentAttribute.BETREFF.getReference(), BigInteger.ZERO, "subject"),
-                            new Attribute(AttributeType.STRING, DokumentAttribute.ACL.getReference(), BigInteger.ZERO, "acl"),
+                            new Attribute(AttributeType.STRING, DokumentAttribute.ZUGRIFFSDEFINITION.getReference(), BigInteger.ZERO, "acl"),
                             new Attribute(AttributeType.STRING, DokumentAttribute.ORGANISATIONSEINHEIT.getReference(), BigInteger.ZERO, "ou"),
                             new Attribute(AttributeType.STRING, "custom.attribute", BigInteger.ZERO, "custom-value")))));
             when(vorgangInPort.searchVorgangsDokumente(any(), any(), anyInt(), any(), any())).thenReturn(result);
@@ -265,7 +265,7 @@ class VorgangControllerTest {
                         new Attribute(AttributeType.STRING, NAME.getReference(), BigInteger.ZERO, "short-name"),
                         new Attribute(AttributeType.ENUM, STATUS.getReference(), BigInteger.ZERO, BigInteger.valueOf(10)),
                         new Attribute(AttributeType.STRING, BEARBEITUNGSSTATUS.getReference(), BigInteger.ZERO, "processing"),
-                        new Attribute(AttributeType.STRING, ACL.getReference(), BigInteger.ZERO, "acl"),
+                        new Attribute(AttributeType.STRING, ZUGRIFFSDEFINITION.getReference(), BigInteger.ZERO, "acl"),
                         new Attribute(AttributeType.STRING, ORGANISATIONSEINHEIT.getReference(), BigInteger.ZERO, "ou"),
                         new Attribute(AttributeType.ENUM, ORIGINAL_MEDIUM.getReference(), BigInteger.ZERO, BigInteger.ONE)));
     }

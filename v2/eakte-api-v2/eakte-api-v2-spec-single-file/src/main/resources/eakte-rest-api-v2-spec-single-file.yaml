@@ -296,7 +296,7 @@ components:
         - originalMedium
         - status
         - bearbeitungsstatus
-        - acl
+        - zugriffsdefinition
         - organisationseinheit
         - eigenschaftenMap
         - eigenschaftenListe
@@ -331,7 +331,7 @@ components:
             - Archiviert
         bearbeitungsstatus:
           type: string
-        acl:
+        zugriffsdefinition:
           type: string
         organisationseinheit:
           type: string
@@ -393,7 +393,7 @@ components:
         - parent
         - name
         - langname
-        - acl
+        - zugriffsdefinition
         - organisationseinheit
         - eigenschaftenMap
         - eigenschaftenListe
@@ -414,7 +414,7 @@ components:
           type: string
         betreff:
           type: string
-        acl:
+        zugriffsdefinition:
           type: string
         organisationseinheit:
           type: string

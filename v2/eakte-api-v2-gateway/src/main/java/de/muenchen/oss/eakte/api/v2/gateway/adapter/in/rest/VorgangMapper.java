@@ -33,7 +33,8 @@ class VorgangMapper {
                 .status(mapStatus(referenceValueMap))
                 .bearbeitungsstatus(
                         attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.BEARBEITUNGSSTATUS.getReference(), String.class).orElseThrow())
-                .acl(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.ACL.getReference(), String.class).orElseThrow())
+                .zugriffsdefinition(
+                        attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.ZUGRIFFSDEFINITION.getReference(), String.class).orElseThrow())
                 .organisationseinheit(
                         attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.ORGANISATIONSEINHEIT.getReference(), String.class).orElseThrow())
                 .eigenschaftenMap(attributeMapper.toMap(result.attributes(), VorgangAttribute.getReferences()))

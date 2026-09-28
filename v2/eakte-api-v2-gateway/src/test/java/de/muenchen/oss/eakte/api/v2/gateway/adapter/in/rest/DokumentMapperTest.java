@@ -1,12 +1,12 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.ACL;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.BETREFF;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.KLASSE;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.NAME;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.ORGANISATIONSEINHEIT;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.PARENT_ID;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.PARENT_TYPE;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.ZUGRIFFSDEFINITION;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass.EINGANG;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass.ERLEDIGUNG;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass.INTERN;
@@ -47,7 +47,7 @@ class DokumentMapperTest {
         assertEquals(new ParentReference().id("parent-id").type(ParentReference.TypeEnum.VORGANG), result.getParent());
         assertEquals("short-name", result.getName());
         assertEquals("subject", result.getBetreff().orElseThrow());
-        assertEquals("acl", result.getAcl());
+        assertEquals("acl", result.getZugriffsdefinition());
         assertEquals("ou", result.getOrganisationseinheit());
         assertEquals(Map.of("custom.attribute_1", "custom-value"), result.getEigenschaftenMap());
         assertEquals("custom.attribute", result.getEigenschaftenListe().getFirst().getReference());
@@ -84,7 +84,7 @@ class DokumentMapperTest {
                 new Attribute(AttributeType.STRING, PARENT_ID.getReference(), INDEX, "parent-id"),
                 new Attribute(AttributeType.STRING, PARENT_TYPE.getReference(), INDEX, PARENT_TYPE_REFERENCE),
                 new Attribute(AttributeType.STRING, NAME.getReference(), INDEX, "short-name"),
-                new Attribute(AttributeType.STRING, ACL.getReference(), INDEX, "acl"),
+                new Attribute(AttributeType.STRING, ZUGRIFFSDEFINITION.getReference(), INDEX, "acl"),
                 new Attribute(AttributeType.STRING, ORGANISATIONSEINHEIT.getReference(), INDEX, "ou"),
                 new Attribute(AttributeType.STRING, "custom.attribute", INDEX, "custom-value")));
         if (optionalAttributes) {
