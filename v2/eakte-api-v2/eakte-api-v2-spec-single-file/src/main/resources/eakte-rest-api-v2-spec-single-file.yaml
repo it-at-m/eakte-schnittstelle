@@ -57,6 +57,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /api/v2/vorgaenge/{vorgangsId}:
+    get:
+      tags:
+        - Vorgang
+      summary: Vorgang lesen
+      operationId: GetVorgang
+      parameters:
+        - in: path
+          name: vorgangsId
+          schema:
+            type: string
+          required: true
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/Eigenschaften'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vorgang'
+          links:
+            GetDokumente:
+              operationId: SearchVorgangsDokumente
+              parameters:
+                vorgangsId: $response.body#/id
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Vorgang konnte nicht gefunden werden.
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /api/v2/vorgaenge/{vorgangsId}/dokumente:
     get:
       tags:
@@ -82,6 +130,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DokumentListeResponse'
+          links:
+            GetVorgang:
+              operationId: GetVorgang
+              parameters:
+                vorgangsId: $response.body#/parent.id
         '400':
           description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
           content:

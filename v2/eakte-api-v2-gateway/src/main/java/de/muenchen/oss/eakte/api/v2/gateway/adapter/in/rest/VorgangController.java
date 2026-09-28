@@ -1,10 +1,13 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.in.VorgangInPort;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.ResourceNotFoundException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.controllers.VorgangApi;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.DokumentListeResponse;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.VorgangListeResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashSet;
@@ -43,6 +46,22 @@ public class VorgangController implements VorgangApi {
                 .elemente(vorgangMapper.mapResults(result.results()))
                 .build();
         return ResponseEntity.of(Optional.of(response));
+    }
+
+    @Override
+    public ResponseEntity<Vorgang> getVorgang(
+            final String vorgangsId,
+            final Optional<String> eakteLoginName,
+            final Optional<String> eakteRolle,
+            final Optional<String> eakteOrganisationseinheit,
+            final Optional<List<String>> eigenschaften,
+            final HttpServletRequest servletRequest) {
+        final RequestContext requestContext = new RequestContext(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
+        final ResultObject result = vorgangInPort.getVorgang(requestContext,
+                vorgangsId,
+                eigenschaften.map(HashSet::new).orElse(null))
+                .orElseThrow(ResourceNotFoundException::new);
+        return ResponseEntity.of(Optional.of(vorgangMapper.mapResult(result)));
     }
 
     @Override
