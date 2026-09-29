@@ -15,6 +15,8 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import org.apache.camel.Exchange;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class CreateIncomingBasisProcessor extends AbstractDMSSoapProcessor {
 
@@ -29,13 +31,16 @@ public class CreateIncomingBasisProcessor extends AbstractDMSSoapProcessor {
   public void process(Exchange exchange) throws Exception {
     CreateIncomingBasisAnfrageDTO dto = getMessageBody(exchange);
 
-    ArrayOfLHMBAI151700GIUserFormsType userFormsType =
+    final List<List<String>> documentFilesubj = dto.getDocumentFilesubj();
+
+      ArrayOfLHMBAI151700GIUserFormsType userFormsType =
         Umwandlungen.wandleUserFormsGIZuUserFormsReferenz(dto.getUserformsdata());
 
-    final ArrayOfLHMBAI151700GIAttachmentType lhmbai151700GIAttachments =
-        createLHMBAI151700GIAttachments((createAttachments(exchange)));
+      final ArrayOfLHMBAI151700GIAttachmentType lhmbai151700GIAttachments =
+      createLHMBAI151700GIAttachmentsForCOAITI((createAttachments(exchange)), documentFilesubj);
 
-    final CreateIncomingGI parameters =
+
+      final CreateIncomingGI parameters =
         createIncomingGI(
             dto,
             getNutzer(exchange),
