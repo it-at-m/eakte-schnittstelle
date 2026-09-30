@@ -12,38 +12,39 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 
 /**
  * Configures a mocked JwtDecoder as Spring bean to test authorization via roles.
- * When an Authorization header is provided in the request, the Bearer value is mapped to an
- * equivalent role if registered in {@link TestSecurityConfiguration#MOCKED_ROLES}.
- * e.g. Authorization: "Bearer reader" -> Role reader
  */
 @TestConfiguration
 @RequiredArgsConstructor
 public class TestSecurityConfiguration {
+    public static final String USER = "authenticatedUser";
+    public static final String USER_IMPERSONATE = "impersonateUser";
+    private static final Map<String, List<String>> USER_ROLES = Map.of(
+            USER, List.of(),
+            USER_IMPERSONATE, List.of("impersonate"));
 
     private final SecurityProperties securityProperties;
-
-    private static final List<String> MOCKED_ROLES = List.of("authenticatedUser");
 
     @Bean
     public JwtDecoder mockedJwtDecoder() {
         JwtDecoder mockedJwtDecoder = Mockito.mock(JwtDecoder.class);
 
-        MOCKED_ROLES.forEach(role -> {
-            Mockito.when(mockedJwtDecoder.decode(role))
-                    .thenReturn(jwtWithRole(role));
+        USER_ROLES.forEach((user, roles) -> {
+            Mockito.when(mockedJwtDecoder.decode(user))
+                    .thenReturn(jwtWithRole(user, roles));
         });
 
         return mockedJwtDecoder;
     }
 
-    private Jwt jwtWithRole(String role) {
-        return Jwt.withTokenValue(role)
+    private Jwt jwtWithRole(final String user, final List<String> roles) {
+        return Jwt.withTokenValue(user)
                 .header("alg", "none")
+                .claim("preferred_username", user)
                 .claim(
                         "resource_access",
                         Map.of(
                                 securityProperties.getClientId(),
-                                Map.of("roles", List.of(role))))
+                                Map.of("roles", roles)))
                 .build();
     }
 

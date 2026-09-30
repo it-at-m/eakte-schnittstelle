@@ -1,0 +1,20 @@
+id: add role
+author: Default
+realm: local_realm
+changes:
+  # create impersonate role
+  - addRole:
+      name: impersonate
+      clientRole: true
+      clientId: public_local
+      composite: false
+  # assign role to user
+  - assignRole:
+      user: user
+      role: impersonate
+      clientId: public_local
+  # add roles to scope of public client
+  - addRoleScopeMapping:
+      clientId: local
+      role: impersonate
+      roleClientId: public_local
