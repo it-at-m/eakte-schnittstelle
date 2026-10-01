@@ -157,6 +157,8 @@ class VorgangControllerTest {
 
         @Test
         void givenSearchParameters_thenForwardContextAndReturnMappedResults() {
+            when(contextFactory.create(eq(Optional.of("login")), eq(Optional.of("ou")), eq(Optional.of("role"))))
+                    .thenReturn(new RequestContext("login", "ou", "role"));
             final SearchResult result = new SearchResult(List.of(new ResultObject(
                     "document-name",
                     "COO.2.3.4",
@@ -185,7 +187,7 @@ class VorgangControllerTest {
                     .getBody();
 
             verify(vorgangInPort).searchVorgangsDokumente(
-                    new RequestContext(Optional.of("login"), Optional.of("ou"), Optional.of("role")),
+                    new RequestContext("login", "ou", "role"),
                     "vorgang-id",
                     EXAMPLE_LIMIT,
                     "condition",
@@ -198,6 +200,8 @@ class VorgangControllerTest {
 
         @Test
         void givenNoClientAttributes_thenForwardNullAndReturnEmptyResponse() {
+            when(contextFactory.create(eq(Optional.empty()), eq(Optional.empty()), eq(Optional.empty())))
+                    .thenReturn(new RequestContext(null, null, null));
             when(vorgangInPort.searchVorgangsDokumente(any(), any(), anyInt(), any(), isNull()))
                     .thenReturn(new SearchResult(List.of()));
 
@@ -206,7 +210,7 @@ class VorgangControllerTest {
                     Optional.empty(), Optional.empty(), null).getBody();
 
             verify(vorgangInPort).searchVorgangsDokumente(
-                    new RequestContext(Optional.empty(), Optional.empty(), Optional.empty()),
+                    new RequestContext(null, null, null),
                     "vorgang-id", EXAMPLE_LIMIT, null, null);
             assertEquals(Optional.of(0), response.getAnzahl());
             assertEquals(Collections.emptyList(), response.getElemente());

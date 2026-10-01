@@ -103,7 +103,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
             stubDokumentResponse();
 
             mockMvc.perform(get("/api/v2/vorgaenge/vorgang-id/dokumente")
-                    .header("Authorization", "Bearer authenticatedUser")
+                    .header("Authorization", "Bearer %s".formatted(USER_IMPERSONATE))
                     .header("EAkte-Login-Name", "login")
                     .header("EAkte-Rolle", "role")
                     .header("EAkte-Organisationseinheit", "ou")
@@ -118,7 +118,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
                     .andExpect(jsonPath("$.elemente[0].eigenschaftenMap['custom.attribute_1']")
                             .value("custom-value"));
 
-            verifyDokumentSearchRequest("document query", "custom.attribute");
+            verifySearchRequest("document query", "custom.attribute", true);
         }
 
         @Test

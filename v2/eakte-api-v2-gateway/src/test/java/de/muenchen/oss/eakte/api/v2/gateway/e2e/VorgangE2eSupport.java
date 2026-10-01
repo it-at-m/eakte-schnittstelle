@@ -59,10 +59,6 @@ abstract class VorgangE2eSupport extends AbstractWireMockE2eTest {
         wireMock.verify(pattern);
     }
 
-    protected void verifyDokumentSearchRequest(final String query, final String attribute) {
-        verifySearchRequest(query, attribute);
-    }
-
     private void stubSearchRequestContaining(final String query, final String response) {
         wireMock.stubFor(post(urlPathEqualTo("/"))
                 .withRequestBody(WireMock.containing(query))

@@ -55,7 +55,7 @@ public class VorgangController implements VorgangApi {
             final Optional<String> bedingungen,
             final Optional<List<String>> eigenschaften,
             final HttpServletRequest servletRequest) {
-        final RequestContext requestContext = new RequestContext(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
+        final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
         final SearchResult result = vorgangInPort.searchVorgangsDokumente(requestContext,
                 vorgangsId,
                 limit.orElseThrow(),
