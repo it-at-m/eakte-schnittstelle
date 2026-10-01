@@ -103,7 +103,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
             stubGetVorgangResponse();
 
             mockMvc.perform(get("/api/v2/vorgaenge/COO.1.2.3")
-                    .header("Authorization", "Bearer authenticatedUser")
+                    .header("Authorization", "Bearer %s".formatted(USER_IMPERSONATE))
                     .header("EAkte-Login-Name", "login")
                     .header("EAkte-Rolle", "role")
                     .header("EAkte-Organisationseinheit", "ou")
@@ -114,7 +114,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
                     .andExpect(jsonPath("$.eigenschaftenMap['custom.attribute_1']")
                             .value("custom-value"));
 
-            verifySearchRequest("COOSYSTEM@1.1:objaddress", "custom.attribute");
+            verifySearchRequest("COOSYSTEM@1.1:objaddress", "custom.attribute", true);
         }
 
         @Test
@@ -122,8 +122,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
             stubGetVorgangNotFoundResponse();
 
             mockMvc.perform(get("/api/v2/vorgaenge/COO.1.2.3")
-                    .header("Authorization", "Bearer authenticatedUser")
-                    .header("EAkte-Login-Name", "login")
+                    .header("Authorization", "Bearer %s".formatted(USER))
                     .queryParam("eigenschaften", "custom.attribute"))
                     .andExpect(status().isNotFound());
         }

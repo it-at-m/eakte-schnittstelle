@@ -227,6 +227,8 @@ class VorgangControllerTest {
     class GetVorgang {
         @Test
         void givenVorgangId_thenForwardContextAndReturnMappedResult() {
+            when(contextFactory.create(eq(Optional.of("login")), eq(Optional.of("ou")), eq(Optional.of("role"))))
+                    .thenReturn(new RequestContext("login", "ou", "role"));
             when(vorgangInPort.getVorgang(any(), any(), any())).thenReturn(
                     Optional.of(vorgangResult()));
 
@@ -240,7 +242,7 @@ class VorgangControllerTest {
                     .getBody();
 
             verify(vorgangInPort).getVorgang(
-                    new RequestContext(Optional.of("login"), Optional.of("ou"), Optional.of("role")),
+                    new RequestContext("login", "ou", "role"),
                     "COO.1.2.3",
                     Set.of("custom.attribute"));
             assertEquals("COO.1.2.3", response.getId());

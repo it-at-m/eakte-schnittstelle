@@ -56,7 +56,7 @@ public class VorgangController implements VorgangApi {
             final Optional<String> eakteOrganisationseinheit,
             final Optional<List<String>> eigenschaften,
             final HttpServletRequest servletRequest) {
-        final RequestContext requestContext = new RequestContext(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
+        final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
         final ResultObject result = vorgangInPort.getVorgang(requestContext,
                 vorgangsId,
                 eigenschaften.map(HashSet::new).orElse(null))
