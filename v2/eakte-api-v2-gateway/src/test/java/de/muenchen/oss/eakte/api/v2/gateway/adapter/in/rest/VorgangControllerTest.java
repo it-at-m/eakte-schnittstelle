@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -41,15 +42,18 @@ import org.mockito.ArgumentMatchers;
 class VorgangControllerTest {
     private VorgangInPort vorgangInPort;
     private VorgangController controller;
+    private RequestContextFactory contextFactory;
 
     @BeforeEach
     void setUp() {
         vorgangInPort = mock(VorgangInPort.class);
+        contextFactory = mock(RequestContextFactory.class);
         final AttributeMapper attributeMapper = new AttributeMapper();
         controller = new VorgangController(
                 vorgangInPort,
                 new VorgangMapper(attributeMapper),
-                new DokumentMapper(attributeMapper));
+                new DokumentMapper(attributeMapper),
+                contextFactory);
     }
 
     @Nested
@@ -58,6 +62,8 @@ class VorgangControllerTest {
 
         @Test
         void givenSearchParameters_thenForwardContextAndReturnMappedResults() {
+            when(contextFactory.create(eq(Optional.of("login")), eq(Optional.of("ou")), eq(Optional.of("role"))))
+                    .thenReturn(new RequestContext("login", "ou", "role"));
             final SearchResult result = new SearchResult(List.of(new ResultObject(
                     "procedure-name",
                     "COO.1.2.3",
@@ -84,6 +90,7 @@ class VorgangControllerTest {
                     .getBody();
 
             final ArgumentCaptor<RequestContext> contextCaptor = ArgumentCaptor.forClass(RequestContext.class);
+            verify(contextFactory).create(eq(Optional.of("login")), eq(Optional.of("ou")), eq(Optional.of("role")));
             verify(vorgangInPort).searchVorgang(
                     contextCaptor.capture(),
                     ArgumentMatchers.eq(EXAMPLE_LIMIT),
@@ -101,6 +108,8 @@ class VorgangControllerTest {
 
         @Test
         void givenNoClientAttributes_thenForwardNullAndReturnEmptyResponse() {
+            when(contextFactory.create(eq(Optional.empty()), eq(Optional.empty()), eq(Optional.empty())))
+                    .thenReturn(new RequestContext(null, null, null));
             when(vorgangInPort.searchVorgang(any(), anyInt(), any(), isNull())).thenReturn(new SearchResult(List.of()));
 
             final VorgangListeResponse response = controller.searchVorgaenge(
@@ -113,8 +122,9 @@ class VorgangControllerTest {
                     null)
                     .getBody();
 
+            verify(contextFactory).create(eq(Optional.empty()), eq(Optional.empty()), eq(Optional.empty()));
             verify(vorgangInPort).searchVorgang(
-                    new RequestContext(Optional.empty(), Optional.empty(), Optional.empty()),
+                    new RequestContext(null, null, null),
                     EXAMPLE_LIMIT,
                     "condition",
                     null);
@@ -124,6 +134,8 @@ class VorgangControllerTest {
 
         @Test
         void givenSearchFailure_thenPropagateException() {
+            when(contextFactory.create(eq(Optional.of("login")), eq(Optional.of("ou")), eq(Optional.of("role"))))
+                    .thenReturn(new RequestContext("login", "role", "ou"));
             final RuntimeException failure = new RuntimeException("search failed");
             when(vorgangInPort.searchVorgang(any(), anyInt(), any(), any())).thenThrow(failure);
 
@@ -135,6 +147,7 @@ class VorgangControllerTest {
                     Optional.of("condition"),
                     Optional.of(List.of("custom.attribute")),
                     null));
+            verify(contextFactory).create(eq(Optional.of("login")), eq(Optional.of("ou")), eq(Optional.of("role")));
         }
     }
 
