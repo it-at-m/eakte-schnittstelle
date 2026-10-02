@@ -3,7 +3,8 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.StringAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.AttributeType;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -23,9 +24,9 @@ class AttributeMapperTest {
 
     @Test
     void givenAttributesAndExcludedReferences_thenMapAndListExcludeReferences() {
-        final List<StringAttribute> attributes = List.of(
-                new StringAttribute(REFERENCE, BigInteger.ZERO, "included"),
-                new StringAttribute("excluded", BigInteger.ZERO, "ignored"));
+        final List<Attribute> attributes = List.of(
+                new Attribute(AttributeType.STRING, REFERENCE, BigInteger.ZERO, "included"),
+                new Attribute(AttributeType.STRING, "excluded", BigInteger.ZERO, "ignored"));
 
         assertEquals(Map.of("reference_0", "included"), mapper.toMap(List.copyOf(attributes), Set.of("excluded")));
         assertEquals("reference", mapper.toList(List.copyOf(attributes), Set.of("excluded")).getFirst().getReference());
@@ -34,9 +35,9 @@ class AttributeMapperTest {
 
     @Test
     void givenAttributesWithSameReference_thenGroupValuesByReference() {
-        final List<StringAttribute> attributes = List.of(
-                new StringAttribute(REFERENCE, BigInteger.ZERO, "first"),
-                new StringAttribute(REFERENCE, BigInteger.ONE, "second"));
+        final List<Attribute> attributes = List.of(
+                new Attribute(AttributeType.STRING, REFERENCE, BigInteger.ZERO, "first"),
+                new Attribute(AttributeType.STRING, REFERENCE, BigInteger.ONE, "second"));
 
         assertEquals(Map.of(REFERENCE, List.of("first", "second")), mapper.toReferenceValueMap(List.copyOf(attributes)));
     }

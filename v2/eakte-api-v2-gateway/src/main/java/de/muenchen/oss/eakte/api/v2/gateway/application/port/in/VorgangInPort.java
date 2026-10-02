@@ -7,4 +7,6 @@ import java.util.Set;
 
 public interface VorgangInPort {
     SearchResult searchVorgang(RequestContext context, int limit, String query, Set<String> attributes);
+
+    SearchResult searchVorgangsDokumente(RequestContext context, String vorgangsId, int limit, String query, Set<String> attributes);
 }

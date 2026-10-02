@@ -2,6 +2,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.application.usecase;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -12,9 +13,14 @@ import static org.mockito.Mockito.when;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.SearchOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper.SearchHelper;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.StringAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.AttributeType;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchType;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,7 +47,7 @@ class VorgangUseCaseTest {
 
         @Test
         void givenClientAttributes_thenSearchWithDefaultAndClientAttributes() {
-            final SearchResult expectedResult = new SearchResult(List.of(new SearchResult.ResultObject(
+            final SearchResult expectedResult = new SearchResult(List.of(new ResultObject(
                     "procedure-name", "procedure-address", List.of())));
             when(searchOutPort.searchObject(any(), any())).thenReturn(expectedResult);
 
@@ -56,7 +62,7 @@ class VorgangUseCaseTest {
             assertEquals(REQUEST_CONTEXT, capturedContext());
             assertEquals(EXAMPLE_LIMIT, request.limit());
             assertEquals("query-value", request.query());
-            final Set<String> expectedAttrs = new HashSet<>(VorgangUseCase.DEFAULT_ATTRIBUTES);
+            final Set<String> expectedAttrs = new HashSet<>(VorgangAttribute.getReferences());
             expectedAttrs.add("custom.attribute");
             assertEquals(
                     expectedAttrs,
@@ -73,9 +79,9 @@ class VorgangUseCaseTest {
                     + "COOSYSTEM@1.1:fullreference";
             final SearchResult expectedResult = new SearchResult(List.of());
             when(searchOutPort.searchObject(any(), any()))
-                    .thenReturn(new SearchResult(List.of(new SearchResult.ResultObject(
+                    .thenReturn(new SearchResult(List.of(new ResultObject(
                             "subject-area", "subject-area-address", List.of(
-                                    new StringAttribute(fullReference, java.math.BigInteger.ONE, dfvAttribute))))),
+                                    new Attribute(AttributeType.STRING, fullReference, java.math.BigInteger.ONE, dfvAttribute))))),
                             expectedResult);
 
             final SearchResult result = useCase.searchVorgang(REQUEST_CONTEXT, EXAMPLE_LIMIT, "query-value", null);
@@ -88,7 +94,7 @@ class VorgangUseCaseTest {
             assertEquals(Set.of(fullReference),
                     requests.get(0).attributes());
             assertEquals("query-value", requests.get(1).query());
-            final Set<String> expectedAttrs = new HashSet<>(VorgangUseCase.DEFAULT_ATTRIBUTES);
+            final Set<String> expectedAttrs = new HashSet<>(VorgangAttribute.getReferences());
             expectedAttrs.add(dfvAttribute);
             assertEquals(expectedAttrs,
                     requests.get(1).attributes());
@@ -106,6 +112,38 @@ class VorgangUseCaseTest {
             final ArgumentCaptor<SearchRequest> requestCaptor = ArgumentCaptor.forClass(SearchRequest.class);
             verify(searchOutPort).searchObject(any(), requestCaptor.capture());
             return requestCaptor.getValue();
+        }
+    }
+
+    @Nested
+    class SearchVorgangsDokumente {
+        @Test
+        void givenClientAttributes_thenSearchDocumentsBelowVorgang() {
+            final SearchResult expectedResult = new SearchResult(List.of());
+            when(searchOutPort.searchObject(any(), any())).thenReturn(expectedResult);
+
+            final SearchResult result = useCase.searchVorgangsDokumente(
+                    REQUEST_CONTEXT, "vorgang-id", 123, "client query", Set.of("custom.attribute"));
+
+            assertSame(expectedResult, result);
+            final ArgumentCaptor<SearchRequest> requestCaptor = ArgumentCaptor.forClass(SearchRequest.class);
+            verify(searchOutPort).searchObject(eq(REQUEST_CONTEXT), requestCaptor.capture());
+            final SearchRequest request = requestCaptor.getValue();
+            assertEquals(SearchType.DOKUMENT, request.type());
+            assertEquals(123, request.limit());
+            assertEquals("(.COOELAK@1.1001:referrednumber.COOSYSTEM@1.1:objaddress = 'vorgang-id') AND (client query)",
+                    request.query());
+            assertTrue(request.attributes().containsAll(DokumentAttribute.getReferences()));
+            assertTrue(request.attributes().contains("custom.attribute"));
+        }
+
+        @Test
+        void givenNoClientAttributes_thenLoadDocumentDfvAttributesBeforeSearch() {
+            when(searchOutPort.searchObject(any(), any())).thenReturn(new SearchResult(List.of()));
+
+            useCase.searchVorgangsDokumente(REQUEST_CONTEXT, "vorgang-id", 123, null, null);
+
+            verify(searchOutPort, times(2)).searchObject(eq(REQUEST_CONTEXT), any());
         }
     }
 }

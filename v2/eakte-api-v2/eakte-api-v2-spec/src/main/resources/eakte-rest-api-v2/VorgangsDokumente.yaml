@@ -1,13 +1,14 @@
 get:
   tags:
     - Vorgang
-  summary: Vorgaenge suchen
-  description: |
-    Mit diesem Aufruf können Vorgänge gesucht werden auf Basis von Bedingungen, die sich auf beliebige
-    Attribute des Vorgangs beziehen (Standard-Metadaten der eGov-Suite oder auch Attribute aus der 
-    "Definition von Verfahren").
-  operationId: SearchVorgaenge
+  summary: Dokumente eines Vorgangs
+  operationId: SearchVorgangsDokumente
   parameters:
+    - in: path
+      name: vorgangsId
+      schema:
+        type: string
+      required: true
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/Rolle'
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
@@ -20,7 +21,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: 'Vorgaenge_Datentypen.yaml#/components/schemas/VorgangListeResponse'
+            $ref: 'Dokument_Datentypen.yaml#/components/schemas/DokumentListeResponse'
     '400':
       description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
       content:

@@ -30,3 +30,5 @@ security:
 paths:
   '/api/v2/vorgaenge':
     $ref: 'Vorgaenge.yaml'
+  '/api/v2/vorgaenge/{vorgangsId}/dokumente':
+    $ref: 'VorgangsDokumente.yaml'
