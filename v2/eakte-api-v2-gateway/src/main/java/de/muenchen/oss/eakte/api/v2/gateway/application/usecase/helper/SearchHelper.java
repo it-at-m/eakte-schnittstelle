@@ -5,6 +5,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.AttributeType;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchType;
@@ -12,6 +13,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,7 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class SearchHelper {
     private static final String COO_PATTERN = "^COO[.\\d]+$";
+    private static final String ID_QUERY = ".COOSYSTEM@1.1:objaddress = '%s'";
     private static final String PARENT_QUERY = ".COOELAK@1.1001:referrednumber.COOSYSTEM@1.1:objaddress = '%s'";
 
     private final SearchOutPort searchOutPort;
@@ -60,6 +63,29 @@ public class SearchHelper {
             return query2;
         }
         return "(%s) AND (%s)".formatted(query1, query2);
+    }
+
+    /**
+     * Search for an object of the given resource type and with the given id.
+     *
+     * @param context The context to execute the search under.
+     * @param searchType The type of the resource to search for.
+     * @param id The id to search for.
+     * @param attrs The attributes to load for the object.
+     * @return The found resource.
+     */
+    public Optional<ResultObject> getObject(final RequestContext context, final SearchType searchType, final String id, final Set<String> attrs) {
+        final String query = ID_QUERY.formatted(id);
+        // TODO determine scope from request context
+        final SearchRequest request = new SearchRequest(searchType, null, 2, query, attrs);
+        final SearchResult result = searchOutPort.searchObject(context, request);
+        if (result.results().isEmpty()) {
+            return Optional.empty();
+        }
+        if (result.results().size() > 1) {
+            throw new IllegalStateException("There shouldn't be more than one result when searching by id.");
+        }
+        return Optional.of(result.results().getFirst());
     }
 
     /**

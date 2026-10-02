@@ -28,7 +28,8 @@ public class DokumentMapper {
                 .langname(result.name())
                 .name(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.NAME.getReference(), String.class).orElseThrow())
                 .betreff(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.BETREFF.getReference(), String.class).orElse(null))
-                .acl(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ACL.getReference(), String.class).orElseThrow())
+                .zugriffsdefinition(
+                        attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ZUGRIFFSDEFINITION.getReference(), String.class).orElseThrow())
                 .organisationseinheit(
                         attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ORGANISATIONSEINHEIT.getReference(), String.class).orElseThrow())
                 .eigenschaftenMap(attributeMapper.toMap(result.attributes(), DokumentAttribute.getReferences()))

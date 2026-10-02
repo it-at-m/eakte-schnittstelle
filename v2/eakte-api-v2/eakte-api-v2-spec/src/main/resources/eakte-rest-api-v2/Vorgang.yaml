@@ -1,8 +1,8 @@
 get:
   tags:
     - Vorgang
-  summary: Dokumente eines Vorgangs
-  operationId: SearchVorgangsDokumente
+  summary: Vorgang lesen
+  operationId: GetVorgang
   parameters:
     - in: path
       name: vorgangsId
@@ -12,8 +12,6 @@ get:
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/Rolle'
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
-    - $ref: '_SucheDatentypen.yaml#/components/parameters/Limit'
-    - $ref: '_SucheDatentypen.yaml#/components/parameters/Bedingungen'
     - $ref: '_SucheDatentypen.yaml#/components/parameters/Eigenschaften'
   responses:
     '200':
@@ -21,12 +19,14 @@ get:
       content:
         application/json:
           schema:
-            $ref: 'Dokument_Datentypen.yaml#/components/schemas/DokumentListeResponse'
+            $ref: 'Vorgaenge_Datentypen.yaml#/components/schemas/Vorgang'
       links:
-        GetVorgang:
-          operationId: GetVorgang
+        GetDokumente:
+          operationId: SearchVorgangsDokumente
           parameters:
-            vorgangsId: '$response.body#/parent.id'
+            vorgangsId: '$response.body#/id'
+    '404':
+      description: Vorgang konnte nicht gefunden werden.
     '400':
       description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
       content:

@@ -8,6 +8,7 @@ package de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.controllers;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.DokumentListeResponse;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.ErrorResponse;
 import org.springframework.lang.Nullable;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.VorgangListeResponse;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,12 +42,92 @@ import jakarta.annotation.Generated;
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.21.0")
 @Validated
 @Controller
-@Tag(name = "Vorgang", description = "the Vorgang API")
+@Tag(name = "Vorgang", description = "Procedure")
 public interface VorgangApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
+
+    String PATH_GET_VORGANG = "/api/v2/vorgaenge/{vorgangsId}";
+    /**
+     * GET /api/v2/vorgaenge/{vorgangsId} : Vorgang lesen
+     *
+     * @param vorgangsId  (required)
+     * @param eakteLoginName **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\\ Log-in-Name des Benutzerobjekts  (optional)
+     * @param eakteRolle Referenz der Rolle (**Rolle des Nutzers** in der eAkte). * Sachbearbeitung - OfficialInCharge * Registratur - Official * Sekretariat - Secretary * Leitung - Head * Fachadministration - OpAdm * Schriftgutverwaltung - DocumentManager  Es dürfen ausschließlich die Rollen genannt werden,  die bei der LHM genutzt werden.\\ Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt!  (optional)
+     * @param eakteOrganisationseinheit URI der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.\\ \\ Die OE ist dann wichtig anzugeben,  wenn der Nutzer in mehreren OEs zugeordnet ist.\\ Über diese OE wird der Mandant zugeordnet und  entsprechend die Berechtigungen geprüft.  (optional)
+     * @param eigenschaften  (optional)
+     * @return OK (status code 200)
+     *         or Vorgang konnte nicht gefunden werden. (status code 404)
+     *         or Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten. (status code 400)
+     *         or Falsche oder fehlende Anmeldeinformationen. (status code 401)
+     *         or Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten. (status code 500)
+     */
+    @Operation(
+        operationId = "getVorgang",
+        summary = "Vorgang lesen",
+        tags = { "Vorgang" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Vorgang.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Vorgang konnte nicht gefunden werden."),
+            @ApiResponse(responseCode = "400", description = "Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Falsche oder fehlende Anmeldeinformationen.", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = VorgangApi.PATH_GET_VORGANG,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<Vorgang> getVorgang(
+        @Parameter(name = "vorgangsId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("vorgangsId") String vorgangsId,
+        @Parameter(name = "EAkte-Login-Name", description = "**Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)\\ Log-in-Name des Benutzerobjekts ", in = ParameterIn.HEADER) @RequestHeader(value = "EAkte-Login-Name", required = false) Optional<String> eakteLoginName,
+        @Parameter(name = "EAkte-Rolle", description = "Referenz der Rolle (**Rolle des Nutzers** in der eAkte). * Sachbearbeitung - OfficialInCharge * Registratur - Official * Sekretariat - Secretary * Leitung - Head * Fachadministration - OpAdm * Schriftgutverwaltung - DocumentManager  Es dürfen ausschließlich die Rollen genannt werden,  die bei der LHM genutzt werden.\\ Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt! ", in = ParameterIn.HEADER) @RequestHeader(value = "EAkte-Rolle", required = false) Optional<String> eakteRolle,
+        @Parameter(name = "EAkte-Organisationseinheit", description = "URI der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.\\ \\ Die OE ist dann wichtig anzugeben,  wenn der Nutzer in mehreren OEs zugeordnet ist.\\ Über diese OE wird der Mandant zugeordnet und  entsprechend die Berechtigungen geprüft. ", in = ParameterIn.HEADER) @RequestHeader(value = "EAkte-Organisationseinheit", required = false) Optional<String> eakteOrganisationseinheit,
+        @Parameter(name = "eigenschaften", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "eigenschaften", required = false) Optional<List<String>> eigenschaften,
+        @Parameter(hidden = true) final HttpServletRequest servletRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"bearbeitungsstatus\" : \"bearbeitungsstatus\", \"sachakteId\" : \"sachakteId\", \"zugriffsdefinition\" : \"zugriffsdefinition\", \"originalMedium\" : \"elektronisch\", \"betreff\" : \"betreff\", \"eigenschaftenMap\" : { \"key\" : \"\" }, \"eigenschaftenListe\" : [ { \"reference\" : \"reference\", \"value\" : \"{}\" }, { \"reference\" : \"reference\", \"value\" : \"{}\" } ], \"langname\" : \"langname\", \"name\" : \"name\", \"organisationseinheit\" : \"organisationseinheit\", \"id\" : \"id\", \"geschaeftsgangvermerk\" : \"Warte auf Rückmeldung\", \"status\" : \"In Bearbeitung\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"instance\" : \"instance\", \"dmsErrorReference\" : \"dmsErrorReference\", \"detail\" : \"detail\", \"title\" : \"title\", \"status\" : 0 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"instance\" : \"instance\", \"dmsErrorReference\" : \"dmsErrorReference\", \"detail\" : \"detail\", \"title\" : \"title\", \"status\" : 0 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"instance\" : \"instance\", \"dmsErrorReference\" : \"dmsErrorReference\", \"detail\" : \"detail\", \"title\" : \"title\", \"status\" : 0 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
 
     String PATH_SEARCH_VORGAENGE = "/api/v2/vorgaenge";
     /**
@@ -104,7 +185,7 @@ public interface VorgangApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"anzahl\" : 3, \"elemente\" : [ { \"bearbeitungsstatus\" : \"bearbeitungsstatus\", \"sachakteId\" : \"sachakteId\", \"originalMedium\" : \"elektronisch\", \"acl\" : \"acl\", \"betreff\" : \"betreff\", \"eigenschaftenMap\" : { \"key\" : \"\" }, \"eigenschaftenListe\" : [ { \"reference\" : \"reference\", \"value\" : \"{}\" }, { \"reference\" : \"reference\", \"value\" : \"{}\" } ], \"langname\" : \"langname\", \"name\" : \"name\", \"organisationseinheit\" : \"organisationseinheit\", \"id\" : \"id\", \"geschaeftsgangvermerk\" : \"Warte auf Rückmeldung\", \"schlagworte\" : [ \"schlagworte\", \"schlagworte\" ], \"status\" : \"status\" }, { \"bearbeitungsstatus\" : \"bearbeitungsstatus\", \"sachakteId\" : \"sachakteId\", \"originalMedium\" : \"elektronisch\", \"acl\" : \"acl\", \"betreff\" : \"betreff\", \"eigenschaftenMap\" : { \"key\" : \"\" }, \"eigenschaftenListe\" : [ { \"reference\" : \"reference\", \"value\" : \"{}\" }, { \"reference\" : \"reference\", \"value\" : \"{}\" } ], \"langname\" : \"langname\", \"name\" : \"name\", \"organisationseinheit\" : \"organisationseinheit\", \"id\" : \"id\", \"geschaeftsgangvermerk\" : \"Warte auf Rückmeldung\", \"schlagworte\" : [ \"schlagworte\", \"schlagworte\" ], \"status\" : \"status\" } ] }";
+                    String exampleString = "{ \"anzahl\" : 3, \"elemente\" : [ { \"bearbeitungsstatus\" : \"bearbeitungsstatus\", \"sachakteId\" : \"sachakteId\", \"zugriffsdefinition\" : \"zugriffsdefinition\", \"originalMedium\" : \"elektronisch\", \"betreff\" : \"betreff\", \"eigenschaftenMap\" : { \"key\" : \"\" }, \"eigenschaftenListe\" : [ { \"reference\" : \"reference\", \"value\" : \"{}\" }, { \"reference\" : \"reference\", \"value\" : \"{}\" } ], \"langname\" : \"langname\", \"name\" : \"name\", \"organisationseinheit\" : \"organisationseinheit\", \"id\" : \"id\", \"geschaeftsgangvermerk\" : \"Warte auf Rückmeldung\", \"status\" : \"In Bearbeitung\" }, { \"bearbeitungsstatus\" : \"bearbeitungsstatus\", \"sachakteId\" : \"sachakteId\", \"zugriffsdefinition\" : \"zugriffsdefinition\", \"originalMedium\" : \"elektronisch\", \"betreff\" : \"betreff\", \"eigenschaftenMap\" : { \"key\" : \"\" }, \"eigenschaftenListe\" : [ { \"reference\" : \"reference\", \"value\" : \"{}\" }, { \"reference\" : \"reference\", \"value\" : \"{}\" } ], \"langname\" : \"langname\", \"name\" : \"name\", \"organisationseinheit\" : \"organisationseinheit\", \"id\" : \"id\", \"geschaeftsgangvermerk\" : \"Warte auf Rückmeldung\", \"status\" : \"In Bearbeitung\" } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -186,7 +267,7 @@ public interface VorgangApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"anzahl\" : 3, \"elemente\" : [ { \"betreff\" : \"betreff\", \"eigenschaftenMap\" : { \"key\" : \"\" }, \"parent\" : { \"id\" : \"id\", \"type\" : \"Vorgang\" }, \"eigenschaftenListe\" : [ { \"reference\" : \"reference\", \"value\" : \"{}\" }, { \"reference\" : \"reference\", \"value\" : \"{}\" } ], \"klasse\" : \"Eingang\", \"langname\" : \"langname\", \"name\" : \"name\", \"organisationseinheit\" : \"organisationseinheit\", \"id\" : \"id\", \"acl\" : \"acl\" }, { \"betreff\" : \"betreff\", \"eigenschaftenMap\" : { \"key\" : \"\" }, \"parent\" : { \"id\" : \"id\", \"type\" : \"Vorgang\" }, \"eigenschaftenListe\" : [ { \"reference\" : \"reference\", \"value\" : \"{}\" }, { \"reference\" : \"reference\", \"value\" : \"{}\" } ], \"klasse\" : \"Eingang\", \"langname\" : \"langname\", \"name\" : \"name\", \"organisationseinheit\" : \"organisationseinheit\", \"id\" : \"id\", \"acl\" : \"acl\" } ] }";
+                    String exampleString = "{ \"anzahl\" : 3, \"elemente\" : [ { \"betreff\" : \"betreff\", \"eigenschaftenMap\" : { \"key\" : \"\" }, \"parent\" : { \"id\" : \"id\", \"type\" : \"Vorgang\" }, \"eigenschaftenListe\" : [ { \"reference\" : \"reference\", \"value\" : \"{}\" }, { \"reference\" : \"reference\", \"value\" : \"{}\" } ], \"klasse\" : \"Eingang\", \"zugriffsdefinition\" : \"zugriffsdefinition\", \"langname\" : \"langname\", \"name\" : \"name\", \"organisationseinheit\" : \"organisationseinheit\", \"id\" : \"id\" }, { \"betreff\" : \"betreff\", \"eigenschaftenMap\" : { \"key\" : \"\" }, \"parent\" : { \"id\" : \"id\", \"type\" : \"Vorgang\" }, \"eigenschaftenListe\" : [ { \"reference\" : \"reference\", \"value\" : \"{}\" }, { \"reference\" : \"reference\", \"value\" : \"{}\" } ], \"klasse\" : \"Eingang\", \"zugriffsdefinition\" : \"zugriffsdefinition\", \"langname\" : \"langname\", \"name\" : \"name\", \"organisationseinheit\" : \"organisationseinheit\", \"id\" : \"id\" } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

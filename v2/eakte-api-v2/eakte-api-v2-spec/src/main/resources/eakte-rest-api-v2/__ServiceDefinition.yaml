@@ -27,8 +27,16 @@ components:
 security:
   - bearerAuth: []
 
+tags:
+  - name: Vorgang
+    description: Procedure
+  - name: Dokument
+    description: Parent-Klasse von Eingang (Incoming) / Erledigung (Outgoing) / Internes Dokument (Internal)
+
 paths:
   '/api/v2/vorgaenge':
     $ref: 'Vorgaenge.yaml'
+  '/api/v2/vorgaenge/{vorgangsId}':
+    $ref: 'Vorgang.yaml'
   '/api/v2/vorgaenge/{vorgangsId}/dokumente':
     $ref: 'VorgangsDokumente.yaml'

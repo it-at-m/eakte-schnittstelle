@@ -8,7 +8,7 @@ components:
         - parent
         - name
         - langname
-        - acl
+        - zugriffsdefinition
         - organisationseinheit
         - eigenschaftenMap
         - eigenschaftenListe
@@ -32,7 +32,7 @@ components:
         # TODO
         # anlagenBeschreibung:
         #   type: string
-        acl:
+        zugriffsdefinition:
           type: string
         organisationseinheit:
           type: string

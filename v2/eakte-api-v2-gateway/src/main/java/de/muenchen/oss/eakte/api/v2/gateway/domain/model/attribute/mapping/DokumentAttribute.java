@@ -16,7 +16,7 @@ public enum DokumentAttribute {
     PARENT_TYPE("COOELAK@1.1001:referrednumber.objclass.fullreference", AttributeType.STRING),
     NAME("COOELAK@1.1001:objmlname.langstring", AttributeType.STRING),
     BETREFF("COOELAK@1.1001:filesubj", AttributeType.STRING),
-    ACL("FSCFOLIO@1.1001:objaccdef.name", AttributeType.STRING),
+    ZUGRIFFSDEFINITION("FSCFOLIO@1.1001:objaccdef.name", AttributeType.STRING),
     ORGANISATIONSEINHEIT("COOSYSTEM@1.1:objowngroup.name", AttributeType.STRING);
 
     private final String reference;
