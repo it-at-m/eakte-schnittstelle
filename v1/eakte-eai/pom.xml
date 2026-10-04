@@ -218,7 +218,7 @@
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-test</artifactId>
 		<scope>test</scope>
-		<version>7.0.0-M2</version>
+		<version>7.0.9</version>
 	</dependency>
 
 	<dependency>
