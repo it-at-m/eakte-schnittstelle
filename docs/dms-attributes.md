@@ -36,7 +36,7 @@ and the property name in the V2 API is given.
 | FSCTERM@1.1001:objterms.name                         | Schlagworte                          | objterms       | -                  |
 | FSCFOLIO@1.1001:objaccdef.name                       | Zugriffsdefinition                   | accdef         | zugriffsdefinition |
 | COOEALK@1.1001:attachments                           | (untergeordnete Schriftstücke)       | gimetadatatype | -                  |
-| COOELAK@1.1001:incattachments                        | Alternative Beschreibung der Anlagen | incattachments | <TODO>             |
+| COOELAK@1.1001:incattachments                        | Alternative Beschreibung der Anlagen | incattachments | \<TODO>            |
 
 ### Eingang
 
