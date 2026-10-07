@@ -10,6 +10,7 @@ At different places the user needs to provide references to organizational units
 In the v1 implementation OUs were represented with COOs and roles with there reference (e.g. `DocumentManager`).
 
 Different alternatives:
+
 - COOs for OU and/or role
   - Differ between environments (only OU)
   - Mapping is unknown when only having the COO

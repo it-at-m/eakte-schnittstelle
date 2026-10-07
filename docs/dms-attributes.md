@@ -1,13 +1,13 @@
 # DMS Attributes
 
 In the following the attributes of the different resources in the DMS are described.
-For each attribute the reference/key in the Fabasoft system, the german label in the UI, the property name in the V1 API 
+For each attribute the reference/key in the Fabasoft system, the german label in the UI, the property name in the V1 API
 and the property name in the V2 API is given.
 
 ## Vorgang
 
 | Reference                           | Label                                            | V1              | V2                    |
-|-------------------------------------|--------------------------------------------------|-----------------|-----------------------|
+| ----------------------------------- | ------------------------------------------------ | --------------- | --------------------- |
 | COOELAK@1.1001:referrednumber       | Akte                                             | referrednumber  | sachakteId            |
 | COOELAK@1.1001:objmlname.langstring | Titel                                            | shortname       | name                  |
 |                                     | Name (Übersicht)                                 | objname         | langname              |
@@ -26,7 +26,7 @@ and the property name in the V2 API is given.
 ## Dokument
 
 | Reference                                            | Label                                | V1             | V2                 |
-|------------------------------------------------------|--------------------------------------|----------------|--------------------|
+| ---------------------------------------------------- | ------------------------------------ | -------------- | ------------------ |
 | COOSYSTEM@1.1:objclass.COOSYSTEM@1.1:fullreference   | Objektklasse                         |                | klasse             |
 | COOELAK@1.1001:referrednumber                        | Vorgang                              | referrednumber | parent.id          |
 | COOELAK@1.1001:referrednumber.objclass.fullreference | Vorgang                              | -              | parent.type        |
@@ -40,24 +40,24 @@ and the property name in the V2 API is given.
 
 ### Eingang
 
-| Reference                       | Label                    | V1              | V2      |
-|---------------------------------|--------------------------|-----------------|---------|
-| COOELAK@1.1001:foreignnr        | Fremdes Geschäftszeichen | foreignnr       |         |
-| COOELAK@1.1001:delivery         | Datum                    | delivery        |         |
-| DEPRECONFIG@15.1001:fileaddsubj | Hinweis                  | documentremarks |         |
+| Reference                       | Label                    | V1              | V2  |
+| ------------------------------- | ------------------------ | --------------- | --- |
+| COOELAK@1.1001:foreignnr        | Fremdes Geschäftszeichen | foreignnr       |     |
+| COOELAK@1.1001:delivery         | Datum                    | delivery        |     |
+| DEPRECONFIG@15.1001:fileaddsubj | Hinweis                  | documentremarks |     |
 
 ### Erledigung / Ausgang
 
-| Reference                          | Label                     | V1               | V2 |
-|------------------------------------|---------------------------|------------------|----|
-| CFGBAYERN@15.1400:referredincoming | Bezug zu Eingangsdokument | referredincoming |    |
-| COOELAK@1.1001:subfiletype         | Dokumententyp             | subfiletype      |    |
-|                                    |                           | searchalso       | -  |
-|                                    |                           | businessapp      | -  |
+| Reference                          | Label                     | V1               | V2  |
+| ---------------------------------- | ------------------------- | ---------------- | --- |
+| CFGBAYERN@15.1400:referredincoming | Bezug zu Eingangsdokument | referredincoming |     |
+| COOELAK@1.1001:subfiletype         | Dokumententyp             | subfiletype      |     |
+|                                    |                           | searchalso       | -   |
+|                                    |                           | businessapp      | -   |
 
 ### Internal
 
-| Reference                  | Label       | V1           | V2 |
-|----------------------------|-------------|--------------|----|
-| COOELAK@1.1001:delivery    | Datum       | deliverydate |    |
-| COOELAK@1.1001:subfiletype | Dokumenttyp | subfiletype  |    |
+| Reference                  | Label       | V1           | V2  |
+| -------------------------- | ----------- | ------------ | --- |
+| COOELAK@1.1001:delivery    | Datum       | deliverydate |     |
+| COOELAK@1.1001:subfiletype | Dokumenttyp | subfiletype  |     |
