@@ -15,11 +15,59 @@ servers:
 security:
   - bearerAuth: []
 tags:
+  - name: Akte
+    description: File (Sachakte)
   - name: Vorgang
     description: Procedure
   - name: Dokument
     description: Parent-Klasse von Eingang (Incoming) / Erledigung (Outgoing) / Internes Dokument (Internal)
 paths:
+  /api/v2/akten/{aktenId}/vorgaenge:
+    post:
+      tags:
+        - Akte
+      summary: Vorgang unter Akte erstellen
+      operationId: CreateVorgang
+      parameters:
+        - in: path
+          name: aktenId
+          schema:
+            type: string
+          required: true
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVorgang'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateVorgangResponse'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /api/v2/vorgaenge:
     get:
       tags:
@@ -261,6 +309,63 @@ components:
         items:
           type: string
   schemas:
+    BaseVorgang:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        betreff:
+          type: string
+        geschaeftsgangvermerk:
+          type: string
+          description: Geschäftsgangvermerk für Prozessverantwortlichen
+          example: Warte auf Rückmeldung
+        originalMedium:
+          type: string
+          enum:
+            - elektronisch
+            - hybrid
+            - papier
+        zugriffsdefinition:
+          type: string
+    CreateVorgang:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseVorgang'
+      properties:
+        vorlagenId:
+          type: string
+        laufweg:
+          type: string
+          default: null
+    CreateVorgangResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+    ErrorResponse:
+      type: object
+      description: |
+        Container für RFC9457 Fehlermeldung und konkrete Fabasoft Fehlermeldung falls Ursache
+      required:
+        - status
+        - title
+      properties:
+        status:
+          type: integer
+          format: int32
+        title:
+          type: string
+        instance:
+          type: string
+        detail:
+          type: string
+        dmsErrorReference:
+          type: string
     AnzahlListenElemente:
       type: integer
       description: |
@@ -278,49 +383,23 @@ components:
           type: object
     Vorgang:
       type: object
-      description: |
-        Repräsentation eines Vorgangs.\
-        Aufgrund der Konfigurierbarkeit der Attribute (verfahrensabhängige Metadaten, siehe
-        Fabasoft eGov-Suite "Definition von Verfahren") werden diese in einer dynamisch 
-        aufgebauten Liste geführt und nichts als Felder in einer fixen (JSON-) Datenstruktur.
-        \
-        Um die innerhalb einer bestimmten Betreffseinheit verfügbaren Custom-Attribute auf
-        Vorgangsebene sowie die Standard-Attribute des Vorgangs zu erfahren, kann über den Endpunkt
-        '/v2/Attribute' eine Abfrage (GET-Methode) getätigt werden (s. Spezifikation dieses
-        Endpunktes, in diesem Fall die Verwendung des Filters 'Schriftgutebene=Vorgang').
       required:
         - id
-        - sachakteId
-        - name
         - langname
-        - originalMedium
         - status
         - bearbeitungsstatus
-        - zugriffsdefinition
         - organisationseinheit
         - eigenschaftenMap
         - eigenschaftenListe
+      allOf:
+        - $ref: '#/components/schemas/BaseVorgang'
       properties:
         id:
           type: string
         sachakteId:
           type: string
-        name:
-          type: string
         langname:
           type: string
-        betreff:
-          type: string
-        geschaeftsgangvermerk:
-          type: string
-          description: Geschäftsgangvermerk für Prozessverantwortlichen
-          example: Warte auf Rückmeldung
-        originalMedium:
-          type: string
-          enum:
-            - elektronisch
-            - hybrid
-            - papier
         status:
           type: string
           enum:
@@ -330,8 +409,6 @@ components:
             - Storniert
             - Archiviert
         bearbeitungsstatus:
-          type: string
-        zugriffsdefinition:
           type: string
         organisationseinheit:
           type: string
@@ -352,25 +429,6 @@ components:
           description: Liste von Vorgängen
           items:
             $ref: '#/components/schemas/Vorgang'
-    ErrorResponse:
-      type: object
-      description: |
-        Container für RFC9457 Fehlermeldung und konkrete Fabasoft Fehlermeldung falls Ursache
-      required:
-        - status
-        - title
-      properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        instance:
-          type: string
-        detail:
-          type: string
-        dmsErrorReference:
-          type: string
     ParentReference:
       type: object
       required:

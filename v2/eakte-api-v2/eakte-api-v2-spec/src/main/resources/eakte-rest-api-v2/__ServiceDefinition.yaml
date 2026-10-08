@@ -28,12 +28,16 @@ security:
   - bearerAuth: []
 
 tags:
+  - name: Akte
+    description: File (Sachakte)
   - name: Vorgang
     description: Procedure
   - name: Dokument
     description: Parent-Klasse von Eingang (Incoming) / Erledigung (Outgoing) / Internes Dokument (Internal)
 
 paths:
+  '/api/v2/akten/{aktenId}/vorgaenge':
+    $ref: 'AktenVorgaenge.yaml'
   '/api/v2/vorgaenge':
     $ref: 'Vorgaenge.yaml'
   '/api/v2/vorgaenge/{vorgangsId}':

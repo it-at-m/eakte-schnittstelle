@@ -16,7 +16,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper
-public abstract class FabasoftAttributeMapper {
+public abstract class FabasoftAttributeInMapper {
     private static final String FABASOFT_TYPE = "fabasoftType";
 
     @Mapping(target = FABASOFT_TYPE, constant = "STRING")

@@ -27,7 +27,7 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class FabasoftSearchAdapter implements SearchOutPort {
     private final FSCGOVXML11001DefaultWebServiceDefinitionSoap soapClient;
-    private final FabasoftAttributeMapper attributeMapper;
+    private final FabasoftAttributeInMapper attributeInMapper;
     private final FabasoftRequestHandler requestHandler;
 
     @Override
@@ -68,25 +68,28 @@ public class FabasoftSearchAdapter implements SearchOutPort {
     }
 
     private List<Attribute> parseAttributes(final AttrListResultType attrs) {
+        if (attrs == null) {
+            return List.of();
+        }
         final List<Attribute> result = new ArrayList<>();
         // STRING
-        result.addAll(attrs.getSTRING().stream().map(attributeMapper::mapString).toList());
+        result.addAll(attrs.getSTRING().stream().map(attributeInMapper::mapString).toList());
         // BOOLEAN
-        result.addAll(attrs.getBOOLEAN().stream().map(attributeMapper::mapBoolean).toList());
+        result.addAll(attrs.getBOOLEAN().stream().map(attributeInMapper::mapBoolean).toList());
         // INTEGER
-        result.addAll(attrs.getINTEGER().stream().map(attributeMapper::mapInt).toList());
+        result.addAll(attrs.getINTEGER().stream().map(attributeInMapper::mapInt).toList());
         // FLOAT
-        result.addAll(attrs.getFLOAT().stream().map(attributeMapper::mapFloat).toList());
+        result.addAll(attrs.getFLOAT().stream().map(attributeInMapper::mapFloat).toList());
         // DATE
-        result.addAll(attrs.getDATE().stream().map(attributeMapper::mapDate).toList());
+        result.addAll(attrs.getDATE().stream().map(attributeInMapper::mapDate).toList());
         // DATETIME
-        result.addAll(attrs.getDATETIME().stream().map(attributeMapper::mapDatetime).toList());
+        result.addAll(attrs.getDATETIME().stream().map(attributeInMapper::mapDatetime).toList());
         // ENUM
-        result.addAll(attrs.getENUM().stream().map(attributeMapper::mapEnum).toList());
+        result.addAll(attrs.getENUM().stream().map(attributeInMapper::mapEnum).toList());
         // CONTENT
-        result.addAll(attrs.getCONTENT().stream().map(attributeMapper::mapContent).toList());
+        result.addAll(attrs.getCONTENT().stream().map(attributeInMapper::mapContent).toList());
         // OBJECT
-        result.addAll(attrs.getOBJECT().stream().map(attributeMapper::mapObject).toList());
+        result.addAll(attrs.getOBJECT().stream().map(attributeInMapper::mapObject).toList());
         // AGGREGATE
         result.addAll(attrs.getAGGREGATE().stream().map(this::mapAggregateType).toList());
         return result;
@@ -95,23 +98,23 @@ public class FabasoftSearchAdapter implements SearchOutPort {
     private Attribute mapAggregateType(final AGGREGATEType aggregateType) {
         final List<Attribute> attributes = new ArrayList<>();
         // STRING
-        attributes.addAll(aggregateType.getSTRING().stream().map(attributeMapper::mapString).toList());
+        attributes.addAll(aggregateType.getSTRING().stream().map(attributeInMapper::mapString).toList());
         // BOOLEAN
-        attributes.addAll(aggregateType.getBOOLEAN().stream().map(attributeMapper::mapBoolean).toList());
+        attributes.addAll(aggregateType.getBOOLEAN().stream().map(attributeInMapper::mapBoolean).toList());
         // INTEGER
-        attributes.addAll(aggregateType.getINTEGER().stream().map(attributeMapper::mapInt).toList());
+        attributes.addAll(aggregateType.getINTEGER().stream().map(attributeInMapper::mapInt).toList());
         // FLOAT
-        attributes.addAll(aggregateType.getFLOAT().stream().map(attributeMapper::mapFloat).toList());
+        attributes.addAll(aggregateType.getFLOAT().stream().map(attributeInMapper::mapFloat).toList());
         // DATE
-        attributes.addAll(aggregateType.getDATE().stream().map(attributeMapper::mapDate).toList());
+        attributes.addAll(aggregateType.getDATE().stream().map(attributeInMapper::mapDate).toList());
         // DATETIME
-        attributes.addAll(aggregateType.getDATETIME().stream().map(attributeMapper::mapDatetime).toList());
+        attributes.addAll(aggregateType.getDATETIME().stream().map(attributeInMapper::mapDatetime).toList());
         // ENUM
-        attributes.addAll(aggregateType.getENUM().stream().map(attributeMapper::mapEnum).toList());
+        attributes.addAll(aggregateType.getENUM().stream().map(attributeInMapper::mapEnum).toList());
         // CONTENT
-        attributes.addAll(aggregateType.getCONTENT().stream().map(attributeMapper::mapContent).toList());
+        attributes.addAll(aggregateType.getCONTENT().stream().map(attributeInMapper::mapContent).toList());
         // OBJECT
-        attributes.addAll(aggregateType.getOBJECT().stream().map(attributeMapper::mapObject).toList());
+        attributes.addAll(aggregateType.getOBJECT().stream().map(attributeInMapper::mapObject).toList());
         // AGGREGATE
         attributes.addAll(aggregateType.getAGGREGATE().stream().map(this::mapAggregateType).toList());
         return new Attribute(AttributeType.AGGREGATE, aggregateType.getReference(), aggregateType.getIndex(), attributes);

@@ -1,37 +1,11 @@
 components:
   schemas:
-    Vorgang:
+    BaseVorgang:
       type: object
-      description: |
-        Repräsentation eines Vorgangs.\
-        Aufgrund der Konfigurierbarkeit der Attribute (verfahrensabhängige Metadaten, siehe
-        Fabasoft eGov-Suite "Definition von Verfahren") werden diese in einer dynamisch 
-        aufgebauten Liste geführt und nichts als Felder in einer fixen (JSON-) Datenstruktur.
-        \
-        Um die innerhalb einer bestimmten Betreffseinheit verfügbaren Custom-Attribute auf
-        Vorgangsebene sowie die Standard-Attribute des Vorgangs zu erfahren, kann über den Endpunkt
-        '/v2/Attribute' eine Abfrage (GET-Methode) getätigt werden (s. Spezifikation dieses
-        Endpunktes, in diesem Fall die Verwendung des Filters 'Schriftgutebene=Vorgang').
       required:
-        - id
-        - sachakteId
         - name
-        - langname
-        - originalMedium
-        - status
-        - bearbeitungsstatus
-        - zugriffsdefinition
-        - organisationseinheit
-        - eigenschaftenMap
-        - eigenschaftenListe
       properties:
-        id:
-          type: string
-        sachakteId:
-          type: string
         name:
-          type: string
-        langname:
           type: string
         betreff:
           type: string
@@ -45,6 +19,28 @@ components:
             - "elektronisch"
             - "hybrid"
             - "papier"
+        zugriffsdefinition:
+          type: string
+
+    Vorgang:
+      type: object
+      required:
+        - id
+        - langname
+        - status
+        - bearbeitungsstatus
+        - organisationseinheit
+        - eigenschaftenMap
+        - eigenschaftenListe
+      allOf:
+        - $ref: "./Vorgaenge_Datentypen.yaml#/components/schemas/BaseVorgang"
+      properties:
+        id:
+          type: string
+        sachakteId:
+          type: string
+        langname:
+          type: string
         status:
           type: string
           enum:
@@ -55,8 +51,6 @@ components:
             - Archiviert
         bearbeitungsstatus:
           type: string
-        zugriffsdefinition:
-          type: string
         organisationseinheit:
           type: string
         eigenschaftenMap:
@@ -66,6 +60,28 @@ components:
           type: array
           items:
             $ref: '_SucheDatentypen.yaml#/components/schemas/EigenschaftEintrag'
+
+    CreateVorgang:
+      type: object
+      allOf:
+        - $ref: "./Vorgaenge_Datentypen.yaml#/components/schemas/BaseVorgang"
+      # TODO required
+      properties:
+        vorlagenId:
+          type: string
+        # TODO
+        laufweg:
+          type: string
+          default: null
+        # TODO DfV attributes
+
+    CreateVorgangResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
 
     VorgangListeResponse:
       type: object
