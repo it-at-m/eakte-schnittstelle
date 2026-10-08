@@ -10,6 +10,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.SearchOutPort;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribute;
@@ -17,7 +18,6 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribut
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchType;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Set;
@@ -54,12 +54,12 @@ class SearchHelperTest {
                                     new Attribute(AttributeType.STRING, "other.reference", BigInteger.ONE, "ignored"),
                                     new Attribute(AttributeType.INTEGER, FULL_REFERENCE, BigInteger.ONE, 42))))));
 
-            final List<String> attributes = searchHelper.loadDfVAttributes(REQUEST_CONTEXT, SearchType.VORGANG);
+            final List<String> attributes = searchHelper.loadDfVAttributes(REQUEST_CONTEXT, FabasoftType.VORGANG);
 
             assertEquals(List.of("attribute.one", "attribute.two"), attributes);
             final ArgumentCaptor<SearchRequest> requestCaptor = ArgumentCaptor.forClass(SearchRequest.class);
             verify(searchOutPort).searchObject(eq(REQUEST_CONTEXT), requestCaptor.capture());
-            assertEquals(SearchType.SUBJECT_AREA, requestCaptor.getValue().type());
+            assertEquals(FabasoftType.SUBJECT_AREA, requestCaptor.getValue().type());
             assertEquals("EGOVTEMPLATE@15.1001:availabledefinitions is not null", requestCaptor.getValue().query());
             assertEquals(Set.of(FULL_REFERENCE), requestCaptor.getValue().attributes());
         }
@@ -69,11 +69,11 @@ class SearchHelperTest {
             when(searchOutPort.searchObject(eq(REQUEST_CONTEXT), any()))
                     .thenReturn(new SearchResult(List.of()));
 
-            searchHelper.loadDfVAttributes(REQUEST_CONTEXT, SearchType.DOKUMENT);
+            searchHelper.loadDfVAttributes(REQUEST_CONTEXT, FabasoftType.DOKUMENT);
 
             final ArgumentCaptor<SearchRequest> requestCaptor = ArgumentCaptor.forClass(SearchRequest.class);
             verify(searchOutPort).searchObject(eq(REQUEST_CONTEXT), requestCaptor.capture());
-            assertEquals(SearchType.SUBJECT_AREA, requestCaptor.getValue().type());
+            assertEquals(FabasoftType.SUBJECT_AREA, requestCaptor.getValue().type());
             assertEquals(Set.of("EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:"
                     + "availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:"
                     + "definitionuseform.FSCUSERFORMS@1.1001:releasecategory.COOTC@1.1001:categoryattributes."
@@ -105,7 +105,7 @@ class SearchHelperTest {
         @Test
         void givenDocumentClientAttributes_thenBuildDocumentDefaultsAndClientAttributes() {
             final Set<String> attributes = searchHelper.buildAttributes(
-                    REQUEST_CONTEXT, SearchType.DOKUMENT, Set.of("custom.attribute"));
+                    REQUEST_CONTEXT, FabasoftType.DOKUMENT, Set.of("custom.attribute"));
 
             assertTrue(attributes.containsAll(DokumentAttribute.getReferences()));
             assertTrue(attributes.contains("custom.attribute"));
@@ -121,13 +121,13 @@ class SearchHelperTest {
                     .thenReturn(new SearchResult(List.of(expectedResult)));
 
             final ResultObject result = searchHelper.getObject(
-                    REQUEST_CONTEXT, SearchType.VORGANG, "COO.1.2.3", Set.of("attribute"))
+                    REQUEST_CONTEXT, FabasoftType.VORGANG, "COO.1.2.3", Set.of("attribute"))
                     .orElseThrow();
 
             assertEquals(expectedResult, result);
             final ArgumentCaptor<SearchRequest> requestCaptor = ArgumentCaptor.forClass(SearchRequest.class);
             verify(searchOutPort).searchObject(eq(REQUEST_CONTEXT), requestCaptor.capture());
-            assertEquals(SearchType.VORGANG, requestCaptor.getValue().type());
+            assertEquals(FabasoftType.VORGANG, requestCaptor.getValue().type());
             assertEquals(2, requestCaptor.getValue().limit());
             assertEquals(".COOSYSTEM@1.1:objaddress = 'COO.1.2.3'", requestCaptor.getValue().query());
             assertEquals(Set.of("attribute"), requestCaptor.getValue().attributes());
@@ -138,7 +138,7 @@ class SearchHelperTest {
             when(searchOutPort.searchObject(eq(REQUEST_CONTEXT), any()))
                     .thenReturn(new SearchResult(List.of()));
 
-            assertTrue(searchHelper.getObject(REQUEST_CONTEXT, SearchType.VORGANG, "COO.1.2.3", Set.of()).isEmpty());
+            assertTrue(searchHelper.getObject(REQUEST_CONTEXT, FabasoftType.VORGANG, "COO.1.2.3", Set.of()).isEmpty());
         }
 
         @Test
@@ -148,7 +148,7 @@ class SearchHelperTest {
                     .thenReturn(new SearchResult(List.of(result, result)));
 
             assertThrows(IllegalStateException.class,
-                    () -> searchHelper.getObject(REQUEST_CONTEXT, SearchType.VORGANG, "COO.1.2.3", Set.of()));
+                    () -> searchHelper.getObject(REQUEST_CONTEXT, FabasoftType.VORGANG, "COO.1.2.3", Set.of()));
         }
     }
 }

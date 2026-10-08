@@ -1,4 +1,4 @@
-package de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping;
+package de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.enums;
 
 import java.util.Arrays;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.enums.DokumentClass;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.ResultObject;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Dokument;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.ParentReference;

@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.SearchOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper.SearchHelper;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute;
@@ -20,7 +21,6 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribut
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchType;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -133,7 +133,7 @@ class VorgangUseCaseTest {
             final ArgumentCaptor<SearchRequest> requestCaptor = ArgumentCaptor.forClass(SearchRequest.class);
             verify(searchOutPort).searchObject(eq(REQUEST_CONTEXT), requestCaptor.capture());
             final SearchRequest request = requestCaptor.getValue();
-            assertEquals(SearchType.DOKUMENT, request.type());
+            assertEquals(FabasoftType.DOKUMENT, request.type());
             assertEquals(123, request.limit());
             assertEquals("(.COOELAK@1.1001:referrednumber.COOSYSTEM@1.1:objaddress = 'vorgang-id') AND (client query)",
                     request.query());
@@ -151,10 +151,10 @@ class VorgangUseCaseTest {
             verify(searchOutPort, times(2)).searchObject(eq(REQUEST_CONTEXT), requestCaptor.capture());
             final List<SearchRequest> requests = requestCaptor.getAllValues();
 
-            assertEquals(SearchType.SUBJECT_AREA, requests.getFirst().type());
+            assertEquals(FabasoftType.SUBJECT_AREA, requests.getFirst().type());
             assertEquals("EGOVTEMPLATE@15.1001:availabledefinitions is not null", requests.getFirst().query());
             assertEquals(Set.of(DOKUMENT_DFV_FULL_REFERENCE), requests.getFirst().attributes());
-            assertEquals(SearchType.DOKUMENT, requests.get(1).type());
+            assertEquals(FabasoftType.DOKUMENT, requests.get(1).type());
             assertEquals(".COOELAK@1.1001:referrednumber.COOSYSTEM@1.1:objaddress = 'vorgang-id'",
                     requests.get(1).query());
             assertTrue(requests.get(1).attributes().containsAll(DokumentAttribute.getReferences()));
@@ -175,7 +175,7 @@ class VorgangUseCaseTest {
             assertSame(expectedResult, result);
             final ArgumentCaptor<SearchRequest> requestCaptor = ArgumentCaptor.forClass(SearchRequest.class);
             verify(searchOutPort).searchObject(eq(REQUEST_CONTEXT), requestCaptor.capture());
-            assertEquals(SearchType.VORGANG, requestCaptor.getValue().type());
+            assertEquals(FabasoftType.VORGANG, requestCaptor.getValue().type());
             assertEquals(".COOSYSTEM@1.1:objaddress = 'COO.1.2.3'", requestCaptor.getValue().query());
             assertTrue(requestCaptor.getValue().attributes().containsAll(VorgangAttribute.getReferences()));
             assertTrue(requestCaptor.getValue().attributes().contains("custom.attribute"));

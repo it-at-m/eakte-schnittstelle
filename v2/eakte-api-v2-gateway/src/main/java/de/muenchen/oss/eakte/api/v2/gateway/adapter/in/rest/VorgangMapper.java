@@ -1,7 +1,8 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangStatus;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.enums.VorgangMedium;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.enums.VorgangStatus;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.ResultObject;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import java.math.BigInteger;
@@ -43,12 +44,12 @@ class VorgangMapper {
     }
 
     protected Vorgang.OriginalMediumEnum mapMedium(final Map<String, List<Object>> referenceValueMap) {
-        return switch (attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.ORIGINAL_MEDIUM.getReference(), BigInteger.class).orElseThrow()
-                .intValue()) {
-        case 1 -> Vorgang.OriginalMediumEnum.ELEKTRONISCH;
-        case 2 -> Vorgang.OriginalMediumEnum.PAPIER;
-        case 3 -> Vorgang.OriginalMediumEnum.HYBRID;
-        default -> null;
+        final BigInteger mediumValue = attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.ORIGINAL_MEDIUM.getReference(), BigInteger.class)
+                .orElseThrow();
+        return switch (VorgangMedium.byFabasoftValue(mediumValue.intValue())) {
+        case ELEKTRONISCH -> Vorgang.OriginalMediumEnum.ELEKTRONISCH;
+        case PAPIER -> Vorgang.OriginalMediumEnum.PAPIER;
+        case HYBRID -> Vorgang.OriginalMediumEnum.HYBRID;
         };
     }
 

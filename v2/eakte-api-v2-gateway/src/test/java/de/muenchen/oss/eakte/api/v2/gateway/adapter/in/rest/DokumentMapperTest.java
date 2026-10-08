@@ -7,9 +7,9 @@ import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mappin
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.PARENT_ID;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.PARENT_TYPE;
 import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.ZUGRIFFSDEFINITION;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass.EINGANG;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass.ERLEDIGUNG;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass.INTERN;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.enums.DokumentClass.EINGANG;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.enums.DokumentClass.ERLEDIGUNG;
+import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.enums.DokumentClass.INTERN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

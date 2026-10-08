@@ -3,12 +3,11 @@ package de.muenchen.oss.eakte.api.v2.gateway.application.usecase;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.in.VorgangInPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.SearchOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper.SearchHelper;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchType;
-
 import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
@@ -22,25 +21,25 @@ public class VorgangUseCase implements VorgangInPort {
 
     @Override
     public SearchResult searchVorgang(final RequestContext context, final int limit, final String query, final Set<String> clientAttrs) {
-        final Set<String> attrs = searchHelper.buildAttributes(context, SearchType.VORGANG, clientAttrs);
+        final Set<String> attrs = searchHelper.buildAttributes(context, FabasoftType.VORGANG, clientAttrs);
         // TODO determine scope from request context
-        final SearchRequest request = new SearchRequest(SearchType.VORGANG, null, limit, query, attrs);
+        final SearchRequest request = new SearchRequest(FabasoftType.VORGANG, null, limit, query, attrs);
         return searchOutPort.searchObject(context, request);
     }
 
     @Override
     public Optional<ResultObject> getVorgang(final RequestContext context, final String vorgangsId, final Set<String> clientAttrs) {
-        final Set<String> attrs = searchHelper.buildAttributes(context, SearchType.VORGANG, clientAttrs);
-        return searchHelper.getObject(context, SearchType.VORGANG, vorgangsId, attrs);
+        final Set<String> attrs = searchHelper.buildAttributes(context, FabasoftType.VORGANG, clientAttrs);
+        return searchHelper.getObject(context, FabasoftType.VORGANG, vorgangsId, attrs);
     }
 
     @Override
     public SearchResult searchVorgangsDokumente(final RequestContext context, final String vorgangsId, final int limit, final String clientQuery,
             final Set<String> clientAttrs) {
-        final Set<String> attrs = searchHelper.buildAttributes(context, SearchType.DOKUMENT, clientAttrs);
+        final Set<String> attrs = searchHelper.buildAttributes(context, FabasoftType.DOKUMENT, clientAttrs);
         final String query = searchHelper.concatQuery(searchHelper.buildParentIdQuery(vorgangsId), clientQuery);
         // TODO determine scope from request context
-        final SearchRequest request = new SearchRequest(SearchType.DOKUMENT, null, limit, query, attrs);
+        final SearchRequest request = new SearchRequest(FabasoftType.DOKUMENT, null, limit, query, attrs);
         return searchOutPort.searchObject(context, request);
     }
 }

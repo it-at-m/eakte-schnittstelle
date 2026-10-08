@@ -1,6 +1,7 @@
 package de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper;
 
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.SearchOutPort;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.FabasoftType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.VorgangAttribute;
@@ -8,7 +9,6 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribut
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchResult;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.SearchType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import java.util.HashSet;
@@ -38,9 +38,9 @@ public class SearchHelper {
      * @param clientAttrs The attributes which were provided by the client.
      * @return A unified enriched set of client attributes.
      */
-    public Set<String> buildAttributes(final RequestContext context, final SearchType searchType, final Set<String> clientAttrs) {
+    public Set<String> buildAttributes(final RequestContext context, final FabasoftType searchType, final Set<String> clientAttrs) {
         final Set<String> attributes = new HashSet<>(switch (searchType) {
-        case SUBJECT_AREA -> throw new IllegalStateException("Not implemented");
+        case SUBJECT_AREA, ZUGRIFFSDEFINITION -> throw new IllegalStateException("Not implemented");
         case VORGANG -> VorgangAttribute.getReferences();
         case DOKUMENT -> DokumentAttribute.getReferences();
         });
@@ -74,7 +74,7 @@ public class SearchHelper {
      * @param attrs The attributes to load for the object.
      * @return The found resource.
      */
-    public Optional<ResultObject> getObject(final RequestContext context, final SearchType searchType, final String id, final Set<String> attrs) {
+    public Optional<ResultObject> getObject(final RequestContext context, final FabasoftType searchType, final String id, final Set<String> attrs) {
         final String query = ID_QUERY.formatted(id);
         // TODO determine scope from request context
         final SearchRequest request = new SearchRequest(searchType, null, 2, query, attrs);
@@ -105,7 +105,7 @@ public class SearchHelper {
      * @param searchType The resource type to load the attributes for.
      * @return The available attributes.
      */
-    public List<String> loadDfVAttributes(final RequestContext context, final SearchType searchType) {
+    public List<String> loadDfVAttributes(final RequestContext context, final FabasoftType searchType) {
         // build attribute key
         final String attrPrefix = switch (searchType) {
         case VORGANG -> "EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0]";
@@ -117,7 +117,7 @@ public class SearchHelper {
                 + ".EGOVTEMPLATE@15.1001:definitionuseform.FSCUSERFORMS@1.1001:releasecategory.COOTC@1.1001:categoryattributes.COOSYSTEM@1.1:fullreference";
         // search for attributes
         final SearchResult result = searchOutPort.searchObject(context, new SearchRequest(
-                SearchType.SUBJECT_AREA,
+                FabasoftType.SUBJECT_AREA,
                 null,
                 SearchRequest.LIMIT_MAX,
                 "EGOVTEMPLATE@15.1001:availabledefinitions is not null",
