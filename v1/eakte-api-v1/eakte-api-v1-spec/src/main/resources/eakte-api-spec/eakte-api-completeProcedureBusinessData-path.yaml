@@ -2,8 +2,9 @@
 post:
   tags:
     - "/completeProcedureBusinessData"
-  summary: Anlegen eines kompletten Vorgangs mit Dokument und Schriftstücken bzw. 
-    Ergänzung einzelner Schriftstücke beim Vorgang
+  summary: Dieser Endpunkt ist deprecated und soll nicht weiter verwendet werden! Anlegen eines kompletten Vorgangs mit Dokument und Schriftstücken bzw. 
+    Ergänzung einzelner Schriftstücke beim Vorgang.
+  deprecated: true
   description: |
     Sobald eine Sachakte über die Fachdaten gefunden wurde, 
     (über die Parameter businessterm und businessvalue),
