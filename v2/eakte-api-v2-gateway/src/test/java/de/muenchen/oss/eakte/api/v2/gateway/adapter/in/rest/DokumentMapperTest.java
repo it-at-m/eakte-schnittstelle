@@ -46,7 +46,7 @@ class DokumentMapperTest {
         assertEquals(Dokument.KlasseEnum.EINGANG, result.getKlasse());
         assertEquals(new ParentReference().id("parent-id").type(ParentReference.TypeEnum.VORGANG), result.getParent());
         assertEquals("short-name", result.getName());
-        assertEquals("subject", result.getBetreff().orElseThrow());
+        assertEquals("subject", result.getBetreff());
         assertEquals("acl", result.getZugriffsdefinition());
         assertEquals("ou", result.getOrganisationseinheit());
         assertEquals(Map.of("custom.attribute_1", "custom-value"), result.getEigenschaftenMap());

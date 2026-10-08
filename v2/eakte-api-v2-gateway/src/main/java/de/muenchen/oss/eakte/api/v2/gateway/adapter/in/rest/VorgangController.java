@@ -27,19 +27,19 @@ public class VorgangController implements VorgangApi {
 
     @Override
     public ResponseEntity<VorgangListeResponse> searchVorgaenge(
-            final Optional<String> loginName,
-            final Optional<String> stelle,
-            final Optional<String> organisationseinheit,
-            final Optional<Integer> limit,
-            final Optional<String> bedingungen,
-            final Optional<List<String>> eigenschaften,
+            final String loginName,
+            final String stelle,
+            final String organisationseinheit,
+            final Integer limit,
+            final String bedingungen,
+            final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
         // call
         final RequestContext requestContext = requestContextFactory.create(loginName, organisationseinheit, stelle);
         final SearchResult result = vorgangInPort.searchVorgang(requestContext,
-                limit.orElseThrow(),
-                bedingungen.orElse(null),
-                eigenschaften.map(HashSet::new).orElse(null));
+                limit,
+                bedingungen,
+                Optional.ofNullable(eigenschaften).map(HashSet::new).orElse(null));
         // respond
         final VorgangListeResponse response = VorgangListeResponse.builder()
                 .anzahl(result.results().size())
@@ -51,15 +51,15 @@ public class VorgangController implements VorgangApi {
     @Override
     public ResponseEntity<Vorgang> getVorgang(
             final String vorgangsId,
-            final Optional<String> eakteLoginName,
-            final Optional<String> eakteRolle,
-            final Optional<String> eakteOrganisationseinheit,
-            final Optional<List<String>> eigenschaften,
+            final String eakteLoginName,
+            final String eakteRolle,
+            final String eakteOrganisationseinheit,
+            final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
         final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
         final ResultObject result = vorgangInPort.getVorgang(requestContext,
                 vorgangsId,
-                eigenschaften.map(HashSet::new).orElse(null))
+                Optional.ofNullable(eigenschaften).map(HashSet::new).orElse(null))
                 .orElseThrow(ResourceNotFoundException::new);
         return ResponseEntity.of(Optional.of(vorgangMapper.mapResult(result)));
     }
@@ -67,19 +67,19 @@ public class VorgangController implements VorgangApi {
     @Override
     public ResponseEntity<DokumentListeResponse> searchVorgangsDokumente(
             final String vorgangsId,
-            final Optional<String> eakteLoginName,
-            final Optional<String> eakteRolle,
-            final Optional<String> eakteOrganisationseinheit,
-            final Optional<Integer> limit,
-            final Optional<String> bedingungen,
-            final Optional<List<String>> eigenschaften,
+            final String eakteLoginName,
+            final String eakteRolle,
+            final String eakteOrganisationseinheit,
+            final Integer limit,
+            final String bedingungen,
+            final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
         final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
         final SearchResult result = vorgangInPort.searchVorgangsDokumente(requestContext,
                 vorgangsId,
-                limit.orElseThrow(),
-                bedingungen.orElse(null),
-                eigenschaften.map(HashSet::new).orElse(null));
+                limit,
+                bedingungen,
+                Optional.ofNullable(eigenschaften).map(HashSet::new).orElse(null));
         // respond
         final DokumentListeResponse response = DokumentListeResponse.builder()
                 .anzahl(result.results().size())

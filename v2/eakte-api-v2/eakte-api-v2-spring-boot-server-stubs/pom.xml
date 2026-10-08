@@ -138,7 +138,6 @@
                 <!-- <useOneOfInterfaces>true</useOneOfInterfaces> -->
                 <interfaceOnly>true</interfaceOnly>
                 <hideGenerationTimestamp>true</hideGenerationTimestamp>
-                <useOptional>true</useOptional>
                 <includeHttpRequestContext>true</includeHttpRequestContext>
                 <useTags>true</useTags>
                 <generateBuilders>true</generateBuilders>

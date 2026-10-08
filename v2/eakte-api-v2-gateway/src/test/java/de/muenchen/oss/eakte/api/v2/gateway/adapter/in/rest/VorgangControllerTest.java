@@ -64,7 +64,7 @@ class VorgangControllerTest {
 
         @Test
         void givenSearchParameters_thenForwardContextAndReturnMappedResults() {
-            when(contextFactory.create(eq(Optional.of("login")), eq(Optional.of("ou")), eq(Optional.of("role"))))
+            when(contextFactory.create(eq("login"), eq("ou"), eq("role")))
                     .thenReturn(new RequestContext("login", "ou", "role"));
             final SearchResult result = new SearchResult(List.of(new ResultObject(
                     "procedure-name",
@@ -82,17 +82,17 @@ class VorgangControllerTest {
             when(vorgangInPort.searchVorgang(any(), anyInt(), any(), any())).thenReturn(result);
 
             final VorgangListeResponse response = controller.searchVorgaenge(
-                    Optional.of("login"),
-                    Optional.of("role"),
-                    Optional.of("ou"),
-                    Optional.of(EXAMPLE_LIMIT),
-                    Optional.of("condition"),
-                    Optional.of(List.of("custom.attribute")),
+                    "login",
+                    "role",
+                    "ou",
+                    EXAMPLE_LIMIT,
+                    "condition",
+                    List.of("custom.attribute"),
                     null)
                     .getBody();
 
             final ArgumentCaptor<RequestContext> contextCaptor = ArgumentCaptor.forClass(RequestContext.class);
-            verify(contextFactory).create(eq(Optional.of("login")), eq(Optional.of("ou")), eq(Optional.of("role")));
+            verify(contextFactory).create(eq("login"), eq("ou"), eq("role"));
             verify(vorgangInPort).searchVorgang(
                     contextCaptor.capture(),
                     ArgumentMatchers.eq(EXAMPLE_LIMIT),
@@ -100,58 +100,58 @@ class VorgangControllerTest {
                     ArgumentMatchers.eq(Set.of("custom.attribute")));
             assertEquals(new RequestContext("login", "ou", "role"), contextCaptor.getValue());
             assert response != null;
-            assertEquals(Optional.of(1), response.getAnzahl());
+            assertEquals(1, response.getAnzahl());
             assertEquals("COO.1.2.3", response.getElemente().getFirst().getId());
             assertEquals("file-id", response.getElemente().getFirst().getSachakteId());
             assertEquals("short-name", response.getElemente().getFirst().getName());
-            assertEquals(Optional.of("subject"), response.getElemente().getFirst().getBetreff());
+            assertEquals("subject", response.getElemente().getFirst().getBetreff());
             assertEquals("custom-value",
                     response.getElemente().getFirst().getEigenschaftenMap().get("custom.attribute_0"));
         }
 
         @Test
         void givenNoClientAttributes_thenForwardNullAndReturnEmptyResponse() {
-            when(contextFactory.create(eq(Optional.empty()), eq(Optional.empty()), eq(Optional.empty())))
+            when(contextFactory.create(eq(null), eq(null), eq(null)))
                     .thenReturn(new RequestContext(null, null, null));
             when(vorgangInPort.searchVorgang(any(), anyInt(), any(), isNull())).thenReturn(new SearchResult(List.of()));
 
             final VorgangListeResponse response = controller.searchVorgaenge(
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.empty(),
-                    Optional.of(EXAMPLE_LIMIT),
-                    Optional.of("condition"),
-                    Optional.empty(),
+                    null,
+                    null,
+                    null,
+                    EXAMPLE_LIMIT,
+                    "condition",
+                    null,
                     null)
                     .getBody();
 
-            verify(contextFactory).create(eq(Optional.empty()), eq(Optional.empty()), eq(Optional.empty()));
+            verify(contextFactory).create(eq(null), eq(null), eq(null));
             verify(vorgangInPort).searchVorgang(
                     new RequestContext(null, null, null),
                     EXAMPLE_LIMIT,
                     "condition",
                     null);
             assert response != null;
-            assertEquals(Optional.of(0), response.getAnzahl());
+            assertEquals(0, response.getAnzahl());
             assertEquals(Collections.emptyList(), response.getElemente());
         }
 
         @Test
         void givenSearchFailure_thenPropagateException() {
-            when(contextFactory.create(eq(Optional.of("login")), eq(Optional.of("ou")), eq(Optional.of("role"))))
+            when(contextFactory.create(eq("login"), eq("ou"), eq("role")))
                     .thenReturn(new RequestContext("login", "role", "ou"));
             final RuntimeException failure = new RuntimeException("search failed");
             when(vorgangInPort.searchVorgang(any(), anyInt(), any(), any())).thenThrow(failure);
 
             assertThrows(RuntimeException.class, () -> controller.searchVorgaenge(
-                    Optional.of("login"),
-                    Optional.of("role"),
-                    Optional.of("ou"),
-                    Optional.of(EXAMPLE_LIMIT),
-                    Optional.of("condition"),
-                    Optional.of(List.of("custom.attribute")),
+                    "login",
+                    "role",
+                    "ou",
+                    EXAMPLE_LIMIT,
+                    "condition",
+                    List.of("custom.attribute"),
                     null));
-            verify(contextFactory).create(eq(Optional.of("login")), eq(Optional.of("ou")), eq(Optional.of("role")));
+            verify(contextFactory).create(eq("login"), eq("ou"), eq("role"));
         }
     }
 
@@ -161,7 +161,7 @@ class VorgangControllerTest {
 
         @Test
         void givenSearchParameters_thenForwardContextAndReturnMappedResults() {
-            when(contextFactory.create(eq(Optional.of("login")), eq(Optional.of("ou")), eq(Optional.of("role"))))
+            when(contextFactory.create(eq("login"), eq("ou"), eq("role")))
                     .thenReturn(new RequestContext("login", "ou", "role"));
             final SearchResult result = new SearchResult(List.of(new ResultObject(
                     "document-name",
@@ -181,12 +181,12 @@ class VorgangControllerTest {
 
             final DokumentListeResponse response = controller.searchVorgangsDokumente(
                     "vorgang-id",
-                    Optional.of("login"),
-                    Optional.of("role"),
-                    Optional.of("ou"),
-                    Optional.of(EXAMPLE_LIMIT),
-                    Optional.of("condition"),
-                    Optional.of(List.of("custom.attribute")),
+                    "login",
+                    "role",
+                    "ou",
+                    EXAMPLE_LIMIT,
+                    "condition",
+                    List.of("custom.attribute"),
                     null)
                     .getBody();
 
@@ -197,7 +197,7 @@ class VorgangControllerTest {
                     "condition",
                     Set.of("custom.attribute"));
             assert response != null;
-            assertEquals(Optional.of(1), response.getAnzahl());
+            assertEquals(1, response.getAnzahl());
             assertEquals("COO.2.3.4", response.getElemente().getFirst().getId());
             assertEquals("parent-id", response.getElemente().getFirst().getParent().getId());
             assertEquals("custom-value", response.getElemente().getFirst().getEigenschaftenMap().get("custom.attribute_0"));
@@ -205,20 +205,20 @@ class VorgangControllerTest {
 
         @Test
         void givenNoClientAttributes_thenForwardNullAndReturnEmptyResponse() {
-            when(contextFactory.create(eq(Optional.empty()), eq(Optional.empty()), eq(Optional.empty())))
+            when(contextFactory.create(eq(null), eq(null), eq(null)))
                     .thenReturn(new RequestContext(null, null, null));
             when(vorgangInPort.searchVorgangsDokumente(any(), any(), anyInt(), any(), isNull()))
                     .thenReturn(new SearchResult(List.of()));
 
             final DokumentListeResponse response = controller.searchVorgangsDokumente(
-                    "vorgang-id", Optional.empty(), Optional.empty(), Optional.empty(), Optional.of(EXAMPLE_LIMIT),
-                    Optional.empty(), Optional.empty(), null).getBody();
+                    "vorgang-id", null, null, null, EXAMPLE_LIMIT,
+                    null, null, null).getBody();
 
             verify(vorgangInPort).searchVorgangsDokumente(
                     new RequestContext(null, null, null),
                     "vorgang-id", EXAMPLE_LIMIT, null, null);
             assert response != null;
-            assertEquals(Optional.of(0), response.getAnzahl());
+            assertEquals(0, response.getAnzahl());
             assertEquals(Collections.emptyList(), response.getElemente());
         }
     }
@@ -227,17 +227,17 @@ class VorgangControllerTest {
     class GetVorgang {
         @Test
         void givenVorgangId_thenForwardContextAndReturnMappedResult() {
-            when(contextFactory.create(eq(Optional.of("login")), eq(Optional.of("ou")), eq(Optional.of("role"))))
+            when(contextFactory.create(eq("login"), eq("ou"), eq("role")))
                     .thenReturn(new RequestContext("login", "ou", "role"));
             when(vorgangInPort.getVorgang(any(), any(), any())).thenReturn(
                     Optional.of(vorgangResult()));
 
             final Vorgang response = controller.getVorgang(
                     "COO.1.2.3",
-                    Optional.of("login"),
-                    Optional.of("role"),
-                    Optional.of("ou"),
-                    Optional.of(List.of("custom.attribute")),
+                    "login",
+                    "role",
+                    "ou",
+                    List.of("custom.attribute"),
                     null)
                     .getBody();
 
@@ -251,10 +251,10 @@ class VorgangControllerTest {
 
         @Test
         void givenUnknownVorgangId_thenThrowNotFoundException() {
-            when(vorgangInPort.getVorgang(any(), any(), any())).thenReturn(Optional.empty());
+            when(vorgangInPort.getVorgang(any(), any(), any())).thenReturn(null);
 
             assertThrows(ResourceNotFoundException.class, () -> controller.getVorgang(
-                    "COO.1.2.3", Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(), null));
+                    "COO.1.2.3", null, null, null, null, null));
         }
     }
 

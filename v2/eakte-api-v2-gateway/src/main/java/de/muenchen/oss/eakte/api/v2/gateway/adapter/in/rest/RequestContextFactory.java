@@ -3,8 +3,8 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.ImpersonationForbiddenException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.helper.AuthUtils;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
-import java.util.Optional;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
  * Creates request contexts using the current authentication context.
@@ -20,14 +20,15 @@ public class RequestContextFactory {
      * @return The request context.
      * @throws ImpersonationForbiddenException if an explicit user is requested without permission.
      */
-    public RequestContext create(final Optional<String> userName,
-            final Optional<String> jobOe, final Optional<String> jobPosition) {
-        if (userName.isPresent() && !AuthUtils.canImpersonate()) {
+    public RequestContext create(final String userName,
+            final String jobOe, final String jobPosition) {
+        final boolean usernameSet = StringUtils.hasText(userName);
+        if (usernameSet && !AuthUtils.canImpersonate()) {
             throw new ImpersonationForbiddenException();
         }
         return new RequestContext(
-                userName.orElseGet(AuthUtils::getUsername),
-                jobOe.orElse(null),
-                jobPosition.orElse(null));
+                usernameSet ? userName : AuthUtils.getUsername(),
+                jobOe,
+                jobPosition);
     }
 }
