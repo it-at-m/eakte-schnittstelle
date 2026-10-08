@@ -28,8 +28,8 @@ public interface VorgangMapper {
             attributeList.add(new Attribute(AttributeType.STRING, VorgangAttribute.GESCHAEFTSGANGVERMERK.getReference(), null, request.geschaeftsgangvermerk()));
         }
         if (request.zugriffsdefinitionText() != null) {
-            // TODO map
-            attributeList.add(new Attribute(AttributeType.OBJECT, VorgangAttribute.ZUGRIFFSDEFINITION.getReference(), null, request.zugriffsdefinitionText()));
+            final String zugriffsdefinitionId = ZugriffsdefinitionHelper.textToId(request.zugriffsdefinitionText());
+            attributeList.add(new Attribute(AttributeType.OBJECT, VorgangAttribute.ZUGRIFFSDEFINITION.getReference(), null, zugriffsdefinitionId));
         }
         // TODO laufweg
         // TODO dfv

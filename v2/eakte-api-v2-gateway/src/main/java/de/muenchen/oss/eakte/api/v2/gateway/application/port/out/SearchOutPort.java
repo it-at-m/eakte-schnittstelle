@@ -16,5 +16,5 @@ public interface SearchOutPort {
      * @param request The parameters for the search.
      * @return The search result including the found objects.
      */
-    SearchResult searchObject(@NotNull @Valid RequestContext requestContext, @NotNull @Valid SearchRequest request);
+    SearchResult searchObject(@NotNull RequestContext requestContext, @NotNull @Valid SearchRequest request);
 }
