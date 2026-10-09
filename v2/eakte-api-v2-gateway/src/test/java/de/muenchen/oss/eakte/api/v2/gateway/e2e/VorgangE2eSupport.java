@@ -1,23 +1,11 @@
 package de.muenchen.oss.eakte.api.v2.gateway.e2e;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.post;
-import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
-import static de.muenchen.oss.eakte.api.v2.gateway.TestSecurityConfiguration.USER;
-
-import com.github.tomakehurst.wiremock.client.WireMock;
-import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder;
-
-abstract class VorgangE2eSupport extends AbstractWireMockE2eTest {
+abstract class VorgangE2eSupport extends FabasoftE2eSupport {
     public static final String DFV_ATTRIBUTE = "custom.dfv.attribute";
     private static final String FULL_REFERENCE = "EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:"
             + "availabledefinitions[0].EGOVTEMPLATE@15.1001:definitionuseform."
             + "FSCUSERFORMS@1.1001:releasecategory.COOTC@1.1001:categoryattributes."
             + "COOSYSTEM@1.1:fullreference";
-    private static final String SOAP_CONTENT_TYPE = "text/xml; charset=utf-8";
-    private static final String SOAP_SEARCH_ACTION = "http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPSearch";
 
     protected void stubVorgangResponse() {
         stubSearchRequestContaining("where query", vorgangResponse());
@@ -36,46 +24,6 @@ abstract class VorgangE2eSupport extends AbstractWireMockE2eTest {
         stubSearchRequestContaining("where query", vorgangResponse());
     }
 
-    protected void stubDokumentResponse() {
-        stubSearchRequestContaining("vorgang-id", dokumentResponse());
-    }
-
-    protected void stubSoapFailure() {
-        wireMock.stubFor(post(urlPathEqualTo("/"))
-                .willReturn(aResponse()
-                        .withStatus(500)
-                        .withHeader("Content-Type", SOAP_CONTENT_TYPE)
-                        .withBody(soapFault())));
-    }
-
-    protected void verifySearchRequest(final String query, final String attribute, final boolean impersonate) {
-        RequestPatternBuilder pattern = postRequestedFor(urlPathEqualTo("/"))
-                .withHeader("SOAPAction", WireMock.containing(SOAP_SEARCH_ACTION))
-                .withRequestBody(WireMock.containing(query))
-                .withRequestBody(WireMock.containing(attribute));
-        if (impersonate) {
-            pattern = pattern
-                    .withHeader("X-FSC-Authenticated-User", equalTo("login"))
-                    .withQueryParam("px", equalTo("role"))
-                    .withQueryParam("gx", equalTo("ou"));
-        } else {
-            pattern = pattern
-                    .withHeader("X-FSC-Authenticated-User", equalTo(USER))
-                    .withoutQueryParam("px")
-                    .withoutQueryParam("gx");
-        }
-        wireMock.verify(pattern);
-    }
-
-    private void stubSearchRequestContaining(final String query, final String response) {
-        wireMock.stubFor(post(urlPathEqualTo("/"))
-                .withRequestBody(WireMock.containing(query))
-                .willReturn(aResponse()
-                        .withStatus(200)
-                        .withHeader("Content-Type", SOAP_CONTENT_TYPE)
-                        .withBody(response)));
-    }
-
     private String vorgangResponse() {
         return soapEnvelope("""
                 <urn:SOAPSearchResponse>
@@ -92,6 +40,7 @@ abstract class VorgangE2eSupport extends AbstractWireMockE2eTest {
                         <urn:STRING urn:reference="FSCFOLIO@1.1001:objaccdef.name" urn:index="1">acl</urn:STRING>
                         <urn:STRING urn:reference="COOSYSTEM@1.1:objowngroup.name" urn:index="1">ou</urn:STRING>
                         <urn:ENUM urn:reference="COOELAK@1.1001:filetype" urn:index="1">1</urn:ENUM>
+                        <urn:STRING urn:reference="COOELAK@1.1001:inchargeremark" urn:index="1">remark</urn:STRING>
                         <urn:STRING urn:reference="custom.attribute" urn:index="1">custom-value</urn:STRING>
                       </urn:attrlist>
                     </urn:object>
@@ -116,30 +65,6 @@ abstract class VorgangE2eSupport extends AbstractWireMockE2eTest {
                 """.formatted(FULL_REFERENCE, DFV_ATTRIBUTE));
     }
 
-    private String dokumentResponse() {
-        return soapEnvelope(
-                """
-                        <urn:SOAPSearchResponse>
-                          <urn:queryresult>
-                            <urn:object>
-                              <urn:objname>document-name</urn:objname>
-                              <urn:objaddress>COO.2.3.4</urn:objaddress>
-                              <urn:attrlist>
-                                <urn:STRING urn:reference="COOSYSTEM@1.1:objclass.COOSYSTEM@1.1:fullreference" urn:index="1">COOELAK@1.1001:Incoming</urn:STRING>
-                                <urn:OBJECT urn:reference="COOELAK@1.1001:referrednumber" urn:index="1">parent-id</urn:OBJECT>
-                                <urn:STRING urn:reference="COOELAK@1.1001:referrednumber.objclass.fullreference" urn:index="1">DEPRECONFIG@15.1001:Procedure</urn:STRING>
-                                <urn:STRING urn:reference="COOELAK@1.1001:objmlname.langstring" urn:index="1">short-name</urn:STRING>
-                                <urn:STRING urn:reference="COOELAK@1.1001:filesubj" urn:index="1">subject</urn:STRING>
-                                <urn:STRING urn:reference="FSCFOLIO@1.1001:objaccdef.name" urn:index="1">acl</urn:STRING>
-                                <urn:STRING urn:reference="COOSYSTEM@1.1:objowngroup.name" urn:index="1">ou</urn:STRING>
-                                <urn:STRING urn:reference="custom.attribute" urn:index="1">custom-value</urn:STRING>
-                              </urn:attrlist>
-                            </urn:object>
-                          </urn:queryresult>
-                        </urn:SOAPSearchResponse>
-                        """);
-    }
-
     private String emptySearchResponse() {
         return soapEnvelope("""
                 <urn:SOAPSearchResponse>
@@ -148,31 +73,4 @@ abstract class VorgangE2eSupport extends AbstractWireMockE2eTest {
                 """);
     }
 
-    private String soapEnvelope(final String body) {
-        return """
-                <?xml version="1.0" encoding="UTF-8"?>
-                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                        xmlns:urn="urn:schemas-fabasoft-com:bai:search">
-                  <soapenv:Body>%s</soapenv:Body>
-                </soapenv:Envelope>
-                """.formatted(body);
-    }
-
-    private String soapFault() {
-        return """
-                <?xml version="1.0" encoding="UTF-8"?>
-                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                        xmlns:fs="http://schemas.fabasoft.com/faultdetails">
-                  <soapenv:Body>
-                    <soapenv:Fault>
-                      <faultcode>soapenv:Server</faultcode>
-                      <faultstring>Fabasoft service failure</faultstring>
-                      <detail>
-                        <fs:ErrorReference>TEST_ERROR</fs:ErrorReference>
-                      </detail>
-                    </soapenv:Fault>
-                  </soapenv:Body>
-                </soapenv:Envelope>
-                """;
-    }
 }

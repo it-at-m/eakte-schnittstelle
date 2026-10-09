@@ -23,7 +23,14 @@ public record SearchRequest(
      * @return The request with the concat query.
      */
     public SearchRequest concatQuery(final String query) {
-        final String newQuery = StringUtils.hasText(query) ? "(%s) AND (%s)".formatted(this.query, query) : this.query;
+        final String newQuery;
+        if (StringUtils.hasText(this.query) && StringUtils.hasText(query)) {
+            newQuery = "(%s) AND (%s)".formatted(this.query, query);
+        } else if (StringUtils.hasText(this.query)) {
+            return this;
+        } else {
+            newQuery = query;
+        }
         return new SearchRequest(limit, newQuery, attributes);
     }
 }

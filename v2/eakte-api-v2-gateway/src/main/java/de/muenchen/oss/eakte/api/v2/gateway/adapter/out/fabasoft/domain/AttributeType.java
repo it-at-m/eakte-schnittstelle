@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 public enum AttributeType {
     STRING(String.class),
     BOOLEAN(Boolean.class),
-    INTEGER(Integer.class),
+    INTEGER(BigInteger.class),
     FLOAT(Float.class),
     DATE(LocalDate.class),
     DATETIME(OffsetDateTime.class),

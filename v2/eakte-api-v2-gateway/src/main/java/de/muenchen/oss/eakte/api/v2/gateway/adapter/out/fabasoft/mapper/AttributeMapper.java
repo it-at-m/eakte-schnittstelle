@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 @Component
-class AttributeMapper {
+public class AttributeMapper {
     protected List<Attribute> toDomain(final List<FabasoftAttribute> attributes, final Set<String> exclude) {
         return attributes.stream()
                 .filter(i -> !exclude.contains(i.reference()))

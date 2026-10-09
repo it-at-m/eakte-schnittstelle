@@ -13,16 +13,19 @@ import com.fabasoft.schemas.bai.search.OBJECTPointerType;
 import com.fabasoft.schemas.bai.search.STRINGType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftAttribute;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.datatype.XMLGregorianCalendar;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 @Mapper
 public abstract class FabasoftSearchMapper {
     private static final String FABASOFT_TYPE = "fabasoftType";
+    public static final String VALUE = "value";
 
     public List<FabasoftAttribute> parseAttributes(final AttrListResultType attrs) {
         final List<FabasoftAttribute> result = new ArrayList<>();
@@ -87,9 +90,11 @@ public abstract class FabasoftSearchMapper {
     protected abstract FabasoftAttribute mapInt(INTEGERType type);
 
     @Mapping(target = FABASOFT_TYPE, constant = "DATE")
+    @Mapping(target = VALUE, source = VALUE, qualifiedByName = "toDate")
     protected abstract FabasoftAttribute mapDate(DATEType type);
 
     @Mapping(target = FABASOFT_TYPE, constant = "DATETIME")
+    @Mapping(target = VALUE, source = VALUE, qualifiedByName = "toDateTime")
     protected abstract FabasoftAttribute mapDatetime(DATETIMEType type);
 
     @Mapping(target = FABASOFT_TYPE, constant = "ENUM")
@@ -101,7 +106,13 @@ public abstract class FabasoftSearchMapper {
     @Mapping(target = FABASOFT_TYPE, constant = "OBJECT")
     protected abstract FabasoftAttribute mapObject(OBJECTPointerType type);
 
-    protected OffsetDateTime mapGregorianCalendar(final XMLGregorianCalendar xmlGregorianCalendar) {
+    @Named("toDate")
+    protected LocalDate toDate(final XMLGregorianCalendar xmlGregorianCalendar) {
+        return toDateTime(xmlGregorianCalendar).toLocalDate();
+    }
+
+    @Named("toDateTime")
+    protected OffsetDateTime toDateTime(final XMLGregorianCalendar xmlGregorianCalendar) {
         return xmlGregorianCalendar.toGregorianCalendar().toZonedDateTime().toOffsetDateTime();
     }
 }
