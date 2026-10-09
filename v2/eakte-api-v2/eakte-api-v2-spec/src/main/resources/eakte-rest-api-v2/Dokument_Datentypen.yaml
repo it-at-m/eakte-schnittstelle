@@ -10,8 +10,7 @@ components:
         - langname
         - zugriffsdefinition
         - organisationseinheit
-        - eigenschaftenMap
-        - eigenschaftenListe
+        - weitereEigenschaften
       properties:
         klasse:
           type: string
@@ -36,10 +35,7 @@ components:
           type: string
         organisationseinheit:
           type: string
-        eigenschaftenMap:
-          type: object
-          additionalProperties: true
-        eigenschaftenListe:
+        weitereEigenschaften:
           type: array
           items:
             $ref: '_SucheDatentypen.yaml#/components/schemas/EigenschaftEintrag'

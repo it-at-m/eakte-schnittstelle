@@ -44,10 +44,10 @@ class VorgangE2ETest extends VorgangE2eSupport {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.anzahl").value(1))
                     .andExpect(jsonPath("$.elemente[0].id").value("COO.1.2.3"))
-                    .andExpect(jsonPath("$.elemente[0].sachakteId").value("file-id"))
+                    .andExpect(jsonPath("$.elemente[0].akteId").value("file-id"))
                     .andExpect(jsonPath("$.elemente[0].name").value("short-name"))
                     .andExpect(jsonPath("$.elemente[0].betreff").value("subject"))
-                    .andExpect(jsonPath("$.elemente[0].eigenschaftenMap['custom.attribute_1']")
+                    .andExpect(jsonPath("$.elemente[0].weitereEigenschaften[?(@.reference=='custom.attribute')].value")
                             .value("custom-value"));
 
             verifySearchRequest("where query", "custom.attribute", true);
@@ -62,7 +62,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
                     .queryParam("bedingungen", "where query"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.anzahl").value(1))
-                    .andExpect(jsonPath("$.elemente[0].eigenschaftenMap['custom.attribute_1']")
+                    .andExpect(jsonPath("$.elemente[0].weitereEigenschaften[?(@.reference=='custom.attribute')].value")
                             .value("custom-value"));
 
             verifySearchRequest("availabledefinitions is not null", "fullreference", false);
@@ -111,7 +111,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").value("COO.1.2.3"))
                     .andExpect(jsonPath("$.name").value("short-name"))
-                    .andExpect(jsonPath("$.eigenschaftenMap['custom.attribute_1']")
+                    .andExpect(jsonPath("$.weitereEigenschaften[?(@.reference=='custom.attribute')].value")
                             .value("custom-value"));
 
             verifySearchRequest("COOSYSTEM@1.1:objaddress", "custom.attribute", true);
@@ -153,7 +153,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
                     .andExpect(jsonPath("$.elemente[0].id").value("COO.2.3.4"))
                     .andExpect(jsonPath("$.elemente[0].parent.id").value("parent-id"))
                     .andExpect(jsonPath("$.elemente[0].name").value("short-name"))
-                    .andExpect(jsonPath("$.elemente[0].eigenschaftenMap['custom.attribute_1']")
+                    .andExpect(jsonPath("$.elemente[0].weitereEigenschaften[?(@.reference=='custom.attribute')].value")
                             .value("custom-value"));
 
             verifySearchRequest("document query", "custom.attribute", true);

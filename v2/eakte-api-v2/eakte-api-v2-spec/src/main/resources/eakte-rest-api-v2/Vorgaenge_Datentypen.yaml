@@ -14,7 +14,7 @@ components:
         Endpunktes, in diesem Fall die Verwendung des Filters 'Schriftgutebene=Vorgang').
       required:
         - id
-        - sachakteId
+        - akteId
         - name
         - langname
         - originalMedium
@@ -22,12 +22,11 @@ components:
         - bearbeitungsstatus
         - zugriffsdefinition
         - organisationseinheit
-        - eigenschaftenMap
-        - eigenschaftenListe
+        - weitereEigenschaften
       properties:
         id:
           type: string
-        sachakteId:
+        akteId:
           type: string
         name:
           type: string
@@ -59,10 +58,7 @@ components:
           type: string
         organisationseinheit:
           type: string
-        eigenschaftenMap:
-          type: object
-          additionalProperties: true
-        eigenschaftenListe:
+        weitereEigenschaften:
           type: array
           items:
             $ref: '_SucheDatentypen.yaml#/components/schemas/EigenschaftEintrag'
