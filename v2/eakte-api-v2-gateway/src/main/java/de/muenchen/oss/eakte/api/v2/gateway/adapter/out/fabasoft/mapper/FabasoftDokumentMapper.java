@@ -58,7 +58,7 @@ public class FabasoftDokumentMapper {
         case EINGANG -> DokumentKlasse.EINGANG;
         case ERLEDIGUNG -> DokumentKlasse.ERLEDIGUNG;
         case INTERN -> DokumentKlasse.INTERN;
-        case null, default  -> throw new IllegalStateException("Unexpected value: " + referenceStr);
+        case null, default -> throw new IllegalStateException("Unexpected value: " + referenceStr);
         };
     }
 }
