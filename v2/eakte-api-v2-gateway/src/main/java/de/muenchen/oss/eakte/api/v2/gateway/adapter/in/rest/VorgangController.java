@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@SuppressWarnings("PMD.UseObjectForClearerAPI")
+@SuppressWarnings({"PMD.UseObjectForClearerAPI", "CPD-START"})
 public class VorgangController implements VorgangApi {
     private final VorgangInPort vorgangInPort;
     private final VorgangMapper vorgangMapper;
