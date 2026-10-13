@@ -32,7 +32,7 @@ class DokumenteE2ETest extends DokumenteE2eSupport {
         void givenAuthenticatedRequest_thenReturnDokumenteAndForwardSoapRequest() throws Exception {
             stubDokumentResponse();
 
-            mockMvc.perform(get("/api/v2/vorgaenge/vorgang-id/dokumente")
+            mockMvc.perform(get("/api/v2/vorgaenge/COO123.123.123/dokumente")
                     .header("Authorization", "Bearer %s".formatted(USER_IMPERSONATE))
                     .header("EAkte-Login-Name", "login")
                     .header("EAkte-Rolle", "role")
@@ -44,7 +44,7 @@ class DokumenteE2ETest extends DokumenteE2eSupport {
                     .andExpect(jsonPath("$.anzahl").value(1))
                     .andExpect(jsonPath("$.elemente[0].id").value("COO.2.3.4"))
                     .andExpect(jsonPath("$.elemente[0].klasse").value("Eingang"))
-                    .andExpect(jsonPath("$.elemente[0].parent.id").value("parent-id"))
+                    .andExpect(jsonPath("$.elemente[0].parent.id").value("COO123.123.123"))
                     .andExpect(jsonPath("$.elemente[0].parent.type").value("Vorgang"))
                     .andExpect(jsonPath("$.elemente[0].name").value("short-name"))
                     .andExpect(jsonPath("$.elemente[0].langname").value("document-name"))
