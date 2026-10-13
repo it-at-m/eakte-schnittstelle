@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class FabasoftVorgangMapper {
+public class FabasoftVorgangResponseMapper {
     private final AttributeMapper attributeMapper;
 
     public List<VorgangResponse> toDomain(final List<ResultObject> results) {

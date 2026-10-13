@@ -5,6 +5,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.application.port.in.VorgangInPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.DfvOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.VorgangOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper.DfvHelper;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
@@ -32,5 +33,10 @@ public class VorgangUseCase implements VorgangInPort {
     public Optional<VorgangResponse> get(final RequestContext context, final String vorgangsId, final Set<String> attributes) {
         final Set<String> updatedAttrs = attributes.isEmpty() ? dfvOutPort.loadDfVAttributes(context, FabasoftObjectType.VORGANG) : attributes;
         return vorgangOutPort.get(context, vorgangsId, updatedAttrs);
+    }
+
+    @Override
+    public String createAkteVorgang(final RequestContext requestContext, final CreateVorgangRequest vorgang) {
+        return vorgangOutPort.createAkteVorgang(requestContext, vorgang);
     }
 }
