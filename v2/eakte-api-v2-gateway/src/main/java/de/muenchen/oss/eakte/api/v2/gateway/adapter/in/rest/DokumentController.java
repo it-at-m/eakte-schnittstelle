@@ -19,7 +19,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 @RequiredArgsConstructor
-@SuppressWarnings({"PMD.UseObjectForClearerAPI", "CPD-START"})
+@SuppressWarnings({ "PMD.UseObjectForClearerAPI", "CPD-START" })
 public class DokumentController implements DokumentApi {
     private final RequestContextFactory requestContextFactory;
     private final DokumentInPort dokumentInPort;
