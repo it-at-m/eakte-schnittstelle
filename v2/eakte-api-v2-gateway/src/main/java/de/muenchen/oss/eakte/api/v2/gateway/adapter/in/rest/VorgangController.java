@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.Nullable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -29,15 +30,15 @@ public class VorgangController implements VorgangApi {
 
     @Override
     public ResponseEntity<VorgangListeResponse> searchVorgaenge(
-            final String loginName,
-            final String stelle,
-            final String organisationseinheit,
+            @Nullable final String eakteLoginName,
+            @Nullable final String eakteRolle,
+            @Nullable final String eakteOrganisationseinheit,
             final Integer limit,
-            final String bedingungen,
+            @Nullable final String bedingungen,
             final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
         // call
-        final RequestContext requestContext = requestContextFactory.create(loginName, organisationseinheit, stelle);
+        final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
         final SearchRequest request = SearchRequest.builder()
                 .limit(limit)
                 .query(bedingungen)
@@ -54,9 +55,9 @@ public class VorgangController implements VorgangApi {
     @Override
     public ResponseEntity<Vorgang> getVorgang(
             final String vorgangsId,
-            final String eakteLoginName,
-            final String eakteRolle,
-            final String eakteOrganisationseinheit,
+            @Nullable final String eakteLoginName,
+            @Nullable final String eakteRolle,
+            @Nullable final String eakteOrganisationseinheit,
             final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
         final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);

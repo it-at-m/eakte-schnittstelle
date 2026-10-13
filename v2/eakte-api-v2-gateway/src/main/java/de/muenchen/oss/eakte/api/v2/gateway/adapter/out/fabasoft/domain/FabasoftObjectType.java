@@ -22,6 +22,12 @@ public enum FabasoftObjectType {
     private final String fabasoftReference;
     private final String coo;
 
+    /**
+     * Find {@link FabasoftObjectType} by {@link FabasoftObjectType#fabasoftReference}.
+     *
+     * @param fabasoftReference The reference to find.
+     * @return If found the {@link FabasoftObjectType}, else {@code null}.
+     */
     public static FabasoftObjectType fromFabasoftReference(final String fabasoftReference) {
         return Arrays.stream(values())
                 .filter(i -> i.fabasoftReference.equals(fabasoftReference))

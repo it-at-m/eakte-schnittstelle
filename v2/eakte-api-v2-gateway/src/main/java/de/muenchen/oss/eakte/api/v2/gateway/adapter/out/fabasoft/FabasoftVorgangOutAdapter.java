@@ -10,13 +10,12 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.helper.AttributeHelper;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +39,10 @@ public class FabasoftVorgangOutAdapter implements VorgangOutPort {
         return result.map(vorgangMapper::toDomain);
     }
 
-    public static String getParentQuery(@NotBlank @Pattern(regexp = FabasoftObjectType.COO_PATTERN) final String id) {
+    public static String getParentQuery(final String id) {
+        if (!StringUtils.hasText(id) || !id.matches(FabasoftObjectType.COO_PATTERN)) {
+            throw new IllegalArgumentException("Invalid id: " + id);
+        }
         return PARENT_QUERY.formatted(id);
     }
 }

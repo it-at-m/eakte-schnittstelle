@@ -39,12 +39,12 @@ public class FabasoftDokumentMapper {
     }
 
     private ParentReference<DokumentParent> mapParent(final Map<String, List<Object>> referenceValueMap) {
-        final String referenceStr = attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.PARENT_TYPE.getReference(), String.class).orElseThrow();
+        final String referenceStr = attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.PARENT_TYPE.getReference(), String.class).orElse(null);
         final FabasoftObjectType fabasoftType = FabasoftObjectType.fromFabasoftReference(referenceStr);
         final DokumentParent type = switch (fabasoftType) {
         case VORGANG -> DokumentParent.VORGANG;
         // TODO Inbox & Arbeitsvorrat
-        default -> throw new IllegalArgumentException("Unknown object type: " + fabasoftType);
+        case null, default -> throw new IllegalStateException("Unknown object type: " + fabasoftType);
         };
         return new ParentReference<>(
                 type,
@@ -52,13 +52,13 @@ public class FabasoftDokumentMapper {
     }
 
     private DokumentKlasse mapKlasse(final Map<String, List<Object>> referenceValueMap) {
-        final String referenceStr = attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.KLASSE.getReference(), String.class).orElseThrow();
+        final String referenceStr = attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.KLASSE.getReference(), String.class).orElse(null);
         final FabasoftObjectType fabasoftType = FabasoftObjectType.fromFabasoftReference(referenceStr);
         return switch (fabasoftType) {
         case EINGANG -> DokumentKlasse.EINGANG;
         case ERLEDIGUNG -> DokumentKlasse.ERLEDIGUNG;
         case INTERN -> DokumentKlasse.INTERN;
-        default -> throw new IllegalStateException("Unexpected value: " + referenceStr);
+        case null, default  -> throw new IllegalStateException("Unexpected value: " + referenceStr);
         };
     }
 }

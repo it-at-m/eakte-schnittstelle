@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.Nullable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
@@ -27,11 +28,11 @@ public class DokumentController implements DokumentApi {
     @Override
     public ResponseEntity<DokumentListeResponse> searchVorgangsDokumente(
             final String vorgangsId,
-            final String eakteLoginName,
-            final String eakteRolle,
-            final String eakteOrganisationseinheit,
+            @Nullable final String eakteLoginName,
+            @Nullable final String eakteRolle,
+            @Nullable final String eakteOrganisationseinheit,
             final Integer limit,
-            final String bedingungen,
+            @Nullable final String bedingungen,
             final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
         final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
