@@ -63,7 +63,7 @@ public class VorgangController implements VorgangApi {
         final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
         final VorgangResponse result = vorgangInPort.get(requestContext,
                 vorgangsId,
-                Optional.ofNullable(eigenschaften).map(HashSet::new).orElse(null))
+                eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of())
                 .orElseThrow(ResourceNotFoundException::new);
         return ResponseEntity.of(Optional.of(vorgangMapper.fromDomain(result)));
     }
