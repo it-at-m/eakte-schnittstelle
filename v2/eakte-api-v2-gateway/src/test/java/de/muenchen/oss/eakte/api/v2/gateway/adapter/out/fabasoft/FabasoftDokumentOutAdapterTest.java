@@ -1,6 +1,7 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
@@ -54,7 +55,8 @@ class FabasoftDokumentOutAdapterTest {
         assertEquals(REQUEST.limit(), forwardedRequest.limit());
         assertEquals("(where) AND (.COOELAK@1.1001:referrednumber.COOSYSTEM@1.1:objaddress = 'COO.1.2.3')",
                 forwardedRequest.query());
-        assertEquals(REQUEST.attributes(), forwardedRequest.attributes());
+        assertTrue(forwardedRequest.attributes().containsAll(REQUEST.attributes()));
+        assertTrue(forwardedRequest.attributes().containsAll(DokumentAttribute.getReferences()));
     }
 
     @Test

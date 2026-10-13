@@ -1,5 +1,6 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft;
 
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.DokumentAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftDokumentMapper;
@@ -21,8 +22,10 @@ public class FabasoftDokumentOutAdapter implements DokumentOutPort {
     @Override
     public List<DokumentResponse> searchBellowVorgang(final RequestContext context, final String vorgangsId, final SearchRequest request) {
         final String vorgangParentQuery = FabasoftVorgangOutAdapter.getParentQuery(vorgangsId);
-        final SearchRequest scopedRequest = request.concatQuery(vorgangParentQuery);
-        final List<ResultObject> result = searchService.searchObject(context, FabasoftObjectType.DOKUMENT, scopedRequest);
+        final SearchRequest enrichedRequest = request
+                .addAttributes(DokumentAttribute.getReferences())
+                .concatQuery(vorgangParentQuery);
+        final List<ResultObject> result = searchService.searchObject(context, FabasoftObjectType.DOKUMENT, enrichedRequest);
         return dokumentMapper.toDomain(result);
     }
 }

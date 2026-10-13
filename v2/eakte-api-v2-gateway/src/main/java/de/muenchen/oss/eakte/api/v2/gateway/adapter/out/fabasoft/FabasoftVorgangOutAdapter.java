@@ -27,8 +27,8 @@ public class FabasoftVorgangOutAdapter implements VorgangOutPort {
 
     @Override
     public List<VorgangResponse> search(final RequestContext context, final SearchRequest request) {
-        final SearchRequest requestWithDefaultAttrs = request.addAttributes(VorgangAttribute.getReferences());
-        final List<ResultObject> result = searchService.searchObject(context, FabasoftObjectType.VORGANG, requestWithDefaultAttrs);
+        final SearchRequest enrichedRequest = request.addAttributes(VorgangAttribute.getReferences());
+        final List<ResultObject> result = searchService.searchObject(context, FabasoftObjectType.VORGANG, enrichedRequest);
         return vorgangMapper.toDomain(result);
     }
 
