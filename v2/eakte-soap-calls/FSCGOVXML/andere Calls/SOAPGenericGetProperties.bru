@@ -1,13 +1,16 @@
 meta {
   name: SOAPGenericGetProperties
   type: http
-  seq: 23
 }
 
 post {
-  url: https://eakte26-k2.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  url: https://eakte26-k2-authldap.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
   body: xml
-  auth: none
+  auth: inherit
+}
+
+params:query {
+  WEBSVC: FSCGOVXML_1_1001_DefaultWebServiceDefinition
 }
 
 headers {
@@ -16,5 +19,13 @@ headers {
 }
 
 body:xml {
-  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><object>string</object></soap:Body></soap:Envelope>
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fsc="http://schemas.fabasoft.com/websvc/FSCGOVXML_1_1001_DefaultWebServiceDefinition/" xmlns:urn="urn:schemas-fabasoft-com:universal">
+      <soap:Body>
+        <urn:object>
+           <urn:objaddress>COO.2150.8801.2.1316246</urn:objaddress>
+           <urn:attrlist>
+           </urn:attrlist>
+        </urn:object>
+      </soap:Body>
+  </soap:Envelope>
 }

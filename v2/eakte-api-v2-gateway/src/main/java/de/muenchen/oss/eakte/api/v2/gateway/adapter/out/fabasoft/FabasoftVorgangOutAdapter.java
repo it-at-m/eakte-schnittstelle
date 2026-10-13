@@ -1,5 +1,6 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft;
 
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.SubFileRequest;
@@ -49,9 +50,12 @@ public class FabasoftVorgangOutAdapter implements VorgangOutPort {
 
     @Override
     public String createAkteVorgang(final RequestContext requestContext, final CreateVorgangRequest vorgang) {
+        // map und validate request
         final SubFileRequest subFileRequest = vorgangRequestMapper.fromDomain(vorgang);
+        final List<FabasoftAttribute> separateAttributes = vorgangRequestMapper.toAttributeList(vorgang);
+        // make calls
         final String vorgangsId = subFileService.createSubFile(requestContext, subFileRequest);
-        attributeService.setAttributes(requestContext, vorgangsId, vorgangRequestMapper.toAttributeList(vorgang));
+        attributeService.setAttributes(requestContext, vorgangsId, separateAttributes);
         return vorgangsId;
     }
 

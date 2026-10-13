@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class FabasoftDokumentMapper {
     private final AttributeMapper attributeMapper;
+    private final DefaultAttributeMapper defaultAttributeMapper;
 
     public List<DokumentResponse> toDomain(final List<ResultObject> results) {
         return results.stream().map(this::toDomain).toList();
@@ -31,7 +32,9 @@ public class FabasoftDokumentMapper {
                 .name(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.NAME.getReference(), String.class).orElseThrow())
                 .betreff(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.BETREFF.getReference(), String.class).orElse(null))
                 .zugriffsdefinition(
+                        defaultAttributeMapper.zugriffsdefinitionToText(
                         attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ZUGRIFFSDEFINITION.getReference(), String.class).orElseThrow())
+                )
                 .organisationseinheit(
                         attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ORGANISATIONSEINHEIT.getReference(), String.class).orElseThrow())
                 .weitereEigenschaften(attributeMapper.toDomain(result.attributes(), DokumentAttribute.getReferences()))

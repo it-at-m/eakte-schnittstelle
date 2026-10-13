@@ -1,0 +1,32 @@
+meta {
+  name: Create - SOAPCreateSubFile
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://eakte26-k2.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCGOVXML_1_1001_SOAPCreateSubFile
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Body>
+          <CreateSubFileRequest>
+              <objclass>string</objclass>
+              <!-- Akte -->
+              <referrednumber>COO.2150.8801.2.1316200</referrednumber>
+              <objmlname>test</objmlname>
+              <filesubj>betreff</filesubj>
+              <!-- Vorlage (e.g. DfV ID) -->
+              <createdfromdefinition>COO.2150.8801.2.1200657</createdfromdefinition>
+          </CreateSubFileRequest>
+      </soap:Body>
+  </soap:Envelope>
+}

@@ -26,6 +26,10 @@ import org.springframework.stereotype.Component;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 
+/**
+ * Mapper between generic domain and fabasoft attributes.
+ * Shouldn't contain any object specific mappings.
+ */
 @Component
 public class AttributeMapper {
     protected List<Attribute> toDomain(final List<FabasoftAttribute> attributes, final Set<String> exclude) {

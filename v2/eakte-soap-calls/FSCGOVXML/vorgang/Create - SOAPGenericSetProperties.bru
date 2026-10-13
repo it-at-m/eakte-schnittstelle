@@ -1,0 +1,30 @@
+meta {
+  name: Create - SOAPGenericSetProperties
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://eakte26-k2.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: none
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPGenericSetProperties
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Body>
+          <OBJECT>
+              <objaddress></objaddress>
+              <ENUM reference="COOELAK@1.1001:filetype">2</ENUM>
+              <STRING reference="COOELAK@1.1001:inchargeremark">Geschaeftsgangvermerk Test</STRING>
+              <!-- Eigener Mandant -->
+              <OBJECT reference="FSCFOLIO@1.1001:objaccdef">COO.15.1400.1.101007</OBJECT>
+          </OBJECT>
+      </soap:Body>
+  </soap:Envelope>
+}

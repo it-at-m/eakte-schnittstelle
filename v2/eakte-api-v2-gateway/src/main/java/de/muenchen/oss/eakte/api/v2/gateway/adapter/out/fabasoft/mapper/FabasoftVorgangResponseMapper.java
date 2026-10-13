@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class FabasoftVorgangResponseMapper {
     private final AttributeMapper attributeMapper;
+    private final DefaultAttributeMapper defaultAttributeMapper;
 
     public List<VorgangResponse> toDomain(final List<ResultObject> results) {
         return results.stream().map(this::toDomain).toList();
@@ -35,7 +36,8 @@ public class FabasoftVorgangResponseMapper {
                 .bearbeitungsstatus(
                         attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.BEARBEITUNGSSTATUS.getReference(), String.class).orElseThrow())
                 .zugriffsdefinition(
-                        attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.ZUGRIFFSDEFINITION.getReference(), String.class).orElse(null))
+                        defaultAttributeMapper.zugriffsdefinitionToText(
+                        attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.ZUGRIFFSDEFINITION.getReference(), String.class).orElse(null)))
                 .organisationseinheit(
                         attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.ORGANISATIONSEINHEIT.getReference(), String.class).orElseThrow())
                 .weitereEigenschaften(attributeMapper.toDomain(result.attributes(), VorgangAttribute.getReferences()))

@@ -8,18 +8,26 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangMedium;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 @Mapper
-public interface FabasoftVorgangRequestMapper {
+public abstract class FabasoftVorgangRequestMapper {
+    private DefaultAttributeMapper defaultAttributeMapper;
+
+    @Autowired
+    public void setDefaultAttributeMapper(final DefaultAttributeMapper defaultAttributeMapper) {
+        this.defaultAttributeMapper = defaultAttributeMapper;
+    }
+
     @Mapping(source = "aktenId", target = "referredId")
     @Mapping(target = "type", constant = "VORGANG")
-    SubFileRequest fromDomain(CreateVorgangRequest request);
+    public abstract SubFileRequest fromDomain(CreateVorgangRequest request);
 
-    default List<FabasoftAttribute> toAttributeList(final CreateVorgangRequest request) {
+    public List<FabasoftAttribute> toAttributeList(final CreateVorgangRequest request) {
         final List<FabasoftAttribute> attributeList = new ArrayList<>();
         if (request.originalMedium() != null) {
             attributeList.add(new FabasoftAttribute(AttributeType.ENUM, VorgangAttribute.ORIGINAL_MEDIUM.getReference(), null, mapOriginalMedium(request.originalMedium())));
@@ -28,15 +36,15 @@ public interface FabasoftVorgangRequestMapper {
             attributeList.add(new FabasoftAttribute(AttributeType.STRING, VorgangAttribute.GESCHAEFTSGANGVERMERK.getReference(), null, request.geschaeftsgangvermerk()));
         }
         if (request.zugriffsdefinition() != null) {
-            // TODO map
-            attributeList.add(new FabasoftAttribute(AttributeType.OBJECT, VorgangAttribute.ZUGRIFFSDEFINITION.getReference(), null, request.zugriffsdefinition()));
+            final String zugriffsdefinitionId = defaultAttributeMapper.zugriffsdefinitionToId(request.zugriffsdefinition());
+            attributeList.add(new FabasoftAttribute(AttributeType.OBJECT, VorgangAttribute.ZUGRIFFSDEFINITION.getReference(), null, zugriffsdefinitionId));
         }
         // TODO laufweg
         // TODO dfv
         return attributeList;
     }
 
-    default BigInteger mapOriginalMedium(VorgangMedium  vorgangMedium) {
+    private BigInteger mapOriginalMedium(VorgangMedium  vorgangMedium) {
         return switch (vorgangMedium) {
             case ELEKTRONISCH -> BigInteger.valueOf(1);
             case PAPIER -> BigInteger.valueOf(2);
