@@ -12,6 +12,6 @@ public record CreateVorgangRequest(
         boolean laufwegErzeugen,
         String geschaeftsgangvermerk,
         String zugriffsdefinition
-        // TODO dfv
+// TODO dfv
 ) {
 }

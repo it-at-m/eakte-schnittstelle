@@ -2,6 +2,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftTestFixtures;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
@@ -16,7 +17,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class FabasoftVorgangMapperTest {
-    private final FabasoftVorgangResponseMapper mapper = new FabasoftVorgangResponseMapper(new AttributeMapper());
+    private final FabasoftVorgangResponseMapper mapper = FabasoftTestFixtures.vorgangResponseMapper();
 
     @Test
     void givenResultObject_thenMapVorgang() {
@@ -26,7 +27,7 @@ class FabasoftVorgangMapperTest {
                 attribute(VorgangAttribute.BETREFF, "subject"),
                 attribute(VorgangAttribute.STATUS, BigInteger.valueOf(30)),
                 attribute(VorgangAttribute.BEARBEITUNGSSTATUS, "processing"),
-                attribute(VorgangAttribute.ZUGRIFFSDEFINITION, "access"),
+                attribute(VorgangAttribute.ZUGRIFFSDEFINITION, FabasoftTestFixtures.ACCESS_DEFINITION_ID),
                 attribute(VorgangAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(VorgangAttribute.ORIGINAL_MEDIUM, BigInteger.valueOf(2)),
                 attribute(VorgangAttribute.GESCHAEFTSGANGVERMERK, "remark"),
@@ -43,7 +44,7 @@ class FabasoftVorgangMapperTest {
         assertEquals(VorgangMedium.PAPIER, mapped.originalMedium());
         assertEquals(VorgangStatus.ABGESCHLOSSEN, mapped.status());
         assertEquals("processing", mapped.bearbeitungsstatus());
-        assertEquals("access", mapped.zugriffsdefinition());
+        assertEquals(FabasoftTestFixtures.ACCESS_DEFINITION_TEXT, mapped.zugriffsdefinition());
         assertEquals("ou", mapped.organisationseinheit());
         assertEquals(List.of(new Attribute("custom", "value")), mapped.weitereEigenschaften());
     }

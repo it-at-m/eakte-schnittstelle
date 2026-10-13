@@ -5,6 +5,7 @@ public class DmsException extends RuntimeException {
     public DmsException(final String message, final Throwable cause) {
         super(message, cause);
     }
+
     public DmsException(final String message) {
         super(message);
     }

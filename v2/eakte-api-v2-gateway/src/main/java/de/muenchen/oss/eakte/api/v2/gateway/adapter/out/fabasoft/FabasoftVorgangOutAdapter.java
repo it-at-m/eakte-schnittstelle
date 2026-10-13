@@ -54,6 +54,7 @@ public class FabasoftVorgangOutAdapter implements VorgangOutPort {
         final SubFileRequest subFileRequest = vorgangRequestMapper.fromDomain(vorgang);
         final List<FabasoftAttribute> separateAttributes = vorgangRequestMapper.toAttributeList(vorgang);
         // make calls
+        // TODO transaction
         final String vorgangsId = subFileService.createSubFile(requestContext, subFileRequest);
         attributeService.setAttributes(requestContext, vorgangsId, separateAttributes);
         return vorgangsId;

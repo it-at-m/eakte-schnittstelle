@@ -17,5 +17,6 @@ public interface VorgangInPort {
     List<VorgangResponse> search(@NotNull RequestContext context, @NotNull @Valid SearchRequest request);
 
     Optional<VorgangResponse> get(@NotNull RequestContext context, @NotBlank String vorgangsId, @NotNull Set<String> attributes);
+
     String createAkteVorgang(@NotNull RequestContext requestContext, @NotNull @Valid CreateVorgangRequest vorgang);
 }

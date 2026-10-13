@@ -28,6 +28,7 @@ public class FabasoftProperties {
     public record MappingEntry(
             @NotBlank String text,
             @NotBlank String id
-            // TODO readonly?
-    ){}
+    // TODO readonly?
+    ) {
+    }
 }

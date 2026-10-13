@@ -6,13 +6,12 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.SubFileR
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.VorgangAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangMedium;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper
 public abstract class FabasoftVorgangRequestMapper {
@@ -30,10 +29,12 @@ public abstract class FabasoftVorgangRequestMapper {
     public List<FabasoftAttribute> toAttributeList(final CreateVorgangRequest request) {
         final List<FabasoftAttribute> attributeList = new ArrayList<>();
         if (request.originalMedium() != null) {
-            attributeList.add(new FabasoftAttribute(AttributeType.ENUM, VorgangAttribute.ORIGINAL_MEDIUM.getReference(), null, mapOriginalMedium(request.originalMedium())));
+            attributeList.add(new FabasoftAttribute(AttributeType.ENUM, VorgangAttribute.ORIGINAL_MEDIUM.getReference(), null,
+                    mapOriginalMedium(request.originalMedium())));
         }
         if (request.geschaeftsgangvermerk() != null) {
-            attributeList.add(new FabasoftAttribute(AttributeType.STRING, VorgangAttribute.GESCHAEFTSGANGVERMERK.getReference(), null, request.geschaeftsgangvermerk()));
+            attributeList.add(
+                    new FabasoftAttribute(AttributeType.STRING, VorgangAttribute.GESCHAEFTSGANGVERMERK.getReference(), null, request.geschaeftsgangvermerk()));
         }
         if (request.zugriffsdefinition() != null) {
             final String zugriffsdefinitionId = defaultAttributeMapper.zugriffsdefinitionToId(request.zugriffsdefinition());
@@ -44,11 +45,11 @@ public abstract class FabasoftVorgangRequestMapper {
         return attributeList;
     }
 
-    private BigInteger mapOriginalMedium(VorgangMedium  vorgangMedium) {
+    private BigInteger mapOriginalMedium(final VorgangMedium vorgangMedium) {
         return switch (vorgangMedium) {
-            case ELEKTRONISCH -> BigInteger.valueOf(1);
-            case PAPIER -> BigInteger.valueOf(2);
-            case HYBRID -> BigInteger.valueOf(3);
+        case ELEKTRONISCH -> BigInteger.valueOf(1);
+        case PAPIER -> BigInteger.valueOf(2);
+        case HYBRID -> BigInteger.valueOf(3);
         };
     }
 }

@@ -37,7 +37,8 @@ public class FabasoftVorgangResponseMapper {
                         attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.BEARBEITUNGSSTATUS.getReference(), String.class).orElseThrow())
                 .zugriffsdefinition(
                         defaultAttributeMapper.zugriffsdefinitionToText(
-                        attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.ZUGRIFFSDEFINITION.getReference(), String.class).orElse(null)))
+                                attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.ZUGRIFFSDEFINITION.getReference(), String.class)
+                                        .orElse(null)))
                 .organisationseinheit(
                         attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.ORGANISATIONSEINHEIT.getReference(), String.class).orElseThrow())
                 .weitereEigenschaften(attributeMapper.toDomain(result.attributes(), VorgangAttribute.getReferences()))

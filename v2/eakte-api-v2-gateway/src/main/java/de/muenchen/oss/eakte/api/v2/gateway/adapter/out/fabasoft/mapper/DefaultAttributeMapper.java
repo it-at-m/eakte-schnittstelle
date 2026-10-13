@@ -23,7 +23,9 @@ public class DefaultAttributeMapper {
      * @return The text of the found Zugriffsdefinition or {@link #UNKNOWN_ZUGRIFFSDEFINITION}.
      */
     public String zugriffsdefinitionToText(final String id) {
-        if (!StringUtils.hasText(id)) {return null;}
+        if (!StringUtils.hasText(id)) {
+            return null;
+        }
         return fabasoftProperties.getZugriffsdefinitionen().stream()
                 .filter(i -> i.id().equals(id))
                 .map(FabasoftProperties.MappingEntry::text)
@@ -38,7 +40,9 @@ public class DefaultAttributeMapper {
      * @throws BadInputException If no Zugriffsdefinition with that text exists.
      */
     public String zugriffsdefinitionToId(final String text) {
-        if (!StringUtils.hasText(text)) {return null;}
+        if (!StringUtils.hasText(text)) {
+            return null;
+        }
         return fabasoftProperties.getZugriffsdefinitionen().stream()
                 .filter(i -> i.text().equals(text))
                 .map(FabasoftProperties.MappingEntry::id)

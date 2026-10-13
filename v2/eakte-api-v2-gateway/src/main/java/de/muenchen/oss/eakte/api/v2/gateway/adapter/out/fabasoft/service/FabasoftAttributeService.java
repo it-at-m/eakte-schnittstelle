@@ -7,13 +7,11 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftRequest
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.AttributeMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.DmsException;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -26,7 +24,6 @@ public class FabasoftAttributeService {
     public void setAttributes(final RequestContext requestContext, final String objectId, final List<FabasoftAttribute> attributes) {
         final ObjectType request = attributeMapper.fromFabasoftAttribute(attributes);
         request.setObjaddress(objectId);
-        // TODO transaktion
         log.debug("#setAttributes {}", attributes);
         final SetResponseType response = requestHandler.handleRequest("setAttributes", requestContext,
                 () -> soapClient.soapGenericSetProperties(request, null));

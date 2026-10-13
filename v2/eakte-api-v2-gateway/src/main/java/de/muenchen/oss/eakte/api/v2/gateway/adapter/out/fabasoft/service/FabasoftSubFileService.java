@@ -7,11 +7,10 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftRequest
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.SubFileRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.DmsException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -25,10 +24,9 @@ public class FabasoftSubFileService {
         requestType.setObjclass(request.type().getCoo());
         requestType.setReferrednumber(request.referredId());
         requestType.setObjmlname(request.name());
-        // TODO
+        // TODO is this correct?
         requestType.getFilesubj().addAll(List.of(request.betreff().split("\n")));
         requestType.setCreatedfromdefinition(request.vorlagenId());
-        // TODO transaktion
         log.debug("#createSubFile for {}", request);
         final CreateSubFileResponseType response = requestHandler.handleRequest("createSubFile", requestContext,
                 () -> soapClient.soapCreateSubFile(requestType, null));

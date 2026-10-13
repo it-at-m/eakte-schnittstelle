@@ -33,8 +33,8 @@ public class FabasoftDokumentMapper {
                 .betreff(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.BETREFF.getReference(), String.class).orElse(null))
                 .zugriffsdefinition(
                         defaultAttributeMapper.zugriffsdefinitionToText(
-                        attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ZUGRIFFSDEFINITION.getReference(), String.class).orElseThrow())
-                )
+                                attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ZUGRIFFSDEFINITION.getReference(), String.class)
+                                        .orElseThrow()))
                 .organisationseinheit(
                         attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ORGANISATIONSEINHEIT.getReference(), String.class).orElseThrow())
                 .weitereEigenschaften(attributeMapper.toDomain(result.attributes(), DokumentAttribute.getReferences()))
