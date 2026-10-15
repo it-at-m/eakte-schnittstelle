@@ -1,0 +1,22 @@
+components:
+  schemas:
+    InternesDokument:
+      type: object
+      allOf:
+        - $ref: 'Dokument_Datentypen.yaml#/components/schemas/Dokument'
+      properties:
+        zustellungsDatum:
+          type: string
+        dokumententypId:
+          type: string
+
+    InternesDokumentListeResponse:
+      type: object
+      properties:
+        anzahl:
+          $ref: '_SucheDatentypen.yaml#/components/schemas/AnzahlListenElemente'
+        elemente:
+          type: array
+          description: Liste von Internen Dokumenten
+          items:
+            $ref: '#/components/schemas/InternesDokument'
