@@ -27,9 +27,9 @@ public class FabasoftAttributeService {
         log.debug("#setAttributes {}", attributes);
         final SetResponseType response = requestHandler.handleRequest("setAttributes", requestContext,
                 () -> soapClient.soapGenericSetProperties(request, null));
-        // TODO check response
+        // Check for failed
         if (response.getFailed() != null && !response.getFailed().getAttr().isEmpty()) {
-            throw new DmsException("#setAttributes failed: %s".formatted(response));
+            throw new DmsException("#setAttributes failed. Failed attributes: %s".formatted(response.getFailed().getAttr()));
         }
         log.info("#setAttributes on {}", objectId);
     }
