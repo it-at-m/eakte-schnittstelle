@@ -1,95 +1,72 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.BETREFF;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.KLASSE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.NAME;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.ORGANISATIONSEINHEIT;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.PARENT_ID;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.PARENT_TYPE;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentAttribute.ZUGRIFFSDEFINITION;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass.EINGANG;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass.ERLEDIGUNG;
-import static de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.mapping.DokumentClass.INTERN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.Attribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.attribute.type.AttributeType;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.search.ResultObject;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ParentReference;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentKlasse;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentParent;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentResponse;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Dokument;
-import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.ParentReference;
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 
 class DokumentMapperTest {
-    private static final BigInteger INDEX = BigInteger.ONE;
-    private static final String PARENT_TYPE_REFERENCE = "DEPRECONFIG@15.1001:Procedure";
-
-    private DokumentMapper mapper;
-
-    @BeforeEach
-    void setUp() {
-        mapper = new DokumentMapper(new AttributeMapper());
-    }
+    private final DokumentMapper mapper = mapper();
 
     @Test
-    void givenCompleteResult_thenMapAllFieldsAndExcludeDefaultAttributes() {
-        final Dokument result = mapper.mapResult(resultWithAttributes(true));
+    void givenDokumentResponse_thenMapAllFields() {
+        final DokumentResponse response = DokumentResponse.builder()
+                .id("id")
+                .klasse(DokumentKlasse.ERLEDIGUNG)
+                .parent(new ParentReference<>(DokumentParent.VORGANG, "parent"))
+                .name("name")
+                .langname("long name")
+                .betreff("subject")
+                .zugriffsdefinition("access")
+                .organisationseinheit("ou")
+                .weitereEigenschaften(List.of(new Attribute("custom", "value")))
+                .build();
 
-        assertEquals("COO.1.2.3", result.getId());
-        assertEquals("document-name", result.getLangname());
-        assertEquals(Dokument.KlasseEnum.EINGANG, result.getKlasse());
-        assertEquals(new ParentReference().id("parent-id").type(ParentReference.TypeEnum.VORGANG), result.getParent());
-        assertEquals("short-name", result.getName());
-        assertEquals("subject", result.getBetreff().orElseThrow());
-        assertEquals("acl", result.getZugriffsdefinition());
+        final Dokument result = mapper.fromDomain(response);
+
+        assertEquals("id", result.getId());
+        assertEquals(Dokument.KlasseEnum.ERLEDIGUNG, result.getKlasse());
+        assertEquals("parent", result.getParent().getId());
+        assertEquals(de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.ParentReference.TypeEnum.VORGANG, result.getParent().getType());
+        assertEquals("name", result.getName());
+        assertEquals("long name", result.getLangname());
+        assertEquals("subject", result.getBetreff());
+        assertEquals("access", result.getZugriffsdefinition());
         assertEquals("ou", result.getOrganisationseinheit());
-        assertEquals(Map.of("custom.attribute_1", "custom-value"), result.getEigenschaftenMap());
-        assertEquals("custom.attribute", result.getEigenschaftenListe().getFirst().getReference());
+        assertEquals("custom", result.getWeitereEigenschaften().getFirst().getReference());
     }
 
     @Test
-    void givenMissingOptionalAttributes_thenUseOptionalDefaults() {
-        final Dokument result = mapper.mapResult(resultWithAttributes(false));
-
-        assertEquals(Optional.empty(), result.getBetreff());
+    void givenDokumentKlasse_thenMapEnumValue() {
+        assertEquals(Dokument.KlasseEnum.INTERN, mapper.fromDomain(DokumentKlasse.INTERN));
+        assertEquals(Dokument.KlasseEnum.EINGANG, mapper.fromDomain(DokumentKlasse.EINGANG));
+        assertEquals(Dokument.KlasseEnum.ERLEDIGUNG, mapper.fromDomain(DokumentKlasse.ERLEDIGUNG));
     }
 
     @Test
-    void givenMissingRequiredAttribute_thenThrowException() {
-        final ResultObject result = new ResultObject("document-name", "COO.1.2.3", List.of());
+    void givenDokumentResponses_thenMapAllResponses() {
+        final DokumentResponse response = DokumentResponse.builder()
+                .id("id")
+                .klasse(DokumentKlasse.INTERN)
+                .name("name")
+                .langname("long name")
+                .build();
 
-        assertThrows(java.util.NoSuchElementException.class, () -> mapper.mapResult(result));
+        final List<Dokument> result = mapper.fromDomain(List.of(response));
+
+        assertEquals(List.of("id"), result.stream().map(Dokument::getId).toList());
     }
 
-    @Test
-    void givenAllKnownDocumentClasses_thenMapClasses() {
-        assertEquals(Dokument.KlasseEnum.EINGANG, mapper.mapKlasse(Map.of(KLASSE.getReference(),
-                List.of(EINGANG.getReference()))));
-        assertEquals(Dokument.KlasseEnum.ERLEDIGUNG, mapper.mapKlasse(Map.of(KLASSE.getReference(),
-                List.of(ERLEDIGUNG.getReference()))));
-        assertEquals(Dokument.KlasseEnum.INTERN, mapper.mapKlasse(Map.of(KLASSE.getReference(),
-                List.of(INTERN.getReference()))));
-    }
-
-    private ResultObject resultWithAttributes(final boolean optionalAttributes) {
-        final List<Attribute> attributes = new ArrayList<>(List.of(
-                new Attribute(AttributeType.STRING, KLASSE.getReference(), INDEX,
-                        EINGANG.getReference()),
-                new Attribute(AttributeType.STRING, PARENT_ID.getReference(), INDEX, "parent-id"),
-                new Attribute(AttributeType.STRING, PARENT_TYPE.getReference(), INDEX, PARENT_TYPE_REFERENCE),
-                new Attribute(AttributeType.STRING, NAME.getReference(), INDEX, "short-name"),
-                new Attribute(AttributeType.STRING, ZUGRIFFSDEFINITION.getReference(), INDEX, "acl"),
-                new Attribute(AttributeType.STRING, ORGANISATIONSEINHEIT.getReference(), INDEX, "ou"),
-                new Attribute(AttributeType.STRING, "custom.attribute", INDEX, "custom-value")));
-        if (optionalAttributes) {
-            attributes.add(new Attribute(AttributeType.STRING, BETREFF.getReference(), INDEX, "subject"));
-        }
-        return new ResultObject("document-name", "COO.1.2.3", attributes);
+    private static DokumentMapper mapper() {
+        final DokumentMapper mapper = new DokumentMapperImpl();
+        ReflectionTestUtils.setField(mapper, "attributeMapper", new AttributeMapperImpl());
+        return mapper;
     }
 }

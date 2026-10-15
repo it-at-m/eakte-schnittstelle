@@ -1,6 +1,6 @@
 get:
   tags:
-    - Vorgang
+    - Dokument
   summary: Dokumente eines Vorgangs
   operationId: SearchVorgangsDokumente
   parameters:
