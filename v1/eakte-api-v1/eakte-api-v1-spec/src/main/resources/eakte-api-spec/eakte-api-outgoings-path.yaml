@@ -1,7 +1,7 @@
 post:
   tags:
     - /outgoings
-  summary: Erledigung anlegen
+  summary: Dokument zur Erledigung anlegen
   description: |
     Neues Ausgangsdokument erstellen unter dem angegebenen Vorgang (optional inklusive Schriftstücke).<br>
     Wenn das Ausgangsdokument keinem Vorgang zugeordnet ist (referrednumber == NULL), 
