@@ -1,7 +1,6 @@
 meta {
   name: SOAPReassignFile
   type: http
-  seq: 44
 }
 
 post {
@@ -16,5 +15,14 @@ headers {
 }
 
 body:xml {
-  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPReassignFileRequest><object>string</object><parent>string</parent><object>string</object><parent>string</parent></SOAPReassignFileRequest></soap:Body></soap:Envelope>
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Body>
+          <SOAPReassignFileRequest>
+              <object>string</object>
+              <parent>string</parent>
+              <object>string</object>
+              <parent>string</parent>
+          </SOAPReassignFileRequest>
+      </soap:Body>
+  </soap:Envelope>
 }

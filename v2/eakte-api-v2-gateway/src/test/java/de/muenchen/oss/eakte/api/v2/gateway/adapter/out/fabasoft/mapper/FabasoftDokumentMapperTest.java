@@ -2,6 +2,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftTestFixtures;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.DokumentAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftAttribute;
@@ -14,7 +15,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class FabasoftDokumentMapperTest {
-    private final FabasoftDokumentMapper mapper = new FabasoftDokumentMapper(new AttributeMapper());
+    private final FabasoftDokumentMapper mapper = FabasoftTestFixtures.dokumentMapper();
 
     @Test
     void givenResultObject_thenMapDokument() {
@@ -24,7 +25,7 @@ class FabasoftDokumentMapperTest {
                 attribute(DokumentAttribute.PARENT_TYPE, "DEPRECONFIG@15.1001:Procedure"),
                 attribute(DokumentAttribute.NAME, "name"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
-                attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
+                attribute(DokumentAttribute.ZUGRIFFSDEFINITION, FabasoftTestFixtures.ACCESS_DEFINITION_ID),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));
 
@@ -37,7 +38,7 @@ class FabasoftDokumentMapperTest {
         assertEquals("name", mapped.name());
         assertEquals("long name", mapped.langname());
         assertEquals("subject", mapped.betreff());
-        assertEquals("access", mapped.zugriffsdefinition());
+        assertEquals(FabasoftTestFixtures.ACCESS_DEFINITION_TEXT, mapped.zugriffsdefinition());
         assertEquals("ou", mapped.organisationseinheit());
         assertEquals(List.of(new Attribute("custom", "value")), mapped.weitereEigenschaften());
     }
@@ -58,4 +59,5 @@ class FabasoftDokumentMapperTest {
     private static FabasoftAttribute attribute(final DokumentAttribute attribute, final String value) {
         return new FabasoftAttribute(attribute.getType(), attribute.getReference(), null, value);
     }
+
 }

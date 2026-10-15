@@ -1,11 +1,14 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangMedium;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangStatus;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.CreateVorgang;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -58,6 +61,29 @@ class VorgangMapperTest {
         final List<Vorgang> result = mapper.fromDomain(List.of(response));
 
         assertEquals(List.of("id"), result.stream().map(Vorgang::getId).toList());
+    }
+
+    @Test
+    void givenCreateVorgang_thenMapAllFields() {
+        final CreateVorgang createVorgang = new CreateVorgang()
+                .name("name")
+                .betreff("subject")
+                .vorlagenId("template-id")
+                .originalMedium(CreateVorgang.OriginalMediumEnum.PAPIER)
+                .laufwegErzeugen(true)
+                .geschaeftsgangvermerk("remark")
+                .zugriffsdefinition("acl");
+
+        final CreateVorgangRequest result = mapper.toDomain("akte-id", createVorgang);
+
+        assertEquals("akte-id", result.aktenId());
+        assertEquals("name", result.name());
+        assertEquals("subject", result.betreff());
+        assertEquals("template-id", result.vorlagenId());
+        assertEquals(VorgangMedium.PAPIER, result.originalMedium());
+        assertTrue(result.laufwegErzeugen());
+        assertEquals("remark", result.geschaeftsgangvermerk());
+        assertEquals("acl", result.zugriffsdefinition());
     }
 
     private static VorgangMapper mapper() {
