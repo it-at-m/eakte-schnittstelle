@@ -1,0 +1,24 @@
+components:
+  schemas:
+    Eingangsdokument:
+      type: object
+      allOf:
+        - $ref: 'Dokument_Datentypen.yaml#/components/schemas/Dokument'
+      properties:
+        fremdesGeschaeftszeichen:
+          type: string
+        eingangsDatum:
+          type: string
+        hinweis:
+          type: string
+
+    EingangsdokumentListeResponse:
+      type: object
+      properties:
+        anzahl:
+          $ref: '_SucheDatentypen.yaml#/components/schemas/AnzahlListenElemente'
+        elemente:
+          type: array
+          description: Liste von Eingängen
+          items:
+            $ref: '#/components/schemas/Eingangsdokument'

@@ -1,16 +1,27 @@
 components:
   schemas:
+    DokumentBase:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        betreff:
+          type: string
+        zugriffsdefinition:
+          type: string
+        organisationseinheit:
+          type: string
+
     Dokument:
       type: object
+      allOf:
+        - $ref: '#/components/schemas/DokumentBase'
       required:
         - klasse
         - id
-        - parent
-        - name
         - langname
-        - zugriffsdefinition
-        - organisationseinheit
-        - weitereEigenschaften
       properties:
         klasse:
           type: string
@@ -21,20 +32,12 @@ components:
         id:
           type: string
         parent:
-          $ref: './Dokument_Datentypen.yaml#/components/schemas/ParentReference'
-        name:
-          type: string
+          $ref: '#/components/schemas/ParentReference'
         langname:
-          type: string
-        betreff:
           type: string
         # TODO
         # anlagenBeschreibung:
         #   type: string
-        zugriffsdefinition:
-          type: string
-        organisationseinheit:
-          type: string
         weitereEigenschaften:
           type: array
           items:
@@ -49,7 +52,7 @@ components:
           type: array
           description: Liste von Dokumenten
           items:
-            $ref: 'Dokument_Datentypen.yaml#/components/schemas/Dokument'
+            $ref: '#/components/schemas/Dokument'
 
     ParentReference:
       type: object
