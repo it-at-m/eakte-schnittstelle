@@ -2,7 +2,7 @@ components:
   schemas:
     Eingangsdokument:
       type: object
-      anyOf:
+      allOf:
         - $ref: 'Dokument_Datentypen.yaml#/components/schemas/Dokument'
       properties:
         fremdesGeschaeftszeichen:
