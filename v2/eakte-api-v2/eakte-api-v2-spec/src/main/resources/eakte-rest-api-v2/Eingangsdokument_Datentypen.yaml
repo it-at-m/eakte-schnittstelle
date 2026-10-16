@@ -1,6 +1,6 @@
 components:
   schemas:
-    Eingang:
+    Eingangsdokument:
       type: object
       anyOf:
         - $ref: 'Dokument_Datentypen.yaml#/components/schemas/Dokument'
@@ -12,7 +12,7 @@ components:
         hinweis:
           type: string
 
-    EingangListeResponse:
+    EingangsdokumentListeResponse:
       type: object
       properties:
         anzahl:
@@ -21,4 +21,4 @@ components:
           type: array
           description: Liste von Eingängen
           items:
-            $ref: '#/components/schemas/Eingang'
+            $ref: '#/components/schemas/Eingangsdokument'

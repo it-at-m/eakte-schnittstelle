@@ -1,8 +1,8 @@
 get:
   tags:
-    - Eingang
-  summary: Eingaenge suchen
-  operationId: SearchEingeange
+    - Eingangsdokument
+  summary: Eingangsdokumente suchen
+  operationId: SearchEingangsdokumente
   parameters:
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/Rolle'
@@ -16,7 +16,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: 'Eingang_Datentypen.yaml#/components/schemas/EingangListeResponse'
+            $ref: 'Eingangsdokument_Datentypen.yaml#/components/schemas/EingangsdokumentListeResponse'
     '400':
       description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
       content:

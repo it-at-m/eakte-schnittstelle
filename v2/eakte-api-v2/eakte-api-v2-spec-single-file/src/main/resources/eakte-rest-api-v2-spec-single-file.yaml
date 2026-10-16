@@ -18,8 +18,8 @@ tags:
   - name: Vorgang
     description: Procedure
   - name: Dokument
-    description: Parent-Klasse von Eingang (Incoming) / Erledigung (Outgoing) / Internes Dokument (Internal)
-  - name: Eingang
+    description: Parent-Klasse von Eingangsdokument (Incoming) / Erledigung (Outgoing) / Internes Dokument (Internal)
+  - name: Eingangsdokument
     description: Incoming (Sub-Klasse von Dokument)
   - name: Erledigung
     description: Outgoing (ehem. Ausgang) (Sub-Klasse von Dokument)
@@ -164,12 +164,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /api/v2/eingaenge:
+  /api/v2/eingangsdokumente:
     get:
       tags:
-        - Eingang
-      summary: Eingaenge suchen
-      operationId: SearchEingeange
+        - Eingangsdokument
+      summary: Eingangsdokumente suchen
+      operationId: SearchEingangsdokumente
       parameters:
         - $ref: '#/components/parameters/LoginName'
         - $ref: '#/components/parameters/Rolle'
@@ -183,7 +183,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EingangListeResponse'
+                $ref: '#/components/schemas/EingangsdokumentListeResponse'
         '400':
           description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
           content:
@@ -202,15 +202,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /api/v2/eingaenge/{eingangsId}:
+  /api/v2/eingangsdokumente/{eingangsdokumentId}:
     get:
       tags:
-        - Eingang
-      summary: Eingang lesen
-      operationId: GetEingang
+        - Eingangsdokument
+      summary: Eingangsdokument lesen
+      operationId: GetEingangsdokument
       parameters:
         - in: path
-          name: eingangsId
+          name: eingangsdokumentId
           schema:
             type: string
           required: true
@@ -224,7 +224,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Eingang'
+                $ref: '#/components/schemas/Eingangsdokument'
         '400':
           description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
           content:
@@ -238,7 +238,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '404':
-          description: Eingang konnte nicht gefunden werden.
+          description: Eingangsdokument konnte nicht gefunden werden.
         '500':
           description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
           content:
@@ -678,7 +678,7 @@ components:
           description: Liste von Dokumenten
           items:
             $ref: '#/components/schemas/Dokument'
-    Eingang:
+    Eingangsdokument:
       type: object
       anyOf:
         - $ref: '#/components/schemas/Dokument'
@@ -689,7 +689,7 @@ components:
           type: string
         hinweis:
           type: string
-    EingangListeResponse:
+    EingangsdokumentListeResponse:
       type: object
       properties:
         anzahl:
@@ -698,7 +698,7 @@ components:
           type: array
           description: Liste von Eingängen
           items:
-            $ref: '#/components/schemas/Eingang'
+            $ref: '#/components/schemas/Eingangsdokument'
     Erledigung:
       type: object
       allOf:

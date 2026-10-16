@@ -1,11 +1,11 @@
 get:
   tags:
-    - Eingang
-  summary: Eingang lesen
-  operationId: GetEingang
+    - Eingangsdokument
+  summary: Eingangsdokument lesen
+  operationId: GetEingangsdokument
   parameters:
     - in: path
-      name: eingangsId
+      name: eingangsdokumentId
       schema:
         type: string
       required: true
@@ -19,9 +19,9 @@ get:
       content:
         application/json:
           schema:
-            $ref: 'Eingang_Datentypen.yaml#/components/schemas/Eingang'
+            $ref: 'Eingangsdokument_Datentypen.yaml#/components/schemas/Eingangsdokument'
     '404':
-      description: Eingang konnte nicht gefunden werden.
+      description: Eingangsdokument konnte nicht gefunden werden.
     '400':
       description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
       content:
