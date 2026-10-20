@@ -3,10 +3,13 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.in.VorgangInPort;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.ResourceNotFoundException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.helper.RequestContextFactory;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.controllers.VorgangApi;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.CreateVorgang;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.CreateVorgangResponse;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.VorgangListeResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -66,5 +69,19 @@ public class VorgangController implements VorgangApi {
                 eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of())
                 .orElseThrow(ResourceNotFoundException::new);
         return ResponseEntity.of(Optional.of(vorgangMapper.fromDomain(result)));
+    }
+
+    @Override
+    public ResponseEntity<CreateVorgangResponse> createVorgang(
+            final String aktenId,
+            final CreateVorgang createVorgang,
+            @Nullable final String eakteLoginName,
+            @Nullable final String eakteRolle,
+            @Nullable final String eakteOrganisationseinheit,
+            final HttpServletRequest servletRequest) {
+        final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
+        final CreateVorgangRequest request = vorgangMapper.toDomain(aktenId, createVorgang);
+        final String vorgangId = vorgangInPort.createAkteVorgang(requestContext, request);
+        return ResponseEntity.of(Optional.of(CreateVorgangResponse.builder().id(vorgangId).build()));
     }
 }

@@ -1,7 +1,8 @@
-package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft;
+package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.config;
 
 import com.fabasoft.schemas.websvc.fscgovxml_1_1001_defaultwebservicedefinition.FSCGOVXML11001DefaultWebServiceDefinition;
 import com.fabasoft.schemas.websvc.fscgovxml_1_1001_defaultwebservicedefinition.FSCGOVXML11001DefaultWebServiceDefinitionSoap;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.RequestContextInjectInterceptor;
 import jakarta.xml.ws.BindingProvider;
 import jakarta.xml.ws.soap.SOAPBinding;
 import java.io.IOException;
