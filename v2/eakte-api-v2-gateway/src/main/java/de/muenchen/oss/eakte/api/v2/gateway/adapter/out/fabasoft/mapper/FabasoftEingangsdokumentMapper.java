@@ -25,20 +25,9 @@ public class FabasoftEingangsdokumentMapper {
     public EingangsdokumentResponse toDomain(final ResultObject result) {
         final Map<String, List<Object>> referenceValueMap = attributeMapper.toReferenceValueMap(result.attributes());
         final Set<String> defaultAttributes = AttributeHelper.combineAttributes(DokumentAttribute.getReferences(), EingangsdokumentAttribute.getReferences());
-        return EingangsdokumentResponse.builder()
-                // Dokument
-                .id(result.coo())
-                .klasse(fabasoftDokumentMapper.mapKlasse(referenceValueMap))
-                .parent(fabasoftDokumentMapper.mapParent(referenceValueMap))
-                .langname(result.name())
-                .name(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.NAME.getReference(), String.class).orElseThrow())
-                .betreff(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.BETREFF.getReference(), String.class).orElse(null))
-                .zugriffsdefinition(
-                        attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ZUGRIFFSDEFINITION.getReference(), String.class).orElseThrow())
-                .organisationseinheit(
-                        attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ORGANISATIONSEINHEIT.getReference(), String.class).orElseThrow())
-                .weitereEigenschaften(attributeMapper.toDomain(result.attributes(), defaultAttributes))
-                // Eingangsdokument
+        final EingangsdokumentResponse.EingangsdokumentResponseBuilder<?, ?> builder = EingangsdokumentResponse.builder();
+        fabasoftDokumentMapper.mapDokumentFields(builder, result, referenceValueMap, defaultAttributes);
+        return builder
                 .fremdesGeschaeftszeichen(attributeMapper
                         .getTypedSingle(referenceValueMap, EingangsdokumentAttribute.FREMDES_GESCHAEFTSZEICHEN.getReference(), String.class).orElse(null))
                 .eingangsdatum(

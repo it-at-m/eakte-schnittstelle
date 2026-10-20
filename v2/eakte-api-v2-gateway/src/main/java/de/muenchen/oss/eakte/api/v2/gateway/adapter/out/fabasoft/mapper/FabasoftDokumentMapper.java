@@ -9,6 +9,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentParent
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,17 @@ public class FabasoftDokumentMapper {
 
     public DokumentResponse toDomain(final ResultObject result) {
         final Map<String, List<Object>> referenceValueMap = attributeMapper.toReferenceValueMap(result.attributes());
-        return DokumentResponse.builder()
+        final DokumentResponse.DokumentResponseBuilder<?, ?> builder = DokumentResponse.builder();
+        this.mapDokumentFields(builder, result, referenceValueMap, DokumentAttribute.getReferences());
+        return builder.build();
+    }
+
+    protected void mapDokumentFields(
+            final DokumentResponse.DokumentResponseBuilder<?, ?> builder,
+            final ResultObject result,
+            final Map<String, List<Object>> referenceValueMap,
+            final Set<String> attributes) {
+        builder
                 .id(result.coo())
                 .klasse(this.mapKlasse(referenceValueMap))
                 .parent(this.mapParent(referenceValueMap))
@@ -34,8 +45,7 @@ public class FabasoftDokumentMapper {
                         attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ZUGRIFFSDEFINITION.getReference(), String.class).orElseThrow())
                 .organisationseinheit(
                         attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ORGANISATIONSEINHEIT.getReference(), String.class).orElseThrow())
-                .weitereEigenschaften(attributeMapper.toDomain(result.attributes(), DokumentAttribute.getReferences()))
-                .build();
+                .weitereEigenschaften(attributeMapper.toDomain(result.attributes(), attributes));
     }
 
     protected ParentReference<DokumentParent> mapParent(final Map<String, List<Object>> referenceValueMap) {
