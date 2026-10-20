@@ -1,0 +1,37 @@
+get:
+  tags:
+    - Erledigung
+  summary: Erledigungen suchen
+  operationId: SearchErledigung
+  parameters:
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Rolle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+    - $ref: '_SucheDatentypen.yaml#/components/parameters/Limit'
+    - $ref: '_SucheDatentypen.yaml#/components/parameters/Bedingungen'
+    - $ref: '_SucheDatentypen.yaml#/components/parameters/Eigenschaften'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'Erledigung_Datentypen.yaml#/components/schemas/ErledigungListeResponse'
+    '400':
+      description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+      content:
+        application/json:
+          schema:
+            $ref: '_GlobaleDatentypen.yaml#/components/schemas/ErrorResponse'
+    '401':
+      description: Falsche oder fehlende Anmeldeinformationen.
+      content:
+        application/json:
+          schema:
+            $ref: '_GlobaleDatentypen.yaml#/components/schemas/ErrorResponse'
+    '500':
+      description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+      content:
+        application/json:
+          schema:
+            $ref: '_GlobaleDatentypen.yaml#/components/schemas/ErrorResponse'

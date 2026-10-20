@@ -31,12 +31,35 @@ tags:
   - name: Vorgang
     description: Procedure
   - name: Dokument
-    description: Parent-Klasse von Eingang (Incoming) / Erledigung (Outgoing) / Internes Dokument (Internal)
+    description: Parent-Klasse von Eingangsdokument (Incoming) / Erledigung (Outgoing) / Internes Dokument (Internal)
+  - name: Eingangsdokument
+    description: Incoming (Sub-Klasse von Dokument)
+  - name: Erledigung
+    description: Outgoing (ehem. Ausgang) (Sub-Klasse von Dokument)
+  - name: Internes Dokument
+    description: Internal (Sub-Klasse von Dokument)
 
 paths:
+  # Vorgang
   '/api/v2/vorgaenge':
     $ref: 'Vorgaenge.yaml'
   '/api/v2/vorgaenge/{vorgangsId}':
     $ref: 'Vorgang.yaml'
+  # Dokument
   '/api/v2/vorgaenge/{vorgangsId}/dokumente':
     $ref: 'VorgangsDokumente.yaml'
+  # Eingangsdokument
+  '/api/v2/eingangsdokumente':
+    $ref: 'Eingangsdokumente.yaml'
+  '/api/v2/eingangsdokumente/{eingangsdokumentId}':
+    $ref: 'Eingangsdokument.yaml'
+  # Erledigung
+  '/api/v2/erledigungen':
+    $ref: 'Erledigungen.yaml'
+  '/api/v2/erledigungen/{erledigungsId}':
+    $ref: 'Erledigung.yaml'
+  # Internes Dokument
+  '/api/v2/interne-dokumente':
+    $ref: 'InterneDokumente.yaml'
+  '/api/v2/interne-dokumente/{dokumentId}':
+    $ref: 'InternesDokument.yaml'

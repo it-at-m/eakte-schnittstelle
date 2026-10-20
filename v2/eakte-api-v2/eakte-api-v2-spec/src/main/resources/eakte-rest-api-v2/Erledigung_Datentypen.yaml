@@ -1,0 +1,22 @@
+components:
+  schemas:
+    Erledigung:
+      type: object
+      allOf:
+        - $ref: 'Dokument_Datentypen.yaml#/components/schemas/Dokument'
+      properties:
+        bezugEingang:
+          type: string
+        dokumententypId:
+          type: string
+
+    ErledigungListeResponse:
+      type: object
+      properties:
+        anzahl:
+          $ref: '_SucheDatentypen.yaml#/components/schemas/AnzahlListenElemente'
+        elemente:
+          type: array
+          description: Liste von Erledigungen
+          items:
+            $ref: '#/components/schemas/Erledigung'
