@@ -5,10 +5,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
-import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.DfvOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.VorgangOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper.DfvHelper;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
@@ -52,13 +52,13 @@ class VorgangUseCaseTest {
             final SearchRequest request = requestWithAttributes(EXPLICIT_ATTRIBUTES);
             final SearchRequest enrichedRequest = requestWithAttributes(DFV_ATTRIBUTES);
             final List<VorgangResponse> expected = List.of(VorgangResponse.builder().id(VORGANG_ID).build());
-            when(dfvHelper.enrichWithDfv(CONTEXT, FabasoftObjectType.VORGANG, request)).thenReturn(enrichedRequest);
+            when(dfvHelper.enrichWithDfv(CONTEXT, ObjectType.VORGANG, request)).thenReturn(enrichedRequest);
             when(vorgangOutPort.search(CONTEXT, enrichedRequest)).thenReturn(expected);
 
             final List<VorgangResponse> result = useCase.search(CONTEXT, request);
 
             assertEquals(expected, result);
-            verify(dfvHelper).enrichWithDfv(CONTEXT, FabasoftObjectType.VORGANG, request);
+            verify(dfvHelper).enrichWithDfv(CONTEXT, ObjectType.VORGANG, request);
             verify(vorgangOutPort).search(CONTEXT, enrichedRequest);
         }
     }
@@ -68,13 +68,13 @@ class VorgangUseCaseTest {
         @Test
         void givenEmptyAttributes_thenLoadVorgangDfvAttributesAndReturnResult() {
             final Optional<VorgangResponse> expected = Optional.empty();
-            when(dfvOutPort.loadDfVAttributes(CONTEXT, FabasoftObjectType.VORGANG)).thenReturn(DFV_ATTRIBUTES);
+            when(dfvOutPort.loadDfVAttributes(CONTEXT, ObjectType.VORGANG)).thenReturn(DFV_ATTRIBUTES);
             when(vorgangOutPort.get(CONTEXT, VORGANG_ID, DFV_ATTRIBUTES)).thenReturn(expected);
 
             final Optional<VorgangResponse> result = useCase.get(CONTEXT, VORGANG_ID, Set.of());
 
             assertEquals(expected, result);
-            verify(dfvOutPort).loadDfVAttributes(CONTEXT, FabasoftObjectType.VORGANG);
+            verify(dfvOutPort).loadDfVAttributes(CONTEXT, ObjectType.VORGANG);
             verify(vorgangOutPort).get(CONTEXT, VORGANG_ID, DFV_ATTRIBUTES);
         }
 

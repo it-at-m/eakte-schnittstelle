@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class FabasoftDokumentMapper {
-    private final AttributeMapper attributeMapper;
+    private final FabasoftAttributeMapper attributeMapper;
 
     public List<DokumentResponse> toDomain(final List<ResultObject> results) {
         return results.stream().map(this::toDomain).toList();
@@ -38,7 +38,7 @@ public class FabasoftDokumentMapper {
                 .build();
     }
 
-    private ParentReference<DokumentParent> mapParent(final Map<String, List<Object>> referenceValueMap) {
+    protected ParentReference<DokumentParent> mapParent(final Map<String, List<Object>> referenceValueMap) {
         final String referenceStr = attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.PARENT_TYPE.getReference(), String.class).orElse(null);
         final FabasoftObjectType fabasoftType = FabasoftObjectType.fromFabasoftReference(referenceStr);
         final DokumentParent type = switch (fabasoftType) {
@@ -51,13 +51,13 @@ public class FabasoftDokumentMapper {
                 attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.PARENT_ID.getReference(), String.class).orElseThrow());
     }
 
-    private DokumentKlasse mapKlasse(final Map<String, List<Object>> referenceValueMap) {
+    protected DokumentKlasse mapKlasse(final Map<String, List<Object>> referenceValueMap) {
         final String referenceStr = attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.KLASSE.getReference(), String.class).orElse(null);
         final FabasoftObjectType fabasoftType = FabasoftObjectType.fromFabasoftReference(referenceStr);
         return switch (fabasoftType) {
-        case EINGANG -> DokumentKlasse.EINGANG;
+        case EINGANGSDOKUMENT -> DokumentKlasse.EINGANG;
         case ERLEDIGUNG -> DokumentKlasse.ERLEDIGUNG;
-        case INTERN -> DokumentKlasse.INTERN;
+        case INTERNES_DOKUMENT -> DokumentKlasse.INTERN;
         case null, default -> throw new IllegalStateException("Unexpected value: " + referenceStr);
         };
     }

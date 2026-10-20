@@ -3,8 +3,10 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftAttributeMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftSearchService;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.DfvOutPort;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import java.util.List;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class FabasoftDfvOutAdapter implements DfvOutPort {
     private final FabasoftSearchService searchService;
+    private final FabasoftAttributeMapper attributeMapper;
 
     /**
      * Load all available DfV attributes for the given context and searchType
@@ -26,9 +29,9 @@ public class FabasoftDfvOutAdapter implements DfvOutPort {
      * @return The available attributes.
      */
     @Override
-    public Set<String> loadDfVAttributes(final RequestContext context, final FabasoftObjectType searchType) {
+    public Set<String> loadDfVAttributes(final RequestContext context, final ObjectType searchType) {
         // build attribute key
-        final String attrPrefix = switch (searchType) {
+        final String attrPrefix = switch (attributeMapper.fromDomain(searchType)) {
         case VORGANG -> "EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0]";
         case DOKUMENT ->
             "EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0]";

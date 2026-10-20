@@ -11,9 +11,9 @@ public enum FabasoftObjectType {
     VORGANG("DEPRECONFIG@15.1001:Procedure", "COO.1.1001.1.16603"),
     SUBJECT_AREA("COOELAK@1.1001:SubjectArea", null),
     DOKUMENT("SOLEGOVCOREMODEL@111.100:EGovCoreDocument", null),
-    EINGANG("COOELAK@1.1001:Incoming", null),
+    EINGANGSDOKUMENT("COOELAK@1.1001:Incoming", null),
     ERLEDIGUNG("COOELAK@1.1001:Outgoing", null),
-    INTERN("COOELAK@1.1001:InternalFile", null),
+    INTERNES_DOKUMENT("COOELAK@1.1001:InternalFile", null),
     // FabasoftAttribute objects
     ZUGRIFFSDEFINITION("FSCFOLIO@1.1001:AccessDefinition", null);
 

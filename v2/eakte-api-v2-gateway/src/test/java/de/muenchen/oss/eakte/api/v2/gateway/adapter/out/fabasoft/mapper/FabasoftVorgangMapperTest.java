@@ -16,7 +16,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class FabasoftVorgangMapperTest {
-    private final FabasoftVorgangMapper mapper = new FabasoftVorgangMapper(new AttributeMapper());
+    private final FabasoftVorgangMapper mapper = new FabasoftVorgangMapper(new FabasoftAttributeMapperImpl());
 
     @Test
     void givenResultObject_thenMapVorgang() {

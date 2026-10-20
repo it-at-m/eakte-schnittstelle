@@ -7,7 +7,7 @@ components:
       properties:
         fremdesGeschaeftszeichen:
           type: string
-        eingangsDatum:
+        eingangsdatum:
           type: string
         hinweis:
           type: string
