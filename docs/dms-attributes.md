@@ -69,13 +69,10 @@ and the property name in the V2 API is given.
 | FSCTERM@1.1001:objterms.name                         | Schlagworte                          | RW   | objterms       | -                  |
 | FSCFOLIO@1.1001:objaccdef.name                       | Zugriffsdefinition                   | RW   | accdef         | zugriffsdefinition |
 | COOEALK@1.1001:attachments                           | (untergeordnete Schriftstücke)       | R(W) | gimetadatatype | -                  |
-| COOELAK@1.1001:incattachments                        | Alternative Beschreibung der Anlagen | RW   | incattachments | `<TODO>`           |
 |                                                      | Vorlage (DfV)                        | W    | definition     |                    |
 |                                                      | (DfV Daten)                          | W    | userformsdata  |                    |
 
-[//]: # "TODO incattachments only on Erledigung/Intern?"
-
-### Eingang (Incoming)
+### Eingangsdokument (Incoming)
 
 | Reference                                 | Label                    | V1  | V1              | V2  |
 | ----------------------------------------- | ------------------------ | --- | --------------- | --- |
@@ -86,23 +83,25 @@ and the property name in the V2 API is given.
 
 ### Erledigung / Ausgang (Outgoing)
 
-| Reference                          | Label                     | V1  | V1               | V2  |
-| ---------------------------------- | ------------------------- | --- | ---------------- | --- |
-| CFGBAYERN@15.1400:referredincoming | Bezug zu Eingangsdokument | RW  | referredincoming |     |
-| COOELAK@1.1001:subfiletype         | Dokumententyp             | RW  | subfiletype      |     |
-|                                    |                           | -   | searchalso       | -   |
-|                                    |                           | -   | businessapp      | -   |
-|                                    |                           | W   | doctemplate      |     |
+| Reference                          | Label                                | V1  | V1               | V2                  |
+| ---------------------------------- | ------------------------------------ | --- | ---------------- | ------------------- |
+| CFGBAYERN@15.1400:referredincoming | Bezug zu Eingangsdokument            | RW  | referredincoming | bezugEingang        |
+| COOELAK@1.1001:subfiletype         | Dokumententyp                        | RW  | subfiletype      | dokumententypId     |
+| COOELAK@1.1001:incattachments      | Alternative Beschreibung der Anlagen | RW  | incattachments   | anlagenBeschreibung |
+|                                    |                                      | -   | searchalso       | -                   |
+|                                    |                                      | -   | businessapp      | -                   |
+|                                    |                                      | W   | doctemplate      |                     |
 
 [//]: # "TODO doctemplate only on Intern?"
 
-### Intern (Internal)
+### Internes Dokument (Internal)
 
-| Reference                  | Label       | V1  | V1           | V2  |
-| -------------------------- | ----------- | --- | ------------ | --- |
-| COOELAK@1.1001:delivery    | Datum       | RW  | deliverydate |     |
-| COOELAK@1.1001:subfiletype | Dokumenttyp | RW  | subfiletype  |     |
-| COOELAK@1.1001:doctemplate | Vorlage     | W   | doctemplate  |     |
+| Reference                     | Label                                | V1  | V1             | V2                  |
+| ----------------------------- | ------------------------------------ | --- | -------------- | ------------------- |
+| COOELAK@1.1001:delivery       | Datum                                | RW  | deliverydate   | zustellungsDatum    |
+| COOELAK@1.1001:subfiletype    | Dokumenttyp                          | RW  | subfiletype    | dokumententypId     |
+| COOELAK@1.1001:doctemplate    | Vorlage                              | W   | doctemplate    |                     |
+| COOELAK@1.1001:incattachments | Alternative Beschreibung der Anlagen | RW  | incattachments | anlagenBeschreibung |
 
 ## Schriftstück (ContentObject)
 
