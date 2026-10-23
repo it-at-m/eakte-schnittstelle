@@ -35,9 +35,6 @@ components:
           $ref: '#/components/schemas/ParentReference'
         langname:
           type: string
-        # TODO
-        # anlagenBeschreibung:
-        #   type: string
         weitereEigenschaften:
           type: array
           items:
