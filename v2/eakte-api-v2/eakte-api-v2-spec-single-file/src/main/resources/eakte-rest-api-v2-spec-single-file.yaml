@@ -704,7 +704,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/Dokument'
       properties:
-        bezugEingang:
+        bezugEingangsdokument:
           type: string
         dokumententypId:
           type: string

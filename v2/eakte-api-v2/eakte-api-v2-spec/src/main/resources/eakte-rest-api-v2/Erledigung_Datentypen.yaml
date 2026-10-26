@@ -5,7 +5,7 @@ components:
       allOf:
         - $ref: 'Dokument_Datentypen.yaml#/components/schemas/Dokument'
       properties:
-        bezugEingang:
+        bezugEingangsdokument:
           type: string
         dokumententypId:
           type: string
