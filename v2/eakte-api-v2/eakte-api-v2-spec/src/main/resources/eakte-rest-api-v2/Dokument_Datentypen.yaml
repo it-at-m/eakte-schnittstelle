@@ -5,6 +5,8 @@ components:
       required:
         - name
       properties:
+        vorgangId:
+          type: string
         name:
           type: string
         betreff:
@@ -31,8 +33,6 @@ components:
             - Intern
         id:
           type: string
-        parent:
-          $ref: '#/components/schemas/ParentReference'
         langname:
           type: string
         weitereEigenschaften:
@@ -50,18 +50,3 @@ components:
           description: Liste von Dokumenten
           items:
             $ref: '#/components/schemas/Dokument'
-
-    ParentReference:
-      type: object
-      required:
-        - type
-        - id
-      properties:
-        type:
-          type: string
-          enum:
-            - Vorgang
-            - Postkorb
-            - Arbeitsvorrat
-        id:
-          type: string

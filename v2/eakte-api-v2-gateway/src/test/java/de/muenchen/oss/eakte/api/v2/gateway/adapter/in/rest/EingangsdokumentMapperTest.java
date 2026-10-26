@@ -3,9 +3,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ParentReference;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentKlasse;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentParent;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.EingangsdokumentResponse;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Eingangsdokument;
 import java.time.LocalDate;
@@ -21,7 +19,7 @@ class EingangsdokumentMapperTest {
         final EingangsdokumentResponse response = EingangsdokumentResponse.builder()
                 .id("id")
                 .klasse(DokumentKlasse.EINGANG)
-                .parent(new ParentReference<>(DokumentParent.VORGANG, "parent"))
+                .vorgangId("vorgang")
                 .name("name")
                 .langname("long name")
                 .betreff("subject")
@@ -37,9 +35,7 @@ class EingangsdokumentMapperTest {
 
         assertEquals("id", result.getId());
         assertEquals(Eingangsdokument.KlasseEnum.EINGANG, result.getKlasse());
-        assertEquals("parent", result.getParent().getId());
-        assertEquals(de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.ParentReference.TypeEnum.VORGANG,
-                result.getParent().getType());
+        assertEquals("vorgang", result.getVorgangId());
         assertEquals("name", result.getName());
         assertEquals("long name", result.getLangname());
         assertEquals("subject", result.getBetreff());

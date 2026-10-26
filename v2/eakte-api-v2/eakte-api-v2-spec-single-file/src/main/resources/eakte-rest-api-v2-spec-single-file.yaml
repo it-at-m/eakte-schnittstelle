@@ -621,6 +621,8 @@ components:
       required:
         - name
       properties:
+        vorgangId:
+          type: string
         name:
           type: string
         betreff:
@@ -628,20 +630,6 @@ components:
         zugriffsdefinition:
           type: string
         organisationseinheit:
-          type: string
-    ParentReference:
-      type: object
-      required:
-        - type
-        - id
-      properties:
-        type:
-          type: string
-          enum:
-            - Vorgang
-            - Postkorb
-            - Arbeitsvorrat
-        id:
           type: string
     Dokument:
       type: object
@@ -660,8 +648,6 @@ components:
             - Intern
         id:
           type: string
-        parent:
-          $ref: '#/components/schemas/ParentReference'
         langname:
           type: string
         weitereEigenschaften:

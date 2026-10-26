@@ -103,8 +103,7 @@ class FabasoftEingangsdokumentOutAdapterTest {
     private static ResultObject resultWithRequiredAttributes() {
         return new ResultObject("long name", EINGANGSDOKUMENT_ID, List.of(
                 attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:Incoming"),
-                attribute(DokumentAttribute.PARENT_ID, "parent"),
-                attribute(DokumentAttribute.PARENT_TYPE, "DEPRECONFIG@15.1001:Procedure"),
+                attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
                 attribute(DokumentAttribute.NAME, "name"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),

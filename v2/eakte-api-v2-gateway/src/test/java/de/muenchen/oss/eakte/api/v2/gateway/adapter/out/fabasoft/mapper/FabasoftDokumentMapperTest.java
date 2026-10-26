@@ -8,7 +8,6 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.Fabasoft
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentKlasse;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentParent;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentResponse;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -20,8 +19,7 @@ class FabasoftDokumentMapperTest {
     void givenResultObject_thenMapDokument() {
         final ResultObject result = new ResultObject("long name", "coo", List.of(
                 attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:Outgoing"),
-                attribute(DokumentAttribute.PARENT_ID, "parent"),
-                attribute(DokumentAttribute.PARENT_TYPE, "DEPRECONFIG@15.1001:Procedure"),
+                attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
                 attribute(DokumentAttribute.NAME, "name"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
@@ -32,8 +30,7 @@ class FabasoftDokumentMapperTest {
 
         assertEquals("coo", mapped.getId());
         assertEquals(DokumentKlasse.ERLEDIGUNG, mapped.getKlasse());
-        assertEquals(DokumentParent.VORGANG, mapped.getParent().type());
-        assertEquals("parent", mapped.getParent().id());
+        assertEquals("vorgang", mapped.getVorgangId());
         assertEquals("name", mapped.getName());
         assertEquals("long name", mapped.getLangname());
         assertEquals("subject", mapped.getBetreff());
@@ -46,8 +43,7 @@ class FabasoftDokumentMapperTest {
     void givenResults_thenMapEachResult() {
         final ResultObject result = new ResultObject("name", "id", List.of(
                 attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:Incoming"),
-                attribute(DokumentAttribute.PARENT_ID, "parent"),
-                attribute(DokumentAttribute.PARENT_TYPE, "DEPRECONFIG@15.1001:Procedure"),
+                attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
                 attribute(DokumentAttribute.NAME, "name"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou")));
