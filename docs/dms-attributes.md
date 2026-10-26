@@ -85,20 +85,20 @@ and the property name in the V2 API is given.
 | Reference                          | Label                                | V1  | V1               | V2                  |
 | ---------------------------------- | ------------------------------------ | --- | ---------------- | ------------------- |
 | CFGBAYERN@15.1400:referredincoming | Bezug zu Eingangsdokument            | RW  | referredincoming | bezugEingang        |
-| COOELAK@1.1001:subfiletype         | Dokumententyp                        | RW  | subfiletype      | dokumententyp       |
-| COOELAK@1.1001:incattachments      | Alternative Beschreibung der Anlagen | RW  | incattachments   | anlagenBeschreibung |
+| COOELAK@1.1001:subfiletype.name    | Dokumententyp                        | RW  | subfiletype      | dokumententyp       |
 | COOELAK@1.1001:doctemplate         | Vorlage                              | W   | doctemplate      | vorlage             |
+| COOELAK@1.1001:incattachments      | Alternative Beschreibung der Anlagen | RW  | incattachments   | anlagenBeschreibung |
 |                                    |                                      | -   | searchalso       | -                   |
 |                                    |                                      | -   | businessapp      | -                   |
 
 ### Internes Dokument (Internal)
 
-| Reference                     | Label                                | V1  | V1             | V2                  |
-| ----------------------------- | ------------------------------------ | --- | -------------- | ------------------- |
-| COOELAK@1.1001:delivery       | Datum                                | RW  | deliverydate   | zustellungsDatum    |
-| COOELAK@1.1001:subfiletype    | Dokumenttyp                          | RW  | subfiletype    | dokumententyp       |
-| COOELAK@1.1001:doctemplate    | Vorlage                              | W   | doctemplate    | vorlage             |
-| COOELAK@1.1001:incattachments | Alternative Beschreibung der Anlagen | RW  | incattachments | anlagenBeschreibung |
+| Reference                       | Label                                | V1  | V1             | V2                  |
+| ------------------------------- | ------------------------------------ | --- | -------------- | ------------------- |
+| COOELAK@1.1001:delivery         | Datum                                | RW  | deliverydate   | zustellungsDatum    |
+| COOELAK@1.1001:subfiletype.name | Dokumenttyp                          | RW  | subfiletype    | dokumententyp       |
+| COOELAK@1.1001:doctemplate      | Vorlage                              | W   | doctemplate    | vorlage             |
+| COOELAK@1.1001:incattachments   | Alternative Beschreibung der Anlagen | RW  | incattachments | anlagenBeschreibung |
 
 ## Schriftstück (ContentObject)
 
