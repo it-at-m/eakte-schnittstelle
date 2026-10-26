@@ -10,5 +10,5 @@ Each ADR describes the context, decision and consequences to make all decisions 
 - [004 - DfV Prefetch Versus Explicit Attributes](./adr/004_DfV-prefetch-vs-explicit-attributes.md)
 - [005 - Configuration of Static Attributes](./adr/005_static-attributes-configurable.md)
 - [006 - Child Resource Endpoints](./adr/006_child-resource-endpoints.md)
-- [007 - Polymorphic Parent References](./adr/007_polymorph-parent-references.md)
+- [007 - Polymorphic Parent References (DEPRECATED)](./adr/007_polymorph-parent-references.md)
 - [008 - Document Resources vs Subtype Resources](./adr/008_document-vs-subtype-resources.md)
