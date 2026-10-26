@@ -54,7 +54,7 @@ public class VorgangController implements VorgangApi {
 
     @Override
     public ResponseEntity<Vorgang> getVorgang(
-            final String vorgangsId,
+            final String vorgangId,
             @Nullable final String eakteLoginName,
             @Nullable final String eakteRolle,
             @Nullable final String eakteOrganisationseinheit,
@@ -62,7 +62,7 @@ public class VorgangController implements VorgangApi {
             final HttpServletRequest servletRequest) {
         final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
         final VorgangResponse result = vorgangInPort.get(requestContext,
-                vorgangsId,
+                vorgangId,
                 eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of())
                 .orElseThrow(ResourceNotFoundException::new);
         return ResponseEntity.of(Optional.of(vorgangMapper.fromDomain(result)));

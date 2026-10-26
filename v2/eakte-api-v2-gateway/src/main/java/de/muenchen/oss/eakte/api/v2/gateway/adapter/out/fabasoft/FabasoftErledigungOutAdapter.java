@@ -33,10 +33,10 @@ public class FabasoftErledigungOutAdapter implements ErledigungOutPort {
     }
 
     @Override
-    public Optional<ErledigungResponse> get(final RequestContext context, final String erledigungsId, final Set<String> attributes) {
+    public Optional<ErledigungResponse> get(final RequestContext context, final String erledigungId, final Set<String> attributes) {
         final Set<String> attrs = AttributeHelper.combineAttributes(attributes, DokumentAttribute.getReferences());
         final Set<String> attrsWithErledigung = AttributeHelper.combineAttributes(attrs, ErledigungAttribute.getReferences());
-        final Optional<ResultObject> result = searchService.getObject(context, FabasoftObjectType.ERLEDIGUNG, erledigungsId, attrsWithErledigung);
+        final Optional<ResultObject> result = searchService.getObject(context, FabasoftObjectType.ERLEDIGUNG, erledigungId, attrsWithErledigung);
         return result.map(erledigungMapper::toDomain);
     }
 }

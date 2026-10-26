@@ -29,8 +29,8 @@ public class VorgangUseCase implements VorgangInPort {
     }
 
     @Override
-    public Optional<VorgangResponse> get(final RequestContext context, final String vorgangsId, final Set<String> attributes) {
+    public Optional<VorgangResponse> get(final RequestContext context, final String vorgangId, final Set<String> attributes) {
         final Set<String> updatedAttrs = attributes.isEmpty() ? dfvOutPort.loadDfVAttributes(context, ObjectType.VORGANG) : attributes;
-        return vorgangOutPort.get(context, vorgangsId, updatedAttrs);
+        return vorgangOutPort.get(context, vorgangId, updatedAttrs);
     }
 }

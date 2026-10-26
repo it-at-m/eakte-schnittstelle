@@ -29,7 +29,7 @@ public class ErledigungController implements ErledigungApi {
 
     @Override
     public ResponseEntity<Erledigung> getErledigung(
-            final String erledigungsId,
+            final String erledigungId,
             final @Nullable String eakteLoginName,
             final @Nullable String eakteRolle,
             final @Nullable String eakteOrganisationseinheit,
@@ -37,7 +37,7 @@ public class ErledigungController implements ErledigungApi {
             final HttpServletRequest servletRequest) {
         final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
         final ErledigungResponse result = erledigungInPort.get(requestContext,
-                erledigungsId,
+                erledigungId,
                 eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of())
                 .orElseThrow(ResourceNotFoundException::new);
         return ResponseEntity.of(Optional.of(erledigungMapper.fromDomain(result)));

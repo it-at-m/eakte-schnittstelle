@@ -33,9 +33,9 @@ public class FabasoftVorgangOutAdapter implements VorgangOutPort {
     }
 
     @Override
-    public Optional<VorgangResponse> get(final RequestContext context, final String vorgangsId, final Set<String> attributes) {
+    public Optional<VorgangResponse> get(final RequestContext context, final String vorgangId, final Set<String> attributes) {
         final Set<String> attributesWithDefault = AttributeHelper.combineAttributes(attributes, VorgangAttribute.getReferences());
-        final Optional<ResultObject> result = searchService.getObject(context, FabasoftObjectType.VORGANG, vorgangsId, attributesWithDefault);
+        final Optional<ResultObject> result = searchService.getObject(context, FabasoftObjectType.VORGANG, vorgangId, attributesWithDefault);
         return result.map(vorgangMapper::toDomain);
     }
 

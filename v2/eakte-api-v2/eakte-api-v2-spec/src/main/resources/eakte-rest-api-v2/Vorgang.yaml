@@ -5,7 +5,7 @@ get:
   operationId: GetVorgang
   parameters:
     - in: path
-      name: vorgangsId
+      name: vorgangId
       schema:
         type: string
       required: true
@@ -24,7 +24,7 @@ get:
         GetDokumente:
           operationId: SearchVorgangsDokumente
           parameters:
-            vorgangsId: '$response.body#/id'
+            vorgangId: '$response.body#/id'
     '404':
       description: Vorgang konnte nicht gefunden werden.
     '400':

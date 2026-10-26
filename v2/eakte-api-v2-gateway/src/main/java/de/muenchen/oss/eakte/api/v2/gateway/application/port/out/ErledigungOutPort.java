@@ -15,5 +15,5 @@ import org.springframework.validation.annotation.Validated;
 public interface ErledigungOutPort {
     List<ErledigungResponse> search(@NotNull RequestContext context, @NotNull @Valid SearchRequest request);
 
-    Optional<ErledigungResponse> get(@NotNull RequestContext context, @NotBlank String erledigungsId, Set<String> attributes);
+    Optional<ErledigungResponse> get(@NotNull RequestContext context, @NotBlank String erledigungId, Set<String> attributes);
 }

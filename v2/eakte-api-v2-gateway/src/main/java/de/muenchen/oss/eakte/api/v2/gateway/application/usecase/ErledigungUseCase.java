@@ -28,8 +28,8 @@ public class ErledigungUseCase implements ErledigungInPort {
     }
 
     @Override
-    public Optional<ErledigungResponse> get(final RequestContext context, final String erledigungsId, final Set<String> attributes) {
+    public Optional<ErledigungResponse> get(final RequestContext context, final String erledigungId, final Set<String> attributes) {
         final Set<String> updatedAttrs = attributes.isEmpty() ? dfvOutPort.loadDfVAttributes(context, ObjectType.DOKUMENT) : attributes;
-        return erledigungOutPort.get(context, erledigungsId, updatedAttrs);
+        return erledigungOutPort.get(context, erledigungId, updatedAttrs);
     }
 }
