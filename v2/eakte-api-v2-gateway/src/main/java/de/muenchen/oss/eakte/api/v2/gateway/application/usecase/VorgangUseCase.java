@@ -1,10 +1,10 @@
 package de.muenchen.oss.eakte.api.v2.gateway.application.usecase;
 
-import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.in.VorgangInPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.DfvOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.VorgangOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper.DfvHelper;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
@@ -24,13 +24,13 @@ public class VorgangUseCase implements VorgangInPort {
 
     @Override
     public List<VorgangResponse> search(final RequestContext context, final SearchRequest request) {
-        final SearchRequest enrichedRequest = dfvHelper.enrichWithDfv(context, FabasoftObjectType.VORGANG, request);
+        final SearchRequest enrichedRequest = dfvHelper.enrichWithDfv(context, ObjectType.VORGANG, request);
         return vorgangOutPort.search(context, enrichedRequest);
     }
 
     @Override
     public Optional<VorgangResponse> get(final RequestContext context, final String vorgangsId, final Set<String> attributes) {
-        final Set<String> updatedAttrs = attributes.isEmpty() ? dfvOutPort.loadDfVAttributes(context, FabasoftObjectType.VORGANG) : attributes;
+        final Set<String> updatedAttrs = attributes.isEmpty() ? dfvOutPort.loadDfVAttributes(context, ObjectType.VORGANG) : attributes;
         return vorgangOutPort.get(context, vorgangsId, updatedAttrs);
     }
 }

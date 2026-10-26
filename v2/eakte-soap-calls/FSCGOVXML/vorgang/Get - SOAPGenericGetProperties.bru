@@ -1,0 +1,43 @@
+meta {
+  name: Get - SOAPGenericGetProperties
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://eakte26-k2-authldap.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: inherit
+}
+
+params:query {
+  WEBSVC: FSCGOVXML_1_1001_DefaultWebServiceDefinition
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPGenericGetProperties
+}
+
+body:xml {
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:schemas-fabasoft-com:universal">
+      <soap:Body>
+          <urn:object>
+              <urn:objaddress>COO.2150.8801.2.1320692</urn:objaddress>
+              <urn:attrlist>
+                  <urn:attr>COOELAK@1.1001:referrednumber</urn:attr>
+                  <urn:attr>COOELAK@1.1001:objmlname</urn:attr>
+                  <urn:attr>FSCFOLIO@1.1001:objdocstate</urn:attr>
+                  <urn:attr>FSCFOLIO@1.1001:bostate</urn:attr>
+                  <urn:attr>COOSYSTEM@1.1:objowngroup</urn:attr>
+                  <urn:attr>COOELAK@1.1001:filesubj</urn:attr>
+                  <urn:attr>COOELAK@1.1001:inchargeremark</urn:attr>
+                  <urn:attr>COOELAK@1.1001:filetype</urn:attr>
+                  <urn:attr>FSCTERM@1.1001:objterms</urn:attr>
+                  <urn:attr>FSCFOLIO@1.1001:objaccdef</urn:attr>
+                  <urn:attr>lhmdfvpublic@2150.8800:TF_Mehrzeilige_Eingabe_Vorgang</urn:attr>
+              </urn:attrlist>
+          </urn:object>
+      </soap:Body>
+  </soap:Envelope>
+}

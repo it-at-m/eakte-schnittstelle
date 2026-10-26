@@ -685,7 +685,7 @@ components:
       properties:
         fremdesGeschaeftszeichen:
           type: string
-        eingangsDatum:
+        eingangsdatum:
           type: string
         hinweis:
           type: string
@@ -708,6 +708,8 @@ components:
           type: string
         dokumententypId:
           type: string
+        anlagenBeschreibung:
+          type: string
     ErledigungListeResponse:
       type: object
       properties:
@@ -726,6 +728,8 @@ components:
         zustellungsDatum:
           type: string
         dokumententypId:
+          type: string
+        anlagenBeschreibung:
           type: string
     InternesDokumentListeResponse:
       type: object

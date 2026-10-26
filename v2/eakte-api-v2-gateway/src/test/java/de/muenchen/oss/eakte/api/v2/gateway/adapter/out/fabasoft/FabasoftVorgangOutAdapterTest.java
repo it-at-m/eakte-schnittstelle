@@ -9,7 +9,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.Fabasoft
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.VorgangAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.AttributeMapper;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftAttributeMapperImpl;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftVorgangMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftSearchService;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
@@ -35,7 +35,7 @@ class FabasoftVorgangOutAdapterTest {
             .attributes(Set.of("custom.attribute"))
             .build();
 
-    private final FabasoftVorgangMapper vorgangMapper = new FabasoftVorgangMapper(new AttributeMapper());
+    private final FabasoftVorgangMapper vorgangMapper = new FabasoftVorgangMapper(new FabasoftAttributeMapperImpl());
 
     @Mock
     private FabasoftSearchService searchService;

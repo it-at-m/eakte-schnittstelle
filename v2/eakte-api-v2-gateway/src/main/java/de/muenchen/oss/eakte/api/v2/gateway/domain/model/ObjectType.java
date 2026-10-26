@@ -2,5 +2,8 @@ package de.muenchen.oss.eakte.api.v2.gateway.domain.model;
 
 public enum ObjectType {
     VORGANG,
-    DOKUMENT
+    DOKUMENT,
+    EINGANGSDOKUMENT,
+    ERLEDIGUNG,
+    INTERNES_DOKUMENT
 }

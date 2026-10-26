@@ -14,7 +14,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class FabasoftDokumentMapperTest {
-    private final FabasoftDokumentMapper mapper = new FabasoftDokumentMapper(new AttributeMapper());
+    private final FabasoftDokumentMapper mapper = new FabasoftDokumentMapper(new FabasoftAttributeMapperImpl());
 
     @Test
     void givenResultObject_thenMapDokument() {
@@ -30,16 +30,16 @@ class FabasoftDokumentMapperTest {
 
         final DokumentResponse mapped = mapper.toDomain(result);
 
-        assertEquals("coo", mapped.id());
-        assertEquals(DokumentKlasse.ERLEDIGUNG, mapped.klasse());
-        assertEquals(DokumentParent.VORGANG, mapped.parent().type());
-        assertEquals("parent", mapped.parent().id());
-        assertEquals("name", mapped.name());
-        assertEquals("long name", mapped.langname());
-        assertEquals("subject", mapped.betreff());
-        assertEquals("access", mapped.zugriffsdefinition());
-        assertEquals("ou", mapped.organisationseinheit());
-        assertEquals(List.of(new Attribute("custom", "value")), mapped.weitereEigenschaften());
+        assertEquals("coo", mapped.getId());
+        assertEquals(DokumentKlasse.ERLEDIGUNG, mapped.getKlasse());
+        assertEquals(DokumentParent.VORGANG, mapped.getParent().type());
+        assertEquals("parent", mapped.getParent().id());
+        assertEquals("name", mapped.getName());
+        assertEquals("long name", mapped.getLangname());
+        assertEquals("subject", mapped.getBetreff());
+        assertEquals("access", mapped.getZugriffsdefinition());
+        assertEquals("ou", mapped.getOrganisationseinheit());
+        assertEquals(List.of(new Attribute("custom", "value")), mapped.getWeitereEigenschaften());
     }
 
     @Test
