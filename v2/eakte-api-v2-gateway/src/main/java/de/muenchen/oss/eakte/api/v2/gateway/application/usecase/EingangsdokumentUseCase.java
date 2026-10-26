@@ -17,19 +17,19 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class EingangsdokumentUseCase implements EingangsdokumentInPort {
-    private final EingangsdokumentOutPort vorgangOutPort;
+    private final EingangsdokumentOutPort eingangsdokumentOutPort;
     private final DfvOutPort dfvOutPort;
     private final DfvHelper dfvHelper;
 
     @Override
     public List<EingangsdokumentResponse> search(final RequestContext context, final SearchRequest request) {
         final SearchRequest enrichedRequest = dfvHelper.enrichWithDfv(context, ObjectType.DOKUMENT, request);
-        return vorgangOutPort.search(context, enrichedRequest);
+        return eingangsdokumentOutPort.search(context, enrichedRequest);
     }
 
     @Override
     public Optional<EingangsdokumentResponse> get(final RequestContext context, final String eingangsdokumentId, final Set<String> attributes) {
         final Set<String> updatedAttrs = attributes.isEmpty() ? dfvOutPort.loadDfVAttributes(context, ObjectType.DOKUMENT) : attributes;
-        return vorgangOutPort.get(context, eingangsdokumentId, updatedAttrs);
+        return eingangsdokumentOutPort.get(context, eingangsdokumentId, updatedAttrs);
     }
 }
