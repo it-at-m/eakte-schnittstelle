@@ -109,9 +109,9 @@ class FabasoftErledigungOutAdapterTest {
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(ErledigungAttribute.BEZUG_EINGANGSDOKUMENT, "incoming-id"),
-                attribute(ErledigungAttribute.DOKUMENTENTYP_ID, "letter"),
+                attribute(ErledigungAttribute.DOKUMENTENTYP, "letter"),
                 attribute(ErledigungAttribute.ANLAGEN_BESCHREIBUNG, "enclosures"),
-                new FabasoftAttribute(ErledigungAttribute.DOKUMENTENTYP_ID.getType(), "custom.attribute", null, "value")));
+                new FabasoftAttribute(ErledigungAttribute.DOKUMENTENTYP.getType(), "custom.attribute", null, "value")));
     }
 
     private static FabasoftAttribute attribute(final DokumentAttribute attribute, final Object value) {

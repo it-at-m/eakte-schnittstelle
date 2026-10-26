@@ -28,7 +28,7 @@ class ErledigungMapperTest {
                 .organisationseinheit("ou")
                 .weitereEigenschaften(List.of(new Attribute("custom", "value")))
                 .bezugEingangsdokument("incoming-id")
-                .dokumententypId("letter")
+                .dokumententyp("letter")
                 .anlagenBeschreibung("enclosures")
                 .build();
 
@@ -46,7 +46,7 @@ class ErledigungMapperTest {
         assertEquals("ou", result.getOrganisationseinheit());
         assertEquals("custom", result.getWeitereEigenschaften().getFirst().getReference());
         assertEquals("incoming-id", result.getBezugEingangsdokument());
-        assertEquals("letter", result.getDokumententypId());
+        assertEquals("letter", result.getDokumententyp());
         assertEquals("enclosures", result.getAnlagenBeschreibung());
     }
 

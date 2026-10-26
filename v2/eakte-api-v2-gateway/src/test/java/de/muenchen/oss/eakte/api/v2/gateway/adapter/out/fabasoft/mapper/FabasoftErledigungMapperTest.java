@@ -36,7 +36,7 @@ class FabasoftErledigungMapperTest {
         assertEquals("access", mapped.getZugriffsdefinition());
         assertEquals("ou", mapped.getOrganisationseinheit());
         assertEquals("incoming-id", mapped.getBezugEingangsdokument());
-        assertEquals("letter", mapped.getDokumententypId());
+        assertEquals("letter", mapped.getDokumententyp());
         assertEquals("enclosures", mapped.getAnlagenBeschreibung());
         assertEquals(List.of(new Attribute("custom", "value")), mapped.getWeitereEigenschaften());
     }
@@ -58,7 +58,7 @@ class FabasoftErledigungMapperTest {
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(ErledigungAttribute.BEZUG_EINGANGSDOKUMENT, "incoming-id"),
-                attribute(ErledigungAttribute.DOKUMENTENTYP_ID, "letter"),
+                attribute(ErledigungAttribute.DOKUMENTENTYP, "letter"),
                 attribute(ErledigungAttribute.ANLAGEN_BESCHREIBUNG, "enclosures"),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));
     }

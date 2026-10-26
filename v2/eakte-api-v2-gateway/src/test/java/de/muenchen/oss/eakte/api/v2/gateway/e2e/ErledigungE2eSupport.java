@@ -3,7 +3,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.e2e;
 abstract class ErledigungE2eSupport extends FabasoftE2eSupport {
     static final String DFV_ATTRIBUTE = "custom.dfv.attribute";
     static final String BEZUG_EINGANGSDOKUMENT_REFERENCE = "CFGBAYERN@15.1400:referredincoming";
-    static final String DOKUMENTENTYP_REFERENCE = "COOELAK@1.1001:subfiletype";
+    static final String DOKUMENTENTYP_REFERENCE = "COOELAK@1.1001:subfiletype.name";
     static final String ANLAGEN_BESCHREIBUNG_REFERENCE = "COOELAK@1.1001:incattachments";
 
     private static final String FULL_REFERENCE = "EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:"

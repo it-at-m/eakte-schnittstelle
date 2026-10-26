@@ -52,7 +52,7 @@ class ErledigungE2ETest extends ErledigungE2eSupport {
                     .andExpect(jsonPath("$.elemente[0].zugriffsdefinition").value("acl"))
                     .andExpect(jsonPath("$.elemente[0].organisationseinheit").value("ou"))
                     .andExpect(jsonPath("$.elemente[0].bezugEingangsdokument").value("COO.7.8.9"))
-                    .andExpect(jsonPath("$.elemente[0].dokumententypId").value("letter"))
+                    .andExpect(jsonPath("$.elemente[0].dokumententyp").value("letter"))
                     .andExpect(jsonPath("$.elemente[0].anlagenBeschreibung").value("additional enclosure"))
                     .andExpect(jsonPath("$.elemente[0].weitereEigenschaften[?(@.reference=='custom.attribute')].value")
                             .value("custom-value"));
@@ -101,7 +101,7 @@ class ErledigungE2ETest extends ErledigungE2eSupport {
                     .andExpect(jsonPath("$.id").value("COO.4.5.6"))
                     .andExpect(jsonPath("$.klasse").value("Erledigung"))
                     .andExpect(jsonPath("$.bezugEingangsdokument").value("COO.7.8.9"))
-                    .andExpect(jsonPath("$.dokumententypId").value("letter"))
+                    .andExpect(jsonPath("$.dokumententyp").value("letter"))
                     .andExpect(jsonPath("$.anlagenBeschreibung").value("additional enclosure"));
 
             verifySearchRequest("COOSYSTEM@1.1:objaddress", BEZUG_EINGANGSDOKUMENT_REFERENCE, true);
