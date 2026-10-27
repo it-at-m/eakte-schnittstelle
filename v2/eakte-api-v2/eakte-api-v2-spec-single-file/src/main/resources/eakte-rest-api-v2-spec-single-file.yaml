@@ -627,6 +627,8 @@ components:
           type: string
         betreff:
           type: string
+        hinweis:
+          type: string
         zugriffsdefinition:
           type: string
         organisationseinheit:
@@ -672,8 +674,6 @@ components:
         fremdesGeschaeftszeichen:
           type: string
         eingangsdatum:
-          type: string
-        hinweis:
           type: string
     EingangsdokumentListeResponse:
       type: object

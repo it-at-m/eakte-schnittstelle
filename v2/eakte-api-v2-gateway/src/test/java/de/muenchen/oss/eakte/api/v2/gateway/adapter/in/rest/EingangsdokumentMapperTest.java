@@ -23,6 +23,7 @@ class EingangsdokumentMapperTest {
                 .name("name")
                 .langname("long name")
                 .betreff("subject")
+                .hinweis("note")
                 .zugriffsdefinition("access")
                 .organisationseinheit("ou")
                 .weitereEigenschaften(List.of(new Attribute("custom", "value")))
@@ -39,6 +40,7 @@ class EingangsdokumentMapperTest {
         assertEquals("name", result.getName());
         assertEquals("long name", result.getLangname());
         assertEquals("subject", result.getBetreff());
+        assertEquals("note", result.getHinweis());
         assertEquals("access", result.getZugriffsdefinition());
         assertEquals("ou", result.getOrganisationseinheit());
         assertEquals("custom", result.getWeitereEigenschaften().getFirst().getReference());

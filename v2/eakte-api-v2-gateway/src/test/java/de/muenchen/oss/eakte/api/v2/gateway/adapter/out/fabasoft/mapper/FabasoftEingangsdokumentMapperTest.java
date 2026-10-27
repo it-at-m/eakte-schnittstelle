@@ -53,11 +53,11 @@ class FabasoftEingangsdokumentMapperTest {
                 attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
                 attribute(DokumentAttribute.NAME, "name"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
+                attribute(DokumentAttribute.HINWEIS, "note"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(EingangsdokumentAttribute.FREMDES_GESCHAEFTSZEICHEN, "external-reference"),
                 attribute(EingangsdokumentAttribute.EINGANGSDATUM, LocalDate.of(2025, 1, 2)),
-                attribute(EingangsdokumentAttribute.HINWEIS, "note"),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));
     }
 

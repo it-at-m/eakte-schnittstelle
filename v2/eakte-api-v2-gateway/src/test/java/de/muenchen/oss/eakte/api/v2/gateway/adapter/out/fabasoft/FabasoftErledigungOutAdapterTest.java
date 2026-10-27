@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.DokumentAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ErledigungAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftAttribute;
@@ -63,6 +64,7 @@ class FabasoftErledigungOutAdapterTest {
                 .search(CONTEXT, REQUEST);
 
         assertEquals(List.of(erledigungMapper.toDomain(result.getFirst())), actual);
+        assertEquals("note", actual.getFirst().getHinweis());
         final SearchRequest forwardedRequest = requestCaptor.getValue();
         assertEquals(REQUEST.limit(), forwardedRequest.limit());
         assertEquals(REQUEST.query(), forwardedRequest.query());
@@ -81,6 +83,7 @@ class FabasoftErledigungOutAdapterTest {
                 .get(CONTEXT, ERLEDIGUNG_ID, REQUEST_ATTRIBUTES);
 
         assertEquals(Optional.of(erledigungMapper.toDomain(result)), actual);
+        assertEquals("note", actual.orElseThrow().getHinweis());
         assertTrue(attributesCaptor.getValue().containsAll(REQUEST_ATTRIBUTES));
         assertTrue(attributesCaptor.getValue().containsAll(DokumentAttribute.getReferences()));
         assertTrue(attributesCaptor.getValue().containsAll(ErledigungAttribute.getReferences()));
@@ -105,12 +108,13 @@ class FabasoftErledigungOutAdapterTest {
                 attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
                 attribute(DokumentAttribute.NAME, "name"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
+                attribute(DokumentAttribute.HINWEIS, "note"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(ErledigungAttribute.BEZUG_EINGANGSDOKUMENT, "incoming-id"),
                 attribute(ErledigungAttribute.DOKUMENTENTYP, "letter"),
                 attribute(ErledigungAttribute.ANLAGEN_BESCHREIBUNG, "enclosures"),
-                new FabasoftAttribute(ErledigungAttribute.DOKUMENTENTYP.getType(), "custom.attribute", null, "value")));
+                new FabasoftAttribute(AttributeType.STRING, "custom.attribute", null, "value")));
     }
 
     private static FabasoftAttribute attribute(final DokumentAttribute attribute, final Object value) {

@@ -11,6 +11,8 @@ components:
           type: string
         betreff:
           type: string
+        hinweis:
+          type: string
         zugriffsdefinition:
           type: string
         organisationseinheit:

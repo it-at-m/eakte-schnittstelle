@@ -48,6 +48,7 @@ class ErledigungE2ETest extends ErledigungE2eSupport {
                     .andExpect(jsonPath("$.elemente[0].name").value("short-name"))
                     .andExpect(jsonPath("$.elemente[0].langname").value("outgoing-name"))
                     .andExpect(jsonPath("$.elemente[0].betreff").value("subject"))
+                    .andExpect(jsonPath("$.elemente[0].hinweis").value("document note"))
                     .andExpect(jsonPath("$.elemente[0].zugriffsdefinition").value("acl"))
                     .andExpect(jsonPath("$.elemente[0].organisationseinheit").value("ou"))
                     .andExpect(jsonPath("$.elemente[0].bezugEingangsdokument").value("COO.7.8.9"))
@@ -99,6 +100,7 @@ class ErledigungE2ETest extends ErledigungE2eSupport {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").value("COO.4.5.6"))
                     .andExpect(jsonPath("$.klasse").value("Erledigung"))
+                    .andExpect(jsonPath("$.hinweis").value("document note"))
                     .andExpect(jsonPath("$.bezugEingangsdokument").value("COO.7.8.9"))
                     .andExpect(jsonPath("$.dokumententyp").value("letter"))
                     .andExpect(jsonPath("$.anlagenBeschreibung").value("additional enclosure"));

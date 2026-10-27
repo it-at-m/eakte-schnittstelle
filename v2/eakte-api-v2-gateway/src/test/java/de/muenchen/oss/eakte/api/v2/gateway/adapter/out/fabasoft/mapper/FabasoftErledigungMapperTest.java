@@ -31,6 +31,7 @@ class FabasoftErledigungMapperTest {
         assertEquals("name", mapped.getName());
         assertEquals("long name", mapped.getLangname());
         assertEquals("subject", mapped.getBetreff());
+        assertEquals("note", mapped.getHinweis());
         assertEquals("access", mapped.getZugriffsdefinition());
         assertEquals("ou", mapped.getOrganisationseinheit());
         assertEquals("incoming-id", mapped.getBezugEingangsdokument());
@@ -52,6 +53,7 @@ class FabasoftErledigungMapperTest {
                 attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
                 attribute(DokumentAttribute.NAME, "name"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
+                attribute(DokumentAttribute.HINWEIS, "note"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(ErledigungAttribute.BEZUG_EINGANGSDOKUMENT, "incoming-id"),

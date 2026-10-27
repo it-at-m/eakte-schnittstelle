@@ -48,6 +48,7 @@ class DokumenteE2ETest extends DokumenteE2eSupport {
                     .andExpect(jsonPath("$.elemente[0].name").value("short-name"))
                     .andExpect(jsonPath("$.elemente[0].langname").value("document-name"))
                     .andExpect(jsonPath("$.elemente[0].betreff").value("subject"))
+                    .andExpect(jsonPath("$.elemente[0].hinweis").value("document note"))
                     .andExpect(jsonPath("$.elemente[0].zugriffsdefinition").value("acl"))
                     .andExpect(jsonPath("$.elemente[0].organisationseinheit").value("ou"))
                     .andExpect(jsonPath("$.elemente[0].weitereEigenschaften[?(@.reference=='custom.attribute')].value")
