@@ -3,7 +3,7 @@
 Status: Deprecated
 Date: 2026-08-17
 
-:::warn Deprecated
+::: warning Deprecated
 Eingangsdokumente only know there parent Vorgang not if they are in a Postkorb/Arbeitsvorrat.
 Because of that this ADR can't be applied.
 :::
