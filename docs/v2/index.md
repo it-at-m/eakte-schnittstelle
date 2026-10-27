@@ -1,5 +1,9 @@
 # eAkte API V2
 
+::: warning WIP
+The initial implementation of the V2 is still ongoing.
+:::
+
 This document describes the eAkte API V2, which consists of the following components:
 
 - v2-API: OpenAPI specification of the API, see [Swagger-UI](./swagger-ui.md)
