@@ -74,11 +74,11 @@ and the property name in the V2 API is given.
 
 ### Eingangsdokument (Incoming)
 
-| Reference                                 | Label                    | V1  | V1              | V2  |
-| ----------------------------------------- | ------------------------ | --- | --------------- | --- |
-| COOELAK@1.1001:foreignnr                  | Fremdes Geschäftszeichen | RW  | foreignnr       |     |
-| COOELAK@1.1001:delivery                   | Datum                    | RW  | delivery        |     |
-| COOELAK@1.1001:incharge.COOWF@1.1:wfpuser |                          | W   | useou           |     |
+| Reference                                 | Label                    | V1  | V1        | V2  |
+| ----------------------------------------- | ------------------------ | --- | --------- | --- |
+| COOELAK@1.1001:foreignnr                  | Fremdes Geschäftszeichen | RW  | foreignnr |     |
+| COOELAK@1.1001:delivery                   | Datum                    | RW  | delivery  |     |
+| COOELAK@1.1001:incharge.COOWF@1.1:wfpuser |                          | W   | useou     |     |
 
 ### Erledigung / Ausgang (Outgoing)
 
