@@ -38,15 +38,15 @@ public class ReadSubjectAreaObjectsMetaDataProcessor extends AbstractDMSSoapProc
       final String organisationseinheit,
       final String rolle,
       final String anwendung) {
-    ReadSubjectAreaGIObjectsMetaData readDocumentGIObjectsMetaData =
+    ReadSubjectAreaGIObjectsMetaData readSubjectAreaGIObjectsMetaData =
         objectFactory.createReadSubjectAreaGIObjectsMetaData();
-    readDocumentGIObjectsMetaData.setObjaddress(objaddress);
-    readDocumentGIObjectsMetaData.setDocstate(docstate);
-    readDocumentGIObjectsMetaData.setBostate(bostate);
-    readDocumentGIObjectsMetaData.setUserlogin(userlogin);
-    readDocumentGIObjectsMetaData.setJobposition(rolle);
-    readDocumentGIObjectsMetaData.setJoboe(organisationseinheit);
-    readDocumentGIObjectsMetaData.setBusinessapp(anwendung);
-    return readDocumentGIObjectsMetaData;
+    readSubjectAreaGIObjectsMetaData.setObjaddress(objaddress);
+    readSubjectAreaGIObjectsMetaData.setDocstate(docstate);
+    readSubjectAreaGIObjectsMetaData.setBostate(bostate);
+    readSubjectAreaGIObjectsMetaData.setUserlogin(userlogin);
+    readSubjectAreaGIObjectsMetaData.setJobposition(rolle);
+    readSubjectAreaGIObjectsMetaData.setJoboe(organisationseinheit);
+    readSubjectAreaGIObjectsMetaData.setBusinessapp(anwendung);
+    return readSubjectAreaGIObjectsMetaData;
   }
 }
