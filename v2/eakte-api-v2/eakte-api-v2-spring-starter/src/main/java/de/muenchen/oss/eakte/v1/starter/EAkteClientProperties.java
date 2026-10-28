@@ -50,8 +50,7 @@ public class EAkteClientProperties {
         @NotNull
         private Mode mode;
         /**
-         * Spring OAuth2 client registration ID used only in client-credentials mode. Defaults
-         * to "eakte".
+         * Spring OAuth2 client registration ID used to acquire client-credentials tokens. Defaults to "eakte".
          */
         @NotBlank
         private String clientRegistrationId = "eakte";

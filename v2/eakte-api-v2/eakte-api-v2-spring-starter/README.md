@@ -5,24 +5,24 @@ explicitly with `eakte.auth.mode`.
 
 ## Starter Properties
 
-| Property | Required | Default | Description |
-| --- | --- | --- | --- |
-| `eakte.base-url` | Yes | None | Root URL for the API. Generated paths, including `/api/v2`, are appended. |
-| `eakte.connection-timeout` | No | `30s` | Maximum time to establish the API connection. |
-| `eakte.response-timeout` | No | `120s` | Maximum time to wait for an API response. |
-| `eakte.auth.mode` | Yes | None | Token mode: `existing-jwt`, `client-credentials`, or `custom`. |
-| `eakte.auth.client-registration-id` | No | `eakte` | Spring OAuth2 registration ID used only in `client-credentials` mode. |
+| Property                            | Required | Default | Description                                                                                  |
+|-------------------------------------|----------|---------|----------------------------------------------------------------------------------------------|
+| `eakte.base-url`                    | Yes      | None    | Root URL for the API. Generated paths, including `/api/v2`, are appended.                    |
+| `eakte.connection-timeout`          | No       | `30s`   | Maximum time to establish the API connection.                                                |
+| `eakte.response-timeout`            | No       | `120s`  | Maximum time to wait for an API response.                                                    |
+| `eakte.auth.mode`                   | Yes      | None    | Token mode: `existing-jwt`, `client-credentials`, or `custom`.                               |
+| `eakte.auth.client-registration-id` | No       | `eakte` | OAuth2 registration ID used for client-credentials tokens, including the custom-mode helper. |
 
 In `client-credentials` mode, configure the standard Spring OAuth2 client
 properties for that registration:
 
-| Spring property | Description |
-| --- | --- |
-| `spring.security.oauth2.client.registration.<id>.provider` | ID of the OAuth2 provider configuration. |
-| `spring.security.oauth2.client.registration.<id>.authorization-grant-type` | Set to `client_credentials`. |
-| `spring.security.oauth2.client.registration.<id>.client-id` | OAuth2 client ID. |
-| `spring.security.oauth2.client.registration.<id>.client-secret` | OAuth2 client secret; supply it from a secret store or environment variable. |
-| `spring.security.oauth2.client.provider.<provider>.issuer-uri` | OIDC issuer used to discover provider endpoints. |
+| Spring property                                                            | Description                                                                  |
+|----------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| `spring.security.oauth2.client.registration.<id>.provider`                 | ID of the OAuth2 provider configuration.                                     |
+| `spring.security.oauth2.client.registration.<id>.authorization-grant-type` | Set to `client_credentials`.                                                 |
+| `spring.security.oauth2.client.registration.<id>.client-id`                | OAuth2 client ID.                                                            |
+| `spring.security.oauth2.client.registration.<id>.client-secret`            | OAuth2 client secret; supply it from a secret store or environment variable. |
+| `spring.security.oauth2.client.provider.<provider>.issuer-uri`             | OIDC issuer used to discover provider endpoints.                             |
 
 ## Forward An Existing JWT
 
@@ -75,18 +75,29 @@ new one after expiry. The selected mode never falls back to the other mode.
 ## Custom Token
 
 In `custom` mode, the starter leaves the generated `ApiClient` bearer-token
-supplier unset. Inject that shared `ApiClient` and configure it before making API
-calls:
+supplier unset. Inject the shared `ApiClient` and `EAkteTokenProvider`, then choose
+one of the provider's token methods before making API calls.
+
+To forward the current JWT:
+
+```java
+apiClient.setBearerToken(tokenProvider::getExistingJwtAccessToken);
+```
+
+To use client credentials, configure the standard Spring OAuth2 registration shown
+above and use:
+
+```java
+apiClient.setBearerToken(tokenProvider::getClientCredentialsAccessToken);
+```
+
+For a completely application-defined token source, use either overload directly:
 
 ```java
 apiClient.setBearerToken("access-token");
+apiClient.setBearerToken(() -> tokenService.getAccessToken());
 ```
 
-For token refresh or per-thread token lookup, use the supplier overload instead:
-
-```java
-apiClient.setBearerToken(tokenProvider::getAccessToken);
-```
-
-The consumer owns token retrieval, refresh, and thread safety in this mode. Set the
-supplier once rather than mutating the shared client around individual requests.
+The consumer owns token retrieval, refresh, and thread safety for custom token
+sources. Set the supplier once rather than mutating the shared client around
+individual requests.
