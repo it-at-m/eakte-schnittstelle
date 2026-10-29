@@ -78,7 +78,7 @@ public class VorgangService {
 #### Starter Properties
 
 | Property                              | Required | Default | Description                                                                                  |
-|---------------------------------------|----------|---------|----------------------------------------------------------------------------------------------|
+| ------------------------------------- | -------- | ------- | -------------------------------------------------------------------------------------------- |
 | `eaktev2.base-url`                    | Yes      | None    | Root URL for the API. Generated paths, including `/api/v2`, are appended.                    |
 | `eaktev2.connection-timeout`          | No       | `30s`   | Maximum time to establish the API connection.                                                |
 | `eaktev2.response-timeout`            | No       | `120s`  | Maximum time to wait for an API response.                                                    |
