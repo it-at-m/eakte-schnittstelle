@@ -141,20 +141,20 @@ one of the provider's token methods before making API calls.
 
 To forward the current JWT:
 
-```
+```java
 apiClient.setBearerToken(tokenProvider::getExistingJwtAccessToken);
 ```
 
 To use client credentials, configure the standard Spring OAuth2 registration shown
 above and use:
 
-```
+```java
 apiClient.setBearerToken(tokenProvider::getClientCredentialsAccessToken);
 ```
 
 For a completely application-defined token source, use either overload directly:
 
-```
+```java
 apiClient.setBearerToken("access-token");
 apiClient.setBearerToken(() -> tokenService.getAccessToken());
 ```
