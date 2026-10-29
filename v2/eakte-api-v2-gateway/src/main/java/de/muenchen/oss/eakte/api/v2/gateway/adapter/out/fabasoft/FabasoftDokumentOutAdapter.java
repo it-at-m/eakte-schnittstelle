@@ -20,8 +20,8 @@ public class FabasoftDokumentOutAdapter implements DokumentOutPort {
     private final FabasoftDokumentMapper dokumentMapper;
 
     @Override
-    public List<DokumentResponse> searchBellowVorgang(final RequestContext context, final String vorgangsId, final SearchRequest request) {
-        final String vorgangParentQuery = FabasoftVorgangOutAdapter.getParentQuery(vorgangsId);
+    public List<DokumentResponse> searchBellowVorgang(final RequestContext context, final String vorgangId, final SearchRequest request) {
+        final String vorgangParentQuery = FabasoftVorgangOutAdapter.getParentQuery(vorgangId);
         final SearchRequest enrichedRequest = request
                 .addAttributes(DokumentAttribute.getReferences())
                 .concatQuery(vorgangParentQuery);

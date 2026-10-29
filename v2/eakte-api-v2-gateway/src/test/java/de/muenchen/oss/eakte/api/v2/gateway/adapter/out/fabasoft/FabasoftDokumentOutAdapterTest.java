@@ -75,8 +75,7 @@ class FabasoftDokumentOutAdapterTest {
     private static ResultObject resultWithRequiredAttributes() {
         return new ResultObject("document-name", "COO.2.3.4", List.of(
                 attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:Incoming"),
-                attribute(DokumentAttribute.PARENT_ID, "parent-id"),
-                attribute(DokumentAttribute.PARENT_TYPE, "DEPRECONFIG@15.1001:Procedure"),
+                attribute(DokumentAttribute.VORGANG_ID, "vorgang-id"),
                 attribute(DokumentAttribute.NAME, "short-name"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou")));

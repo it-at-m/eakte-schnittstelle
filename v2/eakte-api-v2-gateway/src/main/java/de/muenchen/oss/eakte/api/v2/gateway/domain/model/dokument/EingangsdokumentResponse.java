@@ -14,5 +14,4 @@ import lombok.experimental.SuperBuilder;
 public class EingangsdokumentResponse extends DokumentResponse {
     private final String fremdesGeschaeftszeichen;
     private final LocalDate eingangsdatum;
-    private final String hinweis;
 }

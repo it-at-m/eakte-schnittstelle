@@ -5,7 +5,7 @@ get:
   operationId: SearchVorgangsDokumente
   parameters:
     - in: path
-      name: vorgangsId
+      name: vorgangId
       schema:
         type: string
       required: true
@@ -26,7 +26,7 @@ get:
         GetVorgang:
           operationId: GetVorgang
           parameters:
-            vorgangsId: '$response.body#/parent.id'
+            vorgangId: '$response.body#/parent.id'
     '400':
       description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
       content:

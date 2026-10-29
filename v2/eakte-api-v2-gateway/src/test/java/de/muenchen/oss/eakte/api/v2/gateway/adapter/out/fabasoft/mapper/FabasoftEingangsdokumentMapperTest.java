@@ -9,7 +9,6 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.Fabasoft
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentKlasse;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentParent;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.EingangsdokumentResponse;
 import java.time.LocalDate;
 import java.util.List;
@@ -29,8 +28,7 @@ class FabasoftEingangsdokumentMapperTest {
 
         assertEquals("coo", mapped.getId());
         assertEquals(DokumentKlasse.EINGANG, mapped.getKlasse());
-        assertEquals(DokumentParent.VORGANG, mapped.getParent().type());
-        assertEquals("parent", mapped.getParent().id());
+        assertEquals("vorgang", mapped.getVorgangId());
         assertEquals("name", mapped.getName());
         assertEquals("long name", mapped.getLangname());
         assertEquals("subject", mapped.getBetreff());
@@ -52,15 +50,14 @@ class FabasoftEingangsdokumentMapperTest {
     private static ResultObject resultWithAttributes() {
         return new ResultObject("long name", "coo", List.of(
                 attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:Incoming"),
-                attribute(DokumentAttribute.PARENT_ID, "parent"),
-                attribute(DokumentAttribute.PARENT_TYPE, "DEPRECONFIG@15.1001:Procedure"),
+                attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
                 attribute(DokumentAttribute.NAME, "name"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
+                attribute(DokumentAttribute.HINWEIS, "note"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(EingangsdokumentAttribute.FREMDES_GESCHAEFTSZEICHEN, "external-reference"),
                 attribute(EingangsdokumentAttribute.EINGANGSDATUM, LocalDate.of(2025, 1, 2)),
-                attribute(EingangsdokumentAttribute.HINWEIS, "note"),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));
     }
 

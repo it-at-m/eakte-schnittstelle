@@ -15,5 +15,5 @@ import org.springframework.validation.annotation.Validated;
 public interface VorgangInPort {
     List<VorgangResponse> search(@NotNull RequestContext context, @NotNull @Valid SearchRequest request);
 
-    Optional<VorgangResponse> get(@NotNull RequestContext context, @NotBlank String vorgangsId, @NotNull Set<String> attributes);
+    Optional<VorgangResponse> get(@NotNull RequestContext context, @NotBlank String vorgangId, @NotNull Set<String> attributes);
 }
