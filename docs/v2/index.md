@@ -39,10 +39,11 @@ The following steps may change in the future.
 ### Spring Client
 
 For accessing the API the two following java packages are provided to be used with Spring Boot:
+
 - `de.muenchen.oss.eakte:eakte-api-v2-spring-client`: Plain Spring Rest Client without any configuration
 - `de.muenchen.oss.eakte:eakte-api-v2-spring-starter`: Beans, properties and configuration for the client
 
-To use one of them, it needs to be added as dependency. 
+To use one of them, it needs to be added as dependency.
 Further information regarding the starter can be found in the following.
 
 #### Using the Generated API
@@ -77,7 +78,7 @@ public class VorgangService {
 #### Starter Properties
 
 | Property                            | Required | Default | Description                                                                                  |
-|-------------------------------------|----------|---------|----------------------------------------------------------------------------------------------|
+| ----------------------------------- | -------- | ------- | -------------------------------------------------------------------------------------------- |
 | `eakte.base-url`                    | Yes      | None    | Root URL for the API. Generated paths, including `/api/v2`, are appended.                    |
 | `eakte.connection-timeout`          | No       | `30s`   | Maximum time to establish the API connection.                                                |
 | `eakte.response-timeout`            | No       | `120s`  | Maximum time to wait for an API response.                                                    |
