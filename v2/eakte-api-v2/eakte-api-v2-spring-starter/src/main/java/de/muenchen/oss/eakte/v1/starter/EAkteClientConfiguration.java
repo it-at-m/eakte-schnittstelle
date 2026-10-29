@@ -27,7 +27,7 @@ import org.springframework.web.client.RestClient;
 public class EAkteClientConfiguration {
 
     @Bean
-    protected ApiClient eakteApiClient(
+    protected ApiClient eakteApiV2Client(
             final EAkteClientProperties clientProperties, final EAkteTokenProvider tokenProvider) {
         final PoolingHttpClientConnectionManager connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
                 .setDefaultConnectionConfig(ConnectionConfig.custom()
