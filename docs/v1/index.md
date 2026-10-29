@@ -2,19 +2,10 @@
 
 ## API-Spezifikation (gemäß OpenAPI-Standard)
 
-- **aktuelle Version:**
-
-  siehe Information in Kopfzeilen der API-Spezifikation (im Source-Code oder in Swagger-UI)
-
-- **Source Code der Spec:**
-
-  [v1/eakte-api-v1](https://github.com/it-at-m/eakte-schnittstelle/tree/main/v1/eakte-api-v1)
-
-  Einstiegspunkt ist die Datei: [eakte-api--main.yaml](https://github.com/it-at-m/eakte-schnittstelle/blob/main/v1/eakte-api-v1/eakte-api-v1-spec/src/main/resources/eakte-api-spec/eakte-api--main.yaml)
-
-- **Swagger-UI zur interaktiven Erkundung:**
-
-  [SwaggerUI](./swagger-ui.md)
+- **aktuelle Version:** siehe Information in Kopfzeilen der API-Spezifikation (im Source-Code oder in Swagger-UI)
+- **Source Code der Spec:** [v1/eakte-api-v1](https://github.com/it-at-m/eakte-schnittstelle/tree/main/v1/eakte-api-v1)
+  - Einstiegspunkt ist die Datei: [eakte-api--main.yaml](https://github.com/it-at-m/eakte-schnittstelle/blob/main/v1/eakte-api-v1/eakte-api-v1-spec/src/main/resources/eakte-api-spec/eakte-api--main.yaml)
+- **Swagger-UI zur interaktiven Erkundung:** [SwaggerUI](./swagger-ui.md)
 
 ## Beschreibung der Schnittstellen-Anwendungsfälle
 
@@ -28,6 +19,11 @@ Quelltext und lauffähiges Image des eAkte-EAI-Adapters:
 - **Container Image:** [ghcr.io/it-at-m/eakte-schnittstelle/v1/eakte-eai](https://github.com/it-at-m/eakte-schnittstelle/pkgs/container/eakte-schnittstelle%2Fv1%2Feakte-eai)
 
 ## eAkte-Schnittstellen-Aufruf mit Spring Boot Client
+
+::: details Beantragen eines technischen Nutzers (internal)
+Für die Verwendung der V1 API wird ein technischer User benötigt, der über das ServiceNow Formular [eAkte-EAI Zugang](https://it-services.muenchen.de/sp?id=sc_cat_item&sys_id=c03385d13bf8ea506a40122a85e45a94)
+beantragt werden kann.
+:::
 
 Für die Nutzung des bereitgestellten Spring-Boot-Starter-Artefakts muss lediglich eine Abhängigkeit in die Projekt-POM eingetragen werden.
 
