@@ -1,4 +1,4 @@
-package de.muenchen.oss.eakte.v1.starter;
+package de.muenchen.oss.eakte.v2.starter;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ObjectProvider;

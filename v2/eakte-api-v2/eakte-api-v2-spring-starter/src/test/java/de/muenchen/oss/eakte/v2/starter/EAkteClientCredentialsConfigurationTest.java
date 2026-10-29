@@ -1,4 +1,4 @@
-package de.muenchen.oss.eakte.v1.starter;
+package de.muenchen.oss.eakte.v2.starter;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.containing;
@@ -13,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import de.muenchen.oss.eakte.v2.generated.api.VorgangApi;
-import de.muenchen.oss.eakte.v2.generated.dms.ApiClient;
 import de.muenchen.oss.eakte.v2.generated.model.Vorgang;
 import java.util.List;
 import org.junit.jupiter.api.AfterAll;
@@ -26,27 +25,18 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
-@SpringBootTest(classes = EAkteClientCustomAuthenticationConfigurationTest.TestApplication.class)
-class EAkteClientCustomAuthenticationConfigurationTest {
+@SpringBootTest(classes = EAkteClientCredentialsConfigurationTest.TestApplication.class)
+class EAkteClientCredentialsConfigurationTest {
 
-    private static final String ACCESS_TOKEN = "custom-access-token";
-    private static final String CLIENT_REGISTRATION_ID = "custom-eakte-client";
+    private static final String REGISTRATION_ID = "custom-eakte-client";
     private static final String PROVIDER_ID = "local-keycloak";
     private static final String CLIENT_ID = "test-client";
     private static final String CLIENT_SECRET = "test-secret";
-    private static final String CLIENT_ACCESS_TOKEN = "custom-client-access-token";
+    private static final String ACCESS_TOKEN = "service-access-token";
     private static final WireMockServer WIREMOCK = new WireMockServer(options().dynamicPort());
-
-    @Autowired
-    private EAkteTokenProvider tokenProvider;
-
-    @Autowired
-    private ApiClient apiClient;
 
     @Autowired
     private VorgangApi vorgangApi;
@@ -78,7 +68,7 @@ class EAkteClientCustomAuthenticationConfigurationTest {
     }
 
     @AfterEach
-    void clearTestState() {
+    void clearSecurityContext() {
         SecurityContextHolder.clearContext();
         WIREMOCK.resetAll();
     }
@@ -86,19 +76,19 @@ class EAkteClientCustomAuthenticationConfigurationTest {
     @DynamicPropertySource
     static void registerProperties(final DynamicPropertyRegistry registry) {
         registry.add("eakte.base-url", WIREMOCK::baseUrl);
-        registry.add("eakte.auth.mode", () -> "custom");
-        registry.add("eakte.auth.client-registration-id", () -> CLIENT_REGISTRATION_ID);
+        registry.add("eakte.auth.mode", () -> "client-credentials");
+        registry.add("eakte.auth.client-registration-id", () -> REGISTRATION_ID);
         registry.add(
-                "spring.security.oauth2.client.registration.%s.provider".formatted(CLIENT_REGISTRATION_ID),
+                "spring.security.oauth2.client.registration.%s.provider".formatted(REGISTRATION_ID),
                 () -> PROVIDER_ID);
         registry.add(
-                "spring.security.oauth2.client.registration.%s.authorization-grant-type".formatted(CLIENT_REGISTRATION_ID),
+                "spring.security.oauth2.client.registration.%s.authorization-grant-type".formatted(REGISTRATION_ID),
                 () -> "client_credentials");
         registry.add(
-                "spring.security.oauth2.client.registration.%s.client-id".formatted(CLIENT_REGISTRATION_ID),
+                "spring.security.oauth2.client.registration.%s.client-id".formatted(REGISTRATION_ID),
                 () -> CLIENT_ID);
         registry.add(
-                "spring.security.oauth2.client.registration.%s.client-secret".formatted(CLIENT_REGISTRATION_ID),
+                "spring.security.oauth2.client.registration.%s.client-secret".formatted(REGISTRATION_ID),
                 () -> CLIENT_SECRET);
         registry.add(
                 "spring.security.oauth2.client.provider.%s.issuer-uri".formatted(PROVIDER_ID),
@@ -111,22 +101,7 @@ class EAkteClientCustomAuthenticationConfigurationTest {
     static class TestApplication {}
 
     @Test
-    void giveCustomModeAndManuallySetBearerToken_thenUseConfiguredToken() {
-        apiClient.setBearerToken(ACCESS_TOKEN);
-        assertVorgangResponseUsesToken(ACCESS_TOKEN);
-    }
-
-    @Test
-    void giveCustomModeAndExistingJwtTokenProvider_thenUseCurrentJwt() {
-        SecurityContextHolder.getContext().setAuthentication(new JwtAuthenticationToken(
-                Jwt.withTokenValue("current-jwt").header("alg", "none").subject("user-1").build()));
-        apiClient.setBearerToken(tokenProvider::getExistingJwtAccessToken);
-
-        assertVorgangResponseUsesToken("current-jwt");
-    }
-
-    @Test
-    void giveCustomModeAndClientCredentialsTokenProvider_thenAcquireAndUseClientToken() {
+    void giveNoJwtAndClientCredentialsMode_thenAcquireAndReuseClientCredentialsToken() {
         WIREMOCK.stubFor(post(urlEqualTo("/oauth/token"))
                 .withRequestBody(containing("grant_type=client_credentials"))
                 .willReturn(aResponse()
@@ -138,30 +113,25 @@ class EAkteClientCustomAuthenticationConfigurationTest {
                                   "token_type": "Bearer",
                                   "expires_in": 300
                                 }
-                                """.formatted(CLIENT_ACCESS_TOKEN))));
-        apiClient.setBearerToken(tokenProvider::getClientCredentialsAccessToken);
-
-        assertVorgangResponseUsesToken(CLIENT_ACCESS_TOKEN);
-
-        WIREMOCK.verify(1, postRequestedFor(urlEqualTo("/oauth/token"))
-                .withRequestBody(containing("grant_type=client_credentials")));
-    }
-
-    private void assertVorgangResponseUsesToken(final String expectedToken) {
-        WIREMOCK.stubFor(get(urlEqualTo(
-                        "/api/v2/vorgaenge/%s".formatted(EAkteClientConfigurationTest.VORGANG_ID)))
+                                """.formatted(ACCESS_TOKEN))));
+        WIREMOCK.stubFor(get(urlEqualTo("/api/v2/vorgaenge/%s".formatted(EAkteClientConfigurationTest.VORGANG_ID)))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
                         .withBody(EAkteClientConfigurationTest.VORGANG_RESPONSE
                                 .formatted(EAkteClientConfigurationTest.VORGANG_ID))));
 
-        final Vorgang response = vorgangApi.getVorgang(
+        final Vorgang firstResponse = vorgangApi.getVorgang(
+                EAkteClientConfigurationTest.VORGANG_ID, "user-login", "Official", "COO.1.2301.1.ou", List.of());
+        final Vorgang secondResponse = vorgangApi.getVorgang(
                 EAkteClientConfigurationTest.VORGANG_ID, "user-login", "Official", "COO.1.2301.1.ou", List.of());
 
-        assertThat(response.getId()).isEqualTo(EAkteClientConfigurationTest.VORGANG_ID);
-        WIREMOCK.verify(getRequestedFor(urlEqualTo(
+        assertThat(firstResponse.getId()).isEqualTo(EAkteClientConfigurationTest.VORGANG_ID);
+        assertThat(secondResponse.getId()).isEqualTo(EAkteClientConfigurationTest.VORGANG_ID);
+        WIREMOCK.verify(1, postRequestedFor(urlEqualTo("/oauth/token"))
+                .withRequestBody(containing("grant_type=client_credentials")));
+        WIREMOCK.verify(2, getRequestedFor(urlEqualTo(
                         "/api/v2/vorgaenge/%s".formatted(EAkteClientConfigurationTest.VORGANG_ID)))
-                .withHeader("Authorization", equalTo("Bearer %s".formatted(expectedToken))));
+                .withHeader("Authorization", equalTo("Bearer %s".formatted(ACCESS_TOKEN))));
     }
 }

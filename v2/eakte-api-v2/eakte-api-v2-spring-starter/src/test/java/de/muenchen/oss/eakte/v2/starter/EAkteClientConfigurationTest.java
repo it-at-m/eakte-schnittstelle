@@ -1,4 +1,4 @@
-package de.muenchen.oss.eakte.v1.starter;
+package de.muenchen.oss.eakte.v2.starter;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
