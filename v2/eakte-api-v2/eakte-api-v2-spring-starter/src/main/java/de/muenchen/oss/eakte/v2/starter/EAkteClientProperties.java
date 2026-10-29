@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.time.Duration;
 
-@ConfigurationProperties("eakte")
+@ConfigurationProperties("eaktev2")
 @Data
 @Validated
 public class EAkteClientProperties {

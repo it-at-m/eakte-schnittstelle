@@ -77,13 +77,13 @@ public class VorgangService {
 
 #### Starter Properties
 
-| Property                            | Required | Default | Description                                                                                  |
-| ----------------------------------- | -------- | ------- | -------------------------------------------------------------------------------------------- |
-| `eakte.base-url`                    | Yes      | None    | Root URL for the API. Generated paths, including `/api/v2`, are appended.                    |
-| `eakte.connection-timeout`          | No       | `30s`   | Maximum time to establish the API connection.                                                |
-| `eakte.response-timeout`            | No       | `120s`  | Maximum time to wait for an API response.                                                    |
-| `eakte.auth.mode`                   | Yes      | None    | Token mode: `existing-jwt`, `client-credentials`, or `custom`.                               |
-| `eakte.auth.client-registration-id` | No       | `eakte` | OAuth2 registration ID used for client-credentials tokens, including the custom-mode helper. |
+| Property                              | Required | Default | Description                                                                                  |
+|---------------------------------------|----------|---------|----------------------------------------------------------------------------------------------|
+| `eaktev2.base-url`                    | Yes      | None    | Root URL for the API. Generated paths, including `/api/v2`, are appended.                    |
+| `eaktev2.connection-timeout`          | No       | `30s`   | Maximum time to establish the API connection.                                                |
+| `eaktev2.response-timeout`            | No       | `120s`  | Maximum time to wait for an API response.                                                    |
+| `eaktev2.auth.mode`                   | Yes      | None    | Token mode: `existing-jwt`, `client-credentials`, or `custom`.                               |
+| `eaktev2.auth.client-registration-id` | No       | `eakte` | OAuth2 registration ID used for client-credentials tokens, including the custom-mode helper. |
 
 #### Forward An Existing JWT
 
@@ -93,7 +93,7 @@ no JWT is present. The application must configure Spring Security to authenticat
 incoming JWTs.
 
 ```yaml
-eakte:
+eaktev2:
   base-url: https://eakte.example
   auth:
     mode: existing-jwt
@@ -109,7 +109,7 @@ Use this mode for service/background calls. `client-registration-id` defaults to
 secret in an external secret store or environment variable.
 
 ```yaml
-eakte:
+eaktev2:
   base-url: https://eakte.example
   auth:
     mode: client-credentials

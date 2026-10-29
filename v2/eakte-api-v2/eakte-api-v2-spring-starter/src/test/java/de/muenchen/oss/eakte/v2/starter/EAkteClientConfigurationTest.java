@@ -80,8 +80,8 @@ class EAkteClientConfigurationTest {
 
     @DynamicPropertySource
     static void registerProperties(final DynamicPropertyRegistry registry) {
-        registry.add("eakte.base-url", WIREMOCK::baseUrl);
-        registry.add("eakte.auth.mode", () -> "existing-jwt");
+        registry.add("eaktev2.base-url", WIREMOCK::baseUrl);
+        registry.add("eaktev2.auth.mode", () -> "existing-jwt");
     }
 
     @Test

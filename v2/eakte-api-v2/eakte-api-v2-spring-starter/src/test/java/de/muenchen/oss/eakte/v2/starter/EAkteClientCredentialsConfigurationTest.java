@@ -75,9 +75,9 @@ class EAkteClientCredentialsConfigurationTest {
 
     @DynamicPropertySource
     static void registerProperties(final DynamicPropertyRegistry registry) {
-        registry.add("eakte.base-url", WIREMOCK::baseUrl);
-        registry.add("eakte.auth.mode", () -> "client-credentials");
-        registry.add("eakte.auth.client-registration-id", () -> REGISTRATION_ID);
+        registry.add("eaktev2.base-url", WIREMOCK::baseUrl);
+        registry.add("eaktev2.auth.mode", () -> "client-credentials");
+        registry.add("eaktev2.auth.client-registration-id", () -> REGISTRATION_ID);
         registry.add(
                 "spring.security.oauth2.client.registration.%s.provider".formatted(REGISTRATION_ID),
                 () -> PROVIDER_ID);
