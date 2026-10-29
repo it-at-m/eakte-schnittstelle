@@ -35,7 +35,7 @@ class DokumenteE2ETest extends DokumenteE2eSupport {
             mockMvc.perform(get("/api/v2/vorgaenge/COO123.123.123/dokumente")
                     .header("Authorization", "Bearer %s".formatted(USER_IMPERSONATE))
                     .header("EAkte-Login-Name", "login")
-                    .header("EAkte-Rolle", "role")
+                    .header("EAkte-Rolle", "Sachbearbeitung")
                     .header("EAkte-Organisationseinheit", "ou")
                     .queryParam("limit", "123")
                     .queryParam("bedingungen", "document query")

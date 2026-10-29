@@ -9,6 +9,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.Eingangsdokume
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.controllers.EingangsdokumentApi;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Eingangsdokument;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.EingangsdokumentListeResponse;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Rolle;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.List;
@@ -21,21 +22,25 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 @RequiredArgsConstructor
-@SuppressWarnings({ "PMD.UseObjectForClearerAPI", "CPD-START" })
+@SuppressWarnings({ "CPD-START" })
 public class EingangsdokumentController implements EingangsdokumentApi {
     private final RequestContextFactory requestContextFactory;
     private final EingangsdokumentInPort eingangsdokumentInPort;
     private final EingangsdokumentMapper eingangsdokumentMapper;
+    private final CommonMapper commonMapper;
 
     @Override
     public ResponseEntity<Eingangsdokument> getEingangsdokument(
             final String eingangsdokumentId,
             final @Nullable String eakteLoginName,
-            final @Nullable String eakteRolle,
+            final @Nullable Rolle eakteRolle,
             final @Nullable String eakteOrganisationseinheit,
             final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
-        final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
+        final RequestContext requestContext = requestContextFactory.create(
+                eakteLoginName,
+                eakteOrganisationseinheit,
+                commonMapper.toDomain(eakteRolle));
         final EingangsdokumentResponse result = eingangsdokumentInPort.get(requestContext,
                 eingangsdokumentId,
                 eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of())
@@ -46,14 +51,17 @@ public class EingangsdokumentController implements EingangsdokumentApi {
     @Override
     public ResponseEntity<EingangsdokumentListeResponse> searchEingangsdokumente(
             final @Nullable String eakteLoginName,
-            final @Nullable String eakteRolle,
+            final @Nullable Rolle eakteRolle,
             final @Nullable String eakteOrganisationseinheit,
             final Integer limit,
             final @Nullable String bedingungen,
             final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
         // call
-        final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
+        final RequestContext requestContext = requestContextFactory.create(
+                eakteLoginName,
+                eakteOrganisationseinheit,
+                commonMapper.toDomain(eakteRolle));
         final SearchRequest request = SearchRequest.builder()
                 .limit(limit)
                 .query(bedingungen)

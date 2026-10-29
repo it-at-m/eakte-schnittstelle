@@ -1,5 +1,6 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft;
 
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftCommonMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 
 import java.net.URLEncoder;
@@ -29,10 +30,13 @@ public class RequestContextInjectInterceptor extends AbstractPhaseInterceptor<Me
     private static final String OU_QUERY_PARAM = "gx";
 
     private final RequestContextProvider contextProvider;
+    private final FabasoftCommonMapper commonMapper;
 
-    protected RequestContextInjectInterceptor(final RequestContextProvider contextProvider) {
+    protected RequestContextInjectInterceptor(final RequestContextProvider contextProvider,
+            final FabasoftCommonMapper commonMapper) {
         super(Phase.PREPARE_SEND);
         this.contextProvider = contextProvider;
+        this.commonMapper = commonMapper;
     }
 
     @Override
@@ -41,7 +45,7 @@ public class RequestContextInjectInterceptor extends AbstractPhaseInterceptor<Me
         if (context == null) {
             throw new IllegalStateException("Request context needs to be set before SOAP requests");
         }
-        if (contextProvider.get().impersonationUser() == null) {
+        if (context.impersonationUser() == null) {
             return;
         }
 
@@ -67,10 +71,11 @@ public class RequestContextInjectInterceptor extends AbstractPhaseInterceptor<Me
             throw new IllegalStateException("CXF endpoint URI needs to be present");
         }
         final Map<String, String> params = new HashMap<>();
-        if (StringUtils.hasText(contextProvider.get().role())) {
-            params.put(ROLE_QUERY_PARAM, context.role());
+        if (context.role() != null) {
+            final String roleId = commonMapper.fromDomain(context.role()).getId();
+            params.put(ROLE_QUERY_PARAM, roleId);
         }
-        if (StringUtils.hasText(contextProvider.get().ou())) {
+        if (StringUtils.hasText(context.ou())) {
             params.put(OU_QUERY_PARAM, context.ou());
 
         }
