@@ -26,7 +26,7 @@ tags:
   - name: Internes Dokument
     description: Internal (Sub-Klasse von Dokument)
 paths:
-  /api/v2/akten/{akteId}/dokumente:
+  /api/v2/akten/{akteId}/vorgaenge:
     get:
       tags:
         - Vorgang

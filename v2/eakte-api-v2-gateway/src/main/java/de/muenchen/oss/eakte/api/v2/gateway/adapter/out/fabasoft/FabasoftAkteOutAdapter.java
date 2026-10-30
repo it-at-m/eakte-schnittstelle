@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 @Service
+@SuppressWarnings("PMD.UseUtilityClass")
 public class FabasoftAkteOutAdapter {
     private static final String PARENT_QUERY = ".COOELAK@1.1001:referrednumber = '%s'";
 
