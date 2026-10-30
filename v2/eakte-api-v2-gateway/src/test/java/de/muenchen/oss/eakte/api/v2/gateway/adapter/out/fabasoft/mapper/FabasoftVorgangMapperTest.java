@@ -24,6 +24,7 @@ class FabasoftVorgangMapperTest {
                 attribute(VorgangAttribute.PARENT_ID, "akte"),
                 attribute(VorgangAttribute.NAME, "name"),
                 attribute(VorgangAttribute.BETREFF, "subject"),
+                attribute(VorgangAttribute.HINWEIS, "note"),
                 attribute(VorgangAttribute.STATUS, BigInteger.valueOf(30)),
                 attribute(VorgangAttribute.BEARBEITUNGSSTATUS, "processing"),
                 attribute(VorgangAttribute.ZUGRIFFSDEFINITION, "access"),
@@ -39,6 +40,7 @@ class FabasoftVorgangMapperTest {
         assertEquals("name", mapped.name());
         assertEquals("long name", mapped.langname());
         assertEquals("subject", mapped.betreff());
+        assertEquals("note", mapped.hinweis());
         assertEquals("remark", mapped.geschaeftsgangvermerk());
         assertEquals(VorgangMedium.PAPIER, mapped.originalMedium());
         assertEquals(VorgangStatus.ABGESCHLOSSEN, mapped.status());

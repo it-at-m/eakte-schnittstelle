@@ -41,6 +41,8 @@ tags:
 
 paths:
   # Vorgang
+  '/api/v2/akten/{akteId}/vorgaenge':
+    $ref: 'AkteVorgaenge.yaml'
   '/api/v2/vorgaenge':
     $ref: 'Vorgaenge.yaml'
   '/api/v2/vorgaenge/{vorgangsId}':
