@@ -43,6 +43,7 @@ and the property name in the V2 API is given.
 | COOELAK@1.1001:objmlname.langstring        | Titel                                            | RW   | shortname       | name                  |
 | COOSYSTEM@1.1:objname                      | Name (Übersicht)                                 | R    | objname         | langname              |
 | COOELAK@1.1001:filesubj                    | Betreff                                          | RW   | filesubj        | betreff               |
+| DEPRECONFIG@15.1001:procsubject            | Hiweis                                           | RW   | -               | hinweis               |
 | FSCTERM@1.1001:objterms.name               | Schlagworte                                      | RW   | objterms        | -                     |
 | DEPRECONFIG@15.1001:fileruntimefrom        |                                                  | RW   | fileruntimefrom | -                     |
 | DEPRECONFIG@15.1001:fileruntimetill        |                                                  | RW   | fileruntimetill | -                     |

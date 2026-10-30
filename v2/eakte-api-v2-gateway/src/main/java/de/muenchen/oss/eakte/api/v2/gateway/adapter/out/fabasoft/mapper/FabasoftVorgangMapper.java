@@ -28,6 +28,7 @@ public class FabasoftVorgangMapper {
                 .langname(result.name())
                 .name(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.NAME.getReference(), String.class).orElseThrow())
                 .betreff(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.BETREFF.getReference(), String.class).orElse(null))
+                .hinweis(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.HINWEIS.getReference(), String.class).orElse(null))
                 .geschaeftsgangvermerk(
                         attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.GESCHAEFTSGANGVERMERK.getReference(), String.class).orElse(null))
                 .originalMedium(mapMedium(referenceValueMap))

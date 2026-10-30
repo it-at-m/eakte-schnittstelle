@@ -607,6 +607,8 @@ components:
           type: string
         betreff:
           type: string
+        hinweis:
+          type: string
         geschaeftsgangvermerk:
           type: string
           description: Geschäftsgangvermerk für Prozessverantwortlichen
