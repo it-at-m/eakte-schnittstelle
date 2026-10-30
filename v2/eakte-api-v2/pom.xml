@@ -6,16 +6,25 @@
 
   <groupId>de.muenchen.oss.eakte</groupId>
   <artifactId>eakte-api-v2</artifactId>
+  <name>eakte-api-v2</name>
   <version>2.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-
+  <description>eAkte V2 API specification components</description>
+  <url>https://github.com/it-at-m/eakte-schnittstelle</url>
   <licenses>
     <license>
-      <name>MIT License</name>
+      <name>MIT</name>
       <url>https://opensource.org/licenses/MIT</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
+  <developers>
+    <developer>
+      <email>opensource@muenchen.de</email>
+      <url>https://github.com/it-at-m</url>
+      <organization>it@M</organization>
+    </developer>
+  </developers>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -34,6 +43,13 @@
     <module>eakte-api-v2-spring-client</module>
     <module>eakte-api-v2-spring-starter</module>
   </modules>
+
+  <scm child.scm.connection.inherit.append.path="false" child.scm.developerConnection.inherit.append.path="false" child.scm.url.inherit.append.path="false">
+    <connection>scm:git:https://github.com/it-at-m/eakte-schnittstelle.git</connection>
+    <developerConnection>scm:git:https://github.com/it-at-m/eakte-schnittstelle.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/it-at-m/eakte-schnittstelle.git</url>
+  </scm>
 
   <build>
     <plugins>
