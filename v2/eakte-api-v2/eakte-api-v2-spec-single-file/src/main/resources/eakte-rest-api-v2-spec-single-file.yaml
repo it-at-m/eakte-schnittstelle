@@ -26,6 +26,54 @@ tags:
   - name: Internes Dokument
     description: Internal (Sub-Klasse von Dokument)
 paths:
+  /api/v2/akten/{akteId}/dokumente:
+    get:
+      tags:
+        - Vorgang
+      summary: Vorgänge einer Akte
+      operationId: SearchAkteVorgeange
+      parameters:
+        - in: path
+          name: akteId
+          schema:
+            type: string
+          required: true
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Bedingungen'
+        - $ref: '#/components/parameters/Eigenschaften'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VorgangListeResponse'
+          links:
+            GetVorgang:
+              operationId: GetVorgang
+              parameters:
+                vorgangsId: $response.body#/parent.id
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /api/v2/vorgaenge:
     get:
       tags:

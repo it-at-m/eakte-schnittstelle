@@ -67,4 +67,29 @@ public class VorgangController implements VorgangApi {
                 .orElseThrow(ResourceNotFoundException::new);
         return ResponseEntity.of(Optional.of(vorgangMapper.fromDomain(result)));
     }
+
+    @Override
+    public ResponseEntity<VorgangListeResponse> searchAkteVorgeange(
+            final String akteId,
+            final @Nullable String eakteLoginName,
+            final @Nullable String eakteRolle,
+            final @Nullable String eakteOrganisationseinheit,
+            final Integer limit,
+            final @Nullable String bedingungen,
+            final List<String> eigenschaften,
+            final HttpServletRequest servletRequest) {
+        final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
+        final SearchRequest request = SearchRequest.builder()
+                .limit(limit)
+                .query(bedingungen)
+                .attributes(eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of()).build();
+        final List<VorgangResponse> result = vorgangInPort.searchBellowAkte(requestContext, akteId, request);
+        // respond
+        final VorgangListeResponse response = VorgangListeResponse.builder()
+                .anzahl(result.size())
+                .elemente(vorgangMapper.fromDomain(result))
+                .build();
+        return ResponseEntity.of(Optional.of(response));
+
+    }
 }
