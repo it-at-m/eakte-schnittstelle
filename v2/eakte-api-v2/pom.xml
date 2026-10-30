@@ -4,7 +4,7 @@
 
   <groupId>de.muenchen.oss.eakte</groupId>
   <artifactId>eakte-api-v2</artifactId>
-  <version>0.0.1-SNAPHOT</version>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <licenses>

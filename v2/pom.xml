@@ -4,7 +4,7 @@
 
   <groupId>de.muenchen.oss.eakte</groupId>
   <artifactId>eakte-schnittstelle-v2</artifactId>
-  <version>0.0.1-SNAPHOT</version>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>eakte-api-v2</name>
@@ -34,7 +34,7 @@
   <scm child.scm.connection.inherit.append.path="false" child.scm.developerConnection.inherit.append.path="false" child.scm.url.inherit.append.path="false">
     <connection>scm:git:https://github.com/it-at-m/eakte-schnittstelle.git</connection>
     <developerConnection>scm:git:https://github.com/it-at-m/eakte-schnittstelle.git</developerConnection>
-    <tag>eakte-schnittstelle-v2-0.0.1-SNAPHOT</tag>
+    <tag>HEAD</tag>
     <url>https://github.com/it-at-m/eakte-schnittstelle.git</url>
   </scm>
 </project>
