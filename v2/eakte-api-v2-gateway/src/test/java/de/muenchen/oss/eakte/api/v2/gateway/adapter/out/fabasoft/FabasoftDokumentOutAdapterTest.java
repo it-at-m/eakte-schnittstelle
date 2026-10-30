@@ -53,7 +53,7 @@ class FabasoftDokumentOutAdapterTest {
         assertEquals(List.of(dokumentMapper.toDomain(result.getFirst())), actual);
         final SearchRequest forwardedRequest = requestCaptor.getValue();
         assertEquals(REQUEST.limit(), forwardedRequest.limit());
-        assertEquals("(where) AND (.COOELAK@1.1001:referrednumber.COOSYSTEM@1.1:objaddress = 'COO.1.2.3')",
+        assertEquals("(where) AND (.COOELAK@1.1001:referrednumber = 'COO.1.2.3')",
                 forwardedRequest.query());
         assertTrue(forwardedRequest.attributes().containsAll(REQUEST.attributes()));
         assertTrue(forwardedRequest.attributes().containsAll(DokumentAttribute.getReferences()));
@@ -68,7 +68,7 @@ class FabasoftDokumentOutAdapterTest {
         new FabasoftDokumentOutAdapter(searchService, dokumentMapper)
                 .searchBellowVorgang(CONTEXT, "COO.1.2.3", request);
 
-        assertEquals(".COOELAK@1.1001:referrednumber.COOSYSTEM@1.1:objaddress = 'COO.1.2.3'",
+        assertEquals(".COOELAK@1.1001:referrednumber = 'COO.1.2.3'",
                 requestCaptor.getValue().query());
     }
 

@@ -26,6 +26,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class VorgangUseCaseTest {
     private static final RequestContext CONTEXT = new RequestContext("user", "ou", "role");
     private static final String VORGANG_ID = "vorgang-id";
+    private static final String AKTE_ID = "akte-id";
     private static final Set<String> DFV_ATTRIBUTES = Set.of("dfv.one");
     private static final Set<String> EXPLICIT_ATTRIBUTES = Set.of("explicit");
 
@@ -60,6 +61,24 @@ class VorgangUseCaseTest {
             assertEquals(expected, result);
             verify(dfvHelper).enrichWithDfv(CONTEXT, ObjectType.VORGANG, request);
             verify(vorgangOutPort).search(CONTEXT, enrichedRequest);
+        }
+    }
+
+    @Nested
+    class SearchBellowAkte {
+        @Test
+        void givenSearchRequest_thenDelegateEnrichedRequestAndReturnResults() {
+            final SearchRequest request = requestWithAttributes(EXPLICIT_ATTRIBUTES);
+            final SearchRequest enrichedRequest = requestWithAttributes(DFV_ATTRIBUTES);
+            final List<VorgangResponse> expected = List.of(VorgangResponse.builder().id(VORGANG_ID).build());
+            when(dfvHelper.enrichWithDfv(CONTEXT, ObjectType.VORGANG, request)).thenReturn(enrichedRequest);
+            when(vorgangOutPort.searchBellowAkte(CONTEXT, AKTE_ID, enrichedRequest)).thenReturn(expected);
+
+            final List<VorgangResponse> result = useCase.searchBellowAkte(CONTEXT, AKTE_ID, request);
+
+            assertEquals(expected, result);
+            verify(dfvHelper).enrichWithDfv(CONTEXT, ObjectType.VORGANG, request);
+            verify(vorgangOutPort).searchBellowAkte(CONTEXT, AKTE_ID, enrichedRequest);
         }
     }
 
