@@ -12,6 +12,7 @@
   </parent>
 
   <artifactId>eakte-api-v2-spec</artifactId>
+  <name>eakte-api-v2-spec</name>
 
   <build>
     <plugins>
