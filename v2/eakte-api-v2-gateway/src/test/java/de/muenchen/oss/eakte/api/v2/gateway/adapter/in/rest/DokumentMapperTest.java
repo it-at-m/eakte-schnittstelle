@@ -44,8 +44,8 @@ class DokumentMapperTest {
 
     @Test
     void givenDokumentKlasse_thenMapEnumValue() {
-        assertEquals(Dokument.KlasseEnum.INTERN, mapper.fromDomain(DokumentKlasse.INTERN));
-        assertEquals(Dokument.KlasseEnum.EINGANG, mapper.fromDomain(DokumentKlasse.EINGANG));
+        assertEquals(Dokument.KlasseEnum.INTERNES_DOKUMENT, mapper.fromDomain(DokumentKlasse.INTERNES_DOKUMENT));
+        assertEquals(Dokument.KlasseEnum.EINGANGSDOKUMENT, mapper.fromDomain(DokumentKlasse.EINGANGSDOKUMENT));
         assertEquals(Dokument.KlasseEnum.ERLEDIGUNG, mapper.fromDomain(DokumentKlasse.ERLEDIGUNG));
     }
 
@@ -53,7 +53,7 @@ class DokumentMapperTest {
     void givenDokumentResponses_thenMapAllResponses() {
         final DokumentResponse response = DokumentResponse.builder()
                 .id("id")
-                .klasse(DokumentKlasse.INTERN)
+                .klasse(DokumentKlasse.INTERNES_DOKUMENT)
                 .name("name")
                 .langname("long name")
                 .build();

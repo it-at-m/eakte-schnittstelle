@@ -18,7 +18,7 @@ class EingangsdokumentMapperTest {
     void givenEingangsdokumentResponse_thenMapAllFields() {
         final EingangsdokumentResponse response = EingangsdokumentResponse.builder()
                 .id("id")
-                .klasse(DokumentKlasse.EINGANG)
+                .klasse(DokumentKlasse.EINGANGSDOKUMENT)
                 .vorgangId("vorgang")
                 .name("name")
                 .langname("long name")
@@ -35,7 +35,7 @@ class EingangsdokumentMapperTest {
         final Eingangsdokument result = mapper.fromDomain(response);
 
         assertEquals("id", result.getId());
-        assertEquals(Eingangsdokument.KlasseEnum.EINGANG, result.getKlasse());
+        assertEquals(Eingangsdokument.KlasseEnum.EINGANGSDOKUMENT, result.getKlasse());
         assertEquals("vorgang", result.getVorgangId());
         assertEquals("name", result.getName());
         assertEquals("long name", result.getLangname());
@@ -53,7 +53,7 @@ class EingangsdokumentMapperTest {
     void givenEingangsdokumentResponses_thenMapAllResponses() {
         final EingangsdokumentResponse response = EingangsdokumentResponse.builder()
                 .id("id")
-                .klasse(DokumentKlasse.EINGANG)
+                .klasse(DokumentKlasse.EINGANGSDOKUMENT)
                 .build();
 
         final List<Eingangsdokument> result = mapper.fromDomain(List.of(response));

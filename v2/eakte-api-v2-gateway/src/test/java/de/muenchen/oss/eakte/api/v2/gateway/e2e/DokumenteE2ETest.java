@@ -43,7 +43,7 @@ class DokumenteE2ETest extends DokumenteE2eSupport {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.anzahl").value(1))
                     .andExpect(jsonPath("$.elemente[0].id").value("COO.2.3.4"))
-                    .andExpect(jsonPath("$.elemente[0].klasse").value("Eingang"))
+                    .andExpect(jsonPath("$.elemente[0].klasse").value("Eingangsdokument"))
                     .andExpect(jsonPath("$.elemente[0].vorgangId").value("COO123.123.123"))
                     .andExpect(jsonPath("$.elemente[0].name").value("short-name"))
                     .andExpect(jsonPath("$.elemente[0].langname").value("document-name"))

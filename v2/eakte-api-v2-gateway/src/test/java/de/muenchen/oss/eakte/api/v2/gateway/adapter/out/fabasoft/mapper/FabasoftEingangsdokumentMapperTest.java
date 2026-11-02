@@ -27,7 +27,7 @@ class FabasoftEingangsdokumentMapperTest {
         final EingangsdokumentResponse mapped = mapper.toDomain(result);
 
         assertEquals("coo", mapped.getId());
-        assertEquals(DokumentKlasse.EINGANG, mapped.getKlasse());
+        assertEquals(DokumentKlasse.EINGANGSDOKUMENT, mapped.getKlasse());
         assertEquals("vorgang", mapped.getVorgangId());
         assertEquals("name", mapped.getName());
         assertEquals("long name", mapped.getLangname());

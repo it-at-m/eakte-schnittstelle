@@ -51,9 +51,9 @@ public class FabasoftDokumentMapper {
         final String referenceStr = attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.KLASSE.getReference(), String.class).orElse(null);
         final FabasoftObjectType fabasoftType = FabasoftObjectType.fromFabasoftReference(referenceStr);
         return switch (fabasoftType) {
-        case EINGANGSDOKUMENT -> DokumentKlasse.EINGANG;
+        case EINGANGSDOKUMENT -> DokumentKlasse.EINGANGSDOKUMENT;
         case ERLEDIGUNG -> DokumentKlasse.ERLEDIGUNG;
-        case INTERNES_DOKUMENT -> DokumentKlasse.INTERN;
+        case INTERNES_DOKUMENT -> DokumentKlasse.INTERNES_DOKUMENT;
         case null, default -> throw new IllegalStateException("Unexpected value: " + referenceStr);
         };
     }
