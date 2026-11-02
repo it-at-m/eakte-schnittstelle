@@ -43,7 +43,7 @@ class InternesDokumentE2ETest extends InternesDokumentE2eSupport {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.anzahl").value(1))
                     .andExpect(jsonPath("$.elemente[0].id").value("COO.4.5.6"))
-                    .andExpect(jsonPath("$.elemente[0].klasse").value("Intern"))
+                    .andExpect(jsonPath("$.elemente[0].klasse").value("Internes Dokument"))
                     .andExpect(jsonPath("$.elemente[0].vorgangId").value("COO.1.2.3"))
                     .andExpect(jsonPath("$.elemente[0].name").value("short-name"))
                     .andExpect(jsonPath("$.elemente[0].langname").value("internal-name"))
@@ -99,7 +99,7 @@ class InternesDokumentE2ETest extends InternesDokumentE2eSupport {
                     .queryParam("eigenschaften", "custom.attribute"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").value("COO.4.5.6"))
-                    .andExpect(jsonPath("$.klasse").value("Intern"))
+                    .andExpect(jsonPath("$.klasse").value("Internes Dokument"))
                     .andExpect(jsonPath("$.zustellungsDatum").value("2025-01-02"))
                     .andExpect(jsonPath("$.dokumententyp").value("letter"))
                     .andExpect(jsonPath("$.anlagenBeschreibung").value("additional enclosure"));

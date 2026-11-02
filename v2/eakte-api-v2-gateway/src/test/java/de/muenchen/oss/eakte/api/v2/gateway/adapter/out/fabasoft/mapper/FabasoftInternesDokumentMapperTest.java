@@ -27,7 +27,7 @@ class FabasoftInternesDokumentMapperTest {
         final InternesDokumentResponse mapped = mapper.toDomain(resultWithAttributes());
 
         assertEquals(DOKUMENT_ID, mapped.getId());
-        assertEquals(DokumentKlasse.INTERN, mapped.getKlasse());
+        assertEquals(DokumentKlasse.INTERNES_DOKUMENT, mapped.getKlasse());
         assertEquals("vorgang", mapped.getVorgangId());
         assertEquals("name", mapped.getName());
         assertEquals("long name", mapped.getLangname());

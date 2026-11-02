@@ -18,7 +18,7 @@ class InternesDokumentMapperTest {
     void givenInternesDokumentResponse_thenMapAllFields() {
         final InternesDokumentResponse response = InternesDokumentResponse.builder()
                 .id("id")
-                .klasse(DokumentKlasse.INTERN)
+                .klasse(DokumentKlasse.INTERNES_DOKUMENT)
                 .vorgangId("vorgang")
                 .name("name")
                 .langname("long name")
@@ -35,7 +35,7 @@ class InternesDokumentMapperTest {
         final InternesDokument result = mapper.fromDomain(response);
 
         assertEquals("id", result.getId());
-        assertEquals(InternesDokument.KlasseEnum.INTERN, result.getKlasse());
+        assertEquals(InternesDokument.KlasseEnum.INTERNES_DOKUMENT, result.getKlasse());
         assertEquals("vorgang", result.getVorgangId());
         assertEquals("name", result.getName());
         assertEquals("long name", result.getLangname());
@@ -54,7 +54,7 @@ class InternesDokumentMapperTest {
     void givenInternesDokumentResponses_thenMapAllResponses() {
         final InternesDokumentResponse response = InternesDokumentResponse.builder()
                 .id("id")
-                .klasse(DokumentKlasse.INTERN)
+                .klasse(DokumentKlasse.INTERNES_DOKUMENT)
                 .build();
 
         final List<InternesDokument> result = mapper.fromDomain(List.of(response));
