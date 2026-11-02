@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 public enum DokumentAttribute {
     KLASSE("COOSYSTEM@1.1:objclass.COOSYSTEM@1.1:fullreference", AttributeType.STRING),
     VORGANG_ID("COOELAK@1.1001:referrednumber", AttributeType.OBJECT),
-    NAME("COOELAK@1.1001:objmlname.langstring", AttributeType.STRING),
+    TITEL("COOELAK@1.1001:objmlname.langstring", AttributeType.STRING),
     BETREFF("COOELAK@1.1001:filesubj", AttributeType.STRING),
     HINWEIS("DEPRECONFIG@15.1001:fileaddsubj", AttributeType.STRING),
     ZUGRIFFSDEFINITION("FSCFOLIO@1.1001:objaccdef.name", AttributeType.STRING),

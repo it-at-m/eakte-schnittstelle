@@ -19,8 +19,8 @@ class DokumentMapperTest {
                 .id("id")
                 .klasse(DokumentKlasse.ERLEDIGUNG)
                 .vorgangId("vorgang")
+                .titel("titel")
                 .name("name")
-                .langname("long name")
                 .betreff("subject")
                 .hinweis("note")
                 .zugriffsdefinition("access")
@@ -34,7 +34,7 @@ class DokumentMapperTest {
         assertEquals(Dokument.KlasseEnum.ERLEDIGUNG, result.getKlasse());
         assertEquals("vorgang", result.getVorgangId());
         assertEquals("name", result.getName());
-        assertEquals("long name", result.getLangname());
+        assertEquals("titel", result.getTitel());
         assertEquals("subject", result.getBetreff());
         assertEquals("note", result.getHinweis());
         assertEquals("access", result.getZugriffsdefinition());
@@ -54,8 +54,8 @@ class DokumentMapperTest {
         final DokumentResponse response = DokumentResponse.builder()
                 .id("id")
                 .klasse(DokumentKlasse.INTERNES_DOKUMENT)
+                .titel("titel")
                 .name("name")
-                .langname("long name")
                 .build();
 
         final List<Dokument> result = mapper.fromDomain(List.of(response));

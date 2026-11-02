@@ -592,7 +592,7 @@ components:
         - id
         - akteId
         - name
-        - langname
+        - titel
         - originalMedium
         - status
         - bearbeitungsstatus
@@ -604,9 +604,9 @@ components:
           type: string
         akteId:
           type: string
-        name:
+        titel:
           type: string
-        langname:
+        name:
           type: string
         betreff:
           type: string
@@ -672,11 +672,11 @@ components:
     DokumentBase:
       type: object
       required:
-        - name
+        - titel
       properties:
         vorgangId:
           type: string
-        name:
+        titel:
           type: string
         betreff:
           type: string
@@ -693,7 +693,7 @@ components:
       required:
         - klasse
         - id
-        - langname
+        - name
       properties:
         klasse:
           type: string
@@ -703,7 +703,7 @@ components:
             - Internes Dokument
         id:
           type: string
-        langname:
+        name:
           type: string
         weitereEigenschaften:
           type: array

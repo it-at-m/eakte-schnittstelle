@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum VorgangAttribute {
     PARENT_ID("COOELAK@1.1001:referrednumber", AttributeType.OBJECT),
-    NAME("COOELAK@1.1001:objmlname.langstring", AttributeType.STRING),
+    TITEL("COOELAK@1.1001:objmlname.langstring", AttributeType.STRING),
     BETREFF("COOELAK@1.1001:filesubj", AttributeType.STRING),
     HINWEIS("DEPRECONFIG@15.1001:procsubject", AttributeType.STRING),
     STATUS("FSCFOLIO@1.1001:objdocstate", AttributeType.ENUM),

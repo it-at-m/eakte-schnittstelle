@@ -19,8 +19,8 @@ class VorgangMapperTest {
         final VorgangResponse response = VorgangResponse.builder()
                 .id("id")
                 .akteId("akte")
+                .titel("titel")
                 .name("name")
-                .langname("long name")
                 .betreff("subject")
                 .geschaeftsgangvermerk("remark")
                 .originalMedium(VorgangMedium.PAPIER)
@@ -36,7 +36,7 @@ class VorgangMapperTest {
         assertEquals("id", result.getId());
         assertEquals("akte", result.getAkteId());
         assertEquals("name", result.getName());
-        assertEquals("long name", result.getLangname());
+        assertEquals("titel", result.getTitel());
         assertEquals("subject", result.getBetreff());
         assertEquals("remark", result.getGeschaeftsgangvermerk());
         assertEquals(Vorgang.OriginalMediumEnum.PAPIER, result.getOriginalMedium());
@@ -52,7 +52,7 @@ class VorgangMapperTest {
         final VorgangResponse response = VorgangResponse.builder()
                 .id("id")
                 .name("name")
-                .langname("long name")
+                .titel("long name")
                 .build();
 
         final List<Vorgang> result = mapper.fromDomain(List.of(response));

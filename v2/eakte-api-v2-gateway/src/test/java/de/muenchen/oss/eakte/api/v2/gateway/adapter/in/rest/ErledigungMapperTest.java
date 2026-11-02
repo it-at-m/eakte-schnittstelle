@@ -19,8 +19,8 @@ class ErledigungMapperTest {
                 .id("id")
                 .klasse(DokumentKlasse.ERLEDIGUNG)
                 .vorgangId("vorgang")
+                .titel("titel")
                 .name("name")
-                .langname("long name")
                 .betreff("subject")
                 .hinweis("note")
                 .zugriffsdefinition("access")
@@ -36,8 +36,8 @@ class ErledigungMapperTest {
         assertEquals("id", result.getId());
         assertEquals(Erledigung.KlasseEnum.ERLEDIGUNG, result.getKlasse());
         assertEquals("vorgang", result.getVorgangId());
+        assertEquals("titel", result.getTitel());
         assertEquals("name", result.getName());
-        assertEquals("long name", result.getLangname());
         assertEquals("subject", result.getBetreff());
         assertEquals("note", result.getHinweis());
         assertEquals("access", result.getZugriffsdefinition());

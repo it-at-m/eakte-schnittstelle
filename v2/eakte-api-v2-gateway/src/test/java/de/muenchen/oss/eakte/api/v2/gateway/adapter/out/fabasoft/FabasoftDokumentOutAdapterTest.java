@@ -73,10 +73,10 @@ class FabasoftDokumentOutAdapterTest {
     }
 
     private static ResultObject resultWithRequiredAttributes() {
-        return new ResultObject("document-name", "COO.2.3.4", List.of(
+        return new ResultObject("name", "COO.2.3.4", List.of(
                 attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:Incoming"),
                 attribute(DokumentAttribute.VORGANG_ID, "vorgang-id"),
-                attribute(DokumentAttribute.NAME, "short-name"),
+                attribute(DokumentAttribute.TITEL, "titel"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou")));
     }

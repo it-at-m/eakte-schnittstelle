@@ -36,8 +36,8 @@ public class FabasoftDokumentMapper {
                 .id(result.coo())
                 .klasse(this.mapKlasse(referenceValueMap))
                 .vorgangId(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.VORGANG_ID.getReference(), String.class).orElse(null))
-                .langname(result.name())
-                .name(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.NAME.getReference(), String.class).orElseThrow())
+                .name(result.name())
+                .titel(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.TITEL.getReference(), String.class).orElseThrow())
                 .betreff(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.BETREFF.getReference(), String.class).orElse(null))
                 .hinweis(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.HINWEIS.getReference(), String.class).orElse(null))
                 .zugriffsdefinition(

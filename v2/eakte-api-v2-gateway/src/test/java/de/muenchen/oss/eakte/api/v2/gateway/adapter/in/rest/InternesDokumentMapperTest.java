@@ -20,8 +20,8 @@ class InternesDokumentMapperTest {
                 .id("id")
                 .klasse(DokumentKlasse.INTERNES_DOKUMENT)
                 .vorgangId("vorgang")
+                .titel("titel")
                 .name("name")
-                .langname("long name")
                 .betreff("subject")
                 .hinweis("note")
                 .zugriffsdefinition("access")
@@ -38,7 +38,7 @@ class InternesDokumentMapperTest {
         assertEquals(InternesDokument.KlasseEnum.INTERNES_DOKUMENT, result.getKlasse());
         assertEquals("vorgang", result.getVorgangId());
         assertEquals("name", result.getName());
-        assertEquals("long name", result.getLangname());
+        assertEquals("titel", result.getTitel());
         assertEquals("subject", result.getBetreff());
         assertEquals("note", result.getHinweis());
         assertEquals("access", result.getZugriffsdefinition());

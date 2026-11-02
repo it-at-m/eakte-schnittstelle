@@ -25,8 +25,8 @@ public class FabasoftVorgangMapper {
         return VorgangResponse.builder()
                 .id(result.coo())
                 .akteId(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.PARENT_ID.getReference(), String.class).orElse(null))
-                .langname(result.name())
-                .name(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.NAME.getReference(), String.class).orElseThrow())
+                .name(result.name())
+                .titel(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.TITEL.getReference(), String.class).orElseThrow())
                 .betreff(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.BETREFF.getReference(), String.class).orElse(null))
                 .hinweis(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.HINWEIS.getReference(), String.class).orElse(null))
                 .geschaeftsgangvermerk(

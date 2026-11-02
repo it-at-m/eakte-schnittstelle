@@ -16,8 +16,8 @@ public class DokumentResponse {
     private final String id;
     private final DokumentKlasse klasse;
     private final String vorgangId;
+    private final String titel;
     private final String name;
-    private final String langname;
     private final String betreff;
     private final String hinweis;
     private final String zugriffsdefinition;
