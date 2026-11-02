@@ -29,8 +29,6 @@ public class FabasoftErledigungMapper {
         return builder
                 .bezugEingangsdokument(
                         attributeMapper.getTypedSingle(referenceValueMap, ErledigungAttribute.BEZUG_EINGANGSDOKUMENT.getReference(), String.class).orElse(null))
-                .dokumententyp(
-                        attributeMapper.getTypedSingle(referenceValueMap, ErledigungAttribute.DOKUMENTENTYP.getReference(), String.class).orElse(null))
                 .anlagenBeschreibung(
                         attributeMapper.getTypedSingle(referenceValueMap, ErledigungAttribute.ANLAGEN_BESCHREIBUNG.getReference(), String.class).orElse(null))
                 .build();

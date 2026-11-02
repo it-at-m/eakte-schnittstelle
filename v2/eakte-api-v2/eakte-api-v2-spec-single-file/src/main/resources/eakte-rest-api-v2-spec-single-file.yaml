@@ -682,6 +682,8 @@ components:
           type: string
         hinweis:
           type: string
+        dokumententyp:
+          type: string
         zugriffsdefinition:
           type: string
         organisationseinheit:
@@ -745,8 +747,6 @@ components:
       properties:
         bezugEingangsdokument:
           type: string
-        dokumententyp:
-          type: string
         anlagenBeschreibung:
           type: string
     ErledigungListeResponse:
@@ -765,8 +765,6 @@ components:
         - $ref: '#/components/schemas/Dokument'
       properties:
         zustellungsDatum:
-          type: string
-        dokumententyp:
           type: string
         anlagenBeschreibung:
           type: string

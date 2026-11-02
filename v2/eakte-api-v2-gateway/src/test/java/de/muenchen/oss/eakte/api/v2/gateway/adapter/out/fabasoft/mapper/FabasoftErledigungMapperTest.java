@@ -57,7 +57,7 @@ class FabasoftErledigungMapperTest {
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(ErledigungAttribute.BEZUG_EINGANGSDOKUMENT, "incoming-id"),
-                attribute(ErledigungAttribute.DOKUMENTENTYP, "letter"),
+                attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
                 attribute(ErledigungAttribute.ANLAGEN_BESCHREIBUNG, "enclosures"),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));
     }

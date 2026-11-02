@@ -7,8 +7,6 @@ components:
       properties:
         bezugEingangsdokument:
           type: string
-        dokumententyp:
-          type: string
         anlagenBeschreibung:
          type: string
 

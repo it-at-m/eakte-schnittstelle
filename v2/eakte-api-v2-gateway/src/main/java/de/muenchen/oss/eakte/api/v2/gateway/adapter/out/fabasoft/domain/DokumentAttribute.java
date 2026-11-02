@@ -14,6 +14,7 @@ public enum DokumentAttribute {
     TITEL("COOELAK@1.1001:objmlname.langstring", AttributeType.STRING),
     BETREFF("COOELAK@1.1001:filesubj", AttributeType.STRING),
     HINWEIS("DEPRECONFIG@15.1001:fileaddsubj", AttributeType.STRING),
+    DOKUMENTENTYP("COOELAK@1.1001:subfiletype.name", AttributeType.STRING),
     ZUGRIFFSDEFINITION("FSCFOLIO@1.1001:objaccdef.name", AttributeType.STRING),
     ORGANISATIONSEINHEIT("COOSYSTEM@1.1:objowngroup.name", AttributeType.STRING);
 

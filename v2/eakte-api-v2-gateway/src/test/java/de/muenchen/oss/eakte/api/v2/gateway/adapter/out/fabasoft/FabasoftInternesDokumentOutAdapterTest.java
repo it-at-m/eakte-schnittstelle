@@ -110,7 +110,7 @@ class FabasoftInternesDokumentOutAdapterTest {
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(InternesDokumentAttribute.ZUSTELLUNGSDATUM, LocalDate.of(2025, 1, 2)),
-                attribute(InternesDokumentAttribute.DOKUMENTENTYP, "letter"),
+                attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
                 attribute(InternesDokumentAttribute.ANLAGEN_BESCHREIBUNG, "additional enclosure")));
     }
 

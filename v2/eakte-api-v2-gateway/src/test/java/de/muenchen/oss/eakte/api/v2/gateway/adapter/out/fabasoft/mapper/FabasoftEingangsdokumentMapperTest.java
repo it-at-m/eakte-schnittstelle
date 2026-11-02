@@ -32,6 +32,7 @@ class FabasoftEingangsdokumentMapperTest {
         assertEquals("titel", mapped.getTitel());
         assertEquals("name", mapped.getName());
         assertEquals("subject", mapped.getBetreff());
+        assertEquals("letter", mapped.getDokumententyp());
         assertEquals("access", mapped.getZugriffsdefinition());
         assertEquals("ou", mapped.getOrganisationseinheit());
         assertEquals("external-reference", mapped.getFremdesGeschaeftszeichen());
@@ -54,6 +55,7 @@ class FabasoftEingangsdokumentMapperTest {
                 attribute(DokumentAttribute.TITEL, "titel"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
                 attribute(DokumentAttribute.HINWEIS, "note"),
+                attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(EingangsdokumentAttribute.FREMDES_GESCHAEFTSZEICHEN, "external-reference"),

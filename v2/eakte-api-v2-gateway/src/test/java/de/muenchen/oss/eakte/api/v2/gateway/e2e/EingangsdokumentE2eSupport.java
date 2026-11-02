@@ -41,6 +41,7 @@ abstract class EingangsdokumentE2eSupport extends FabasoftE2eSupport {
                                 <urn:STRING urn:reference="COOELAK@1.1001:filesubj" urn:index="1">subject</urn:STRING>
                                 <urn:STRING urn:reference="FSCFOLIO@1.1001:objaccdef.name" urn:index="1">acl</urn:STRING>
                                 <urn:STRING urn:reference="COOSYSTEM@1.1:objowngroup.name" urn:index="1">ou</urn:STRING>
+                                <urn:STRING urn:reference="%s" urn:index="1">letter</urn:STRING>
                                 <urn:STRING urn:reference="COOELAK@1.1001:foreignnr" urn:index="1">external-reference</urn:STRING>
                                 <urn:DATE urn:reference="COOELAK@1.1001:delivery" urn:index="1">2025-01-02</urn:DATE>
                                 <urn:STRING urn:reference="DEPRECONFIG@15.1001:fileaddsubj" urn:index="1">incoming note</urn:STRING>
@@ -49,7 +50,8 @@ abstract class EingangsdokumentE2eSupport extends FabasoftE2eSupport {
                             </urn:object>
                           </urn:queryresult>
                         </urn:SOAPSearchResponse>
-                        """);
+                        """
+                        .formatted(DOKUMENTENTYP_REFERENCE));
     }
 
     private String dfvResponse() {

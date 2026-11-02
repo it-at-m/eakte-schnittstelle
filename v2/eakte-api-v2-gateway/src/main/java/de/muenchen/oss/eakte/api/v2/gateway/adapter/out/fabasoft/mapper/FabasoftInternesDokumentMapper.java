@@ -31,8 +31,6 @@ public class FabasoftInternesDokumentMapper {
                 .zustellungsDatum(
                         attributeMapper.getTypedSingle(referenceValueMap, InternesDokumentAttribute.ZUSTELLUNGSDATUM.getReference(), LocalDate.class)
                                 .orElse(null))
-                .dokumententyp(
-                        attributeMapper.getTypedSingle(referenceValueMap, InternesDokumentAttribute.DOKUMENTENTYP.getReference(), String.class).orElse(null))
                 .anlagenBeschreibung(
                         attributeMapper.getTypedSingle(referenceValueMap, InternesDokumentAttribute.ANLAGEN_BESCHREIBUNG.getReference(), String.class)
                                 .orElse(null))

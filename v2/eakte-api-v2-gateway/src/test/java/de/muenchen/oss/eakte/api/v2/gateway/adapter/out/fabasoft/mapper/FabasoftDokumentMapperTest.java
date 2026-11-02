@@ -23,6 +23,7 @@ class FabasoftDokumentMapperTest {
                 attribute(DokumentAttribute.TITEL, "titel"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
                 attribute(DokumentAttribute.HINWEIS, "note"),
+                attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));
@@ -36,6 +37,7 @@ class FabasoftDokumentMapperTest {
         assertEquals("name", mapped.getName());
         assertEquals("subject", mapped.getBetreff());
         assertEquals("note", mapped.getHinweis());
+        assertEquals("letter", mapped.getDokumententyp());
         assertEquals("access", mapped.getZugriffsdefinition());
         assertEquals("ou", mapped.getOrganisationseinheit());
         assertEquals(List.of(new Attribute("custom", "value")), mapped.getWeitereEigenschaften());

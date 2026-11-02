@@ -50,6 +50,7 @@ class EingangsdokumentE2ETest extends EingangsdokumentE2eSupport {
                     .andExpect(jsonPath("$.elemente[0].betreff").value("subject"))
                     .andExpect(jsonPath("$.elemente[0].zugriffsdefinition").value("acl"))
                     .andExpect(jsonPath("$.elemente[0].organisationseinheit").value("ou"))
+                    .andExpect(jsonPath("$.elemente[0].dokumententyp").value("letter"))
                     .andExpect(jsonPath("$.elemente[0].fremdesGeschaeftszeichen").value("external-reference"))
                     .andExpect(jsonPath("$.elemente[0].eingangsdatum").value("2025-01-02"))
                     .andExpect(jsonPath("$.elemente[0].hinweis").value("incoming note"))
@@ -57,6 +58,7 @@ class EingangsdokumentE2ETest extends EingangsdokumentE2eSupport {
                             .value("custom-value"));
 
             verifySearchRequest("where query", "COOELAK@1.1001:delivery", true);
+            verifySearchRequest("where query", DOKUMENTENTYP_REFERENCE, true);
             verifySearchRequest("where query", "custom.attribute", true);
         }
 
@@ -100,10 +102,12 @@ class EingangsdokumentE2ETest extends EingangsdokumentE2eSupport {
                     .andExpect(jsonPath("$.vorgangId").value("COO.1.2.3"))
                     .andExpect(jsonPath("$.titel").value("titel"))
                     .andExpect(jsonPath("$.name").value("name"))
+                    .andExpect(jsonPath("$.dokumententyp").value("letter"))
                     .andExpect(jsonPath("$.fremdesGeschaeftszeichen").value("external-reference"))
                     .andExpect(jsonPath("$.eingangsdatum").value("2025-01-02"))
                     .andExpect(jsonPath("$.hinweis").value("incoming note"));
 
+            verifySearchRequest("COOSYSTEM@1.1:objaddress", DOKUMENTENTYP_REFERENCE, true);
             verifySearchRequest("COOSYSTEM@1.1:objaddress", "custom.attribute", true);
         }
 

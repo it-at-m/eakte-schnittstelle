@@ -40,6 +40,8 @@ public class FabasoftDokumentMapper {
                 .titel(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.TITEL.getReference(), String.class).orElseThrow())
                 .betreff(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.BETREFF.getReference(), String.class).orElse(null))
                 .hinweis(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.HINWEIS.getReference(), String.class).orElse(null))
+                .dokumententyp(
+                        attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.DOKUMENTENTYP.getReference(), String.class).orElse(null))
                 .zugriffsdefinition(
                         attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ZUGRIFFSDEFINITION.getReference(), String.class).orElseThrow())
                 .organisationseinheit(

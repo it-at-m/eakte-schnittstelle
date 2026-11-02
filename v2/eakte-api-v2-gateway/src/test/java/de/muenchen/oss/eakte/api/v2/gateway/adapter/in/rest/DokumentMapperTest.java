@@ -23,6 +23,7 @@ class DokumentMapperTest {
                 .name("name")
                 .betreff("subject")
                 .hinweis("note")
+                .dokumententyp("letter")
                 .zugriffsdefinition("access")
                 .organisationseinheit("ou")
                 .weitereEigenschaften(List.of(new Attribute("custom", "value")))
@@ -37,6 +38,7 @@ class DokumentMapperTest {
         assertEquals("titel", result.getTitel());
         assertEquals("subject", result.getBetreff());
         assertEquals("note", result.getHinweis());
+        assertEquals("letter", result.getDokumententyp());
         assertEquals("access", result.getZugriffsdefinition());
         assertEquals("ou", result.getOrganisationseinheit());
         assertEquals("custom", result.getWeitereEigenschaften().getFirst().getReference());
