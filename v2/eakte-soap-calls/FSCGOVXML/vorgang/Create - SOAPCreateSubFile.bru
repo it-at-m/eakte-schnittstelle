@@ -5,9 +5,13 @@ meta {
 }
 
 post {
-  url: https://eakte26-k2.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  url: https://eakte26-k2-authldap.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
   body: xml
-  auth: none
+  auth: inherit
+}
+
+params:query {
+  WEBSVC: FSCGOVXML_1_1001_DefaultWebServiceDefinition
 }
 
 headers {
@@ -16,17 +20,17 @@ headers {
 }
 
 body:xml {
-  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fsc="http://schemas.fabasoft.com/websvc/FSCGOVXML_1_1001_DefaultWebServiceDefinition/" xmlns:urn="urn:schemas-editions-fabasoft-com:gov:createsubfile">
       <soap:Body>
-          <CreateSubFileRequest>
-              <objclass>string</objclass>
+          <urn:CreateSubFileRequest>
+              <urn:objclass>COO.1.1001.1.16603</urn:objclass>
               <!-- Akte -->
-              <referrednumber>COO.2150.8801.2.1316200</referrednumber>
-              <objmlname>test</objmlname>
-              <filesubj>betreff</filesubj>
+              <urn:referrednumber>COO.2150.8801.2.1316200</urn:referrednumber>
+              <urn:objmlname>test</urn:objmlname>
+              <urn:filesubj>betreff</urn:filesubj>
               <!-- Vorlage (e.g. DfV ID) -->
-              <createdfromdefinition>COO.2150.8801.2.1200657</createdfromdefinition>
-          </CreateSubFileRequest>
+              <urn:createdfromdefinition>COO.2150.8801.2.1200657</urn:createdfromdefinition>
+          </urn:CreateSubFileRequest>
       </soap:Body>
   </soap:Envelope>
 }
