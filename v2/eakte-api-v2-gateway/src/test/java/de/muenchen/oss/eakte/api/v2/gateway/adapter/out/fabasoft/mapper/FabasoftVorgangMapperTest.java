@@ -17,7 +17,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class FabasoftVorgangMapperTest {
-    private final FabasoftVorgangResponseMapper mapper = FabasoftTestFixtures.vorgangResponseMapper();
+    private final FabasoftVorgangMapper mapper = FabasoftTestFixtures.vorgangMapper();
 
     @Test
     void givenResultObject_thenMapVorgang() {

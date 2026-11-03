@@ -26,6 +26,7 @@ import javax.xml.datatype.DatatypeFactory;
 import org.mapstruct.Mapper;
 
 @Mapper
+@SuppressWarnings("PMD.CouplingBetweenObjects")
 public abstract class FabasoftAttributeMapper {
     public abstract FabasoftObjectType fromDomain(ObjectType objectType);
 

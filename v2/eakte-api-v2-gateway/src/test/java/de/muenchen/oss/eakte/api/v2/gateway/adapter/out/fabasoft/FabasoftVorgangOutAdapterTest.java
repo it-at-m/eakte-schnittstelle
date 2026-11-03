@@ -12,8 +12,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.Fabasoft
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.SubFileRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.VorgangAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftVorgangRequestMapper;
-import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftVorgangResponseMapper;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftVorgangMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftAttributeService;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftSearchService;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftSubFileService;
@@ -43,8 +42,7 @@ class FabasoftVorgangOutAdapterTest {
             .attributes(Set.of("custom.attribute"))
             .build();
 
-    private final FabasoftVorgangResponseMapper vorgangMapper = FabasoftTestFixtures.vorgangResponseMapper();
-    private final FabasoftVorgangRequestMapper requestMapper = FabasoftTestFixtures.vorgangRequestMapper();
+    private final FabasoftVorgangMapper vorgangMapper = FabasoftTestFixtures.vorgangMapper();
 
     @Mock
     private FabasoftSubFileService subFileService;
@@ -143,7 +141,7 @@ class FabasoftVorgangOutAdapterTest {
     }
 
     private FabasoftVorgangOutAdapter adapter() {
-        return new FabasoftVorgangOutAdapter(searchService, subFileService, attributeService, vorgangMapper, requestMapper);
+        return new FabasoftVorgangOutAdapter(searchService, subFileService, attributeService, vorgangMapper);
     }
 
 }

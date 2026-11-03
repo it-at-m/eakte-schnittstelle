@@ -4,9 +4,8 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.config.Fabasoft
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.DefaultAttributeMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftAttributeMapperImpl;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftDokumentMapper;
-import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftVorgangRequestMapper;
-import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftVorgangRequestMapperImpl;
-import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftVorgangResponseMapper;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftVorgangMapper;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftVorgangMapperImpl;
 import java.util.List;
 
 public final class FabasoftTestFixtures {
@@ -23,13 +22,9 @@ public final class FabasoftTestFixtures {
         return new DefaultAttributeMapper(properties);
     }
 
-    public static FabasoftVorgangResponseMapper vorgangResponseMapper() {
-        return new FabasoftVorgangResponseMapper(new FabasoftAttributeMapperImpl(), defaultAttributeMapper());
-    }
-
-    public static FabasoftVorgangRequestMapper vorgangRequestMapper() {
-        final FabasoftVorgangRequestMapper mapper = new FabasoftVorgangRequestMapperImpl();
-        mapper.setDefaultAttributeMapper(defaultAttributeMapper());
+    public static FabasoftVorgangMapper vorgangMapper() {
+        final FabasoftVorgangMapper mapper = new FabasoftVorgangMapperImpl();
+        mapper.setDefaultAttributeMapper(new FabasoftAttributeMapperImpl(), defaultAttributeMapper());
         return mapper;
     }
 
