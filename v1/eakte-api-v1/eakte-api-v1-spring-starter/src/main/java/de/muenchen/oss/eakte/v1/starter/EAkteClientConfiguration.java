@@ -164,12 +164,6 @@ public class EAkteClientConfiguration {
     }
 
     @Bean
-    protected ReadSubjectAreaObjectsMetaDataApi eAkteReadSubjectAreaObjectsMetaDataApi(
-            final ApiClient apiClient) {
-        return new ReadSubjectAreaObjectsMetaDataApi(apiClient);
-    }
-
-    @Bean
     protected RevokeDepositObjectsApi eAkteRevokeDepositObjectsApi(final ApiClient apiClient) {
         return new RevokeDepositObjectsApi(apiClient);
     }
