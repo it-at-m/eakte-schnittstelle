@@ -9,13 +9,14 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentParent
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class FabasoftDokumentMapper {
-    private final AttributeMapper attributeMapper;
+    private final FabasoftAttributeMapper attributeMapper;
     private final DefaultAttributeMapper defaultAttributeMapper;
 
     public List<DokumentResponse> toDomain(final List<ResultObject> results) {
@@ -24,7 +25,17 @@ public class FabasoftDokumentMapper {
 
     public DokumentResponse toDomain(final ResultObject result) {
         final Map<String, List<Object>> referenceValueMap = attributeMapper.toReferenceValueMap(result.attributes());
-        return DokumentResponse.builder()
+        final DokumentResponse.DokumentResponseBuilder<?, ?> builder = DokumentResponse.builder();
+        this.mapDokumentFields(builder, result, referenceValueMap, DokumentAttribute.getReferences());
+        return builder.build();
+    }
+
+    protected void mapDokumentFields(
+            final DokumentResponse.DokumentResponseBuilder<?, ?> builder,
+            final ResultObject result,
+            final Map<String, List<Object>> referenceValueMap,
+            final Set<String> attributes) {
+        builder
                 .id(result.coo())
                 .klasse(this.mapKlasse(referenceValueMap))
                 .parent(this.mapParent(referenceValueMap))
@@ -37,11 +48,10 @@ public class FabasoftDokumentMapper {
                                         .orElseThrow()))
                 .organisationseinheit(
                         attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ORGANISATIONSEINHEIT.getReference(), String.class).orElseThrow())
-                .weitereEigenschaften(attributeMapper.toDomain(result.attributes(), DokumentAttribute.getReferences()))
-                .build();
+                .weitereEigenschaften(attributeMapper.toDomain(result.attributes(), attributes));
     }
 
-    private ParentReference<DokumentParent> mapParent(final Map<String, List<Object>> referenceValueMap) {
+    protected ParentReference<DokumentParent> mapParent(final Map<String, List<Object>> referenceValueMap) {
         final String referenceStr = attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.PARENT_TYPE.getReference(), String.class).orElse(null);
         final FabasoftObjectType fabasoftType = FabasoftObjectType.fromFabasoftReference(referenceStr);
         final DokumentParent type = switch (fabasoftType) {
@@ -54,13 +64,13 @@ public class FabasoftDokumentMapper {
                 attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.PARENT_ID.getReference(), String.class).orElseThrow());
     }
 
-    private DokumentKlasse mapKlasse(final Map<String, List<Object>> referenceValueMap) {
+    protected DokumentKlasse mapKlasse(final Map<String, List<Object>> referenceValueMap) {
         final String referenceStr = attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.KLASSE.getReference(), String.class).orElse(null);
         final FabasoftObjectType fabasoftType = FabasoftObjectType.fromFabasoftReference(referenceStr);
         return switch (fabasoftType) {
-        case EINGANG -> DokumentKlasse.EINGANG;
+        case EINGANGSDOKUMENT -> DokumentKlasse.EINGANGSDOKUMENT;
         case ERLEDIGUNG -> DokumentKlasse.ERLEDIGUNG;
-        case INTERN -> DokumentKlasse.INTERN;
+        case INTERNES_DOKUMENT -> DokumentKlasse.INTERNES_DOKUMENT;
         case null, default -> throw new IllegalStateException("Unexpected value: " + referenceStr);
         };
     }

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class FabasoftVorgangResponseMapper {
-    private final AttributeMapper attributeMapper;
+    private final FabasoftAttributeMapper attributeMapper;
     private final DefaultAttributeMapper defaultAttributeMapper;
 
     public List<VorgangResponse> toDomain(final List<ResultObject> results) {

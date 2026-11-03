@@ -9,12 +9,15 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.Attribut
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftAttributeMapperImpl;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftSearchService;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -33,8 +36,15 @@ class FabasoftDfvOutAdapterTest {
     @Mock
     private FabasoftSearchService searchService;
 
+    private FabasoftDfvOutAdapter fabasoftDfvOutAdapter;
+
     @Captor
     private ArgumentCaptor<SearchRequest> requestCaptor;
+
+    @BeforeEach
+    void setUp() {
+        this.fabasoftDfvOutAdapter = new FabasoftDfvOutAdapter(searchService, new FabasoftAttributeMapperImpl());
+    }
 
     @Test
     void givenVorgangType_thenLoadMatchingStringAttributes() {
@@ -46,7 +56,7 @@ class FabasoftDfvOutAdapterTest {
                         new FabasoftAttribute(AttributeType.INTEGER, reference, BigInteger.valueOf(3), BigInteger.TEN),
                         new FabasoftAttribute(AttributeType.STRING, "other", BigInteger.ONE, "ignored")))));
 
-        final Set<String> actual = new FabasoftDfvOutAdapter(searchService).loadDfVAttributes(CONTEXT, FabasoftObjectType.VORGANG);
+        final Set<String> actual = fabasoftDfvOutAdapter.loadDfVAttributes(CONTEXT, ObjectType.VORGANG);
 
         assertEquals(Set.of("attribute.one", "attribute.two"), actual);
         assertRequest(requestCaptor.getValue(), reference);
@@ -59,7 +69,7 @@ class FabasoftDfvOutAdapterTest {
                 .thenReturn(List.of(new ResultObject("name", "coo", List.of(
                         new FabasoftAttribute(AttributeType.STRING, reference, BigInteger.ONE, "attribute")))));
 
-        final Set<String> actual = new FabasoftDfvOutAdapter(searchService).loadDfVAttributes(CONTEXT, FabasoftObjectType.DOKUMENT);
+        final Set<String> actual = fabasoftDfvOutAdapter.loadDfVAttributes(CONTEXT, ObjectType.DOKUMENT);
 
         assertEquals(Set.of("attribute"), actual);
         assertRequest(requestCaptor.getValue(), reference);
@@ -68,7 +78,7 @@ class FabasoftDfvOutAdapterTest {
     @Test
     void givenUnsupportedType_thenRejectDfVResolution() {
         assertThrows(IllegalArgumentException.class,
-                () -> new FabasoftDfvOutAdapter(searchService).loadDfVAttributes(CONTEXT, FabasoftObjectType.EINGANG));
+                () -> fabasoftDfvOutAdapter.loadDfVAttributes(CONTEXT, ObjectType.EINGANGSDOKUMENT));
     }
 
     private static void assertRequest(final SearchRequest request, final String reference) {

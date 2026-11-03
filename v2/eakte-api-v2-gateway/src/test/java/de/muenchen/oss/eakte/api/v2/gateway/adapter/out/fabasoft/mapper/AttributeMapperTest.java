@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class AttributeMapperTest {
-    private final AttributeMapper mapper = new AttributeMapper();
+    private final FabasoftAttributeMapper mapper = new FabasoftAttributeMapperImpl();
 
     @Test
     void givenFabasoftAttribute_thenMapToDomain() {

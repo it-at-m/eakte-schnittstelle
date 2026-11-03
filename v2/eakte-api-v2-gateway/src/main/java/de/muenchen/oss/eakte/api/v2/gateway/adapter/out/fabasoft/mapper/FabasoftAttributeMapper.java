@@ -11,10 +11,12 @@ import com.fabasoft.schemas.universal.ObjectPointerType;
 import com.fabasoft.schemas.universal.ObjectType;
 import com.fabasoft.schemas.universal.StringType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ObjectType;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -22,14 +24,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
 /**
  * Mapper between generic domain and fabasoft attributes.
  * Shouldn't contain any object specific mappings.
  */
-@Component
-public class AttributeMapper {
+@Mapper
+public abstract class FabasoftAttributeMapper {
+    public abstract FabasoftObjectType fromDomain(ObjectType objectType);
     protected List<Attribute> toDomain(final List<FabasoftAttribute> attributes, final Set<String> exclude) {
         return attributes.stream()
                 .filter(i -> !exclude.contains(i.reference()))

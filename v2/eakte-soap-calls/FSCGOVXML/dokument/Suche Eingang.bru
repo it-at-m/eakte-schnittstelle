@@ -1,0 +1,47 @@
+meta {
+  name: Suche Eingang
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://eakte26-k2-authldap.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: inherit
+}
+
+params:query {
+  WEBSVC: FSCGOVXML_1_1001_DefaultWebServiceDefinition
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPSearch
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fsc="http://schemas.fabasoft.com/websvc/FSCGOVXML_1_1001_DefaultWebServiceDefinition/" xmlns:urn="urn:schemas-fabasoft-com:bai:search">
+      <soapenv:Body>
+          <urn:SOAPSearchRequest>
+              <urn:query>
+                LIMIT 2
+                SELECT * FROM COOELAK@1.1001:Incoming
+                WHERE .COOSYSTEM@1.1:objaddress = 'COO.2150.8801.2.1333622'
+              </urn:query>
+              <urn:attrlist>
+                  <urn:attr>COOSYSTEM@1.1:objclass</urn:attr>
+                  <urn:attr>COOSYSTEM@1.1:objclass.COOSYSTEM@1.1:fullreference</urn:attr>
+                  <urn:attr>COOELAK@1.1001:referrednumber</urn:attr>
+                  <urn:attr>COOELAK@1.1001:referrednumber.objclass.fullreference</urn:attr>
+                  <urn:attr>COOELAK@1.1001:objmlname.langstring</urn:attr>
+                  <urn:attr>COOELAK@1.1001:filesubj</urn:attr>
+                  <urn:attr>FSCFOLIO@1.1001:objaccdef.name</urn:attr>
+                  <urn:attr>COOSYSTEM@1.1:objowngroup.name</urn:attr>
+                  <urn:attr>COOELAK@1.1001:foreignnr</urn:attr>
+                  <urn:attr>COOELAK@1.1001:delivery</urn:attr>
+                  <urn:attr>DEPRECONFIG@15.1001:fileaddsubj</urn:attr>
+              </urn:attrlist>
+          </urn:SOAPSearchRequest>
+      </soapenv:Body>
+  </soapenv:Envelope>
+}

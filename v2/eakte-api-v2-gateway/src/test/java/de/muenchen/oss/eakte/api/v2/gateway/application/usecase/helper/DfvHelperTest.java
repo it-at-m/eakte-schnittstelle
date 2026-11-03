@@ -6,8 +6,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
-import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.DfvOutPort;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import java.util.Set;
@@ -42,14 +42,14 @@ class DfvHelperTest {
                     .query("query")
                     .attributes(Set.of())
                     .build();
-            when(dfvOutPort.loadDfVAttributes(CONTEXT, FabasoftObjectType.DOKUMENT)).thenReturn(DFV_ATTRIBUTES);
+            when(dfvOutPort.loadDfVAttributes(CONTEXT, ObjectType.DOKUMENT)).thenReturn(DFV_ATTRIBUTES);
 
-            final SearchRequest result = helper.enrichWithDfv(CONTEXT, FabasoftObjectType.DOKUMENT, request);
+            final SearchRequest result = helper.enrichWithDfv(CONTEXT, ObjectType.DOKUMENT, request);
 
             assertEquals(DFV_ATTRIBUTES, result.attributes());
             assertEquals(request.limit(), result.limit());
             assertEquals(request.query(), result.query());
-            verify(dfvOutPort).loadDfVAttributes(CONTEXT, FabasoftObjectType.DOKUMENT);
+            verify(dfvOutPort).loadDfVAttributes(CONTEXT, ObjectType.DOKUMENT);
         }
 
         @Test
@@ -60,7 +60,7 @@ class DfvHelperTest {
                     .attributes(Set.of("explicit"))
                     .build();
 
-            final SearchRequest result = helper.enrichWithDfv(CONTEXT, FabasoftObjectType.VORGANG, request);
+            final SearchRequest result = helper.enrichWithDfv(CONTEXT, ObjectType.VORGANG, request);
 
             assertSame(request, result);
             verifyNoInteractions(dfvOutPort);

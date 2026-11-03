@@ -1,7 +1,7 @@
 package de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper;
 
-import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.DfvOutPort;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import java.util.Set;
@@ -19,7 +19,7 @@ public class DfvHelper {
      * @param request The request to enrich.
      * @return The enriched request.
      */
-    public SearchRequest enrichWithDfv(final RequestContext context, final FabasoftObjectType type, final SearchRequest request) {
+    public SearchRequest enrichWithDfv(final RequestContext context, final ObjectType type, final SearchRequest request) {
         final SearchRequest updatedRequest;
         if (request.attributes().isEmpty()) {
             final Set<String> dfvAttributes = dfvOutPort.loadDfVAttributes(context, type);
