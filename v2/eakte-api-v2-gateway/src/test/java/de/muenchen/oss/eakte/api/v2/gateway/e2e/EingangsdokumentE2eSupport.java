@@ -39,7 +39,7 @@ abstract class EingangsdokumentE2eSupport extends FabasoftE2eSupport {
                                 <urn:STRING urn:reference="COOELAK@1.1001:referrednumber.objclass.fullreference" urn:index="1">DEPRECONFIG@15.1001:Procedure</urn:STRING>
                                 <urn:STRING urn:reference="COOELAK@1.1001:objmlname.langstring" urn:index="1">short-name</urn:STRING>
                                 <urn:STRING urn:reference="COOELAK@1.1001:filesubj" urn:index="1">subject</urn:STRING>
-                                <urn:STRING urn:reference="FSCFOLIO@1.1001:objaccdef.name" urn:index="1">acl</urn:STRING>
+                                <urn:STRING urn:reference="FSCFOLIO@1.1001:objaccdef" urn:index="1">COO.1.1001.1.182601</urn:STRING>
                                 <urn:STRING urn:reference="COOSYSTEM@1.1:objowngroup.name" urn:index="1">ou</urn:STRING>
                                 <urn:STRING urn:reference="COOELAK@1.1001:foreignnr" urn:index="1">external-reference</urn:STRING>
                                 <urn:DATE urn:reference="COOELAK@1.1001:delivery" urn:index="1">2025-01-02</urn:DATE>

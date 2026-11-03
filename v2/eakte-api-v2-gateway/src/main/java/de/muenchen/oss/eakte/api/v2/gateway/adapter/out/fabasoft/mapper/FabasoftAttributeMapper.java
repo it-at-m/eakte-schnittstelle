@@ -8,15 +8,14 @@ import com.fabasoft.schemas.universal.EnumType;
 import com.fabasoft.schemas.universal.FloatType;
 import com.fabasoft.schemas.universal.IntegerType;
 import com.fabasoft.schemas.universal.ObjectPointerType;
-import com.fabasoft.schemas.universal.ObjectType;
 import com.fabasoft.schemas.universal.StringType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ObjectType;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ObjectType;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,13 +25,10 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import org.mapstruct.Mapper;
 
-/**
- * Mapper between generic domain and fabasoft attributes.
- * Shouldn't contain any object specific mappings.
- */
 @Mapper
 public abstract class FabasoftAttributeMapper {
     public abstract FabasoftObjectType fromDomain(ObjectType objectType);
+
     protected List<Attribute> toDomain(final List<FabasoftAttribute> attributes, final Set<String> exclude) {
         return attributes.stream()
                 .filter(i -> !exclude.contains(i.reference()))
@@ -44,8 +40,8 @@ public abstract class FabasoftAttributeMapper {
     }
 
     @SuppressWarnings("PMD.CyclomaticComplexity")
-    public ObjectType fromFabasoftAttribute(final List<FabasoftAttribute> attributes) {
-        final ObjectType objectType = new ObjectType();
+    public com.fabasoft.schemas.universal.ObjectType fromFabasoftAttribute(final List<FabasoftAttribute> attributes) {
+        final com.fabasoft.schemas.universal.ObjectType objectType = new com.fabasoft.schemas.universal.ObjectType();
         for (final FabasoftAttribute attribute : attributes) {
             switch (attribute.fabasoftType()) {
             case STRING -> objectType.getSTRING().add(mapString(attribute));

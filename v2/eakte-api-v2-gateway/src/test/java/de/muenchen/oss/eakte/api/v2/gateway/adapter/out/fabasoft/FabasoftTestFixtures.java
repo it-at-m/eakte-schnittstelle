@@ -1,8 +1,8 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft;
 
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.config.FabasoftProperties;
-import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.AttributeMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.DefaultAttributeMapper;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftAttributeMapperImpl;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftDokumentMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftVorgangRequestMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftVorgangRequestMapperImpl;
@@ -24,7 +24,7 @@ public final class FabasoftTestFixtures {
     }
 
     public static FabasoftVorgangResponseMapper vorgangResponseMapper() {
-        return new FabasoftVorgangResponseMapper(new AttributeMapper(), defaultAttributeMapper());
+        return new FabasoftVorgangResponseMapper(new FabasoftAttributeMapperImpl(), defaultAttributeMapper());
     }
 
     public static FabasoftVorgangRequestMapper vorgangRequestMapper() {
@@ -34,6 +34,6 @@ public final class FabasoftTestFixtures {
     }
 
     public static FabasoftDokumentMapper dokumentMapper() {
-        return new FabasoftDokumentMapper(new AttributeMapper(), defaultAttributeMapper());
+        return new FabasoftDokumentMapper(new FabasoftAttributeMapperImpl(), defaultAttributeMapper());
     }
 }

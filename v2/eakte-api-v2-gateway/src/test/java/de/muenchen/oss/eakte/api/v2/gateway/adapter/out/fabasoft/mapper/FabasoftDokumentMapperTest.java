@@ -50,7 +50,7 @@ class FabasoftDokumentMapperTest {
                 attribute(DokumentAttribute.PARENT_ID, "parent"),
                 attribute(DokumentAttribute.PARENT_TYPE, "DEPRECONFIG@15.1001:Procedure"),
                 attribute(DokumentAttribute.NAME, "name"),
-                attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
+                attribute(DokumentAttribute.ZUGRIFFSDEFINITION, FabasoftTestFixtures.ACCESS_DEFINITION_ID),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou")));
 
         assertEquals(List.of(mapper.toDomain(result)), mapper.toDomain(List.of(result)));

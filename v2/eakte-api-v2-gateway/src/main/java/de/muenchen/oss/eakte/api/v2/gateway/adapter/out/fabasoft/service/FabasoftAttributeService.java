@@ -5,7 +5,7 @@ import com.fabasoft.schemas.universal.SetResponseType;
 import com.fabasoft.schemas.websvc.fscgovxml_1_1001_defaultwebservicedefinition.FSCGOVXML11001DefaultWebServiceDefinitionSoap;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftRequestHandler;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.AttributeMapper;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftAttributeMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.DmsException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import java.util.List;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class FabasoftAttributeService {
     private final FSCGOVXML11001DefaultWebServiceDefinitionSoap soapClient;
     private final FabasoftRequestHandler requestHandler;
-    private final AttributeMapper attributeMapper;
+    private final FabasoftAttributeMapper attributeMapper;
 
     public void setAttributes(final RequestContext requestContext, final String objectId, final List<FabasoftAttribute> attributes) {
         final ObjectType request = attributeMapper.fromFabasoftAttribute(attributes);
