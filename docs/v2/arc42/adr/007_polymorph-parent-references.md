@@ -1,7 +1,12 @@
-# 007 - Polymorphic Parent References
+# 007 - Polymorphic Parent References (DEPRECATED)
 
-Status: Accepted
+Status: Deprecated
 Date: 2026-08-17
+
+::: warning Deprecated
+Eingangsdokumente only know there parent Vorgang not if they are in a Postkorb/Arbeitsvorrat.
+Because of that this ADR can't be applied.
+:::
 
 ## Context
 

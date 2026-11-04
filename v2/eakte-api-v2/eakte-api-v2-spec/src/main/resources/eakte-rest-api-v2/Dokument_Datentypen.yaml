@@ -26,9 +26,9 @@ components:
         klasse:
           type: string
           enum:
-            - Eingang
+            - Eingangsdokument
             - Erledigung
-            - Intern
+            - Internes Dokument
         id:
           type: string
         parent:

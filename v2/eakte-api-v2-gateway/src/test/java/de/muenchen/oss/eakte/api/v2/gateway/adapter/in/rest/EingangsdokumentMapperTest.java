@@ -20,7 +20,7 @@ class EingangsdokumentMapperTest {
     void givenEingangsdokumentResponse_thenMapAllFields() {
         final EingangsdokumentResponse response = EingangsdokumentResponse.builder()
                 .id("id")
-                .klasse(DokumentKlasse.EINGANG)
+                .klasse(DokumentKlasse.EINGANGSDOKUMENT)
                 .parent(new ParentReference<>(DokumentParent.VORGANG, "parent"))
                 .name("name")
                 .langname("long name")
@@ -36,7 +36,7 @@ class EingangsdokumentMapperTest {
         final Eingangsdokument result = mapper.fromDomain(response);
 
         assertEquals("id", result.getId());
-        assertEquals(Eingangsdokument.KlasseEnum.EINGANG, result.getKlasse());
+        assertEquals(Eingangsdokument.KlasseEnum.EINGANGSDOKUMENT, result.getKlasse());
         assertEquals("parent", result.getParent().getId());
         assertEquals(de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.ParentReference.TypeEnum.VORGANG,
                 result.getParent().getType());
@@ -55,7 +55,7 @@ class EingangsdokumentMapperTest {
     void givenEingangsdokumentResponses_thenMapAllResponses() {
         final EingangsdokumentResponse response = EingangsdokumentResponse.builder()
                 .id("id")
-                .klasse(DokumentKlasse.EINGANG)
+                .klasse(DokumentKlasse.EINGANGSDOKUMENT)
                 .build();
 
         final List<Eingangsdokument> result = mapper.fromDomain(List.of(response));
