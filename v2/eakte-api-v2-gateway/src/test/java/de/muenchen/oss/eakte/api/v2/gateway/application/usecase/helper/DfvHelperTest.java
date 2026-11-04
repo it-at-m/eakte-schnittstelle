@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.DfvOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Role;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class DfvHelperTest {
-    private static final RequestContext CONTEXT = new RequestContext("user", "ou", "role");
+    private static final RequestContext CONTEXT = new RequestContext("user", "ou", Role.SACHBEARBEITUNG);
     private static final Set<String> DFV_ATTRIBUTES = Set.of("dfv.one", "dfv.two");
 
     @Mock

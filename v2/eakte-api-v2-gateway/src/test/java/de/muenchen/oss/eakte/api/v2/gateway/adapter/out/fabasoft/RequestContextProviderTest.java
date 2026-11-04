@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Role;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -13,7 +14,7 @@ class RequestContextProviderTest {
     @Test
     void givenContext_thenReturnContextAfterSetAndGet() {
         final RequestContextProvider provider = new RequestContextProvider();
-        final RequestContext context = new RequestContext("user", "ou", "role");
+        final RequestContext context = new RequestContext("user", "ou", Role.SACHBEARBEITUNG);
 
         provider.set(context);
 
@@ -23,7 +24,7 @@ class RequestContextProviderTest {
     @Test
     void givenContext_thenRemoveContextAfterClear() {
         final RequestContextProvider provider = new RequestContextProvider();
-        provider.set(new RequestContext("user", "ou", "role"));
+        provider.set(new RequestContext("user", "ou", Role.SACHBEARBEITUNG));
 
         provider.clear();
 
@@ -33,8 +34,8 @@ class RequestContextProviderTest {
     @Test
     void givenDifferentThreads_thenKeepContextsIsolated() throws Exception {
         final RequestContextProvider provider = new RequestContextProvider();
-        final RequestContext firstContext = new RequestContext("first", "ou", "role");
-        final RequestContext secondContext = new RequestContext("second", "ou", "role");
+        final RequestContext firstContext = new RequestContext("first", "ou", Role.SACHBEARBEITUNG);
+        final RequestContext secondContext = new RequestContext("second", "ou", Role.SACHBEARBEITUNG);
         try (ExecutorService executor = Executors.newFixedThreadPool(2)) {
             final var first = executor.submit(() -> {
                 provider.set(firstContext);
@@ -53,7 +54,7 @@ class RequestContextProviderTest {
     @Test
     void givenContextOnOneThread_thenClearDoesNotAffectAnotherThread() throws Exception {
         final RequestContextProvider provider = new RequestContextProvider();
-        final RequestContext context = new RequestContext("user", "ou", "role");
+        final RequestContext context = new RequestContext("user", "ou", Role.SACHBEARBEITUNG);
         try (ExecutorService executor = Executors.newFixedThreadPool(2)) {
             final var first = executor.submit(() -> {
                 provider.set(context);

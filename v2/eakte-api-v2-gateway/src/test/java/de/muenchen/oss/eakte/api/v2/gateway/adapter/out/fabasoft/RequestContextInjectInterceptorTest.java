@@ -8,7 +8,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftCommonMapper;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftCommonMapperImpl;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Role;
 import java.util.List;
 import java.util.Map;
 import org.apache.cxf.message.Message;
@@ -20,13 +23,15 @@ import org.mockito.ArgumentCaptor;
 class RequestContextInjectInterceptorTest {
     private static final String USER_HEADER = "X-FSC-Authenticated-User";
     private static final String ENDPOINT = "https://example.org/fscgov";
+    private static final String SACHBEARBEITUNG_ID = "COO.1.1001.1.4328";
 
     private final RequestContextProvider contextProvider = new RequestContextProvider();
+    private final FabasoftCommonMapper commonMapper = new FabasoftCommonMapperImpl();
     private RequestContextInjectInterceptor interceptor;
 
     @BeforeEach
     void setUp() {
-        interceptor = new RequestContextInjectInterceptor(contextProvider);
+        interceptor = new RequestContextInjectInterceptor(contextProvider, commonMapper);
         contextProvider.clear();
     }
 
@@ -40,7 +45,7 @@ class RequestContextInjectInterceptorTest {
     @Test
     void givenNoImpersonationUser_thenLeaveHeadersUnchanged() {
         final Message message = mock(Message.class);
-        contextProvider.set(new RequestContext(null, "ou", "role"));
+        contextProvider.set(new RequestContext(null, "ou", Role.SACHBEARBEITUNG));
 
         interceptor.handleMessage(message);
 
@@ -50,7 +55,7 @@ class RequestContextInjectInterceptorTest {
     @Test
     void givenImpersonationUserAndNoHeaders_thenCreateUserHeader() {
         final Message message = mock(Message.class);
-        contextProvider.set(new RequestContext("user", "ou", "role"));
+        contextProvider.set(new RequestContext("user", "ou", Role.SACHBEARBEITUNG));
         when(message.get(Message.ENDPOINT_ADDRESS)).thenReturn(ENDPOINT);
 
         interceptor.handleMessage(message);
@@ -68,7 +73,7 @@ class RequestContextInjectInterceptorTest {
         headers.put("Existing", List.of("value"));
         when(message.get(Message.PROTOCOL_HEADERS)).thenReturn(headers);
         when(message.get(Message.ENDPOINT_ADDRESS)).thenReturn(ENDPOINT);
-        contextProvider.set(new RequestContext("user", "ou", "role"));
+        contextProvider.set(new RequestContext("user", "ou", Role.SACHBEARBEITUNG));
 
         interceptor.handleMessage(message);
 
@@ -80,7 +85,7 @@ class RequestContextInjectInterceptorTest {
     void givenOuAndRole_thenAppendEncodedQueryParameters() {
         final Message message = mock(Message.class);
         when(message.get(Message.ENDPOINT_ADDRESS)).thenReturn(ENDPOINT);
-        contextProvider.set(new RequestContext("user", "ou with space", "role/value"));
+        contextProvider.set(new RequestContext("user", "ou with space", Role.SACHBEARBEITUNG));
 
         interceptor.handleMessage(message);
 
@@ -88,7 +93,7 @@ class RequestContextInjectInterceptorTest {
         verify(message).put(eq(Message.ENDPOINT_ADDRESS), endpointCaptor.capture());
         final String updatedEndpoint = endpointCaptor.getValue();
         assertTrue(updatedEndpoint.startsWith(ENDPOINT + "?"));
-        assertTrue(updatedEndpoint.contains("px=role%2Fvalue"));
+        assertTrue(updatedEndpoint.contains("px=%s".formatted(SACHBEARBEITUNG_ID)));
         assertTrue(updatedEndpoint.contains("gx=ou+with+space"));
     }
 
@@ -97,7 +102,7 @@ class RequestContextInjectInterceptorTest {
         final Message message = mock(Message.class);
         final String endpoint = ENDPOINT + "?existing=value";
         when(message.get(Message.ENDPOINT_ADDRESS)).thenReturn(endpoint);
-        contextProvider.set(new RequestContext("user", "ou", "role"));
+        contextProvider.set(new RequestContext("user", "ou", Role.SACHBEARBEITUNG));
 
         interceptor.handleMessage(message);
 
@@ -105,7 +110,7 @@ class RequestContextInjectInterceptorTest {
         verify(message).put(eq(Message.ENDPOINT_ADDRESS), endpointCaptor.capture());
         final String updatedEndpoint = endpointCaptor.getValue();
         assertTrue(updatedEndpoint.startsWith(endpoint + "&"));
-        assertTrue(updatedEndpoint.contains("px=role"));
+        assertTrue(updatedEndpoint.contains("px=%s".formatted(SACHBEARBEITUNG_ID)));
         assertTrue(updatedEndpoint.contains("gx=ou"));
     }
 

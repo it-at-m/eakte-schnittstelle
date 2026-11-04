@@ -7,6 +7,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentResponse;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.controllers.DokumentApi;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.DokumentListeResponse;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Rolle;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.List;
@@ -24,18 +25,22 @@ public class DokumentController implements DokumentApi {
     private final RequestContextFactory requestContextFactory;
     private final DokumentInPort dokumentInPort;
     private final DokumentMapper dokumentMapper;
+    private final CommonMapper commonMapper;
 
     @Override
     public ResponseEntity<DokumentListeResponse> searchVorgangsDokumente(
             final String vorgangsId,
             @Nullable final String eakteLoginName,
-            @Nullable final String eakteRolle,
+            @Nullable final Rolle eakteRolle,
             @Nullable final String eakteOrganisationseinheit,
             final Integer limit,
             @Nullable final String bedingungen,
             final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
-        final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
+        final RequestContext requestContext = requestContextFactory.create(
+                eakteLoginName,
+                eakteOrganisationseinheit,
+                commonMapper.toDomain(eakteRolle));
         final SearchRequest request = SearchRequest.builder()
                 .limit(limit)
                 .query(bedingungen)
