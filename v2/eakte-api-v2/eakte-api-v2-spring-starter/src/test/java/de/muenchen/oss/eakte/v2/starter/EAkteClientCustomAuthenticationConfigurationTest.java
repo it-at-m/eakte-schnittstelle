@@ -14,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import de.muenchen.oss.eakte.v2.generated.api.VorgangApi;
 import de.muenchen.oss.eakte.v2.generated.dms.ApiClient;
+import de.muenchen.oss.eakte.v2.generated.model.Rolle;
 import de.muenchen.oss.eakte.v2.generated.model.Vorgang;
 import java.util.List;
 import org.junit.jupiter.api.AfterAll;
@@ -157,7 +158,7 @@ class EAkteClientCustomAuthenticationConfigurationTest {
                                 .formatted(EAkteClientConfigurationTest.VORGANG_ID))));
 
         final Vorgang response = vorgangApi.getVorgang(
-                EAkteClientConfigurationTest.VORGANG_ID, "user-login", "Official", "COO.1.2301.1.ou", List.of());
+                EAkteClientConfigurationTest.VORGANG_ID, "user-login", Rolle.SACHBEARBEITUNG, "COO.1.2301.1.ou", List.of());
 
         assertThat(response.getId()).isEqualTo(EAkteClientConfigurationTest.VORGANG_ID);
         WIREMOCK.verify(getRequestedFor(urlEqualTo(
