@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.DmsException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.DmsResponseException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Role;
 import jakarta.xml.ws.WebServiceException;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.cxf.binding.soap.Soap11;
@@ -21,7 +22,7 @@ import org.w3c.dom.Element;
 
 class FabasoftRequestHandlerTest {
     private static final String CALL_NAME = "searchObject";
-    private static final RequestContext REQUEST_CONTEXT = new RequestContext("user", "ou", "role");
+    private static final RequestContext REQUEST_CONTEXT = new RequestContext("user", "ou", Role.SACHBEARBEITUNG);
 
     private RequestContextProvider contextProvider;
     private FabasoftRequestHandler errorHandler;
