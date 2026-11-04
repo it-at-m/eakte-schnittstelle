@@ -80,13 +80,16 @@ public class VorgangController implements VorgangApi {
     public ResponseEntity<VorgangListeResponse> searchAkteVorgeange(
             final String akteId,
             final @Nullable String eakteLoginName,
-            final @Nullable String eakteRolle,
+            final @Nullable Rolle eakteRolle,
             final @Nullable String eakteOrganisationseinheit,
             final Integer limit,
             final @Nullable String bedingungen,
             final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
-        final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
+        final RequestContext requestContext = requestContextFactory.create(
+                eakteLoginName,
+                eakteOrganisationseinheit,
+                commonMapper.toDomain(eakteRolle));
         final SearchRequest request = SearchRequest.builder()
                 .limit(limit)
                 .query(bedingungen)

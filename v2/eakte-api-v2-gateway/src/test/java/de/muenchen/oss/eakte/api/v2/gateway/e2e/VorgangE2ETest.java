@@ -160,7 +160,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
             mockMvc.perform(get("/api/v2/akten/COO.1.2.3/vorgaenge")
                     .header("Authorization", "Bearer %s".formatted(USER_IMPERSONATE))
                     .header("EAkte-Login-Name", "login")
-                    .header("EAkte-Rolle", "role")
+                    .header("EAkte-Rolle", "Sachbearbeitung")
                     .header("EAkte-Organisationseinheit", "ou")
                     .queryParam("limit", "123")
                     .queryParam("bedingungen", "where query")
