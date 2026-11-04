@@ -9,6 +9,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.InternesDokume
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.controllers.InternesDokumentApi;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.InternesDokument;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.InternesDokumentListeResponse;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Rolle;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.List;
@@ -21,21 +22,25 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 @RequiredArgsConstructor
-@SuppressWarnings({ "PMD.UseObjectForClearerAPI", "CPD-START" })
+@SuppressWarnings({ "CPD-START" })
 public class InternesDokumentController implements InternesDokumentApi {
     private final RequestContextFactory requestContextFactory;
     private final InternesDokumentInPort internesDokumentInPort;
     private final InternesDokumentMapper internesDokumentMapper;
+    private final CommonMapper commonMapper;
 
     @Override
     public ResponseEntity<InternesDokument> getInternesDokument(
             final String dokumentId,
             final @Nullable String eakteLoginName,
-            final @Nullable String eakteRolle,
+            final @Nullable Rolle eakteRolle,
             final @Nullable String eakteOrganisationseinheit,
             final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
-        final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
+        final RequestContext requestContext = requestContextFactory.create(
+                eakteLoginName,
+                eakteOrganisationseinheit,
+                commonMapper.toDomain(eakteRolle));
         final InternesDokumentResponse result = internesDokumentInPort.get(requestContext,
                 dokumentId,
                 eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of())
@@ -46,13 +51,16 @@ public class InternesDokumentController implements InternesDokumentApi {
     @Override
     public ResponseEntity<InternesDokumentListeResponse> searchInterneDokumente(
             final @Nullable String eakteLoginName,
-            final @Nullable String eakteRolle,
+            final @Nullable Rolle eakteRolle,
             final @Nullable String eakteOrganisationseinheit,
             final Integer limit,
             final @Nullable String bedingungen,
             final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
-        final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
+        final RequestContext requestContext = requestContextFactory.create(
+                eakteLoginName,
+                eakteOrganisationseinheit,
+                commonMapper.toDomain(eakteRolle));
         final SearchRequest request = SearchRequest.builder()
                 .limit(limit)
                 .query(bedingungen)
