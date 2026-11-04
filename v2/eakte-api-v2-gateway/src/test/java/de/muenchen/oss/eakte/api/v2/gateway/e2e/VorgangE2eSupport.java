@@ -1,5 +1,7 @@
 package de.muenchen.oss.eakte.api.v2.gateway.e2e;
 
+import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder;
+
 abstract class VorgangE2eSupport extends FabasoftE2eSupport {
     public static final String DFV_ATTRIBUTE = "custom.dfv.attribute";
     private static final String FULL_REFERENCE = "EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:"
@@ -17,6 +19,41 @@ abstract class VorgangE2eSupport extends FabasoftE2eSupport {
 
     protected void stubGetVorgangNotFoundResponse() {
         stubSearchRequestContaining("COOSYSTEM@1.1:objaddress", emptySearchResponse());
+    }
+
+    protected void stubCreateVorgangResponse() {
+        wireMock.stubFor(com.github.tomakehurst.wiremock.client.WireMock.post(
+                com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo("/"))
+                .withHeader("SOAPAction", com.github.tomakehurst.wiremock.client.WireMock.containing("SOAPCreateSubFile"))
+                .willReturn(com.github.tomakehurst.wiremock.client.WireMock.aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "text/xml; charset=utf-8")
+                        .withBody(createSubFileResponse())));
+        wireMock.stubFor(com.github.tomakehurst.wiremock.client.WireMock.post(
+                com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo("/"))
+                .withHeader("SOAPAction", com.github.tomakehurst.wiremock.client.WireMock.containing("SOAPGenericSetProperties"))
+                .willReturn(com.github.tomakehurst.wiremock.client.WireMock.aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "text/xml; charset=utf-8")
+                        .withBody(setPropertiesResponse())));
+    }
+
+    protected void verifyCreateVorgangRequest(final String aktenId, final String name, final String betreff,
+            final String vorlagenId, final boolean impersonate) {
+        RequestPatternBuilder pattern = com.github.tomakehurst.wiremock.client.WireMock
+                .postRequestedFor(
+                        com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo("/"))
+                .withRequestBody(com.github.tomakehurst.wiremock.client.WireMock.containing(aktenId))
+                .withRequestBody(com.github.tomakehurst.wiremock.client.WireMock.containing(name))
+                .withRequestBody(com.github.tomakehurst.wiremock.client.WireMock.containing(betreff))
+                .withRequestBody(com.github.tomakehurst.wiremock.client.WireMock.containing(vorlagenId));
+        if (impersonate) {
+            pattern = pattern
+                    .withHeader("X-FSC-Authenticated-User", com.github.tomakehurst.wiremock.client.WireMock.equalTo("login"))
+                    .withQueryParam("px", com.github.tomakehurst.wiremock.client.WireMock.equalTo("role"))
+                    .withQueryParam("gx", com.github.tomakehurst.wiremock.client.WireMock.equalTo("ou"));
+        }
+        wireMock.verify(pattern);
     }
 
     protected void stubDfVAndVorgangResponse() {
@@ -37,7 +74,7 @@ abstract class VorgangE2eSupport extends FabasoftE2eSupport {
                         <urn:STRING urn:reference="COOELAK@1.1001:objmlname.langstring" urn:index="1">short-name</urn:STRING>
                         <urn:ENUM urn:reference="FSCFOLIO@1.1001:objdocstate" urn:index="1">10</urn:ENUM>
                         <urn:STRING urn:reference="FSCFOLIO@1.1001:bostate.name" urn:index="1">processing</urn:STRING>
-                        <urn:STRING urn:reference="FSCFOLIO@1.1001:objaccdef.name" urn:index="1">acl</urn:STRING>
+                        <urn:OBJECT urn:reference="FSCFOLIO@1.1001:objaccdef" urn:index="1">COO.1.1001.1.182601</urn:OBJECT>
                         <urn:STRING urn:reference="COOSYSTEM@1.1:objowngroup.name" urn:index="1">ou</urn:STRING>
                         <urn:ENUM urn:reference="COOELAK@1.1001:filetype" urn:index="1">1</urn:ENUM>
                         <urn:STRING urn:reference="COOELAK@1.1001:inchargeremark" urn:index="1">remark</urn:STRING>
@@ -71,6 +108,34 @@ abstract class VorgangE2eSupport extends FabasoftE2eSupport {
                   <urn:queryresult/>
                 </urn:SOAPSearchResponse>
                 """);
+    }
+
+    private String createSubFileResponse() {
+        return """
+                <?xml version="1.0" encoding="UTF-8"?>
+                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                        xmlns:urn="urn:schemas-editions-fabasoft-com:gov:createsubfile">
+                  <soapenv:Body>
+                    <urn:CreateSubFileResponse>
+                      <urn:subfile>
+                        <urn:objaddress>COO.1.2.3</urn:objaddress>
+                      </urn:subfile>
+                    </urn:CreateSubFileResponse>
+                  </soapenv:Body>
+                </soapenv:Envelope>
+                """;
+    }
+
+    private String setPropertiesResponse() {
+        return """
+                <?xml version="1.0" encoding="UTF-8"?>
+                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                        xmlns:urn="urn:schemas-fabasoft-com:universal">
+                  <soapenv:Body>
+                    <urn:response/>
+                  </soapenv:Body>
+                </soapenv:Envelope>
+                """;
     }
 
 }

@@ -1,7 +1,6 @@
 meta {
   name: SOAPCreateContentObjectsAndConvert
   type: http
-  seq: 1
 }
 
 post {
@@ -16,5 +15,32 @@ headers {
 }
 
 body:xml {
-  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><CreateContentObjectsAndConvertRequest><!--1 or more repetitions--><contentobj><objclass>string</objclass><context>string</context><container>string</container><contname>string</contname><contextension>string</contextension><content>?</content><finalform>string</finalform><data></data></contentobj><!--1 or more repetitions--><contentobj><objclass>string</objclass><context>string</context><container>string</container><contname>string</contname><contextension>string</contextension><content>?</content><finalform>string</finalform><data></data></contentobj></CreateContentObjectsAndConvertRequest></soap:Body></soap:Envelope>
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Body>
+          <CreateContentObjectsAndConvertRequest>
+              <!--1 or more repetitions-->
+              <contentobj>
+                  <objclass>string</objclass>
+                  <context>string</context>
+                  <container>string</container>
+                  <contname>string</contname>
+                  <contextension>string</contextension>
+                  <content>?</content>
+                  <finalform>string</finalform>
+                  <data></data>
+              </contentobj>
+              <!--1 or more repetitions-->
+              <contentobj>
+                  <objclass>string</objclass>
+                  <context>string</context>
+                  <container>string</container>
+                  <contname>string</contname>
+                  <contextension>string</contextension>
+                  <content>?</content>
+                  <finalform>string</finalform>
+                  <data></data>
+              </contentobj>
+          </CreateContentObjectsAndConvertRequest>
+      </soap:Body>
+  </soap:Envelope>
 }

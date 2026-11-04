@@ -1,7 +1,6 @@
 meta {
   name: SOAPSetContentSWA
   type: http
-  seq: 34
 }
 
 post {
@@ -16,5 +15,14 @@ headers {
 }
 
 body:xml {
-  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SOAPSetContentSWARequest><objaddress>string</objaddress><encoding>string</encoding><objaddress>string</objaddress><encoding>string</encoding></SOAPSetContentSWARequest></soap:Body></soap:Envelope>
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Body>
+          <SOAPSetContentSWARequest>
+              <objaddress>string</objaddress>
+              <encoding>string</encoding>
+              <objaddress>string</objaddress>
+              <encoding>string</encoding>
+          </SOAPSetContentSWARequest>
+      </soap:Body>
+  </soap:Envelope>
 }

@@ -1,0 +1,33 @@
+meta {
+  name: Suche alle Zugriffsdefinitionen
+  type: http
+  seq: 8
+}
+
+post {
+  url: https://eakte26-k2-authldap.muenchen.de/fsc/fscdav/wsdl?WEBSVC=FSCGOVXML_1_1001_DefaultWebServiceDefinition
+  body: xml
+  auth: inherit
+}
+
+params:query {
+  WEBSVC: FSCGOVXML_1_1001_DefaultWebServiceDefinition
+}
+
+headers {
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPSearch
+}
+
+body:xml {
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fsc="http://schemas.fabasoft.com/websvc/FSCGOVXML_1_1001_DefaultWebServiceDefinition/" xmlns:urn="urn:schemas-fabasoft-com:bai:search">
+     <soapenv:Body>
+        <urn:SOAPSearchRequest>
+           <urn:query>
+  	         SELECT *
+  	         FROM FSCFOLIO@1.1001:AccessDefinition
+           </urn:query>
+        </urn:SOAPSearchRequest>
+     </soapenv:Body>
+  </soapenv:Envelope>
+}
