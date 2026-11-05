@@ -33,4 +33,10 @@ public class VorgangUseCase implements VorgangInPort {
         final Set<String> updatedAttrs = attributes.isEmpty() ? dfvOutPort.loadDfVAttributes(context, ObjectType.VORGANG) : attributes;
         return vorgangOutPort.get(context, vorgangsId, updatedAttrs);
     }
+
+    @Override
+    public List<VorgangResponse> searchBellowAkte(final RequestContext context, final String akteId, final SearchRequest request) {
+        final SearchRequest enrichedRequest = dfvHelper.enrichWithDfv(context, ObjectType.VORGANG, request);
+        return vorgangOutPort.searchBellowAkte(context, akteId, enrichedRequest);
+    }
 }
