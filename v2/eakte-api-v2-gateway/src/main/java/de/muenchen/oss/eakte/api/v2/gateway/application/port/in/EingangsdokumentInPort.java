@@ -15,5 +15,5 @@ import org.springframework.validation.annotation.Validated;
 public interface EingangsdokumentInPort {
     List<EingangsdokumentResponse> search(@NotNull RequestContext context, @NotNull @Valid SearchRequest request);
 
-    Optional<EingangsdokumentResponse> get(@NotNull RequestContext context, @NotBlank String vorgangsId, @NotNull Set<String> attributes);
+    Optional<EingangsdokumentResponse> get(@NotNull RequestContext context, @NotBlank String eingangsdokumentId, @NotNull Set<String> attributes);
 }

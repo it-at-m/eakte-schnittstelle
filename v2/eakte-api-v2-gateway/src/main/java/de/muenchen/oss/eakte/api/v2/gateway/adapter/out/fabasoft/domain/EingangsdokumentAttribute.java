@@ -10,8 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum EingangsdokumentAttribute {
     FREMDES_GESCHAEFTSZEICHEN("COOELAK@1.1001:foreignnr", AttributeType.STRING),
-    EINGANGSDATUM("COOELAK@1.1001:delivery", AttributeType.DATE),
-    HINWEIS("DEPRECONFIG@15.1001:fileaddsubj", AttributeType.STRING);
+    EINGANGSDATUM("COOELAK@1.1001:delivery", AttributeType.DATE);
 
     private final String reference;
     private final AttributeType type;

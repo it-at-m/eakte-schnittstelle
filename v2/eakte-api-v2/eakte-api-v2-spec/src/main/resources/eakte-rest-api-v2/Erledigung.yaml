@@ -5,7 +5,7 @@ get:
   operationId: GetErledigung
   parameters:
     - in: path
-      name: erledigungsId
+      name: erledigungId
       schema:
         type: string
       required: true

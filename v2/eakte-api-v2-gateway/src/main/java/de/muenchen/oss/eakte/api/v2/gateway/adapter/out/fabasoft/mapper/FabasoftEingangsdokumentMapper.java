@@ -32,7 +32,6 @@ public class FabasoftEingangsdokumentMapper {
                         .getTypedSingle(referenceValueMap, EingangsdokumentAttribute.FREMDES_GESCHAEFTSZEICHEN.getReference(), String.class).orElse(null))
                 .eingangsdatum(
                         attributeMapper.getTypedSingle(referenceValueMap, EingangsdokumentAttribute.EINGANGSDATUM.getReference(), LocalDate.class).orElse(null))
-                .hinweis(attributeMapper.getTypedSingle(referenceValueMap, EingangsdokumentAttribute.HINWEIS.getReference(), String.class).orElse(null))
                 .build();
     }
 }

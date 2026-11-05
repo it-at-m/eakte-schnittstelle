@@ -7,7 +7,7 @@ components:
       properties:
         zustellungsDatum:
           type: string
-        dokumententypId:
+        dokumententyp:
           type: string
         anlagenBeschreibung:
           type: string

@@ -18,8 +18,8 @@ public class DokumentUseCase implements DokumentInPort {
     private final DfvHelper dfvHelper;
 
     @Override
-    public List<DokumentResponse> searchBellowVorgang(final RequestContext context, final String vorgangsId, final SearchRequest request) {
+    public List<DokumentResponse> searchBellowVorgang(final RequestContext context, final String vorgangId, final SearchRequest request) {
         final SearchRequest enrichedRequest = dfvHelper.enrichWithDfv(context, ObjectType.DOKUMENT, request);
-        return dokumentOutPort.searchBellowVorgang(context, vorgangsId, enrichedRequest);
+        return dokumentOutPort.searchBellowVorgang(context, vorgangId, enrichedRequest);
     }
 }

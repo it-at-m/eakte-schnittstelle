@@ -9,8 +9,6 @@ components:
           type: string
         eingangsdatum:
           type: string
-        hinweis:
-          type: string
 
     EingangsdokumentListeResponse:
       type: object

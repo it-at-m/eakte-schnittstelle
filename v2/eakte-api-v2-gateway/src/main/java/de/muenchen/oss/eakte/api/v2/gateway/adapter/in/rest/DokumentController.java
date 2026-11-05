@@ -29,7 +29,7 @@ public class DokumentController implements DokumentApi {
 
     @Override
     public ResponseEntity<DokumentListeResponse> searchVorgangsDokumente(
-            final String vorgangsId,
+            final String vorgangId,
             @Nullable final String eakteLoginName,
             @Nullable final Rolle eakteRolle,
             @Nullable final String eakteOrganisationseinheit,
@@ -45,7 +45,7 @@ public class DokumentController implements DokumentApi {
                 .limit(limit)
                 .query(bedingungen)
                 .attributes(eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of()).build();
-        final List<DokumentResponse> result = dokumentInPort.searchBellowVorgang(requestContext, vorgangsId, request);
+        final List<DokumentResponse> result = dokumentInPort.searchBellowVorgang(requestContext, vorgangId, request);
         // respond
         final DokumentListeResponse response = DokumentListeResponse.builder()
                 .anzahl(result.size())

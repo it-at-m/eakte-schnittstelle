@@ -116,7 +116,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /api/v2/vorgaenge/{vorgangsId}:
+  /api/v2/vorgaenge/{vorgangId}:
     get:
       tags:
         - Vorgang
@@ -124,7 +124,7 @@ paths:
       operationId: GetVorgang
       parameters:
         - in: path
-          name: vorgangsId
+          name: vorgangId
           schema:
             type: string
           required: true
@@ -143,7 +143,7 @@ paths:
             GetDokumente:
               operationId: SearchVorgangsDokumente
               parameters:
-                vorgangsId: $response.body#/id
+                vorgangId: $response.body#/id
         '400':
           description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
           content:
@@ -164,7 +164,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /api/v2/vorgaenge/{vorgangsId}/dokumente:
+  /api/v2/vorgaenge/{vorgangId}/dokumente:
     get:
       tags:
         - Dokument
@@ -172,7 +172,7 @@ paths:
       operationId: SearchVorgangsDokumente
       parameters:
         - in: path
-          name: vorgangsId
+          name: vorgangId
           schema:
             type: string
           required: true
@@ -193,7 +193,7 @@ paths:
             GetVorgang:
               operationId: GetVorgang
               parameters:
-                vorgangsId: $response.body#/parent.id
+                vorgangId: $response.body#/parent.id
         '400':
           description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
           content:
@@ -331,7 +331,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /api/v2/erledigungen/{erledigungsId}:
+  /api/v2/erledigungen/{erledigungId}:
     get:
       tags:
         - Erledigung
@@ -339,7 +339,7 @@ paths:
       operationId: GetErledigung
       parameters:
         - in: path
-          name: erledigungsId
+          name: erledigungId
           schema:
             type: string
           required: true
@@ -674,27 +674,17 @@ components:
       required:
         - name
       properties:
+        vorgangId:
+          type: string
         name:
           type: string
         betreff:
           type: string
+        hinweis:
+          type: string
         zugriffsdefinition:
           type: string
         organisationseinheit:
-          type: string
-    ParentReference:
-      type: object
-      required:
-        - type
-        - id
-      properties:
-        type:
-          type: string
-          enum:
-            - Vorgang
-            - Postkorb
-            - Arbeitsvorrat
-        id:
           type: string
     Dokument:
       type: object
@@ -713,8 +703,6 @@ components:
             - Internes Dokument
         id:
           type: string
-        parent:
-          $ref: '#/components/schemas/ParentReference'
         langname:
           type: string
         weitereEigenschaften:
@@ -740,8 +728,6 @@ components:
           type: string
         eingangsdatum:
           type: string
-        hinweis:
-          type: string
     EingangsdokumentListeResponse:
       type: object
       properties:
@@ -757,9 +743,9 @@ components:
       allOf:
         - $ref: '#/components/schemas/Dokument'
       properties:
-        bezugEingang:
+        bezugEingangsdokument:
           type: string
-        dokumententypId:
+        dokumententyp:
           type: string
         anlagenBeschreibung:
           type: string
@@ -780,7 +766,7 @@ components:
       properties:
         zustellungsDatum:
           type: string
-        dokumententypId:
+        dokumententyp:
           type: string
         anlagenBeschreibung:
           type: string
