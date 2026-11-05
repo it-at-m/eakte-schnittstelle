@@ -11,6 +11,5 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class ErledigungResponse extends DokumentResponse {
     private final String bezugEingangsdokument;
-    private final String dokumententyp;
     private final String anlagenBeschreibung;
 }

@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum InternesDokumentAttribute {
     ZUSTELLUNGSDATUM("COOELAK@1.1001:delivery", AttributeType.DATE),
-    DOKUMENTENTYP("COOELAK@1.1001:subfiletype.name", AttributeType.STRING),
     ANLAGEN_BESCHREIBUNG("COOELAK@1.1001:incattachments", AttributeType.STRING);
 
     private final String reference;

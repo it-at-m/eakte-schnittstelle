@@ -592,7 +592,7 @@ components:
         - id
         - akteId
         - name
-        - langname
+        - titel
         - originalMedium
         - status
         - bearbeitungsstatus
@@ -604,9 +604,9 @@ components:
           type: string
         akteId:
           type: string
-        name:
+        titel:
           type: string
-        langname:
+        name:
           type: string
         betreff:
           type: string
@@ -672,15 +672,17 @@ components:
     DokumentBase:
       type: object
       required:
-        - name
+        - titel
       properties:
         vorgangId:
           type: string
-        name:
+        titel:
           type: string
         betreff:
           type: string
         hinweis:
+          type: string
+        dokumententyp:
           type: string
         zugriffsdefinition:
           type: string
@@ -693,7 +695,7 @@ components:
       required:
         - klasse
         - id
-        - langname
+        - name
       properties:
         klasse:
           type: string
@@ -703,7 +705,7 @@ components:
             - Internes Dokument
         id:
           type: string
-        langname:
+        name:
           type: string
         weitereEigenschaften:
           type: array
@@ -745,8 +747,6 @@ components:
       properties:
         bezugEingangsdokument:
           type: string
-        dokumententyp:
-          type: string
         anlagenBeschreibung:
           type: string
     ErledigungListeResponse:
@@ -765,8 +765,6 @@ components:
         - $ref: '#/components/schemas/Dokument'
       properties:
         zustellungsDatum:
-          type: string
-        dokumententyp:
           type: string
         anlagenBeschreibung:
           type: string

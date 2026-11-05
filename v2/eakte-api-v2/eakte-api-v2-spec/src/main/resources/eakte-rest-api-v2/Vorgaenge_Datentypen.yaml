@@ -16,7 +16,7 @@ components:
         - id
         - akteId
         - name
-        - langname
+        - titel
         - originalMedium
         - status
         - bearbeitungsstatus
@@ -28,9 +28,9 @@ components:
           type: string
         akteId:
           type: string
-        name:
+        titel:
           type: string
-        langname:
+        name:
           type: string
         betreff:
           type: string

@@ -14,6 +14,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.Fabasoft
 abstract class FabasoftE2eSupport extends AbstractWireMockE2eTest {
     private static final String SOAP_CONTENT_TYPE = "text/xml; charset=utf-8";
     private static final String SOAP_SEARCH_ACTION = "http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPSearch";
+    protected static final String DOKUMENTENTYP_REFERENCE = "COOELAK@1.1001:subfiletype.name";
 
     protected void stubSoapFailure() {
         wireMock.stubFor(post(urlPathEqualTo("/"))

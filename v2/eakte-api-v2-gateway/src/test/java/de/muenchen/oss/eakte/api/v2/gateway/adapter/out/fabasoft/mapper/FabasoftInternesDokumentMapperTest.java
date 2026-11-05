@@ -29,8 +29,8 @@ class FabasoftInternesDokumentMapperTest {
         assertEquals(DOKUMENT_ID, mapped.getId());
         assertEquals(DokumentKlasse.INTERNES_DOKUMENT, mapped.getKlasse());
         assertEquals("vorgang", mapped.getVorgangId());
+        assertEquals("titel", mapped.getTitel());
         assertEquals("name", mapped.getName());
-        assertEquals("long name", mapped.getLangname());
         assertEquals("subject", mapped.getBetreff());
         assertEquals("access", mapped.getZugriffsdefinition());
         assertEquals("ou", mapped.getOrganisationseinheit());
@@ -49,16 +49,16 @@ class FabasoftInternesDokumentMapperTest {
     }
 
     private static ResultObject resultWithAttributes() {
-        return new ResultObject("long name", DOKUMENT_ID, List.of(
+        return new ResultObject("name", DOKUMENT_ID, List.of(
                 attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:InternalFile"),
                 attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
-                attribute(DokumentAttribute.NAME, "name"),
+                attribute(DokumentAttribute.TITEL, "titel"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
                 attribute(DokumentAttribute.HINWEIS, "note"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(InternesDokumentAttribute.ZUSTELLUNGSDATUM, LocalDate.of(2025, 1, 2)),
-                attribute(InternesDokumentAttribute.DOKUMENTENTYP, "letter"),
+                attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
                 attribute(InternesDokumentAttribute.ANLAGEN_BESCHREIBUNG, "additional enclosure"),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));
     }

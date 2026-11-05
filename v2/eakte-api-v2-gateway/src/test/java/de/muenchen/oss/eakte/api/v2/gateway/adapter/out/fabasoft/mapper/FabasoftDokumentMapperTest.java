@@ -17,12 +17,13 @@ class FabasoftDokumentMapperTest {
 
     @Test
     void givenResultObject_thenMapDokument() {
-        final ResultObject result = new ResultObject("long name", "coo", List.of(
+        final ResultObject result = new ResultObject("name", "coo", List.of(
                 attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:Outgoing"),
                 attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
-                attribute(DokumentAttribute.NAME, "name"),
+                attribute(DokumentAttribute.TITEL, "titel"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
                 attribute(DokumentAttribute.HINWEIS, "note"),
+                attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));
@@ -32,10 +33,11 @@ class FabasoftDokumentMapperTest {
         assertEquals("coo", mapped.getId());
         assertEquals(DokumentKlasse.ERLEDIGUNG, mapped.getKlasse());
         assertEquals("vorgang", mapped.getVorgangId());
+        assertEquals("titel", mapped.getTitel());
         assertEquals("name", mapped.getName());
-        assertEquals("long name", mapped.getLangname());
         assertEquals("subject", mapped.getBetreff());
         assertEquals("note", mapped.getHinweis());
+        assertEquals("letter", mapped.getDokumententyp());
         assertEquals("access", mapped.getZugriffsdefinition());
         assertEquals("ou", mapped.getOrganisationseinheit());
         assertEquals(List.of(new Attribute("custom", "value")), mapped.getWeitereEigenschaften());
@@ -46,7 +48,7 @@ class FabasoftDokumentMapperTest {
         final ResultObject result = new ResultObject("name", "id", List.of(
                 attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:Incoming"),
                 attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
-                attribute(DokumentAttribute.NAME, "name"),
+                attribute(DokumentAttribute.TITEL, "titel"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou")));
 

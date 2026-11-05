@@ -29,9 +29,10 @@ class FabasoftEingangsdokumentMapperTest {
         assertEquals("coo", mapped.getId());
         assertEquals(DokumentKlasse.EINGANGSDOKUMENT, mapped.getKlasse());
         assertEquals("vorgang", mapped.getVorgangId());
+        assertEquals("titel", mapped.getTitel());
         assertEquals("name", mapped.getName());
-        assertEquals("long name", mapped.getLangname());
         assertEquals("subject", mapped.getBetreff());
+        assertEquals("letter", mapped.getDokumententyp());
         assertEquals("access", mapped.getZugriffsdefinition());
         assertEquals("ou", mapped.getOrganisationseinheit());
         assertEquals("external-reference", mapped.getFremdesGeschaeftszeichen());
@@ -48,12 +49,13 @@ class FabasoftEingangsdokumentMapperTest {
     }
 
     private static ResultObject resultWithAttributes() {
-        return new ResultObject("long name", "coo", List.of(
+        return new ResultObject("name", "coo", List.of(
                 attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:Incoming"),
                 attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
-                attribute(DokumentAttribute.NAME, "name"),
+                attribute(DokumentAttribute.TITEL, "titel"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
                 attribute(DokumentAttribute.HINWEIS, "note"),
+                attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(EingangsdokumentAttribute.FREMDES_GESCHAEFTSZEICHEN, "external-reference"),

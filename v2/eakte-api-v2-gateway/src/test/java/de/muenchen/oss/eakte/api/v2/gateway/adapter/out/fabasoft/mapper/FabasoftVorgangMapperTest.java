@@ -20,9 +20,9 @@ class FabasoftVorgangMapperTest {
 
     @Test
     void givenResultObject_thenMapVorgang() {
-        final ResultObject result = new ResultObject("long name", "coo", List.of(
+        final ResultObject result = new ResultObject("name", "coo", List.of(
                 attribute(VorgangAttribute.PARENT_ID, "akte"),
-                attribute(VorgangAttribute.NAME, "name"),
+                attribute(VorgangAttribute.TITEL, "titel"),
                 attribute(VorgangAttribute.BETREFF, "subject"),
                 attribute(VorgangAttribute.HINWEIS, "note"),
                 attribute(VorgangAttribute.STATUS, BigInteger.valueOf(30)),
@@ -38,7 +38,7 @@ class FabasoftVorgangMapperTest {
         assertEquals("coo", mapped.id());
         assertEquals("akte", mapped.akteId());
         assertEquals("name", mapped.name());
-        assertEquals("long name", mapped.langname());
+        assertEquals("titel", mapped.titel());
         assertEquals("subject", mapped.betreff());
         assertEquals("note", mapped.hinweis());
         assertEquals("remark", mapped.geschaeftsgangvermerk());
@@ -71,7 +71,7 @@ class FabasoftVorgangMapperTest {
 
     private static ResultObject resultWithRequiredAttributes() {
         return new ResultObject("name", "id", List.of(
-                attribute(VorgangAttribute.NAME, "name"),
+                attribute(VorgangAttribute.TITEL, "titel"),
                 attribute(VorgangAttribute.STATUS, BigInteger.TEN),
                 attribute(VorgangAttribute.BEARBEITUNGSSTATUS, "processing"),
                 attribute(VorgangAttribute.ORGANISATIONSEINHEIT, "ou"),

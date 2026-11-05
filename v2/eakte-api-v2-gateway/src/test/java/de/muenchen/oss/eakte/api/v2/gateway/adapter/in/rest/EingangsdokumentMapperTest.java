@@ -20,10 +20,11 @@ class EingangsdokumentMapperTest {
                 .id("id")
                 .klasse(DokumentKlasse.EINGANGSDOKUMENT)
                 .vorgangId("vorgang")
+                .titel("titel")
                 .name("name")
-                .langname("long name")
                 .betreff("subject")
                 .hinweis("note")
+                .dokumententyp("letter")
                 .zugriffsdefinition("access")
                 .organisationseinheit("ou")
                 .weitereEigenschaften(List.of(new Attribute("custom", "value")))
@@ -37,10 +38,11 @@ class EingangsdokumentMapperTest {
         assertEquals("id", result.getId());
         assertEquals(Eingangsdokument.KlasseEnum.EINGANGSDOKUMENT, result.getKlasse());
         assertEquals("vorgang", result.getVorgangId());
+        assertEquals("titel", result.getTitel());
         assertEquals("name", result.getName());
-        assertEquals("long name", result.getLangname());
         assertEquals("subject", result.getBetreff());
         assertEquals("note", result.getHinweis());
+        assertEquals("letter", result.getDokumententyp());
         assertEquals("access", result.getZugriffsdefinition());
         assertEquals("ou", result.getOrganisationseinheit());
         assertEquals("custom", result.getWeitereEigenschaften().getFirst().getReference());

@@ -101,16 +101,16 @@ class FabasoftInternesDokumentOutAdapterTest {
     }
 
     private static ResultObject resultWithRequiredAttributes() {
-        return new ResultObject("long name", DOKUMENT_ID, List.of(
+        return new ResultObject("name", DOKUMENT_ID, List.of(
                 attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:InternalFile"),
                 attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
-                attribute(DokumentAttribute.NAME, "name"),
+                attribute(DokumentAttribute.TITEL, "titel"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
                 attribute(DokumentAttribute.HINWEIS, "note"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(InternesDokumentAttribute.ZUSTELLUNGSDATUM, LocalDate.of(2025, 1, 2)),
-                attribute(InternesDokumentAttribute.DOKUMENTENTYP, "letter"),
+                attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
                 attribute(InternesDokumentAttribute.ANLAGEN_BESCHREIBUNG, "additional enclosure")));
     }
 

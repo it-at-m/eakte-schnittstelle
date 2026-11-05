@@ -124,7 +124,7 @@ class FabasoftVorgangOutAdapterTest {
 
     private static ResultObject resultWithRequiredAttributes() {
         return new ResultObject("name", "COO.1.2.3", List.of(
-                attribute(VorgangAttribute.NAME, "name"),
+                attribute(VorgangAttribute.TITEL, "titel"),
                 attribute(VorgangAttribute.STATUS, BigInteger.TEN),
                 attribute(VorgangAttribute.BEARBEITUNGSSTATUS, "processing"),
                 attribute(VorgangAttribute.ORGANISATIONSEINHEIT, "ou"),

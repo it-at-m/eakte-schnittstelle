@@ -13,6 +13,5 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class InternesDokumentResponse extends DokumentResponse {
     private final LocalDate zustellungsDatum;
-    private final String dokumententyp;
     private final String anlagenBeschreibung;
 }
