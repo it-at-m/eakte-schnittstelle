@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@SuppressWarnings({ "CPD-START" })
+@SuppressWarnings({ "PMD.UseObjectForClearerAPI", "CPD-START" })
 public class VorgangController implements VorgangApi {
     private final VorgangInPort vorgangInPort;
     private final VorgangMapper vorgangMapper;
@@ -74,5 +74,32 @@ public class VorgangController implements VorgangApi {
                 eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of())
                 .orElseThrow(ResourceNotFoundException::new);
         return ResponseEntity.of(Optional.of(vorgangMapper.fromDomain(result)));
+    }
+
+    @Override
+    public ResponseEntity<VorgangListeResponse> searchAkteVorgeange(
+            final String akteId,
+            final @Nullable String eakteLoginName,
+            final @Nullable Rolle eakteRolle,
+            final @Nullable String eakteOrganisationseinheit,
+            final Integer limit,
+            final @Nullable String bedingungen,
+            final List<String> eigenschaften,
+            final HttpServletRequest servletRequest) {
+        final RequestContext requestContext = requestContextFactory.create(
+                eakteLoginName,
+                eakteOrganisationseinheit,
+                commonMapper.toDomain(eakteRolle));
+        final SearchRequest request = SearchRequest.builder()
+                .limit(limit)
+                .query(bedingungen)
+                .attributes(eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of()).build();
+        final List<VorgangResponse> result = vorgangInPort.searchBellowAkte(requestContext, akteId, request);
+        // respond
+        final VorgangListeResponse response = VorgangListeResponse.builder()
+                .anzahl(result.size())
+                .elemente(vorgangMapper.fromDomain(result))
+                .build();
+        return ResponseEntity.of(Optional.of(response));
     }
 }

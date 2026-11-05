@@ -11,6 +11,7 @@ public record VorgangResponse(
         String name,
         String langname,
         String betreff,
+        String hinweis,
         String geschaeftsgangvermerk,
         VorgangMedium originalMedium,
         VorgangStatus status,
