@@ -1,7 +1,7 @@
 put:
   tags:
     - /reAssignObject
-  summary: Akte oder Vorgang umschreiben
+  summary: Akte in einen anderen Aktenplaneintrag oder Vorgang in eine andere Akte verschieben (umschreiben)
   operationId: ReAssignObject
   parameters:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/x_anwendung'
