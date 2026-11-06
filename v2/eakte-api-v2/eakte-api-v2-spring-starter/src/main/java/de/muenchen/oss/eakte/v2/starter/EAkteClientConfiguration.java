@@ -1,10 +1,6 @@
 package de.muenchen.oss.eakte.v2.starter;
 
-import de.muenchen.oss.eakte.v2.generated.api.DokumentApi;
-import de.muenchen.oss.eakte.v2.generated.api.EingangsdokumentApi;
-import de.muenchen.oss.eakte.v2.generated.api.ErledigungApi;
-import de.muenchen.oss.eakte.v2.generated.api.InternesDokumentApi;
-import de.muenchen.oss.eakte.v2.generated.api.VorgangApi;
+import de.muenchen.oss.eakte.v2.generated.api.*;
 import de.muenchen.oss.eakte.v2.generated.dms.ApiClient;
 import org.apache.hc.client5.http.config.ConnectionConfig;
 import org.apache.hc.client5.http.config.RequestConfig;
@@ -62,6 +58,9 @@ public class EAkteClientConfiguration {
                 clientRegistrationRepositoryProvider,
                 authorizedClientServiceProvider);
     }
+
+    @Bean
+    protected AkteApi eakteAkteApi(final ApiClient apiClient) { return new AkteApi(apiClient);}
 
     @Bean
     protected VorgangApi eakteVorgangApi(final ApiClient apiClient) {

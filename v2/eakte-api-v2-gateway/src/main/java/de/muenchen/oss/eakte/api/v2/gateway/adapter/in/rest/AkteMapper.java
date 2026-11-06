@@ -1,0 +1,18 @@
+package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
+
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.akte.AkteResponse;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Akte;
+import org.mapstruct.Mapper;
+import org.mapstruct.MapperConfig;
+import org.mapstruct.ReportingPolicy;
+
+import java.util.Collection;
+import java.util.List;
+
+@Mapper(uses = { AttributeMapper.class })
+@MapperConfig(unmappedSourcePolicy = ReportingPolicy.ERROR)
+public interface AkteMapper {
+    Akte fromDomain(AkteResponse response);
+
+    List<Akte> fromDomain(Collection<AkteResponse> responses);
+}
