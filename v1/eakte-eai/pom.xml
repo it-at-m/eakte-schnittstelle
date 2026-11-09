@@ -18,9 +18,9 @@
 <properties>
 	<java.version>21</java.version>
 	<camel.version>4.11.0</camel.version>
-	<spring-boot-version>3.4.4</spring-boot-version>
+	<spring-boot-version>3.4.13</spring-boot-version>
 
-	<cxf.version>4.1.0</cxf.version>
+	<cxf.version>4.1.9</cxf.version>
 	<dms-eai.version>1.10</dms-eai.version>
 	<wsdl.version>1.11</wsdl.version>
 	<api.version>1.2.6</api.version>
@@ -32,7 +32,7 @@
 	<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 
 	<!-- SonarQube -->
-	<sonar.scanner.version>3.9.0.2155</sonar.scanner.version>
+	<sonar.scanner.version>3.9.1.2184</sonar.scanner.version>
 	<sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
 
 	<!-- Java 11 Features, Java 11 JVM -->
@@ -73,7 +73,7 @@
 		<dependency>
 			<groupId>org.junit</groupId>
 			<artifactId>junit-bom</artifactId>
-			<version>5.12.0</version>
+			<version>5.12.2</version>
 			<scope>import</scope>
 			<type>pom</type>
 		</dependency>
@@ -101,7 +101,7 @@
 	<dependency>
 		<groupId>org.apache.commons</groupId>
 		<artifactId>commons-collections4</artifactId>
-		<version>4.5.0-M3</version>
+		<version>4.5.0</version>
 	</dependency>
 
 	<dependency>
@@ -197,7 +197,7 @@
 	<dependency>
 		<groupId>com.github.spotbugs</groupId>
 		<artifactId>spotbugs-annotations</artifactId>
-		<version>4.9.3</version>
+		<version>4.9.8</version>
 		<scope>provided</scope>
 	</dependency>
 
@@ -225,35 +225,35 @@
 		<groupId>org.junit.platform</groupId>
 		<artifactId>junit-platform-launcher</artifactId>
 		<scope>test</scope>
-		<version>1.12.0</version>
+		<version>1.12.2</version>
 	</dependency>
 
 	<dependency>
 		<groupId>org.junit.platform</groupId>
 		<artifactId>junit-platform-commons</artifactId>
 		<scope>test</scope>
-		<version>1.12.0</version>
+		<version>1.12.2</version>
 	</dependency>
 
 	<dependency>
 		<groupId>org.junit.platform</groupId>
 		<artifactId>junit-platform-engine</artifactId>
 		<scope>test</scope>
-		<version>1.12.0</version>
+		<version>1.12.2</version>
 	</dependency>
 
 	<dependency>
 		<groupId>org.junit.jupiter</groupId>
 		<artifactId>junit-jupiter-api</artifactId>
 		<scope>test</scope>
-		<version>5.12.0</version>
+		<version>5.12.2</version>
 	</dependency>
 
 	<dependency>
 		<groupId>org.junit.jupiter</groupId>
 		<artifactId>junit-jupiter-engine</artifactId>
 		<scope>test</scope>
-		<version>5.12.0</version>
+		<version>5.12.2</version>
 	</dependency>
 
 	<dependency>
@@ -295,7 +295,7 @@
 						<groupId>org.projectlombok</groupId>
 						<artifactId>lombok</artifactId>
 						<!-- Version muss mit der in den spring-boot-dependencies bereitgestellten Lombok-Version übereinstimmen -->
-						<version>1.18.38</version>
+						<version>1.18.48</version>
 					</path>
 					<path>
 						<groupId>org.projectlombok</groupId>
@@ -411,7 +411,7 @@
 		<plugin>
 			<groupId>org.codehaus.mojo</groupId>
 			<artifactId>build-helper-maven-plugin</artifactId>
-			<version>3.6.0</version>
+			<version>3.6.2</version>
 			<executions>
 				<execution>
 					<id>add-source</id>
