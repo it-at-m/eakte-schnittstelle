@@ -44,9 +44,9 @@ public class AkteE2eTest extends AkteE2eSupport {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.anzahl").value(1))
                     .andExpect(jsonPath("$.elemente[0].id").value("COO.1.2.3"))
-                    .andExpect(jsonPath("$.elemente[0].betreffseinheitId").value("subjectArea-id"));
+                    .andExpect(jsonPath("$.elemente[0].aktenplaneintragId").value("subjectArea-id"));
 
-            verifySearchRequest(".ELAKGGOV@1.1001:apentry = 'COO.1.2.3'", "custom.attribute", true);
+            verifySearchRequest(".ELAKGOV@1.1001:apentry = 'COO.1.2.3'", "custom.attribute", true);
         }
 
         @Test

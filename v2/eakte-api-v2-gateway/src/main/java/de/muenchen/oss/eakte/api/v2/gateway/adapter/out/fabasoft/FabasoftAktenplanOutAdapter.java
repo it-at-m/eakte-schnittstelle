@@ -9,7 +9,7 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class FabasoftAktenplanOutAdapter {
 
-    private static final String PARENT_QUERY = ".ELAKGGOV@1.1001:apentry = '%s'";
+    private static final String PARENT_QUERY = ".ELAKGOV@1.1001:apentry = '%s'";
 
     public static String getParentQuery(final String id) {
         if (!StringUtils.hasText(id) || !id.matches(FabasoftObjectType.COO_PATTERN)) {

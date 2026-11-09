@@ -21,7 +21,7 @@ and the property name in the V2 API is given.
 
 | Reference                                   | Label                           | V1 | V1              | V2                        |
 |---------------------------------------------|---------------------------------|----|-----------------|---------------------------|
-| ELAKGGOV@1.1001:apentry                     | Aktenplaneintrag                | RW | apentry         | betreffseinheitId         |
+| ELAKGGOV@1.1001:apentry                     | Aktenplaneintrag                | RW | apentry         | aktenplaneintragId        |
 | COOELAK@1.1001:objmlname.langstring         | Titel                           | RW | shortname       | titel                     |
 | COOSYSTEM@1.1:objname                       | Name (Übersicht)                | R  | objname         | name                      |
 | COOELAK@1.1001:filesubj                     | Betreff                         | RW | filesubj        | betreff                   |

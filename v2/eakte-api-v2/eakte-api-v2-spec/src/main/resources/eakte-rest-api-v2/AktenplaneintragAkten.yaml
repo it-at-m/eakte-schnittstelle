@@ -5,7 +5,7 @@ get:
   operationId: SearchAktenplaneintragAkten
   parameters:
     - in: path
-      name: betreffseinheitId
+      name: aktenplaneintragId
       schema:
         type: string
       required: true

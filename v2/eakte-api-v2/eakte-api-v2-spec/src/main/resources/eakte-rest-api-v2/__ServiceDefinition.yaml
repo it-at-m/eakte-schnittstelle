@@ -43,7 +43,7 @@ tags:
 
 paths:
   # Akte
-  '/api/v2/aktenplaneintraege/{betreffseinheitId}/akten':
+  '/api/v2/aktenplaneintraege/{aktenplaneintragId}/akten':
     $ref: 'AktenplaneintragAkten.yaml'
   # Vorgang
   '/api/v2/akten/{akteId}/vorgaenge':

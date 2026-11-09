@@ -3,7 +3,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.e2e;
 public class AkteE2eSupport extends FabasoftE2eSupport {
 
     protected void stubAktenplanAkteResponse() {
-        stubSearchRequestContaining(".ELAKGGOV@1.1001:apentry", akteResponse());
+        stubSearchRequestContaining(".ELAKGOV@1.1001:apentry", akteResponse());
     }
 
     private String akteResponse() {
@@ -14,7 +14,7 @@ public class AkteE2eSupport extends FabasoftE2eSupport {
                       <urn:objname>name</urn:objname>
                       <urn:objaddress>COO.1.2.3</urn:objaddress>
                       <urn:attrlist>
-                        <urn:OBJECT urn:reference="ELAKGGOV@1.1001:apentry" urn:index="1">subjectArea-id</urn:OBJECT>
+                        <urn:OBJECT urn:reference="ELAKGOV@1.1001:apentry" urn:index="1">subjectArea-id</urn:OBJECT>
                         <urn:STRING urn:reference="COOELAK@1.1001:objmlname.langstring" urn:index="1">titel</urn:STRING>
                         <urn:STRING urn:reference="COOELAK@1.1001:filesubj" urn:index="1">subject</urn:STRING>
                         <urn:STRING urn:reference="FSCFOLIO@1.1001:objaccdef.name" urn:index="1">acl</urn:STRING>

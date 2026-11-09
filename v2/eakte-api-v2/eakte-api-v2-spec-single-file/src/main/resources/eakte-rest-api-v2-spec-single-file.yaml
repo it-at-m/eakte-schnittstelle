@@ -28,7 +28,7 @@ tags:
   - name: Internes Dokument
     description: Internal (Sub-Klasse von Dokument)
 paths:
-  /api/v2/aktenplaneintraege/{betreffseinheitId}/akten:
+  /api/v2/aktenplaneintraege/{aktenplaneintragId}/akten:
     get:
       tags:
         - Akte
@@ -36,7 +36,7 @@ paths:
       operationId: SearchAktenplaneintragAkten
       parameters:
         - in: path
-          name: betreffseinheitId
+          name: aktenplaneintragId
           schema:
             type: string
           required: true
@@ -640,7 +640,7 @@ components:
         Endpunktes, in diesem Fall die Verwendung des Filters 'Schriftgutebene=Akte').
       required:
         - id
-        - betreffseinheitId
+        - aktenplaneintragId
         - titel
         - name
         - betreff
@@ -651,7 +651,7 @@ components:
       properties:
         id:
           type: string
-        betreffseinheitId:
+        aktenplaneintragId:
           type: string
         titel:
           type: string

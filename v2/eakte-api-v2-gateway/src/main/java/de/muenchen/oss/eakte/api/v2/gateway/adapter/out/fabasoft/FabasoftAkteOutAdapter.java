@@ -1,8 +1,8 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft;
 
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.AkteAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
-import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.VorgangAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftAkteMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftSearchService;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.AkteOutPort;
@@ -24,10 +24,10 @@ public class FabasoftAkteOutAdapter implements AkteOutPort {
     private final FabasoftAkteMapper akteMapper;
 
     @Override
-    public List<AkteResponse> searchBellowAktenplan(final RequestContext context, final String betreffseinheitId, final SearchRequest request) {
-        final String akteParentQuery = FabasoftAktenplanOutAdapter.getParentQuery(betreffseinheitId);
+    public List<AkteResponse> searchBellowAktenplan(final RequestContext context, final String aktenplaneintragId, final SearchRequest request) {
+        final String akteParentQuery = FabasoftAktenplanOutAdapter.getParentQuery(aktenplaneintragId);
         final SearchRequest enrichedRequest = request
-                .addAttributes(VorgangAttribute.getReferences())
+                .addAttributes(AkteAttribute.getReferences())
                 .concatQuery(akteParentQuery);
         final List<ResultObject> result = searchService.searchObject(context, FabasoftObjectType.AKTE, enrichedRequest);
         return akteMapper.toDomain(result);

@@ -12,5 +12,5 @@ import java.util.List;
 
 @Validated
 public interface AkteInPort {
-    List<AkteResponse> searchBellowAktenplan(@NotNull RequestContext context, @NotBlank String betreffseinheitId, @NotNull @Valid SearchRequest request);
+    List<AkteResponse> searchBellowAktenplan(@NotNull RequestContext context, @NotBlank String aktenplaneintragId, @NotNull @Valid SearchRequest request);
 }

@@ -8,7 +8,7 @@ import java.util.List;
 @Builder
 public record AkteResponse(
         String id,
-        String betreffseinheitId,
+        String aktenplaneintragId,
         String titel,
         String name,
         String betreff,

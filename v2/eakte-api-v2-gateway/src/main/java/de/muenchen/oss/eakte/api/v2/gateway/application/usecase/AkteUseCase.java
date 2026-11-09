@@ -19,8 +19,8 @@ public class AkteUseCase implements AkteInPort {
     private final DfvHelper dfvHelper;
 
     @Override
-    public List<AkteResponse> searchBellowAktenplan(final RequestContext context, final String betreffseinheitId, final SearchRequest request) {
+    public List<AkteResponse> searchBellowAktenplan(final RequestContext context, final String aktenplaneintragId, final SearchRequest request) {
         final SearchRequest enrichedRequest = dfvHelper.enrichWithDfv(context, ObjectType.AKTE, request);
-        return akteOutPort.searchBellowAktenplan(context, betreffseinheitId, enrichedRequest);
+        return akteOutPort.searchBellowAktenplan(context, aktenplaneintragId, enrichedRequest);
     }
 }

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Getter
 public enum AkteAttribute {
-    PARENT_ID("ELAKGGOV@1.1001:apentry", AttributeType.OBJECT),
+    PARENT_ID("ELAKGOV@1.1001:apentry", AttributeType.OBJECT),
     TITEL("COOELAK@1.1001:objmlname.langstring", AttributeType.STRING),
     NAME("COOSYSTEM@1.1:objname", AttributeType.STRING),
     BETREFF("COOELAK@1.1001:filesubj", AttributeType.STRING),

@@ -30,7 +30,7 @@ public class AkteController implements AkteApi {
 
     @Override
     public ResponseEntity<AkteListeResponse> searchAktenplaneintragAkten(
-            final String betreffseinheitId,
+            final String aktenplaneintragId,
             final @Nullable String eakteLoginName,
             final @Nullable Rolle eakteRolle,
             final @Nullable String eakteOrganisationseinheit,
@@ -46,7 +46,7 @@ public class AkteController implements AkteApi {
                 .limit(limit)
                 .query(bedingungen)
                 .attributes(eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of()).build();
-        final List<AkteResponse> result = akteInPort.searchBellowAktenplan(requestContext, betreffseinheitId, request);
+        final List<AkteResponse> result = akteInPort.searchBellowAktenplan(requestContext, aktenplaneintragId, request);
         // respond
         final AkteListeResponse response = AkteListeResponse.builder()
                 .anzahl(result.size())

@@ -22,7 +22,7 @@ public class FabasoftAkteMapper {
         final Map<String, List<Object>> referenceValueMap = attributeMapper.toReferenceValueMap(result.attributes());
         return AkteResponse.builder()
                 .id(result.coo())
-                .betreffseinheitId(attributeMapper.getTypedSingle(referenceValueMap, AkteAttribute.PARENT_ID.getReference(), String.class).orElse(null))
+                .aktenplaneintragId(attributeMapper.getTypedSingle(referenceValueMap, AkteAttribute.PARENT_ID.getReference(), String.class).orElse(null))
                 .name(result.name())
                 .titel(attributeMapper.getTypedSingle(referenceValueMap, AkteAttribute.TITEL.getReference(), String.class).orElseThrow())
                 .betreff(attributeMapper.getTypedSingle(referenceValueMap, AkteAttribute.BETREFF.getReference(), String.class).orElse(null))
