@@ -1,11 +1,10 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter

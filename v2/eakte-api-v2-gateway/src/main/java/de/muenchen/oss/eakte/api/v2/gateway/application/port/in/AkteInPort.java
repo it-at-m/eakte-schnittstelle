@@ -6,9 +6,8 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.akte.AkteResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.validation.annotation.Validated;
-
 import java.util.List;
+import org.springframework.validation.annotation.Validated;
 
 @Validated
 public interface AkteInPort {

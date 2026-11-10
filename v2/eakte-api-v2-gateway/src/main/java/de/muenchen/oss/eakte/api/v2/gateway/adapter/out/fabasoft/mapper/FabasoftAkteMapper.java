@@ -3,11 +3,10 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.AkteAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.akte.AkteResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor

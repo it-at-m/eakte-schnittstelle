@@ -9,15 +9,14 @@ import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.controllers.Akte
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.AkteListeResponse;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Rolle;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
-import org.jspecify.annotations.Nullable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.Nullable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

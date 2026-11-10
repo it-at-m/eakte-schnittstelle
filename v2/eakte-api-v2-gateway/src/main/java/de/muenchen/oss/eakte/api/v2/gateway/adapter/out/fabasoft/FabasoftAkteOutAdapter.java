@@ -9,11 +9,10 @@ import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.AkteOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.akte.AkteResponse;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
