@@ -7,6 +7,7 @@ import org.springframework.util.StringUtils;
 
 @Service
 @RequiredArgsConstructor
+@SuppressWarnings("PMD.UseUtilityClass")
 public class FabasoftAktenplanOutAdapter {
 
     private static final String PARENT_QUERY = ".ELAKGOV@1.1001:apentry = '%s'";
