@@ -688,6 +688,8 @@ components:
           type: string
         dokumententyp:
           type: string
+        datum:
+          type: string
         zugriffsdefinition:
           type: string
         organisationseinheit:
@@ -732,8 +734,6 @@ components:
       properties:
         fremdesGeschaeftszeichen:
           type: string
-        eingangsdatum:
-          type: string
     EingangsdokumentListeResponse:
       type: object
       properties:
@@ -768,8 +768,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/Dokument'
       properties:
-        zustellungsDatum:
-          type: string
         anlagenBeschreibung:
           type: string
     InternesDokumentListeResponse:

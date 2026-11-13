@@ -7,8 +7,6 @@ components:
       properties:
         fremdesGeschaeftszeichen:
           type: string
-        eingangsdatum:
-          type: string
 
     EingangsdokumentListeResponse:
       type: object

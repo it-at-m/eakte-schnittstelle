@@ -2,7 +2,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.e2e;
 
 abstract class InternesDokumentE2eSupport extends FabasoftE2eSupport {
     protected static final String DFV_ATTRIBUTE = "custom.dfv.attribute";
-    protected static final String ZUSTELLUNGSDATUM_REFERENCE = "COOELAK@1.1001:delivery";
+    protected static final String DATUM_REFERENCE = "COOELAK@1.1001:delivery";
     protected static final String ANLAGEN_BESCHREIBUNG_REFERENCE = "COOELAK@1.1001:incattachments";
 
     private static final String FULL_REFERENCE = "EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:"
@@ -53,7 +53,7 @@ abstract class InternesDokumentE2eSupport extends FabasoftE2eSupport {
                           </urn:queryresult>
                         </urn:SOAPSearchResponse>
                         """
-                        .formatted(ZUSTELLUNGSDATUM_REFERENCE, DOKUMENTENTYP_REFERENCE, ANLAGEN_BESCHREIBUNG_REFERENCE));
+                        .formatted(DATUM_REFERENCE, DOKUMENTENTYP_REFERENCE, ANLAGEN_BESCHREIBUNG_REFERENCE));
     }
 
     private String emptySearchResponse() {

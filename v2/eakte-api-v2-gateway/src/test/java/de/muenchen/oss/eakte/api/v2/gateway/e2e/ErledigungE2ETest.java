@@ -49,6 +49,7 @@ class ErledigungE2ETest extends ErledigungE2eSupport {
                     .andExpect(jsonPath("$.elemente[0].name").value("name"))
                     .andExpect(jsonPath("$.elemente[0].betreff").value("subject"))
                     .andExpect(jsonPath("$.elemente[0].hinweis").value("document note"))
+                    .andExpect(jsonPath("$.elemente[0].datum").value("2025-01-02"))
                     .andExpect(jsonPath("$.elemente[0].zugriffsdefinition").value("acl"))
                     .andExpect(jsonPath("$.elemente[0].organisationseinheit").value("ou"))
                     .andExpect(jsonPath("$.elemente[0].bezugEingangsdokument").value("COO.7.8.9"))

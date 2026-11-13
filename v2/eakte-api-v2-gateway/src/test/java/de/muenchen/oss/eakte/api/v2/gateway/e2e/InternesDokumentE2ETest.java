@@ -51,13 +51,13 @@ class InternesDokumentE2ETest extends InternesDokumentE2eSupport {
                     .andExpect(jsonPath("$.elemente[0].hinweis").value("internal note"))
                     .andExpect(jsonPath("$.elemente[0].zugriffsdefinition").value("acl"))
                     .andExpect(jsonPath("$.elemente[0].organisationseinheit").value("ou"))
-                    .andExpect(jsonPath("$.elemente[0].zustellungsDatum").value("2025-01-02"))
+                    .andExpect(jsonPath("$.elemente[0].datum").value("2025-01-02"))
                     .andExpect(jsonPath("$.elemente[0].dokumententyp").value("letter"))
                     .andExpect(jsonPath("$.elemente[0].anlagenBeschreibung").value("additional enclosure"))
                     .andExpect(jsonPath("$.elemente[0].weitereEigenschaften[?(@.reference=='custom.attribute')].value")
                             .value("custom-value"));
 
-            verifySearchRequest("where query", ZUSTELLUNGSDATUM_REFERENCE, true);
+            verifySearchRequest("where query", DATUM_REFERENCE, true);
             verifySearchRequest("where query", DOKUMENTENTYP_REFERENCE, true);
             verifySearchRequest("where query", ANLAGEN_BESCHREIBUNG_REFERENCE, true);
             verifySearchRequest("where query", "custom.attribute", true);
@@ -100,11 +100,11 @@ class InternesDokumentE2ETest extends InternesDokumentE2eSupport {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").value("COO.4.5.6"))
                     .andExpect(jsonPath("$.klasse").value("Internes Dokument"))
-                    .andExpect(jsonPath("$.zustellungsDatum").value("2025-01-02"))
+                    .andExpect(jsonPath("$.datum").value("2025-01-02"))
                     .andExpect(jsonPath("$.dokumententyp").value("letter"))
                     .andExpect(jsonPath("$.anlagenBeschreibung").value("additional enclosure"));
 
-            verifySearchRequest("COOSYSTEM@1.1:objaddress", ZUSTELLUNGSDATUM_REFERENCE, true);
+            verifySearchRequest("COOSYSTEM@1.1:objaddress", DATUM_REFERENCE, true);
             verifySearchRequest("COOSYSTEM@1.1:objaddress", DOKUMENTENTYP_REFERENCE, true);
             verifySearchRequest("COOSYSTEM@1.1:objaddress", ANLAGEN_BESCHREIBUNG_REFERENCE, true);
             verifySearchRequest("COOSYSTEM@1.1:objaddress", "custom.attribute", true);

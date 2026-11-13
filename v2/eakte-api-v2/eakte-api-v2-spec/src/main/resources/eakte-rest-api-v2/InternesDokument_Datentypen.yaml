@@ -5,8 +5,6 @@ components:
       allOf:
         - $ref: 'Dokument_Datentypen.yaml#/components/schemas/Dokument'
       properties:
-        zustellungsDatum:
-          type: string
         anlagenBeschreibung:
           type: string
 

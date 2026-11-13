@@ -5,7 +5,6 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.Eingangs
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.helper.AttributeHelper;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.EingangsdokumentResponse;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,8 +29,6 @@ public class FabasoftEingangsdokumentMapper {
         return builder
                 .fremdesGeschaeftszeichen(attributeMapper
                         .getTypedSingle(referenceValueMap, EingangsdokumentAttribute.FREMDES_GESCHAEFTSZEICHEN.getReference(), String.class).orElse(null))
-                .eingangsdatum(
-                        attributeMapper.getTypedSingle(referenceValueMap, EingangsdokumentAttribute.EINGANGSDATUM.getReference(), LocalDate.class).orElse(null))
                 .build();
     }
 }

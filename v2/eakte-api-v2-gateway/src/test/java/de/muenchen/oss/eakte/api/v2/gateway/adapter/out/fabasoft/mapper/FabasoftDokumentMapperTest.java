@@ -9,6 +9,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultOb
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentKlasse;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentResponse;
+import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +25,7 @@ class FabasoftDokumentMapperTest {
                 attribute(DokumentAttribute.BETREFF, "subject"),
                 attribute(DokumentAttribute.HINWEIS, "note"),
                 attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
+                attribute(DokumentAttribute.DATUM, LocalDate.of(2025, 1, 2)),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));
@@ -38,6 +40,7 @@ class FabasoftDokumentMapperTest {
         assertEquals("subject", mapped.getBetreff());
         assertEquals("note", mapped.getHinweis());
         assertEquals("letter", mapped.getDokumententyp());
+        assertEquals(LocalDate.of(2025, 1, 2), mapped.getDatum());
         assertEquals("access", mapped.getZugriffsdefinition());
         assertEquals("ou", mapped.getOrganisationseinheit());
         assertEquals(List.of(new Attribute("custom", "value")), mapped.getWeitereEigenschaften());
@@ -55,7 +58,7 @@ class FabasoftDokumentMapperTest {
         assertEquals(List.of(mapper.toDomain(result)), mapper.toDomain(List.of(result)));
     }
 
-    private static FabasoftAttribute attribute(final DokumentAttribute attribute, final String value) {
+    private static FabasoftAttribute attribute(final DokumentAttribute attribute, final Object value) {
         return new FabasoftAttribute(attribute.getType(), attribute.getReference(), null, value);
     }
 }
