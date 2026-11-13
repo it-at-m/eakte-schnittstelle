@@ -1,6 +1,6 @@
 package de.muenchen.oss.eakte.api.v2.gateway.domain.model;
 
-public enum Position {
+public enum Stelle {
     SACHBEARBEITUNG,
     SEKRETARIAT,
     LEITUNG,

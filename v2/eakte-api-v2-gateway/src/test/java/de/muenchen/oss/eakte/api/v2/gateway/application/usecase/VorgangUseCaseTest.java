@@ -9,9 +9,9 @@ import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.DfvOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.VorgangOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper.DfvHelper;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ObjectType;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Position;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Stelle;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +25,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class VorgangUseCaseTest {
-    private static final RequestContext CONTEXT = new RequestContext("user", "ou", Position.SACHBEARBEITUNG);
+    private static final RequestContext CONTEXT = new RequestContext("user", "ou", Stelle.SACHBEARBEITUNG);
     private static final String VORGANG_ID = "vorgang-id";
     private static final String AKTE_ID = "akte-id";
     private static final Set<String> DFV_ATTRIBUTES = Set.of("dfv.one");

@@ -3,8 +3,8 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Position;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Stelle;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -14,7 +14,7 @@ class RequestContextProviderTest {
     @Test
     void givenContext_thenReturnContextAfterSetAndGet() {
         final RequestContextProvider provider = new RequestContextProvider();
-        final RequestContext context = new RequestContext("user", "ou", Position.SACHBEARBEITUNG);
+        final RequestContext context = new RequestContext("user", "ou", Stelle.SACHBEARBEITUNG);
 
         provider.set(context);
 
@@ -24,7 +24,7 @@ class RequestContextProviderTest {
     @Test
     void givenContext_thenRemoveContextAfterClear() {
         final RequestContextProvider provider = new RequestContextProvider();
-        provider.set(new RequestContext("user", "ou", Position.SACHBEARBEITUNG));
+        provider.set(new RequestContext("user", "ou", Stelle.SACHBEARBEITUNG));
 
         provider.clear();
 
@@ -34,8 +34,8 @@ class RequestContextProviderTest {
     @Test
     void givenDifferentThreads_thenKeepContextsIsolated() throws Exception {
         final RequestContextProvider provider = new RequestContextProvider();
-        final RequestContext firstContext = new RequestContext("first", "ou", Position.SACHBEARBEITUNG);
-        final RequestContext secondContext = new RequestContext("second", "ou", Position.SACHBEARBEITUNG);
+        final RequestContext firstContext = new RequestContext("first", "ou", Stelle.SACHBEARBEITUNG);
+        final RequestContext secondContext = new RequestContext("second", "ou", Stelle.SACHBEARBEITUNG);
         try (ExecutorService executor = Executors.newFixedThreadPool(2)) {
             final var first = executor.submit(() -> {
                 provider.set(firstContext);
@@ -54,7 +54,7 @@ class RequestContextProviderTest {
     @Test
     void givenContextOnOneThread_thenClearDoesNotAffectAnotherThread() throws Exception {
         final RequestContextProvider provider = new RequestContextProvider();
-        final RequestContext context = new RequestContext("user", "ou", Position.SACHBEARBEITUNG);
+        final RequestContext context = new RequestContext("user", "ou", Stelle.SACHBEARBEITUNG);
         try (ExecutorService executor = Executors.newFixedThreadPool(2)) {
             final var first = executor.submit(() -> {
                 provider.set(context);
