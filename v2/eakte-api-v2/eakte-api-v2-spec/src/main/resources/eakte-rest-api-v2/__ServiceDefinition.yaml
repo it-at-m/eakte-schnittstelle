@@ -40,6 +40,8 @@ tags:
     description: Outgoing (ehem. Ausgang) (Sub-Klasse von Dokument)
   - name: Internes Dokument
     description: Internal (Sub-Klasse von Dokument)
+  - name: Benutzer
+    description: User
 
 paths:
   # Akte
@@ -70,3 +72,6 @@ paths:
     $ref: 'InterneDokumente.yaml'
   '/api/v2/interne-dokumente/{dokumentId}':
     $ref: 'InternesDokument.yaml'
+  # Benutzer
+  '/api/v2/benutzer/ich':
+    $ref: 'Benutzer.yaml'
