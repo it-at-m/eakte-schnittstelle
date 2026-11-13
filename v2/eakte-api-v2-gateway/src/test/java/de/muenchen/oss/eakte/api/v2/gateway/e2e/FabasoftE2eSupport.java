@@ -9,7 +9,7 @@ import static de.muenchen.oss.eakte.api.v2.gateway.TestSecurityConfiguration.USE
 
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder;
-import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftPosition;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftStelle;
 
 abstract class FabasoftE2eSupport extends AbstractWireMockE2eTest {
     private static final String SOAP_CONTENT_TYPE = "text/xml; charset=utf-8";
@@ -32,7 +32,7 @@ abstract class FabasoftE2eSupport extends AbstractWireMockE2eTest {
         if (impersonate) {
             pattern = pattern
                     .withHeader("X-FSC-Authenticated-User", equalTo("login"))
-                    .withQueryParam("px", equalTo(FabasoftPosition.SACHBEARBEITUNG.getId()))
+                    .withQueryParam("px", equalTo(FabasoftStelle.SACHBEARBEITUNG.getId()))
                     .withQueryParam("gx", equalTo("ou"));
         } else {
             pattern = pattern

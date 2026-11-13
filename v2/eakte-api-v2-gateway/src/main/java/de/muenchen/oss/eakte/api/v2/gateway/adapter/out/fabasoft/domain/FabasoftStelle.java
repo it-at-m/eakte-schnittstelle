@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum FabasoftPosition {
+public enum FabasoftStelle {
 
     SACHBEARBEITUNG("COO.1.1001.1.4328"),
     SEKRETARIAT("COO.1.1001.1.4592"),
@@ -22,12 +22,12 @@ public enum FabasoftPosition {
     private final String id;
 
     /**
-     * Find {@link FabasoftPosition} by {@link FabasoftPosition#id}.
+     * Find {@link FabasoftStelle} by {@link FabasoftStelle#id}.
      *
      * @param fabasoftId The id to find.
      * @return If found the {@link FabasoftObjectType}, else {@code null}.
      */
-    public static FabasoftPosition fromFabasoftId(final String fabasoftId) {
+    public static FabasoftStelle fromFabasoftId(final String fabasoftId) {
         return Arrays.stream(values())
                 .filter(i -> i.id.equals(fabasoftId))
                 .findFirst().orElse(null);
