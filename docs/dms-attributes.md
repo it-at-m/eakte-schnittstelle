@@ -59,21 +59,21 @@ and the property name in the V2 API is given.
 
 ## Dokument (Incoming / Outgoing / Internal)
 
-| Reference                                          | Label                          | V1   | V1                                     | V2                   |
-| -------------------------------------------------- | ------------------------------ | ---- | -------------------------------------- | -------------------- |
-| COOSYSTEM@1.1:objclass.COOSYSTEM@1.1:fullreference | Objektklasse                   | R    |                                        | klasse               |
-| COOELAK@1.1001:referrednumber                      | Vorgang                        | RW   | referrednumber                         | vorgangId            |
-| COOELAK@1.1001:objmlname.langstring                | Titel                          | RW   | shortname                              | titel                |
-| COOSYSTEM@1.1:objname                              | Name (Übersicht)               | R    | objname                                | name                 |
-| COOELAK@1.1001:filesubj                            | Betreff                        | RW   | filesubj                               | betreff              |
-| DEPRECONFIG@15.1001:fileaddsubj                    | Hinweis                        | RW   | documentremarks (only Incoming)        | hinweis              |
-| COOELAK@1.1001:subfiletype.name                    | Dokumententyp                  | RW   | subfiletype (only Outoging & Internal) | dokumententyp        |
-| FSCTERM@1.1001:objterms.name                       | Schlagworte                    | RW   | objterms                               | -                    |
-| COOELAK@1.1001:delivery                            | Datum                          | RW   | delivery                               | datum                |
-| FSCFOLIO@1.1001:objaccdef.name                     | Zugriffsdefinition             | RW   | accdef                                 | zugriffsdefinition   |
-| COOEALK@1.1001:attachments                         | (untergeordnete Schriftstücke) | R(W) | gimetadatatype                         | -                    |
-| EGOVTEMPLATE@15.1001:createdfromdefinition         | Definition für Verfahren       | W    | definition                             | dfvId                |
-|                                                    | (DfV Daten)                    | W    | userformsdata                          | weitereEigenschaften |
+| Reference                                          | Label                          | V1   | V1                                            | V2                   |
+| -------------------------------------------------- | ------------------------------ | ---- | --------------------------------------------- | -------------------- |
+| COOSYSTEM@1.1:objclass.COOSYSTEM@1.1:fullreference | Objektklasse                   | R    |                                               | klasse               |
+| COOELAK@1.1001:referrednumber                      | Vorgang                        | RW   | referrednumber                                | vorgangId            |
+| COOELAK@1.1001:objmlname.langstring                | Titel                          | RW   | shortname                                     | titel                |
+| COOSYSTEM@1.1:objname                              | Name (Übersicht)               | R    | objname                                       | name                 |
+| COOELAK@1.1001:filesubj                            | Betreff                        | RW   | filesubj                                      | betreff              |
+| DEPRECONFIG@15.1001:fileaddsubj                    | Hinweis                        | RW   | documentremarks (only Incoming)               | hinweis              |
+| COOELAK@1.1001:subfiletype.name                    | Dokumententyp                  | RW   | subfiletype (only Outoging & Internal)        | dokumententyp        |
+| FSCTERM@1.1001:objterms.name                       | Schlagworte                    | RW   | objterms                                      | -                    |
+| COOELAK@1.1001:delivery                            | Datum                          | RW   | delivery (Incoming) & deliverydate (Internal) | datum                |
+| FSCFOLIO@1.1001:objaccdef.name                     | Zugriffsdefinition             | RW   | accdef                                        | zugriffsdefinition   |
+| COOEALK@1.1001:attachments                         | (untergeordnete Schriftstücke) | R(W) | gimetadatatype                                | -                    |
+| EGOVTEMPLATE@15.1001:createdfromdefinition         | Definition für Verfahren       | W    | definition                                    | dfvId                |
+|                                                    | (DfV Daten)                    | W    | userformsdata                                 | weitereEigenschaften |
 
 ### Eingangsdokument (Incoming)
 
