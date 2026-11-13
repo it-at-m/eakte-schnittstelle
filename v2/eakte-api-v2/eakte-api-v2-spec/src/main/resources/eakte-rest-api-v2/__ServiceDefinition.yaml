@@ -28,6 +28,8 @@ security:
   - bearerAuth: []
 
 tags:
+  - name: Akte #TODO: Akte oder Sachakte?
+    description: SubjectAreaFile
   - name: Vorgang
     description: Procedure
   - name: Dokument
@@ -40,6 +42,9 @@ tags:
     description: Internal (Sub-Klasse von Dokument)
 
 paths:
+  # Akte
+  '/api/v2/aktenplaneintraege/{aktenplaneintragId}/akten':
+    $ref: 'AktenplaneintragAkten.yaml'
   # Vorgang
   '/api/v2/akten/{akteId}/vorgaenge':
     $ref: 'AkteVorgaenge.yaml'

@@ -15,6 +15,8 @@ servers:
 security:
   - bearerAuth: []
 tags:
+  - name: Akte
+    description: SubjectAreaFile
   - name: Vorgang
     description: Procedure
   - name: Dokument
@@ -26,6 +28,54 @@ tags:
   - name: Internes Dokument
     description: Internal (Sub-Klasse von Dokument)
 paths:
+  /api/v2/aktenplaneintraege/{aktenplaneintragId}/akten:
+    get:
+      tags:
+        - Akte
+      summary: Akten eines Aktenplaneintrags
+      operationId: SearchAktenplaneintragAkten
+      parameters:
+        - in: path
+          name: aktenplaneintragId
+          schema:
+            type: string
+          required: true
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Bedingungen'
+        - $ref: '#/components/parameters/Eigenschaften'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AkteListeResponse'
+          links:
+            GetAkte:
+              operationId: GetAkte
+              parameters:
+                aktenId: $response.body#/parent.id
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /api/v2/akten/{akteId}/vorgaenge:
     get:
       tags:
@@ -580,6 +630,78 @@ components:
           type: string
         value:
           type: object
+    Akte:
+      type: object
+      description: |
+        Repräsentation einer Akte.\
+        Aufgrund der Konfigurierbarkeit der Attribute (verfahrensabhängige Metadaten, siehe
+        Fabasoft eGov-Suite "Definition von Verfahren") werden diese in einer dynamisch 
+        aufgebauten Liste geführt und nichts als Felder in einer fixen (JSON-) Datenstruktur.
+        \
+        Um die innerhalb einer bestimmten Betreffseinheit verfügbaren Custom-Attribute auf
+        Vorgangsebene sowie die Standard-Attribute der Akte zu erfahren, kann über den Endpunkt
+        '/v2/Attribute' eine Abfrage (GET-Methode) getätigt werden (s. Spezifikation dieses
+        Endpunktes, in diesem Fall die Verwendung des Filters 'Schriftgutebene=Akte').
+      required:
+        - id
+        - aktenplaneintragId
+        - titel
+        - name
+        - betreff
+        - zugriffsdefinition
+        - zugriffsdefinitionVorgang
+        - dfvId
+        - weitereEigenschaften
+      properties:
+        id:
+          type: string
+        aktenplaneintragId:
+          type: string
+        titel:
+          type: string
+        name:
+          type: string
+        betreff:
+          type: string
+        zugriffsdefinition:
+          type: string
+        zugriffsdefinitionVorgang:
+          type: string
+        dfvId:
+          type: string
+        weitereEigenschaften:
+          type: array
+          items:
+            $ref: '#/components/schemas/EigenschaftEintrag'
+    AkteListeResponse:
+      type: object
+      properties:
+        anzahl:
+          $ref: '#/components/schemas/AnzahlListenElemente'
+        elemente:
+          type: array
+          description: Liste von Akten
+          items:
+            $ref: '#/components/schemas/Akte'
+    ErrorResponse:
+      type: object
+      description: |
+        Container für RFC9457 Fehlermeldung und konkrete Fabasoft Fehlermeldung falls Ursache
+      required:
+        - status
+        - title
+      properties:
+        status:
+          type: integer
+          format: int32
+        title:
+          type: string
+        instance:
+          type: string
+        detail:
+          type: string
+        dmsErrorReference:
+          type: string
     Vorgang:
       type: object
       description: |
@@ -654,25 +776,6 @@ components:
           description: Liste von Vorgängen
           items:
             $ref: '#/components/schemas/Vorgang'
-    ErrorResponse:
-      type: object
-      description: |
-        Container für RFC9457 Fehlermeldung und konkrete Fabasoft Fehlermeldung falls Ursache
-      required:
-        - status
-        - title
-      properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        instance:
-          type: string
-        detail:
-          type: string
-        dmsErrorReference:
-          type: string
     DokumentBase:
       type: object
       required:

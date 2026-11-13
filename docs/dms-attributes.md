@@ -19,21 +19,21 @@ and the property name in the V2 API is given.
 
 ## Akte (File)
 
-| Reference                                   | Label                           | V1  | V1              | V2                   |
-| ------------------------------------------- | ------------------------------- | --- | --------------- | -------------------- |
-| ELAKGGOV@1.1001:apentry                     | Aktenplaneintrag                | RW  | apentry         |                      |
-| COOELAK@1.1001:objmlname.langstring         | Titel                           | RW  | shortname       | titel                |
-| COOSYSTEM@1.1:objname                       | Name (Übersicht)                | R   | objname         | name                 |
-| COOELAK@1.1001:filesubj                     | Betreff                         | RW  | filesubj        | betreff              |
-| FSCTERM@1.1001:objterms.name                | Schlagworte                     | RW  | objterms        | -                    |
-| FSCFOLIO@1.1001:objaccdef.name              | Zugriffsdefinition              | RW  | accdef          | zugriffsdefinition   |
-| DEPRECONFIG@15.1001:fileruntimefrom         |                                 | RW  | fileruntimefrom | -                    |
-| DEPRECONFIG@15.1001:fileruntimetill         |                                 | RW  | fileruntimetill | -                    |
-| COOELAK@1.1001:fileouobj                    |                                 | RW  | fileouobj       |                      |
-| CFGBAYERN@15.1400:procedureaccessdefinition | Zugriffsdefinition für Vorgänge | RW  | procedureaccdef |                      |
-| COOEALK@1.1001:attachments                  | (untergeordnete Vorgänge)       | R   | giobjecttype    | -                    |
-| EGOVTEMPLATE@15.1001:createdfromdefinition  | Definition für Verfahren        | W   | definition      | dfvId                |
-|                                             | (DfV Daten)                     | W   | userformsdata   | weitereEigenschaften |
+| Reference                                   | Label                           | V1  | V1              | V2                        |
+| ------------------------------------------- | ------------------------------- | --- | --------------- | ------------------------- |
+| ELAKGGOV@1.1001:apentry                     | Aktenplaneintrag                | RW  | apentry         | aktenplaneintragId        |
+| COOELAK@1.1001:objmlname.langstring         | Titel                           | RW  | shortname       | titel                     |
+| COOSYSTEM@1.1:objname                       | Name (Übersicht)                | R   | objname         | name                      |
+| COOELAK@1.1001:filesubj                     | Betreff                         | RW  | filesubj        | betreff                   |
+| FSCTERM@1.1001:objterms.name                | Schlagworte                     | RW  | objterms        | -                         |
+| FSCFOLIO@1.1001:objaccdef.name              | Zugriffsdefinition              | RW  | accdef          | zugriffsdefinition        |
+| DEPRECONFIG@15.1001:fileruntimefrom         |                                 | RW  | fileruntimefrom | -                         |
+| DEPRECONFIG@15.1001:fileruntimetill         |                                 | RW  | fileruntimetill | -                         |
+| COOELAK@1.1001:fileouobj                    |                                 | RW  | fileouobj       |                           |
+| CFGBAYERN@15.1400:procedureaccessdefinition | Zugriffsdefinition für Vorgänge | RW  | procedureaccdef | zugriffsdefinitionVorgang |
+| COOEALK@1.1001:attachments                  | (untergeordnete Vorgänge)       | R   | giobjecttype    | -                         |
+| EGOVTEMPLATE@15.1001:createdfromdefinition  | Definition für Verfahren        | W   | definition      | dfvId                     |
+|                                             | (DfV Daten)                     | W   | userformsdata   | weitereEigenschaften      |
 
 ## Vorgang (Procedure)
 
