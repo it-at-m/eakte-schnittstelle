@@ -6,9 +6,10 @@ components:
       type: "object"
       description: |
         Rückgabe der Verfahrenseigenschaft bestehend aus
-        * dem Wert (oder Werteliste) der Verfahrenseigenschaft
-        * der internen lfd. Nummer des Wertes der Verfahrenseigenschaft (bei einer Liste jeweils die lfdNr. aller Werte)
-        * dem zugehörigen Referenznamen zur lfd. Nummer des Wertes der Verfahrenseigenschaft (bei einer Liste die Referenznamen aller Werte)
+        * dem Wert bzw. Liste von Werten (bei Checkboxen) der Verfahrenseigenschaft  
+        * bei Wertelisten
+        ** alle internen lfd. Nummern aller Werte
+        ** die zugehörigen Referenznamen zur lfd. Nummer aller Werte
       properties:
         value:
           type: "string"
