@@ -6,9 +6,9 @@ import org.springframework.util.StringUtils;
 
 public record RequestContext(
         @NotBlank String impersonationUser,
-        String ou,
-        Role role) {
-    @AssertTrue(message = "'ou' and 'role' must both be set or both be absent") public boolean isOuRolePairValid() {
-        return StringUtils.hasText(ou) == (role != null);
+        String organisationseinheit,
+        Stelle stelle) {
+    @AssertTrue(message = "'organisationseinheit' and 'stelle' must both be set or both be absent") public boolean isRolleValid() {
+        return StringUtils.hasText(organisationseinheit) == (stelle != null);
     }
 }

@@ -27,7 +27,7 @@ class InternesDokumentMapperTest {
                 .zugriffsdefinition("access")
                 .organisationseinheit("ou")
                 .weitereEigenschaften(List.of(new Attribute("custom", "value")))
-                .zustellungsDatum(LocalDate.of(2025, 1, 2))
+                .datum(LocalDate.of(2025, 1, 2))
                 .dokumententyp("letter")
                 .anlagenBeschreibung("additional enclosure")
                 .build();
@@ -45,7 +45,7 @@ class InternesDokumentMapperTest {
         assertEquals("ou", result.getOrganisationseinheit());
         assertEquals("custom", result.getWeitereEigenschaften().getFirst().getReference());
         assertEquals("value", result.getWeitereEigenschaften().getFirst().getValue());
-        assertEquals("2025-01-02", result.getZustellungsDatum());
+        assertEquals("2025-01-02", result.getDatum());
         assertEquals("letter", result.getDokumententyp());
         assertEquals("additional enclosure", result.getAnlagenBeschreibung());
     }

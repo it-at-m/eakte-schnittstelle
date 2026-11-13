@@ -34,7 +34,7 @@ class FabasoftInternesDokumentMapperTest {
         assertEquals("subject", mapped.getBetreff());
         assertEquals("access", mapped.getZugriffsdefinition());
         assertEquals("ou", mapped.getOrganisationseinheit());
-        assertEquals(LocalDate.of(2025, 1, 2), mapped.getZustellungsDatum());
+        assertEquals(LocalDate.of(2025, 1, 2), mapped.getDatum());
         assertEquals("letter", mapped.getDokumententyp());
         assertEquals("additional enclosure", mapped.getAnlagenBeschreibung());
         assertEquals("note", mapped.getHinweis());
@@ -57,7 +57,7 @@ class FabasoftInternesDokumentMapperTest {
                 attribute(DokumentAttribute.HINWEIS, "note"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
-                attribute(InternesDokumentAttribute.ZUSTELLUNGSDATUM, LocalDate.of(2025, 1, 2)),
+                attribute(DokumentAttribute.DATUM, LocalDate.of(2025, 1, 2)),
                 attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
                 attribute(InternesDokumentAttribute.ANLAGEN_BESCHREIBUNG, "additional enclosure"),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));

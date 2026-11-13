@@ -5,6 +5,8 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.Fabasoft
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentKlasse;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentResponse;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -42,6 +44,8 @@ public class FabasoftDokumentMapper {
                 .hinweis(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.HINWEIS.getReference(), String.class).orElse(null))
                 .dokumententyp(
                         attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.DOKUMENTENTYP.getReference(), String.class).orElse(null))
+                .datum(
+                        attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.DATUM.getReference(), LocalDate.class).orElse(null))
                 .zugriffsdefinition(
                         attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ZUGRIFFSDEFINITION.getReference(), String.class).orElseThrow())
                 .organisationseinheit(

@@ -7,7 +7,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.akte.AkteResponse;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.controllers.AkteApi;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.AkteListeResponse;
-import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Rolle;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Stelle;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.List;
@@ -31,7 +31,7 @@ public class AkteController implements AkteApi {
     public ResponseEntity<AkteListeResponse> searchAktenplaneintragAkten(
             final String aktenplaneintragId,
             final @Nullable String eakteLoginName,
-            final @Nullable Rolle eakteRolle,
+            final @Nullable Stelle eakteStelle,
             final @Nullable String eakteOrganisationseinheit,
             final Integer limit,
             final @Nullable String bedingungen,
@@ -40,7 +40,7 @@ public class AkteController implements AkteApi {
         final RequestContext requestContext = requestContextFactory.create(
                 eakteLoginName,
                 eakteOrganisationseinheit,
-                commonMapper.toDomain(eakteRolle));
+                commonMapper.toDomain(eakteStelle));
         final SearchRequest request = SearchRequest.builder()
                 .limit(limit)
                 .query(bedingungen)

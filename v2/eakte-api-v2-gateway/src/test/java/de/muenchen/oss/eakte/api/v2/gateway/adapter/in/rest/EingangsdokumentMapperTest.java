@@ -29,7 +29,7 @@ class EingangsdokumentMapperTest {
                 .organisationseinheit("ou")
                 .weitereEigenschaften(List.of(new Attribute("custom", "value")))
                 .fremdesGeschaeftszeichen("reference")
-                .eingangsdatum(LocalDate.of(2025, 1, 2))
+                .datum(LocalDate.of(2025, 1, 2))
                 .hinweis("note")
                 .build();
 
@@ -47,7 +47,7 @@ class EingangsdokumentMapperTest {
         assertEquals("ou", result.getOrganisationseinheit());
         assertEquals("custom", result.getWeitereEigenschaften().getFirst().getReference());
         assertEquals("reference", result.getFremdesGeschaeftszeichen());
-        assertEquals("2025-01-02", result.getEingangsdatum());
+        assertEquals("2025-01-02", result.getDatum());
         assertEquals("note", result.getHinweis());
     }
 

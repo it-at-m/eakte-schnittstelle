@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public enum InternesDokumentAttribute {
-    ZUSTELLUNGSDATUM("COOELAK@1.1001:delivery", AttributeType.DATE),
     ANLAGEN_BESCHREIBUNG("COOELAK@1.1001:incattachments", AttributeType.STRING);
 
     private final String reference;

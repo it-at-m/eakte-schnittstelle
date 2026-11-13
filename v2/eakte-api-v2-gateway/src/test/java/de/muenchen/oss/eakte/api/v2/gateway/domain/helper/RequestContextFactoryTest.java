@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.ImpersonationForbiddenException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Role;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Stelle;
 import java.time.Instant;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -56,9 +56,9 @@ class RequestContextFactoryTest {
         final RequestContext context = factory.create(
                 "impersonated-user",
                 "ou",
-                Role.SACHBEARBEITUNG);
+                Stelle.SACHBEARBEITUNG);
 
-        assertEquals(new RequestContext("impersonated-user", "ou", Role.SACHBEARBEITUNG), context);
+        assertEquals(new RequestContext("impersonated-user", "ou", Stelle.SACHBEARBEITUNG), context);
     }
 
     @Test

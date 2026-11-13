@@ -1,6 +1,8 @@
 package de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument;
 
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
+
+import java.time.LocalDate;
 import java.util.List;
 
 import lombok.EqualsAndHashCode;
@@ -21,6 +23,7 @@ public class DokumentResponse {
     private final String betreff;
     private final String hinweis;
     private final String dokumententyp;
+    private final LocalDate datum;
     private final String zugriffsdefinition;
     private final String organisationseinheit;
     private final List<Attribute> weitereEigenschaften;

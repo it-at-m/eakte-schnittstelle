@@ -5,7 +5,6 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.Internes
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.helper.AttributeHelper;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.InternesDokumentResponse;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -28,9 +27,6 @@ public class FabasoftInternesDokumentMapper {
         final InternesDokumentResponse.InternesDokumentResponseBuilder<?, ?> builder = InternesDokumentResponse.builder();
         fabasoftDokumentMapper.mapDokumentFields(builder, result, referenceValueMap, defaultAttributes);
         return builder
-                .zustellungsDatum(
-                        attributeMapper.getTypedSingle(referenceValueMap, InternesDokumentAttribute.ZUSTELLUNGSDATUM.getReference(), LocalDate.class)
-                                .orElse(null))
                 .anlagenBeschreibung(
                         attributeMapper.getTypedSingle(referenceValueMap, InternesDokumentAttribute.ANLAGEN_BESCHREIBUNG.getReference(), String.class)
                                 .orElse(null))
