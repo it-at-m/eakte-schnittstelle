@@ -1,0 +1,28 @@
+changelog:
+  categories:
+    - title: V1
+      labels:
+        - "Version: V1"
+      exclude:
+        - "Version: V2"
+    - title: V2
+      labels:
+        - "Version: V2"
+      exclude:
+        - "Version: V1"
+    - title: V1 & V2
+      labels:
+        - "Version: V1"
+        - "Version: V2"
+    - title: CI/CD
+      labels:
+        - "Component: CI/CD"
+    - title: Stack
+      labels:
+        - "Component: Stack"
+    - title: Documentation
+      labels:
+        - "Type: Documentation"
+    - title: Other Changes
+      labels:
+        - "*"
