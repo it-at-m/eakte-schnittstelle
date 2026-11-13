@@ -71,8 +71,8 @@ public class RequestContextInjectInterceptor extends AbstractPhaseInterceptor<Me
             throw new IllegalStateException("CXF endpoint URI needs to be present");
         }
         final Map<String, String> params = new HashMap<>();
-        if (context.role() != null) {
-            final String roleId = commonMapper.fromDomain(context.role()).getId();
+        if (context.position() != null) {
+            final String roleId = commonMapper.fromDomain(context.position()).getId();
             params.put(ROLE_QUERY_PARAM, roleId);
         }
         if (StringUtils.hasText(context.ou())) {

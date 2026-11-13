@@ -1,0 +1,14 @@
+package de.muenchen.oss.eakte.api.v2.gateway.domain.model;
+
+public enum Position {
+    SACHBEARBEITUNG,
+    SEKRETARIAT,
+    LEITUNG,
+    REGISTRATUR,
+    SCHRIFTGUTVERWALTUNG,
+    VORLAGENVERWALTUNG,
+    VORLAGENADMINISTRATION,
+    FACHADMINISTRATION,
+    OE_ADMINISTRATION,
+    MITARBEIT
+}

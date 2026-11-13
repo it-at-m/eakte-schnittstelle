@@ -9,7 +9,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.Eingangsdokume
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.controllers.EingangsdokumentApi;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Eingangsdokument;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.EingangsdokumentListeResponse;
-import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Rolle;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Stelle;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.List;
@@ -32,15 +32,15 @@ public class EingangsdokumentController implements EingangsdokumentApi {
     @Override
     public ResponseEntity<Eingangsdokument> getEingangsdokument(
             final String eingangsdokumentId,
-            final @Nullable String eakteLoginName,
-            final @Nullable Rolle eakteRolle,
+            @Nullable final String eakteLoginName,
+            @Nullable final Stelle eakteStelle,
             final @Nullable String eakteOrganisationseinheit,
             final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
         final RequestContext requestContext = requestContextFactory.create(
                 eakteLoginName,
                 eakteOrganisationseinheit,
-                commonMapper.toDomain(eakteRolle));
+                commonMapper.toDomain(eakteStelle));
         final EingangsdokumentResponse result = eingangsdokumentInPort.get(requestContext,
                 eingangsdokumentId,
                 eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of())
@@ -50,18 +50,18 @@ public class EingangsdokumentController implements EingangsdokumentApi {
 
     @Override
     public ResponseEntity<EingangsdokumentListeResponse> searchEingangsdokumente(
-            final @Nullable String eakteLoginName,
-            final @Nullable Rolle eakteRolle,
-            final @Nullable String eakteOrganisationseinheit,
+            @Nullable final String eakteLoginName,
+            @Nullable final Stelle eakteStelle,
+            @Nullable final String eakteOrganisationseinheit,
             final Integer limit,
-            final @Nullable String bedingungen,
+            @Nullable final String bedingungen,
             final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
         // call
         final RequestContext requestContext = requestContextFactory.create(
                 eakteLoginName,
                 eakteOrganisationseinheit,
-                commonMapper.toDomain(eakteRolle));
+                commonMapper.toDomain(eakteStelle));
         final SearchRequest request = SearchRequest.builder()
                 .limit(limit)
                 .query(bedingungen)
