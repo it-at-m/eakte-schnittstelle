@@ -29,6 +29,8 @@ tags:
     description: Internal (Sub-Klasse von Dokument)
   - name: Schriftstueck
     description: ContentObject
+  - name: Benutzer
+    description: User
 paths:
   /api/v2/aktenplaneintraege/{aktenplaneintragId}/akten:
     get:
@@ -591,6 +593,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /api/v2/benutzer/ich:
+    get:
+      tags:
+        - Benutzer
+      summary: Eigenen Benutzer lesen
+      operationId: GetBenutzerIch
+      parameters:
+        - $ref: '#/components/parameters/LoginName'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Benutzer'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Benutzer konnte nicht gefunden werden.
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   securitySchemes:
     bearerAuth:
@@ -998,3 +1035,39 @@ components:
           description: Liste von Vorgängen
           items:
             $ref: '#/components/schemas/Schriftstueck'
+    Reference:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    BenutzerRolle:
+      type: object
+      properties:
+        mandant:
+          type: string
+        organisationseinheit:
+          $ref: '#/components/schemas/Reference'
+        stelle:
+          $ref: '#/components/schemas/Stelle'
+        default:
+          type: boolean
+    Benutzer:
+      type: object
+      required:
+        - id
+        - username
+        - rollen
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        rollen:
+          type: array
+          items:
+            $ref: '#/components/schemas/BenutzerRolle'

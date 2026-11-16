@@ -42,6 +42,8 @@ tags:
     description: Internal (Sub-Klasse von Dokument)
   - name: Schriftstueck
     description: ContentObject
+  - name: Benutzer
+    description: User
 
 paths:
   # Akte
@@ -77,3 +79,6 @@ paths:
     $ref: 'DokumentSchriftstuecke.yaml'
   '/api/v2/schriftstuecke/{schriftstueckId}':
     $ref: 'Schriftstueck.yaml'
+  # Benutzer
+  '/api/v2/benutzer/ich':
+    $ref: 'Benutzer.yaml'
