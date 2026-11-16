@@ -1,8 +1,7 @@
 package de.muenchen.oss.eakte.api.v2.gateway.domain.model;
 
-import lombok.Builder;
-
 import java.math.BigInteger;
+import lombok.Builder;
 
 @Builder
 public record SchriftstueckResponse(
