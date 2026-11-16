@@ -1,5 +1,6 @@
 package de.muenchen.oss.eakte.v2.starter;
 
+import de.muenchen.oss.eakte.v2.generated.api.BenutzerApi;
 import de.muenchen.oss.eakte.v2.generated.api.*;
 import de.muenchen.oss.eakte.v2.generated.dms.ApiClient;
 import org.apache.hc.client5.http.config.ConnectionConfig;
@@ -85,5 +86,10 @@ public class EAkteClientConfiguration {
     @Bean
     protected InternesDokumentApi eakteInternesDokumentApi(final ApiClient apiClient) {
         return new InternesDokumentApi(apiClient);
+    }
+
+    @Bean
+    protected BenutzerApi eakteBenutzerApi(final ApiClient apiClient) {
+        return new BenutzerApi(apiClient);
     }
 }
