@@ -10,6 +10,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultOb
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentKlasse;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.ErledigungResponse;
+import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -36,6 +37,7 @@ class FabasoftErledigungMapperTest {
         assertEquals("ou", mapped.getOrganisationseinheit());
         assertEquals("incoming-id", mapped.getBezugEingangsdokument());
         assertEquals("letter", mapped.getDokumententyp());
+        assertEquals(LocalDate.of(2025, 1, 2), mapped.getDatum());
         assertEquals("enclosures", mapped.getAnlagenBeschreibung());
         assertEquals(List.of(new Attribute("custom", "value")), mapped.getWeitereEigenschaften());
     }
@@ -57,6 +59,7 @@ class FabasoftErledigungMapperTest {
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(ErledigungAttribute.BEZUG_EINGANGSDOKUMENT, "incoming-id"),
+                attribute(DokumentAttribute.DATUM, LocalDate.of(2025, 1, 2)),
                 attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
                 attribute(ErledigungAttribute.ANLAGEN_BESCHREIBUNG, "enclosures"),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));

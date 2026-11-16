@@ -15,6 +15,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.Fabasof
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentResponse;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
@@ -77,6 +78,7 @@ class FabasoftDokumentOutAdapterTest {
                 attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:Incoming"),
                 attribute(DokumentAttribute.VORGANG_ID, "vorgang-id"),
                 attribute(DokumentAttribute.TITEL, "titel"),
+                attribute(DokumentAttribute.DATUM, LocalDate.of(2025, 1, 2)),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou")));
     }

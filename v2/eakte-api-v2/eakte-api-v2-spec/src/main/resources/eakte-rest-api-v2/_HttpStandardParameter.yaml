@@ -26,8 +26,8 @@ components:
         type: string
       example: COO.1.2300.1.847
 
-    Rolle:
-      name: EAkte-Rolle
+    Stelle:
+      name: EAkte-Stelle
       in: header
       description: |
         Referenz der Rolle (**Rolle des Nutzers** in der eAkte).
@@ -37,16 +37,5 @@ components:
         Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt!
       required: false
       schema:
-        $ref: '#/components/schemas/Rolle'
+        $ref: "./_GlobaleDatentypen.yaml#/components/schemas/Stelle"
       example: DocumentManager
-
-  schemas:
-    Rolle:
-      type: string
-      enum:
-        - Sachbearbeitung
-        - Schriftgutverwaltung
-        - Registratur
-        - Sekretariat
-        - Leitung
-        - Fachadministration

@@ -41,7 +41,7 @@ paths:
             type: string
           required: true
         - $ref: '#/components/parameters/LoginName'
-        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Stelle'
         - $ref: '#/components/parameters/Organisationseinheit'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Bedingungen'
@@ -89,7 +89,7 @@ paths:
             type: string
           required: true
         - $ref: '#/components/parameters/LoginName'
-        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Stelle'
         - $ref: '#/components/parameters/Organisationseinheit'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Bedingungen'
@@ -136,7 +136,7 @@ paths:
       operationId: SearchVorgaenge
       parameters:
         - $ref: '#/components/parameters/LoginName'
-        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Stelle'
         - $ref: '#/components/parameters/Organisationseinheit'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Bedingungen'
@@ -179,7 +179,7 @@ paths:
             type: string
           required: true
         - $ref: '#/components/parameters/LoginName'
-        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Stelle'
         - $ref: '#/components/parameters/Organisationseinheit'
         - $ref: '#/components/parameters/Eigenschaften'
       responses:
@@ -227,7 +227,7 @@ paths:
             type: string
           required: true
         - $ref: '#/components/parameters/LoginName'
-        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Stelle'
         - $ref: '#/components/parameters/Organisationseinheit'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Bedingungen'
@@ -270,7 +270,7 @@ paths:
       operationId: SearchEingangsdokumente
       parameters:
         - $ref: '#/components/parameters/LoginName'
-        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Stelle'
         - $ref: '#/components/parameters/Organisationseinheit'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Bedingungen'
@@ -313,7 +313,7 @@ paths:
             type: string
           required: true
         - $ref: '#/components/parameters/LoginName'
-        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Stelle'
         - $ref: '#/components/parameters/Organisationseinheit'
         - $ref: '#/components/parameters/Eigenschaften'
       responses:
@@ -351,7 +351,7 @@ paths:
       operationId: SearchErledigung
       parameters:
         - $ref: '#/components/parameters/LoginName'
-        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Stelle'
         - $ref: '#/components/parameters/Organisationseinheit'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Bedingungen'
@@ -394,7 +394,7 @@ paths:
             type: string
           required: true
         - $ref: '#/components/parameters/LoginName'
-        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Stelle'
         - $ref: '#/components/parameters/Organisationseinheit'
         - $ref: '#/components/parameters/Eigenschaften'
       responses:
@@ -432,7 +432,7 @@ paths:
       operationId: SearchInterneDokumente
       parameters:
         - $ref: '#/components/parameters/LoginName'
-        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Stelle'
         - $ref: '#/components/parameters/Organisationseinheit'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Bedingungen'
@@ -475,7 +475,7 @@ paths:
             type: string
           required: true
         - $ref: '#/components/parameters/LoginName'
-        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Stelle'
         - $ref: '#/components/parameters/Organisationseinheit'
         - $ref: '#/components/parameters/Eigenschaften'
       responses:
@@ -522,8 +522,8 @@ components:
       schema:
         type: string
       example: max.mustermann
-    Rolle:
-      name: EAkte-Rolle
+    Stelle:
+      name: EAkte-Stelle
       in: header
       description: |
         Referenz der Rolle (**Rolle des Nutzers** in der eAkte).
@@ -533,7 +533,7 @@ components:
         Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt!
       required: false
       schema:
-        $ref: '#/components/schemas/Rolle'
+        $ref: '#/components/schemas/Stelle'
       example: DocumentManager
     Organisationseinheit:
       name: EAkte-Organisationseinheit
@@ -602,15 +602,19 @@ components:
         items:
           type: string
   schemas:
-    Rolle:
+    Stelle:
       type: string
       enum:
         - Sachbearbeitung
-        - Schriftgutverwaltung
-        - Registratur
         - Sekretariat
         - Leitung
+        - Registratur
+        - Schriftgutverwaltung
+        - Vorlagenverwaltung
+        - Vorlagenadministration
         - Fachadministration
+        - OE-Administration
+        - Mitarbeit
     AnzahlListenElemente:
       type: integer
       description: |
@@ -787,6 +791,8 @@ components:
           type: string
         dokumententyp:
           type: string
+        datum:
+          type: string
         zugriffsdefinition:
           type: string
         organisationseinheit:
@@ -831,8 +837,6 @@ components:
       properties:
         fremdesGeschaeftszeichen:
           type: string
-        eingangsdatum:
-          type: string
     EingangsdokumentListeResponse:
       type: object
       properties:
@@ -867,8 +871,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/Dokument'
       properties:
-        zustellungsDatum:
-          type: string
         anlagenBeschreibung:
           type: string
     InternesDokumentListeResponse:

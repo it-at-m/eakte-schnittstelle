@@ -19,6 +19,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.Fabasof
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.ErledigungResponse;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -110,6 +111,7 @@ class FabasoftErledigungOutAdapterTest {
                 attribute(DokumentAttribute.BETREFF, "subject"),
                 attribute(DokumentAttribute.HINWEIS, "note"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
+                attribute(DokumentAttribute.DATUM, LocalDate.of(2025, 1, 2)),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(ErledigungAttribute.BEZUG_EINGANGSDOKUMENT, "incoming-id"),
                 attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),

@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import de.muenchen.oss.eakte.v2.generated.api.VorgangApi;
-import de.muenchen.oss.eakte.v2.generated.model.Rolle;
+import de.muenchen.oss.eakte.v2.generated.model.Stelle;
 import de.muenchen.oss.eakte.v2.generated.model.Vorgang;
 import java.util.List;
 import java.util.Set;
@@ -96,20 +96,20 @@ class EAkteClientConfigurationTest {
                         .withBody(VORGANG_RESPONSE.formatted(VORGANG_ID))));
 
         final Vorgang response = vorgangApi.getVorgang(
-                VORGANG_ID, "user-login", Rolle.SACHBEARBEITUNG, "COO.1.2301.1.ou", List.of());
+                VORGANG_ID, "user-login", Stelle.SACHBEARBEITUNG, "COO.1.2301.1.ou", List.of());
 
         assertThat(response.getId()).isEqualTo(VORGANG_ID);
         WIREMOCK.verify(getRequestedFor(urlEqualTo("/api/v2/vorgaenge/%s".formatted(VORGANG_ID)))
                 .withHeader("Authorization", equalTo("Bearer user-access-token"))
                 .withHeader("EAkte-Login-Name", equalTo("user-login"))
-                .withHeader("EAkte-Rolle", equalTo("Sachbearbeitung"))
+                .withHeader("EAkte-Stelle", equalTo("Sachbearbeitung"))
                 .withHeader("EAkte-Organisationseinheit", equalTo("COO.1.2301.1.ou")));
     }
 
     @Test
     void giveExistingJwtModeWithoutJwt_thenFailWithoutCallingApi() {
         assertThatThrownBy(() -> vorgangApi.getVorgang(
-                        VORGANG_ID, "user-login", Rolle.SACHBEARBEITUNG, "COO.1.2301.1.ou", List.of()))
+                        VORGANG_ID, "user-login", Stelle.SACHBEARBEITUNG, "COO.1.2301.1.ou", List.of()))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("JWT");
 
@@ -171,7 +171,7 @@ class EAkteClientConfigurationTest {
         SecurityContextHolder.setContext(securityContext);
         try {
             return vorgangApi.getVorgang(
-                    VORGANG_ID, "user-login", Rolle.SACHBEARBEITUNG, "COO.1.2301.1.ou", List.of());
+                    VORGANG_ID, "user-login", Stelle.SACHBEARBEITUNG, "COO.1.2301.1.ou", List.of());
         } finally {
             SecurityContextHolder.clearContext();
         }

@@ -36,7 +36,7 @@ class FabasoftEingangsdokumentMapperTest {
         assertEquals("access", mapped.getZugriffsdefinition());
         assertEquals("ou", mapped.getOrganisationseinheit());
         assertEquals("external-reference", mapped.getFremdesGeschaeftszeichen());
-        assertEquals(LocalDate.of(2025, 1, 2), mapped.getEingangsdatum());
+        assertEquals(LocalDate.of(2025, 1, 2), mapped.getDatum());
         assertEquals("note", mapped.getHinweis());
         assertEquals(List.of(new Attribute("custom", "value")), mapped.getWeitereEigenschaften());
     }
@@ -56,10 +56,10 @@ class FabasoftEingangsdokumentMapperTest {
                 attribute(DokumentAttribute.BETREFF, "subject"),
                 attribute(DokumentAttribute.HINWEIS, "note"),
                 attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
+                attribute(DokumentAttribute.DATUM, LocalDate.of(2025, 1, 2)),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(EingangsdokumentAttribute.FREMDES_GESCHAEFTSZEICHEN, "external-reference"),
-                attribute(EingangsdokumentAttribute.EINGANGSDATUM, LocalDate.of(2025, 1, 2)),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));
     }
 

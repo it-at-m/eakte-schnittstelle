@@ -35,7 +35,7 @@ class EingangsdokumentE2ETest extends EingangsdokumentE2eSupport {
             mockMvc.perform(get("/api/v2/eingangsdokumente")
                     .header("Authorization", "Bearer %s".formatted(USER_IMPERSONATE))
                     .header("EAkte-Login-Name", "login")
-                    .header("EAkte-Rolle", "Sachbearbeitung")
+                    .header("EAkte-Stelle", "Sachbearbeitung")
                     .header("EAkte-Organisationseinheit", "ou")
                     .queryParam("limit", "123")
                     .queryParam("bedingungen", "where query")
@@ -52,7 +52,7 @@ class EingangsdokumentE2ETest extends EingangsdokumentE2eSupport {
                     .andExpect(jsonPath("$.elemente[0].organisationseinheit").value("ou"))
                     .andExpect(jsonPath("$.elemente[0].dokumententyp").value("letter"))
                     .andExpect(jsonPath("$.elemente[0].fremdesGeschaeftszeichen").value("external-reference"))
-                    .andExpect(jsonPath("$.elemente[0].eingangsdatum").value("2025-01-02"))
+                    .andExpect(jsonPath("$.elemente[0].datum").value("2025-01-02"))
                     .andExpect(jsonPath("$.elemente[0].hinweis").value("incoming note"))
                     .andExpect(jsonPath("$.elemente[0].weitereEigenschaften[?(@.reference=='custom.attribute')].value")
                             .value("custom-value"));
@@ -93,7 +93,7 @@ class EingangsdokumentE2ETest extends EingangsdokumentE2eSupport {
             mockMvc.perform(get("/api/v2/eingangsdokumente/COO.4.5.6")
                     .header("Authorization", "Bearer %s".formatted(USER_IMPERSONATE))
                     .header("EAkte-Login-Name", "login")
-                    .header("EAkte-Rolle", "Sachbearbeitung")
+                    .header("EAkte-Stelle", "Sachbearbeitung")
                     .header("EAkte-Organisationseinheit", "ou")
                     .queryParam("eigenschaften", "custom.attribute"))
                     .andExpect(status().isOk())
@@ -104,7 +104,7 @@ class EingangsdokumentE2ETest extends EingangsdokumentE2eSupport {
                     .andExpect(jsonPath("$.name").value("name"))
                     .andExpect(jsonPath("$.dokumententyp").value("letter"))
                     .andExpect(jsonPath("$.fremdesGeschaeftszeichen").value("external-reference"))
-                    .andExpect(jsonPath("$.eingangsdatum").value("2025-01-02"))
+                    .andExpect(jsonPath("$.datum").value("2025-01-02"))
                     .andExpect(jsonPath("$.hinweis").value("incoming note"));
 
             verifySearchRequest("COOSYSTEM@1.1:objaddress", DOKUMENTENTYP_REFERENCE, true);

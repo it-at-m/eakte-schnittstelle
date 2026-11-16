@@ -9,7 +9,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.ErledigungResp
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.controllers.ErledigungApi;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Erledigung;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.ErledigungListeResponse;
-import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Rolle;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Stelle;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.List;
@@ -33,14 +33,14 @@ public class ErledigungController implements ErledigungApi {
     public ResponseEntity<Erledigung> getErledigung(
             final String erledigungId,
             final @Nullable String eakteLoginName,
-            final @Nullable Rolle eakteRolle,
+            @Nullable final Stelle eakteStelle,
             final @Nullable String eakteOrganisationseinheit,
             final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
         final RequestContext requestContext = requestContextFactory.create(
                 eakteLoginName,
                 eakteOrganisationseinheit,
-                commonMapper.toDomain(eakteRolle));
+                commonMapper.toDomain(eakteStelle));
         final ErledigungResponse result = erledigungInPort.get(requestContext,
                 erledigungId,
                 eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of())
@@ -51,7 +51,7 @@ public class ErledigungController implements ErledigungApi {
     @Override
     public ResponseEntity<ErledigungListeResponse> searchErledigung(
             final @Nullable String eakteLoginName,
-            final @Nullable Rolle eakteRolle,
+            @Nullable final Stelle eakteStelle,
             final @Nullable String eakteOrganisationseinheit,
             final Integer limit,
             final @Nullable String bedingungen,
@@ -60,7 +60,7 @@ public class ErledigungController implements ErledigungApi {
         final RequestContext requestContext = requestContextFactory.create(
                 eakteLoginName,
                 eakteOrganisationseinheit,
-                commonMapper.toDomain(eakteRolle));
+                commonMapper.toDomain(eakteStelle));
         final SearchRequest request = SearchRequest.builder()
                 .limit(limit)
                 .query(bedingungen)

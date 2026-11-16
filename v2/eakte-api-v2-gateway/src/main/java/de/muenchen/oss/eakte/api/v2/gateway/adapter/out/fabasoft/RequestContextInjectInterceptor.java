@@ -71,12 +71,12 @@ public class RequestContextInjectInterceptor extends AbstractPhaseInterceptor<Me
             throw new IllegalStateException("CXF endpoint URI needs to be present");
         }
         final Map<String, String> params = new HashMap<>();
-        if (context.role() != null) {
-            final String roleId = commonMapper.fromDomain(context.role()).getId();
+        if (context.stelle() != null) {
+            final String roleId = commonMapper.fromDomain(context.stelle()).getId();
             params.put(ROLE_QUERY_PARAM, roleId);
         }
-        if (StringUtils.hasText(context.ou())) {
-            params.put(OU_QUERY_PARAM, context.ou());
+        if (StringUtils.hasText(context.organisationseinheit())) {
+            params.put(OU_QUERY_PARAM, context.organisationseinheit());
 
         }
         if (!params.isEmpty()) {

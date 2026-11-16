@@ -11,7 +11,7 @@ import static org.mockito.Mockito.when;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftCommonMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftCommonMapperImpl;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Role;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Stelle;
 import java.util.List;
 import java.util.Map;
 import org.apache.cxf.message.Message;
@@ -45,7 +45,7 @@ class RequestContextInjectInterceptorTest {
     @Test
     void givenNoImpersonationUser_thenLeaveHeadersUnchanged() {
         final Message message = mock(Message.class);
-        contextProvider.set(new RequestContext(null, "ou", Role.SACHBEARBEITUNG));
+        contextProvider.set(new RequestContext(null, "ou", Stelle.SACHBEARBEITUNG));
 
         interceptor.handleMessage(message);
 
@@ -55,7 +55,7 @@ class RequestContextInjectInterceptorTest {
     @Test
     void givenImpersonationUserAndNoHeaders_thenCreateUserHeader() {
         final Message message = mock(Message.class);
-        contextProvider.set(new RequestContext("user", "ou", Role.SACHBEARBEITUNG));
+        contextProvider.set(new RequestContext("user", "ou", Stelle.SACHBEARBEITUNG));
         when(message.get(Message.ENDPOINT_ADDRESS)).thenReturn(ENDPOINT);
 
         interceptor.handleMessage(message);
@@ -73,7 +73,7 @@ class RequestContextInjectInterceptorTest {
         headers.put("Existing", List.of("value"));
         when(message.get(Message.PROTOCOL_HEADERS)).thenReturn(headers);
         when(message.get(Message.ENDPOINT_ADDRESS)).thenReturn(ENDPOINT);
-        contextProvider.set(new RequestContext("user", "ou", Role.SACHBEARBEITUNG));
+        contextProvider.set(new RequestContext("user", "ou", Stelle.SACHBEARBEITUNG));
 
         interceptor.handleMessage(message);
 
@@ -85,7 +85,7 @@ class RequestContextInjectInterceptorTest {
     void givenOuAndRole_thenAppendEncodedQueryParameters() {
         final Message message = mock(Message.class);
         when(message.get(Message.ENDPOINT_ADDRESS)).thenReturn(ENDPOINT);
-        contextProvider.set(new RequestContext("user", "ou with space", Role.SACHBEARBEITUNG));
+        contextProvider.set(new RequestContext("user", "ou with space", Stelle.SACHBEARBEITUNG));
 
         interceptor.handleMessage(message);
 
@@ -102,7 +102,7 @@ class RequestContextInjectInterceptorTest {
         final Message message = mock(Message.class);
         final String endpoint = ENDPOINT + "?existing=value";
         when(message.get(Message.ENDPOINT_ADDRESS)).thenReturn(endpoint);
-        contextProvider.set(new RequestContext("user", "ou", Role.SACHBEARBEITUNG));
+        contextProvider.set(new RequestContext("user", "ou", Stelle.SACHBEARBEITUNG));
 
         interceptor.handleMessage(message);
 

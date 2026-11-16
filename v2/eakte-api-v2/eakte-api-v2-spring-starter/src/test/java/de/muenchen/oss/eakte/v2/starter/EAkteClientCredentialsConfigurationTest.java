@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import de.muenchen.oss.eakte.v2.generated.api.VorgangApi;
-import de.muenchen.oss.eakte.v2.generated.model.Rolle;
+import de.muenchen.oss.eakte.v2.generated.model.Stelle;
 import de.muenchen.oss.eakte.v2.generated.model.Vorgang;
 import java.util.List;
 import org.junit.jupiter.api.AfterAll;
@@ -123,9 +123,9 @@ class EAkteClientCredentialsConfigurationTest {
                                 .formatted(EAkteClientConfigurationTest.VORGANG_ID))));
 
         final Vorgang firstResponse = vorgangApi.getVorgang(
-                EAkteClientConfigurationTest.VORGANG_ID, "user-login", Rolle.SACHBEARBEITUNG, "COO.1.2301.1.ou", List.of());
+                EAkteClientConfigurationTest.VORGANG_ID, "user-login", Stelle.SACHBEARBEITUNG, "COO.1.2301.1.ou", List.of());
         final Vorgang secondResponse = vorgangApi.getVorgang(
-                EAkteClientConfigurationTest.VORGANG_ID, "user-login", Rolle.SACHBEARBEITUNG, "COO.1.2301.1.ou", List.of());
+                EAkteClientConfigurationTest.VORGANG_ID, "user-login", Stelle.SACHBEARBEITUNG, "COO.1.2301.1.ou", List.of());
 
         assertThat(firstResponse.getId()).isEqualTo(EAkteClientConfigurationTest.VORGANG_ID);
         assertThat(secondResponse.getId()).isEqualTo(EAkteClientConfigurationTest.VORGANG_ID);

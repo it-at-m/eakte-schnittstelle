@@ -20,3 +20,17 @@ components:
           type: string
         dmsErrorReference:
           type: string
+
+    Stelle:
+      type: string
+      enum:
+        - Sachbearbeitung
+        - Sekretariat
+        - Leitung
+        - Registratur
+        - Schriftgutverwaltung
+        - Vorlagenverwaltung
+        - Vorlagenadministration
+        - Fachadministration
+        - OE-Administration
+        - Mitarbeit

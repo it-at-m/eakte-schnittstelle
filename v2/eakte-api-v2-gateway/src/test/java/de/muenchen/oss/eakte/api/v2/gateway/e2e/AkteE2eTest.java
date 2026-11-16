@@ -35,7 +35,7 @@ public class AkteE2eTest extends AkteE2eSupport {
             mockMvc.perform(get("/api/v2/aktenplaneintraege/COO.1.2.3/akten")
                     .header("Authorization", "Bearer %s".formatted(USER_IMPERSONATE))
                     .header("EAkte-Login-Name", "login")
-                    .header("EAkte-Rolle", "Sachbearbeitung")
+                    .header("EAkte-Stelle", "Sachbearbeitung")
                     .header("EAkte-Organisationseinheit", "ou")
                     .queryParam("limit", "123")
                     .queryParam("bedingungen", "where query")

@@ -7,7 +7,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.controllers.VorgangApi;
-import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Rolle;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Stelle;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.VorgangListeResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,7 +33,7 @@ public class VorgangController implements VorgangApi {
     @Override
     public ResponseEntity<VorgangListeResponse> searchVorgaenge(
             @Nullable final String eakteLoginName,
-            @Nullable final Rolle eakteRolle,
+            @Nullable final Stelle eakteStelle,
             @Nullable final String eakteOrganisationseinheit,
             final Integer limit,
             @Nullable final String bedingungen,
@@ -43,7 +43,7 @@ public class VorgangController implements VorgangApi {
         final RequestContext requestContext = requestContextFactory.create(
                 eakteLoginName,
                 eakteOrganisationseinheit,
-                commonMapper.toDomain(eakteRolle));
+                commonMapper.toDomain(eakteStelle));
         final SearchRequest request = SearchRequest.builder()
                 .limit(limit)
                 .query(bedingungen)
@@ -61,14 +61,14 @@ public class VorgangController implements VorgangApi {
     public ResponseEntity<Vorgang> getVorgang(
             final String vorgangId,
             @Nullable final String eakteLoginName,
-            @Nullable final Rolle eakteRolle,
+            @Nullable final Stelle eakteStelle,
             @Nullable final String eakteOrganisationseinheit,
             final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
         final RequestContext requestContext = requestContextFactory.create(
                 eakteLoginName,
                 eakteOrganisationseinheit,
-                commonMapper.toDomain(eakteRolle));
+                commonMapper.toDomain(eakteStelle));
         final VorgangResponse result = vorgangInPort.get(requestContext,
                 vorgangId,
                 eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of())
@@ -79,17 +79,17 @@ public class VorgangController implements VorgangApi {
     @Override
     public ResponseEntity<VorgangListeResponse> searchAkteVorgeange(
             final String akteId,
-            final @Nullable String eakteLoginName,
-            final @Nullable Rolle eakteRolle,
-            final @Nullable String eakteOrganisationseinheit,
+            @Nullable final String eakteLoginName,
+            @Nullable final Stelle eakteStelle,
+            @Nullable final String eakteOrganisationseinheit,
             final Integer limit,
-            final @Nullable String bedingungen,
+            @Nullable final String bedingungen,
             final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
         final RequestContext requestContext = requestContextFactory.create(
                 eakteLoginName,
                 eakteOrganisationseinheit,
-                commonMapper.toDomain(eakteRolle));
+                commonMapper.toDomain(eakteStelle));
         final SearchRequest request = SearchRequest.builder()
                 .limit(limit)
                 .query(bedingungen)
