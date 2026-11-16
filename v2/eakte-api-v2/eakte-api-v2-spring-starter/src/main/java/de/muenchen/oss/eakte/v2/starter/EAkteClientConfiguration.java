@@ -86,4 +86,9 @@ public class EAkteClientConfiguration {
     protected InternesDokumentApi eakteInternesDokumentApi(final ApiClient apiClient) {
         return new InternesDokumentApi(apiClient);
     }
+
+    @Bean
+    protected SchriftstueckApi eakteSchriftstueckApi(final ApiClient apiClient) {
+        return new SchriftstueckApi(apiClient);
+    }
 }

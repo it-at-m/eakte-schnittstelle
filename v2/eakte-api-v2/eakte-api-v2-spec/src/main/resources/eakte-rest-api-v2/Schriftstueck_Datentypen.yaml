@@ -1,0 +1,32 @@
+components:
+  schemas:
+    Schriftstueck:
+      type: object
+      required:
+        - id
+        - dokumentId
+        - name
+      properties:
+        id:
+          type: string
+        dokumentId:
+          type: string
+        name:
+          type: string
+        betreff:
+          type: string
+        dateiEndung:
+          type: string
+        dateiGroesse:
+          type: integer
+
+    SchriftstueckListeResponse:
+      type: object
+      properties:
+        anzahl:
+          $ref: '_SucheDatentypen.yaml#/components/schemas/AnzahlListenElemente'
+        elemente:
+          type: array
+          description: Liste von Vorgängen
+          items:
+            $ref: '#/components/schemas/Schriftstueck'

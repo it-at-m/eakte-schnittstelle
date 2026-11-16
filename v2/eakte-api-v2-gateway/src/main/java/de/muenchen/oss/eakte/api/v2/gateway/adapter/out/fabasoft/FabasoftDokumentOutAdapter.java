@@ -12,10 +12,13 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentRespon
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 @RequiredArgsConstructor
 public class FabasoftDokumentOutAdapter implements DokumentOutPort {
+    private static final String PARENT_QUERY = ".COOELAK@1.1001:referrednumber = '%s'";
+
     private final FabasoftSearchService searchService;
     private final FabasoftDokumentMapper dokumentMapper;
 
@@ -27,5 +30,12 @@ public class FabasoftDokumentOutAdapter implements DokumentOutPort {
                 .concatQuery(vorgangParentQuery);
         final List<ResultObject> result = searchService.searchObject(context, FabasoftObjectType.DOKUMENT, enrichedRequest);
         return dokumentMapper.toDomain(result);
+    }
+
+    public static String getBellowDokumentQuery(final String id) {
+        if (!StringUtils.hasText(id) || !id.matches(FabasoftObjectType.COO_PATTERN)) {
+            throw new IllegalArgumentException("Invalid id: " + id);
+        }
+        return PARENT_QUERY.formatted(id);
     }
 }
