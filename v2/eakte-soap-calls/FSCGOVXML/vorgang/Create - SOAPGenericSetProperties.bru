@@ -20,15 +20,14 @@ headers {
 }
 
 body:xml {
-  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fsc="http://schemas.fabasoft.com/websvc/FSCGOVXML_1_1001_DefaultWebServiceDefinition/" xmlns:urn="urn:schemas-fabasoft-com:universal">
       <soap:Body>
-          <OBJECT>
-              <objaddress></objaddress>
-              <ENUM reference="COOELAK@1.1001:filetype">2</ENUM>
-              <STRING reference="COOELAK@1.1001:inchargeremark">Geschaeftsgangvermerk Test</STRING>
+          <urn:OBJECT urn:objaddress="">
+              <urn:ENUM reference="COOELAK@1.1001:filetype">2</urn:ENUM>
+              <urn:STRING reference="COOELAK@1.1001:inchargeremark">Geschaeftsgangvermerk Test</urn:STRING>
               <!-- Eigener Mandant -->
-              <OBJECT reference="FSCFOLIO@1.1001:objaccdef">COO.15.1400.1.101007</OBJECT>
-          </OBJECT>
+              <urn:OBJECT reference="FSCFOLIO@1.1001:objaccdef">COO.15.1400.1.101007</urn:OBJECT>
+          </urn:OBJECT>
       </soap:Body>
   </soap:Envelope>
 }
