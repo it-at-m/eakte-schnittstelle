@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public record CreateVorgangRequest(
         @NotBlank String aktenId,
-        @NotBlank String name,
+        @NotBlank String titel,
         String betreff,
         String vorlagenId,
         VorgangMedium originalMedium,

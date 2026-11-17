@@ -2,6 +2,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftTestFixtures;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.DokumentAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftAttribute;
@@ -20,7 +21,7 @@ class FabasoftInternesDokumentMapperTest {
     private final FabasoftAttributeMapper attributeMapper = new FabasoftAttributeMapperImpl();
     private final FabasoftInternesDokumentMapper mapper = new FabasoftInternesDokumentMapper(
             attributeMapper,
-            new FabasoftDokumentMapper(attributeMapper));
+            FabasoftTestFixtures.dokumentMapper());
 
     @Test
     void givenResultObject_thenMapInternesDokument() {
@@ -32,7 +33,7 @@ class FabasoftInternesDokumentMapperTest {
         assertEquals("titel", mapped.getTitel());
         assertEquals("name", mapped.getName());
         assertEquals("subject", mapped.getBetreff());
-        assertEquals("access", mapped.getZugriffsdefinition());
+        assertEquals(FabasoftTestFixtures.ACCESS_DEFINITION_TEXT, mapped.getZugriffsdefinition());
         assertEquals("ou", mapped.getOrganisationseinheit());
         assertEquals(LocalDate.of(2025, 1, 2), mapped.getDatum());
         assertEquals("letter", mapped.getDokumententyp());
@@ -55,7 +56,7 @@ class FabasoftInternesDokumentMapperTest {
                 attribute(DokumentAttribute.TITEL, "titel"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
                 attribute(DokumentAttribute.HINWEIS, "note"),
-                attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
+                attribute(DokumentAttribute.ZUGRIFFSDEFINITION, FabasoftTestFixtures.ACCESS_DEFINITION_ID),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(DokumentAttribute.DATUM, LocalDate.of(2025, 1, 2)),
                 attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),

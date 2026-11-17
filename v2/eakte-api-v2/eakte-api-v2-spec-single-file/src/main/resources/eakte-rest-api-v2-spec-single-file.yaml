@@ -126,6 +126,51 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - Vorgang
+      summary: Vorgang unter Akte erstellen
+      operationId: CreateVorgang
+      parameters:
+        - in: path
+          name: akteId
+          schema:
+            type: string
+          required: true
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVorgang'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateVorgangResponse'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /api/v2/vorgaenge:
     get:
       tags:
@@ -652,63 +697,6 @@ components:
         - Fachadministration
         - OE-Administration
         - Mitarbeit
-    BaseVorgang:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
-        betreff:
-          type: string
-        geschaeftsgangvermerk:
-          type: string
-          description: Geschäftsgangvermerk für Prozessverantwortlichen
-          example: Warte auf Rückmeldung
-        originalMedium:
-          type: string
-          enum:
-            - elektronisch
-            - hybrid
-            - papier
-        zugriffsdefinition:
-          type: string
-    CreateVorgang:
-      type: object
-      allOf:
-        - $ref: '#/components/schemas/BaseVorgang'
-      properties:
-        vorlagenId:
-          type: string
-        laufwegErzeugen:
-          type: boolean
-          default: false
-    CreateVorgangResponse:
-      type: object
-      required:
-        - id
-      properties:
-        id:
-          type: string
-    ErrorResponse:
-      type: object
-      description: |
-        Container für RFC9457 Fehlermeldung und konkrete Fabasoft Fehlermeldung falls Ursache
-      required:
-        - status
-        - title
-      properties:
-        status:
-          type: integer
-          format: int32
-        title:
-          type: string
-        instance:
-          type: string
-        detail:
-          type: string
-        dmsErrorReference:
-          type: string
     AnzahlListenElemente:
       type: integer
       description: |
@@ -796,29 +784,22 @@ components:
           type: string
         dmsErrorReference:
           type: string
-    Vorgang:
+    BaseVorgang:
       type: object
       required:
-        - id
-        - akteId
-        - name
         - titel
         - originalMedium
         - status
         - bearbeitungsstatus
+        - zugriffsdefinition
         - organisationseinheit
-        - eigenschaftenMap
-        - eigenschaftenListe
-      allOf:
-        - $ref: '#/components/schemas/BaseVorgang'
+        - weitereEigenschaften
       properties:
         id:
           type: string
         akteId:
           type: string
         titel:
-          type: string
-        name:
           type: string
         betreff:
           type: string
@@ -834,6 +815,27 @@ components:
             - elektronisch
             - hybrid
             - papier
+        zugriffsdefinition:
+          type: string
+    Vorgang:
+      type: object
+      required:
+        - id
+        - name
+        - status
+        - bearbeitungsstatus
+        - organisationseinheit
+        - eigenschaftenMap
+        - eigenschaftenListe
+      allOf:
+        - $ref: '#/components/schemas/BaseVorgang'
+      properties:
+        id:
+          type: string
+        akteId:
+          type: string
+        name:
+          type: string
         status:
           type: string
           enum:
@@ -860,6 +862,23 @@ components:
           description: Liste von Vorgängen
           items:
             $ref: '#/components/schemas/Vorgang'
+    CreateVorgang:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseVorgang'
+      properties:
+        vorlagenId:
+          type: string
+        laufwegErzeugen:
+          type: boolean
+          default: false
+    CreateVorgangResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
     DokumentBase:
       type: object
       required:

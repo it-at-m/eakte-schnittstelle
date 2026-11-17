@@ -3,7 +3,6 @@ components:
     BaseVorgang:
       type: object
       required:
-        - name
         - titel
         - originalMedium
         - status
@@ -17,8 +16,6 @@ components:
         akteId:
           type: string
         titel:
-          type: string
-        name:
           type: string
         betreff:
           type: string
@@ -41,7 +38,7 @@ components:
       type: object
       required:
         - id
-        - langname
+        - name
         - status
         - bearbeitungsstatus
         - organisationseinheit
@@ -54,7 +51,7 @@ components:
           type: string
         akteId:
           type: string
-        langname:
+        name:
           type: string
         status:
           type: string

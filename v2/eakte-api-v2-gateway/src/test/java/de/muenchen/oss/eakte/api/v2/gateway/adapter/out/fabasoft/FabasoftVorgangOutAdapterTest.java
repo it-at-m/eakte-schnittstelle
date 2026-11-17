@@ -82,7 +82,7 @@ class FabasoftVorgangOutAdapterTest {
         when(searchService.searchObject(eq(CONTEXT), eq(FabasoftObjectType.VORGANG), requestCaptor.capture()))
                 .thenReturn(result);
 
-        final List<VorgangResponse> actual = new FabasoftVorgangOutAdapter(searchService, vorgangMapper)
+        final List<VorgangResponse> actual = adapter()
                 .searchBellowAkte(CONTEXT, "COO.1.2.3", REQUEST);
 
         assertEquals(List.of(vorgangMapper.toDomain(result.getFirst())), actual);
@@ -99,7 +99,7 @@ class FabasoftVorgangOutAdapterTest {
         when(searchService.searchObject(eq(CONTEXT), eq(FabasoftObjectType.VORGANG), requestCaptor.capture()))
                 .thenReturn(List.of());
 
-        new FabasoftVorgangOutAdapter(searchService, vorgangMapper)
+        adapter()
                 .searchBellowAkte(CONTEXT, "COO.1.2.3", request);
 
         assertEquals(".COOELAK@1.1001:referrednumber = 'COO.1.2.3'", requestCaptor.getValue().query());

@@ -13,7 +13,6 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.Fabasoft
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftAttributeMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftAttributeMapperImpl;
-import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftDokumentMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftErledigungMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftSearchService;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
@@ -44,7 +43,7 @@ class FabasoftErledigungOutAdapterTest {
     private final FabasoftAttributeMapper attributeMapper = new FabasoftAttributeMapperImpl();
     private final FabasoftErledigungMapper erledigungMapper = new FabasoftErledigungMapper(
             attributeMapper,
-            new FabasoftDokumentMapper(attributeMapper));
+            FabasoftTestFixtures.dokumentMapper());
 
     @Mock
     private FabasoftSearchService searchService;

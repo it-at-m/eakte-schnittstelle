@@ -66,7 +66,7 @@ class VorgangMapperTest {
     @Test
     void givenCreateVorgang_thenMapAllFields() {
         final CreateVorgang createVorgang = new CreateVorgang()
-                .name("name")
+                .titel("titel")
                 .betreff("subject")
                 .vorlagenId("template-id")
                 .originalMedium(CreateVorgang.OriginalMediumEnum.PAPIER)
@@ -77,7 +77,7 @@ class VorgangMapperTest {
         final CreateVorgangRequest result = mapper.toDomain("akte-id", createVorgang);
 
         assertEquals("akte-id", result.aktenId());
-        assertEquals("name", result.name());
+        assertEquals("titel", result.titel());
         assertEquals("subject", result.betreff());
         assertEquals("template-id", result.vorlagenId());
         assertEquals(VorgangMedium.PAPIER, result.originalMedium());

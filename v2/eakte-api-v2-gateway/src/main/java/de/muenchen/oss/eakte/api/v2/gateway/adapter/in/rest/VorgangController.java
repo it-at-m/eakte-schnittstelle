@@ -81,14 +81,17 @@ public class VorgangController implements VorgangApi {
 
     @Override
     public ResponseEntity<CreateVorgangResponse> createVorgang(
-            final String aktenId,
+            final String akteId,
             final CreateVorgang createVorgang,
             @Nullable final String eakteLoginName,
-            @Nullable final String eakteRolle,
+            @Nullable final Stelle eakteStelle,
             @Nullable final String eakteOrganisationseinheit,
             final HttpServletRequest servletRequest) {
-        final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
-        final CreateVorgangRequest request = vorgangMapper.toDomain(aktenId, createVorgang);
+        final RequestContext requestContext = requestContextFactory.create(
+                eakteLoginName,
+                eakteOrganisationseinheit,
+                commonMapper.toDomain(eakteStelle));
+        final CreateVorgangRequest request = vorgangMapper.toDomain(akteId, createVorgang);
         final String vorgangId = vorgangInPort.createAkteVorgang(requestContext, request);
         return ResponseEntity.of(Optional.of(CreateVorgangResponse.builder().id(vorgangId).build()));
     }

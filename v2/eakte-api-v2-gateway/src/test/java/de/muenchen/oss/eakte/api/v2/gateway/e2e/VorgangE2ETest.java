@@ -194,12 +194,12 @@ class VorgangE2ETest extends VorgangE2eSupport {
             mockMvc.perform(post("/api/v2/akten/akte-id/vorgaenge")
                     .header("Authorization", "Bearer %s".formatted(USER_IMPERSONATE))
                     .header("EAkte-Login-Name", "login")
-                    .header("EAkte-Rolle", "role")
+                    .header("EAkte-Stelle", "Sachbearbeitung")
                     .header("EAkte-Organisationseinheit", "ou")
                     .contentType(APPLICATION_JSON)
                     .content("""
                             {
-                              "name": "name",
+                              "titel": "titel",
                               "betreff": "subject",
                               "vorlagenId": "template-id",
                               "originalMedium": "papier",
@@ -218,7 +218,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
         void givenNoAuthentication_thenRejectRequest() throws Exception {
             mockMvc.perform(post("/api/v2/akten/akte-id/vorgaenge")
                     .contentType(APPLICATION_JSON)
-                    .content("{\"name\":\"name\",\"betreff\":\"subject\"}"))
+                    .content("{\"titel\":\"titel\",\"betreff\":\"subject\"}"))
                     .andExpect(status().isForbidden());
         }
 
@@ -229,7 +229,17 @@ class VorgangE2ETest extends VorgangE2eSupport {
             mockMvc.perform(post("/api/v2/akten/akte-id/vorgaenge")
                     .header("Authorization", "Bearer %s".formatted(USER))
                     .contentType(APPLICATION_JSON)
-                    .content("{\"name\":\"name\",\"betreff\":\"subject\"}"))
+                    .content("""
+                            {
+                              "titel": "name",
+                              "betreff": "subject",
+                              "vorlagenId": "template-id",
+                              "originalMedium": "papier",
+                              "laufwegErzeugen": true,
+                              "geschaeftsgangvermerk": "remark",
+                              "zugriffsdefinition": "Standard Zugriffsdefinition für Dokumente"
+                            }
+                            """))
                     .andExpect(status().isInternalServerError());
         }
     }

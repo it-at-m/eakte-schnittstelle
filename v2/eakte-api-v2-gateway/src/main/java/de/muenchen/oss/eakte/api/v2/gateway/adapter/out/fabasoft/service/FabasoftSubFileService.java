@@ -23,8 +23,7 @@ public class FabasoftSubFileService {
         final CreateSubFileRequestType requestType = new CreateSubFileRequestType();
         requestType.setObjclass(request.type().getCoo());
         requestType.setReferrednumber(request.referredId());
-        requestType.setObjmlname(request.name());
-        // TODO is this correct?
+        requestType.setObjmlname(request.titel());
         requestType.getFilesubj().addAll(List.of(request.betreff().split("\n")));
         requestType.setCreatedfromdefinition(request.vorlagenId());
         log.debug("#createSubFile for {}", request);

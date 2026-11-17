@@ -1,6 +1,7 @@
 package de.muenchen.oss.eakte.api.v2.gateway.e2e;
 
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftStelle;
 
 abstract class VorgangE2eSupport extends FabasoftE2eSupport {
     public static final String DFV_ATTRIBUTE = "custom.dfv.attribute";
@@ -54,7 +55,7 @@ abstract class VorgangE2eSupport extends FabasoftE2eSupport {
         if (impersonate) {
             pattern = pattern
                     .withHeader("X-FSC-Authenticated-User", com.github.tomakehurst.wiremock.client.WireMock.equalTo("login"))
-                    .withQueryParam("px", com.github.tomakehurst.wiremock.client.WireMock.equalTo("role"))
+                    .withQueryParam("px", com.github.tomakehurst.wiremock.client.WireMock.equalTo(FabasoftStelle.SACHBEARBEITUNG.getId()))
                     .withQueryParam("gx", com.github.tomakehurst.wiremock.client.WireMock.equalTo("ou"));
         }
         wireMock.verify(pattern);
