@@ -40,17 +40,22 @@ tags:
     description: Outgoing (ehem. Ausgang) (Sub-Klasse von Dokument)
   - name: Internes Dokument
     description: Internal (Sub-Klasse von Dokument)
+  - name: Benutzer
+    description: User
 
 paths:
+  # Akte
+  '/api/v2/aktenplaneintraege/{aktenplaneintragId}/akten':
+    $ref: 'AktenplaneintragAkten.yaml'
   # Vorgang
-  '/api/v2/akten/{aktenId}/vorgaenge':
-    $ref: 'AktenVorgaenge.yaml'
+  '/api/v2/akten/{akteId}/vorgaenge':
+    $ref: 'AkteVorgaenge.yaml'
   '/api/v2/vorgaenge':
     $ref: 'Vorgaenge.yaml'
-  '/api/v2/vorgaenge/{vorgangsId}':
+  '/api/v2/vorgaenge/{vorgangId}':
     $ref: 'Vorgang.yaml'
   # Dokument
-  '/api/v2/vorgaenge/{vorgangsId}/dokumente':
+  '/api/v2/vorgaenge/{vorgangId}/dokumente':
     $ref: 'VorgangsDokumente.yaml'
   # Eingangsdokument
   '/api/v2/eingangsdokumente':
@@ -60,10 +65,13 @@ paths:
   # Erledigung
   '/api/v2/erledigungen':
     $ref: 'Erledigungen.yaml'
-  '/api/v2/erledigungen/{erledigungsId}':
+  '/api/v2/erledigungen/{erledigungId}':
     $ref: 'Erledigung.yaml'
   # Internes Dokument
   '/api/v2/interne-dokumente':
     $ref: 'InterneDokumente.yaml'
   '/api/v2/interne-dokumente/{dokumentId}':
     $ref: 'InternesDokument.yaml'
+  # Benutzer
+  '/api/v2/benutzer/ich':
+    $ref: 'Benutzer.yaml'

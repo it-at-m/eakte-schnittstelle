@@ -10,6 +10,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.controllers.VorgangApi;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.CreateVorgang;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.CreateVorgangResponse;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Stelle;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.VorgangListeResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,18 +31,22 @@ public class VorgangController implements VorgangApi {
     private final VorgangInPort vorgangInPort;
     private final VorgangMapper vorgangMapper;
     private final RequestContextFactory requestContextFactory;
+    private final CommonMapper commonMapper;
 
     @Override
     public ResponseEntity<VorgangListeResponse> searchVorgaenge(
             @Nullable final String eakteLoginName,
-            @Nullable final String eakteRolle,
+            @Nullable final Stelle eakteStelle,
             @Nullable final String eakteOrganisationseinheit,
             final Integer limit,
             @Nullable final String bedingungen,
             final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
         // call
-        final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
+        final RequestContext requestContext = requestContextFactory.create(
+                eakteLoginName,
+                eakteOrganisationseinheit,
+                commonMapper.toDomain(eakteStelle));
         final SearchRequest request = SearchRequest.builder()
                 .limit(limit)
                 .query(bedingungen)
@@ -57,15 +62,18 @@ public class VorgangController implements VorgangApi {
 
     @Override
     public ResponseEntity<Vorgang> getVorgang(
-            final String vorgangsId,
+            final String vorgangId,
             @Nullable final String eakteLoginName,
-            @Nullable final String eakteRolle,
+            @Nullable final Stelle eakteStelle,
             @Nullable final String eakteOrganisationseinheit,
             final List<String> eigenschaften,
             final HttpServletRequest servletRequest) {
-        final RequestContext requestContext = requestContextFactory.create(eakteLoginName, eakteOrganisationseinheit, eakteRolle);
+        final RequestContext requestContext = requestContextFactory.create(
+                eakteLoginName,
+                eakteOrganisationseinheit,
+                commonMapper.toDomain(eakteStelle));
         final VorgangResponse result = vorgangInPort.get(requestContext,
-                vorgangsId,
+                vorgangId,
                 eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of())
                 .orElseThrow(ResourceNotFoundException::new);
         return ResponseEntity.of(Optional.of(vorgangMapper.fromDomain(result)));
@@ -83,5 +91,32 @@ public class VorgangController implements VorgangApi {
         final CreateVorgangRequest request = vorgangMapper.toDomain(aktenId, createVorgang);
         final String vorgangId = vorgangInPort.createAkteVorgang(requestContext, request);
         return ResponseEntity.of(Optional.of(CreateVorgangResponse.builder().id(vorgangId).build()));
+    }
+
+    @Override
+    public ResponseEntity<VorgangListeResponse> searchAkteVorgeange(
+            final String akteId,
+            @Nullable final String eakteLoginName,
+            @Nullable final Stelle eakteStelle,
+            @Nullable final String eakteOrganisationseinheit,
+            final Integer limit,
+            @Nullable final String bedingungen,
+            final List<String> eigenschaften,
+            final HttpServletRequest servletRequest) {
+        final RequestContext requestContext = requestContextFactory.create(
+                eakteLoginName,
+                eakteOrganisationseinheit,
+                commonMapper.toDomain(eakteStelle));
+        final SearchRequest request = SearchRequest.builder()
+                .limit(limit)
+                .query(bedingungen)
+                .attributes(eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of()).build();
+        final List<VorgangResponse> result = vorgangInPort.searchBellowAkte(requestContext, akteId, request);
+        // respond
+        final VorgangListeResponse response = VorgangListeResponse.builder()
+                .anzahl(result.size())
+                .elemente(vorgangMapper.fromDomain(result))
+                .build();
+        return ResponseEntity.of(Optional.of(response));
     }
 }

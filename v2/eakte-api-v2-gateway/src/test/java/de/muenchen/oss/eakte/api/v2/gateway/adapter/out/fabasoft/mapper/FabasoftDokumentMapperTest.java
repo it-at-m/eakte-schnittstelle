@@ -9,8 +9,8 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.Fabasoft
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentKlasse;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentParent;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentResponse;
+import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -19,12 +19,14 @@ class FabasoftDokumentMapperTest {
 
     @Test
     void givenResultObject_thenMapDokument() {
-        final ResultObject result = new ResultObject("long name", "coo", List.of(
+        final ResultObject result = new ResultObject("name", "coo", List.of(
                 attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:Outgoing"),
-                attribute(DokumentAttribute.PARENT_ID, "parent"),
-                attribute(DokumentAttribute.PARENT_TYPE, "DEPRECONFIG@15.1001:Procedure"),
-                attribute(DokumentAttribute.NAME, "name"),
+                attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
+                attribute(DokumentAttribute.TITEL, "titel"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
+                attribute(DokumentAttribute.HINWEIS, "note"),
+                attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
+                attribute(DokumentAttribute.DATUM, LocalDate.of(2025, 1, 2)),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, FabasoftTestFixtures.ACCESS_DEFINITION_ID),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));
@@ -33,11 +35,13 @@ class FabasoftDokumentMapperTest {
 
         assertEquals("coo", mapped.getId());
         assertEquals(DokumentKlasse.ERLEDIGUNG, mapped.getKlasse());
-        assertEquals(DokumentParent.VORGANG, mapped.getParent().type());
-        assertEquals("parent", mapped.getParent().id());
+        assertEquals("vorgang", mapped.getVorgangId());
+        assertEquals("titel", mapped.getTitel());
         assertEquals("name", mapped.getName());
-        assertEquals("long name", mapped.getLangname());
         assertEquals("subject", mapped.getBetreff());
+        assertEquals("note", mapped.getHinweis());
+        assertEquals("letter", mapped.getDokumententyp());
+        assertEquals(LocalDate.of(2025, 1, 2), mapped.getDatum());
         assertEquals(FabasoftTestFixtures.ACCESS_DEFINITION_TEXT, mapped.getZugriffsdefinition());
         assertEquals("ou", mapped.getOrganisationseinheit());
         assertEquals(List.of(new Attribute("custom", "value")), mapped.getWeitereEigenschaften());
@@ -47,16 +51,15 @@ class FabasoftDokumentMapperTest {
     void givenResults_thenMapEachResult() {
         final ResultObject result = new ResultObject("name", "id", List.of(
                 attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:Incoming"),
-                attribute(DokumentAttribute.PARENT_ID, "parent"),
-                attribute(DokumentAttribute.PARENT_TYPE, "DEPRECONFIG@15.1001:Procedure"),
-                attribute(DokumentAttribute.NAME, "name"),
+                attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
+                attribute(DokumentAttribute.TITEL, "titel"),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, FabasoftTestFixtures.ACCESS_DEFINITION_ID),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou")));
 
         assertEquals(List.of(mapper.toDomain(result)), mapper.toDomain(List.of(result)));
     }
 
-    private static FabasoftAttribute attribute(final DokumentAttribute attribute, final String value) {
+    private static FabasoftAttribute attribute(final DokumentAttribute attribute, final Object value) {
         return new FabasoftAttribute(attribute.getType(), attribute.getReference(), null, value);
     }
 

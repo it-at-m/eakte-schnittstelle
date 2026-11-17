@@ -10,11 +10,12 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum DokumentAttribute {
     KLASSE("COOSYSTEM@1.1:objclass.COOSYSTEM@1.1:fullreference", AttributeType.STRING),
-    // TODO which attribute for Inbox & Arbeitsvorrat
-    PARENT_ID("COOELAK@1.1001:referrednumber", AttributeType.OBJECT),
-    PARENT_TYPE("COOELAK@1.1001:referrednumber.objclass.fullreference", AttributeType.STRING),
-    NAME("COOELAK@1.1001:objmlname.langstring", AttributeType.STRING),
+    VORGANG_ID("COOELAK@1.1001:referrednumber", AttributeType.OBJECT),
+    TITEL("COOELAK@1.1001:objmlname.langstring", AttributeType.STRING),
     BETREFF("COOELAK@1.1001:filesubj", AttributeType.STRING),
+    HINWEIS("DEPRECONFIG@15.1001:fileaddsubj", AttributeType.STRING),
+    DOKUMENTENTYP("COOELAK@1.1001:subfiletype.name", AttributeType.STRING),
+    DATUM("COOELAK@1.1001:delivery", AttributeType.DATE),
     ZUGRIFFSDEFINITION("FSCFOLIO@1.1001:objaccdef", AttributeType.STRING),
     ORGANISATIONSEINHEIT("COOSYSTEM@1.1:objowngroup.name", AttributeType.STRING);
 

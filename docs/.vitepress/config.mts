@@ -21,12 +21,15 @@ const vitepressConfig = defineConfig({
     nav: [
       {
         text: "Home",
+        link: "/",
+      },
+      {
+        text: "DMS",
         items: [
           { text: "Index", link: "/dms" },
           { text: "Attributes", link: "/dms-attributes" },
         ],
       },
-      { text: "DMS", link: "/dms" },
       {
         text: "V1",
         items: [
@@ -52,10 +55,7 @@ const vitepressConfig = defineConfig({
       {
         text: "V1",
         link: "/v1/",
-        items: [
-          { text: "Use Cases", link: "/v1/usecases" },
-          { text: "Swagger-UI", link: "/v1/swagger-ui" },
-        ],
+        items: [{ text: "Swagger-UI", link: "/v1/swagger-ui" }],
       },
       {
         text: "V2 (WIP)",

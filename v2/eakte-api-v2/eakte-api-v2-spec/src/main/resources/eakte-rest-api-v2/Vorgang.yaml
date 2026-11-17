@@ -5,12 +5,12 @@ get:
   operationId: GetVorgang
   parameters:
     - in: path
-      name: vorgangsId
+      name: vorgangId
       schema:
         type: string
       required: true
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
-    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Rolle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
     - $ref: '_SucheDatentypen.yaml#/components/parameters/Eigenschaften'
   responses:
@@ -24,7 +24,7 @@ get:
         GetDokumente:
           operationId: SearchVorgangsDokumente
           parameters:
-            vorgangsId: '$response.body#/id'
+            vorgangId: '$response.body#/id'
     '404':
       description: Vorgang konnte nicht gefunden werden.
     '400':

@@ -13,6 +13,10 @@ abstract class VorgangE2eSupport extends FabasoftE2eSupport {
         stubSearchRequestContaining("where query", vorgangResponse());
     }
 
+    protected void stubAkteVorgaengeResponse() {
+        stubSearchRequestContaining(".COOELAK@1.1001:referrednumber", vorgangResponse());
+    }
+
     protected void stubGetVorgangResponse() {
         stubSearchRequestContaining("COOSYSTEM@1.1:objaddress", vorgangResponse());
     }
@@ -66,12 +70,13 @@ abstract class VorgangE2eSupport extends FabasoftE2eSupport {
                 <urn:SOAPSearchResponse>
                   <urn:queryresult>
                     <urn:object>
-                      <urn:objname>procedure-name</urn:objname>
+                      <urn:objname>name</urn:objname>
                       <urn:objaddress>COO.1.2.3</urn:objaddress>
                       <urn:attrlist>
                         <urn:OBJECT urn:reference="COOELAK@1.1001:referrednumber" urn:index="1">file-id</urn:OBJECT>
                         <urn:STRING urn:reference="COOELAK@1.1001:filesubj" urn:index="1">subject</urn:STRING>
-                        <urn:STRING urn:reference="COOELAK@1.1001:objmlname.langstring" urn:index="1">short-name</urn:STRING>
+                        <urn:STRING urn:reference="DEPRECONFIG@15.1001:procsubject" urn:index="1">note</urn:STRING>
+                        <urn:STRING urn:reference="COOELAK@1.1001:objmlname.langstring" urn:index="1">titel</urn:STRING>
                         <urn:ENUM urn:reference="FSCFOLIO@1.1001:objdocstate" urn:index="1">10</urn:ENUM>
                         <urn:STRING urn:reference="FSCFOLIO@1.1001:bostate.name" urn:index="1">processing</urn:STRING>
                         <urn:OBJECT urn:reference="FSCFOLIO@1.1001:objaccdef" urn:index="1">COO.1.1001.1.182601</urn:OBJECT>

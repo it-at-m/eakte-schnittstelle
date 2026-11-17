@@ -25,7 +25,7 @@ import org.springframework.util.StringUtils;
 @Service
 @RequiredArgsConstructor
 public class FabasoftVorgangOutAdapter implements VorgangOutPort {
-    private static final String PARENT_QUERY = ".COOELAK@1.1001:referrednumber.COOSYSTEM@1.1:objaddress = '%s'";
+    private static final String PARENT_QUERY = ".COOELAK@1.1001:referrednumber = '%s'";
 
     private final FabasoftSearchService searchService;
     private final FabasoftSubFileService subFileService;
@@ -40,10 +40,20 @@ public class FabasoftVorgangOutAdapter implements VorgangOutPort {
     }
 
     @Override
-    public Optional<VorgangResponse> get(final RequestContext context, final String vorgangsId, final Set<String> attributes) {
+    public Optional<VorgangResponse> get(final RequestContext context, final String vorgangId, final Set<String> attributes) {
         final Set<String> attributesWithDefault = AttributeHelper.combineAttributes(attributes, VorgangAttribute.getReferences());
-        final Optional<ResultObject> result = searchService.getObject(context, FabasoftObjectType.VORGANG, vorgangsId, attributesWithDefault);
+        final Optional<ResultObject> result = searchService.getObject(context, FabasoftObjectType.VORGANG, vorgangId, attributesWithDefault);
         return result.map(vorgangMapper::toDomain);
+    }
+
+    @Override
+    public List<VorgangResponse> searchBellowAkte(final RequestContext context, final String akteId, final SearchRequest request) {
+        final String vorgangParentQuery = FabasoftAkteOutAdapter.getParentQuery(akteId);
+        final SearchRequest enrichedRequest = request
+                .addAttributes(VorgangAttribute.getReferences())
+                .concatQuery(vorgangParentQuery);
+        final List<ResultObject> result = searchService.searchObject(context, FabasoftObjectType.VORGANG, enrichedRequest);
+        return vorgangMapper.toDomain(result);
     }
 
     @Override

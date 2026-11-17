@@ -12,6 +12,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.domain.model.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Stelle;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangMedium;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
 import java.util.List;
@@ -26,8 +27,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class VorgangUseCaseTest {
-    private static final RequestContext CONTEXT = new RequestContext("user", "ou", "role");
+    private static final RequestContext CONTEXT = new RequestContext("user", "ou", Stelle.SACHBEARBEITUNG);
     private static final String VORGANG_ID = "vorgang-id";
+    private static final String AKTE_ID = "akte-id";
     private static final CreateVorgangRequest CREATE_REQUEST = new CreateVorgangRequest(
             "akte-id", "name", "subject", "template-id", VorgangMedium.ELEKTRONISCH, true, "remark", "acl");
     private static final Set<String> DFV_ATTRIBUTES = Set.of("dfv.one");
@@ -64,6 +66,24 @@ class VorgangUseCaseTest {
             assertEquals(expected, result);
             verify(dfvHelper).enrichWithDfv(CONTEXT, ObjectType.VORGANG, request);
             verify(vorgangOutPort).search(CONTEXT, enrichedRequest);
+        }
+    }
+
+    @Nested
+    class SearchBellowAkte {
+        @Test
+        void givenSearchRequest_thenDelegateEnrichedRequestAndReturnResults() {
+            final SearchRequest request = requestWithAttributes(EXPLICIT_ATTRIBUTES);
+            final SearchRequest enrichedRequest = requestWithAttributes(DFV_ATTRIBUTES);
+            final List<VorgangResponse> expected = List.of(VorgangResponse.builder().id(VORGANG_ID).build());
+            when(dfvHelper.enrichWithDfv(CONTEXT, ObjectType.VORGANG, request)).thenReturn(enrichedRequest);
+            when(vorgangOutPort.searchBellowAkte(CONTEXT, AKTE_ID, enrichedRequest)).thenReturn(expected);
+
+            final List<VorgangResponse> result = useCase.searchBellowAkte(CONTEXT, AKTE_ID, request);
+
+            assertEquals(expected, result);
+            verify(dfvHelper).enrichWithDfv(CONTEXT, ObjectType.VORGANG, request);
+            verify(vorgangOutPort).searchBellowAkte(CONTEXT, AKTE_ID, enrichedRequest);
         }
     }
 

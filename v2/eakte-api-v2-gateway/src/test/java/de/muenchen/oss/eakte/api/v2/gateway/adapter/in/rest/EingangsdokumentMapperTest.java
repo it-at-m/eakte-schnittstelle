@@ -3,9 +3,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ParentReference;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentKlasse;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentParent;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.EingangsdokumentResponse;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Eingangsdokument;
 import java.time.LocalDate;
@@ -21,15 +19,17 @@ class EingangsdokumentMapperTest {
         final EingangsdokumentResponse response = EingangsdokumentResponse.builder()
                 .id("id")
                 .klasse(DokumentKlasse.EINGANGSDOKUMENT)
-                .parent(new ParentReference<>(DokumentParent.VORGANG, "parent"))
+                .vorgangId("vorgang")
+                .titel("titel")
                 .name("name")
-                .langname("long name")
                 .betreff("subject")
+                .hinweis("note")
+                .dokumententyp("letter")
                 .zugriffsdefinition("access")
                 .organisationseinheit("ou")
                 .weitereEigenschaften(List.of(new Attribute("custom", "value")))
                 .fremdesGeschaeftszeichen("reference")
-                .eingangsdatum(LocalDate.of(2025, 1, 2))
+                .datum(LocalDate.of(2025, 1, 2))
                 .hinweis("note")
                 .build();
 
@@ -37,17 +37,17 @@ class EingangsdokumentMapperTest {
 
         assertEquals("id", result.getId());
         assertEquals(Eingangsdokument.KlasseEnum.EINGANGSDOKUMENT, result.getKlasse());
-        assertEquals("parent", result.getParent().getId());
-        assertEquals(de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.ParentReference.TypeEnum.VORGANG,
-                result.getParent().getType());
+        assertEquals("vorgang", result.getVorgangId());
+        assertEquals("titel", result.getTitel());
         assertEquals("name", result.getName());
-        assertEquals("long name", result.getLangname());
         assertEquals("subject", result.getBetreff());
+        assertEquals("note", result.getHinweis());
+        assertEquals("letter", result.getDokumententyp());
         assertEquals("access", result.getZugriffsdefinition());
         assertEquals("ou", result.getOrganisationseinheit());
         assertEquals("custom", result.getWeitereEigenschaften().getFirst().getReference());
         assertEquals("reference", result.getFremdesGeschaeftszeichen());
-        assertEquals("2025-01-02", result.getEingangsdatum());
+        assertEquals("2025-01-02", result.getDatum());
         assertEquals("note", result.getHinweis());
     }
 

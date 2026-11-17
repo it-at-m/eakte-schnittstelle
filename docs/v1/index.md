@@ -7,10 +7,6 @@
   - Einstiegspunkt ist die Datei: [eakte-api--main.yaml](https://github.com/it-at-m/eakte-schnittstelle/blob/main/v1/eakte-api-v1/eakte-api-v1-spec/src/main/resources/eakte-api-spec/eakte-api--main.yaml)
 - **Swagger-UI zur interaktiven Erkundung:** [SwaggerUI](./swagger-ui.md)
 
-## Beschreibung der Schnittstellen-Anwendungsfälle
-
-[Use Cases](./usecases.md)
-
 ## REST-EAI-Adapter
 
 Quelltext und lauffähiges Image des eAkte-EAI-Adapters:

@@ -32,6 +32,7 @@ public class FabasoftDfvOutAdapter implements DfvOutPort {
     public Set<String> loadDfVAttributes(final RequestContext context, final ObjectType searchType) {
         // build attribute key
         final String attrPrefix = switch (attributeMapper.fromDomain(searchType)) {
+        case AKTE -> "EGOVTEMPLATE@15.1001:availabledefinitions[0]";
         case VORGANG -> "EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0]";
         case DOKUMENT ->
             "EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:availabledefinitions[0]";

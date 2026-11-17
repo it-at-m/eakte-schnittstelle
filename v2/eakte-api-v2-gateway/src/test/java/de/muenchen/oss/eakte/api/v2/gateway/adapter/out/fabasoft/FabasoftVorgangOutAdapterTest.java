@@ -77,6 +77,35 @@ class FabasoftVorgangOutAdapterTest {
     }
 
     @Test
+    void givenSearchRequest_thenSearchBelowAkteAndMapResults() {
+        final List<ResultObject> result = List.of(resultWithRequiredAttributes());
+        when(searchService.searchObject(eq(CONTEXT), eq(FabasoftObjectType.VORGANG), requestCaptor.capture()))
+                .thenReturn(result);
+
+        final List<VorgangResponse> actual = new FabasoftVorgangOutAdapter(searchService, vorgangMapper)
+                .searchBellowAkte(CONTEXT, "COO.1.2.3", REQUEST);
+
+        assertEquals(List.of(vorgangMapper.toDomain(result.getFirst())), actual);
+        final SearchRequest forwardedRequest = requestCaptor.getValue();
+        assertEquals(REQUEST.limit(), forwardedRequest.limit());
+        assertEquals("(where) AND (.COOELAK@1.1001:referrednumber = 'COO.1.2.3')", forwardedRequest.query());
+        assertTrue(forwardedRequest.attributes().containsAll(REQUEST.attributes()));
+        assertTrue(forwardedRequest.attributes().containsAll(VorgangAttribute.getReferences()));
+    }
+
+    @Test
+    void givenSearchWithoutQuery_thenKeepAkteParentQueryOnly() {
+        final SearchRequest request = SearchRequest.builder().limit(10).attributes(Set.of()).build();
+        when(searchService.searchObject(eq(CONTEXT), eq(FabasoftObjectType.VORGANG), requestCaptor.capture()))
+                .thenReturn(List.of());
+
+        new FabasoftVorgangOutAdapter(searchService, vorgangMapper)
+                .searchBellowAkte(CONTEXT, "COO.1.2.3", request);
+
+        assertEquals(".COOELAK@1.1001:referrednumber = 'COO.1.2.3'", requestCaptor.getValue().query());
+    }
+
+    @Test
     void givenExistingVorgang_thenGetAndMapResult() {
         final ResultObject result = resultWithRequiredAttributes();
         when(searchService.getObject(eq(CONTEXT), eq(FabasoftObjectType.VORGANG), eq("COO.1.2.3"), attributesCaptor.capture()))
@@ -123,17 +152,18 @@ class FabasoftVorgangOutAdapterTest {
 
     @Test
     void givenVorgangId_thenBuildParentQuery() {
-        assertEquals(".COOELAK@1.1001:referrednumber.COOSYSTEM@1.1:objaddress = 'COO.1.2.3'",
+        assertEquals(".COOELAK@1.1001:referrednumber = 'COO.1.2.3'",
                 FabasoftVorgangOutAdapter.getParentQuery("COO.1.2.3"));
     }
 
     private static ResultObject resultWithRequiredAttributes() {
         return new ResultObject("name", "COO.1.2.3", List.of(
-                attribute(VorgangAttribute.NAME, "name"),
+                attribute(VorgangAttribute.TITEL, "titel"),
                 attribute(VorgangAttribute.STATUS, BigInteger.TEN),
                 attribute(VorgangAttribute.BEARBEITUNGSSTATUS, "processing"),
                 attribute(VorgangAttribute.ORGANISATIONSEINHEIT, "ou"),
-                attribute(VorgangAttribute.ORIGINAL_MEDIUM, BigInteger.ONE)));
+                attribute(VorgangAttribute.ORIGINAL_MEDIUM, BigInteger.ONE),
+                attribute(VorgangAttribute.HINWEIS, "note")));
     }
 
     private static FabasoftAttribute attribute(final VorgangAttribute attribute, final Object value) {

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 public enum FabasoftObjectType {
     // Objects
     VORGANG("DEPRECONFIG@15.1001:Procedure", "COO.1.1001.1.16603"),
+    AKTE("DEPRECONFIG@15.1001:SubjectAreaFile", "COO.1.1001.1.16628"),
     SUBJECT_AREA("COOELAK@1.1001:SubjectArea", null),
     DOKUMENT("SOLEGOVCOREMODEL@111.100:EGovCoreDocument", null),
     EINGANGSDOKUMENT("COOELAK@1.1001:Incoming", null),

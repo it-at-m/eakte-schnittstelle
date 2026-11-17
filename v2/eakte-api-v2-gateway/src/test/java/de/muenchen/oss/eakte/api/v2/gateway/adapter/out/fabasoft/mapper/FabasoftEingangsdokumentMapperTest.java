@@ -10,7 +10,6 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.Fabasoft
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentKlasse;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentParent;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.EingangsdokumentResponse;
 import java.time.LocalDate;
 import java.util.List;
@@ -30,15 +29,15 @@ class FabasoftEingangsdokumentMapperTest {
 
         assertEquals("coo", mapped.getId());
         assertEquals(DokumentKlasse.EINGANGSDOKUMENT, mapped.getKlasse());
-        assertEquals(DokumentParent.VORGANG, mapped.getParent().type());
-        assertEquals("parent", mapped.getParent().id());
+        assertEquals("vorgang", mapped.getVorgangId());
+        assertEquals("titel", mapped.getTitel());
         assertEquals("name", mapped.getName());
-        assertEquals("long name", mapped.getLangname());
         assertEquals("subject", mapped.getBetreff());
+        assertEquals("letter", mapped.getDokumententyp());
         assertEquals(FabasoftTestFixtures.ACCESS_DEFINITION_TEXT, mapped.getZugriffsdefinition());
         assertEquals("ou", mapped.getOrganisationseinheit());
         assertEquals("external-reference", mapped.getFremdesGeschaeftszeichen());
-        assertEquals(LocalDate.of(2025, 1, 2), mapped.getEingangsdatum());
+        assertEquals(LocalDate.of(2025, 1, 2), mapped.getDatum());
         assertEquals("note", mapped.getHinweis());
         assertEquals(List.of(new Attribute("custom", "value")), mapped.getWeitereEigenschaften());
     }
@@ -51,17 +50,17 @@ class FabasoftEingangsdokumentMapperTest {
     }
 
     private static ResultObject resultWithAttributes() {
-        return new ResultObject("long name", "coo", List.of(
+        return new ResultObject("name", "coo", List.of(
                 attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:Incoming"),
-                attribute(DokumentAttribute.PARENT_ID, "parent"),
-                attribute(DokumentAttribute.PARENT_TYPE, "DEPRECONFIG@15.1001:Procedure"),
-                attribute(DokumentAttribute.NAME, "name"),
+                attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
+                attribute(DokumentAttribute.TITEL, "titel"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
+                attribute(DokumentAttribute.HINWEIS, "note"),
+                attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
+                attribute(DokumentAttribute.DATUM, LocalDate.of(2025, 1, 2)),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, FabasoftTestFixtures.ACCESS_DEFINITION_ID),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(EingangsdokumentAttribute.FREMDES_GESCHAEFTSZEICHEN, "external-reference"),
-                attribute(EingangsdokumentAttribute.EINGANGSDATUM, LocalDate.of(2025, 1, 2)),
-                attribute(EingangsdokumentAttribute.HINWEIS, "note"),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));
     }
 

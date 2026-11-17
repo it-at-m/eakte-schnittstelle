@@ -1,0 +1,75 @@
+package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.AttributeType;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.DokumentAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ErledigungAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentKlasse;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.ErledigungResponse;
+import java.time.LocalDate;
+import java.util.List;
+import org.junit.jupiter.api.Test;
+
+class FabasoftErledigungMapperTest {
+    private final FabasoftAttributeMapper attributeMapper = new FabasoftAttributeMapperImpl();
+    private final FabasoftErledigungMapper mapper = new FabasoftErledigungMapper(
+            attributeMapper,
+            new FabasoftDokumentMapper(attributeMapper));
+
+    @Test
+    void givenResultObject_thenMapErledigung() {
+        final ResultObject result = resultWithAttributes();
+
+        final ErledigungResponse mapped = mapper.toDomain(result);
+
+        assertEquals("coo", mapped.getId());
+        assertEquals(DokumentKlasse.ERLEDIGUNG, mapped.getKlasse());
+        assertEquals("vorgang", mapped.getVorgangId());
+        assertEquals("titel", mapped.getTitel());
+        assertEquals("name", mapped.getName());
+        assertEquals("subject", mapped.getBetreff());
+        assertEquals("note", mapped.getHinweis());
+        assertEquals("access", mapped.getZugriffsdefinition());
+        assertEquals("ou", mapped.getOrganisationseinheit());
+        assertEquals("incoming-id", mapped.getBezugEingangsdokument());
+        assertEquals("letter", mapped.getDokumententyp());
+        assertEquals(LocalDate.of(2025, 1, 2), mapped.getDatum());
+        assertEquals("enclosures", mapped.getAnlagenBeschreibung());
+        assertEquals(List.of(new Attribute("custom", "value")), mapped.getWeitereEigenschaften());
+    }
+
+    @Test
+    void givenResults_thenMapEachResult() {
+        final ResultObject result = resultWithAttributes();
+
+        assertEquals(List.of(mapper.toDomain(result)), mapper.toDomain(List.of(result)));
+    }
+
+    private static ResultObject resultWithAttributes() {
+        return new ResultObject("name", "coo", List.of(
+                attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:Outgoing"),
+                attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
+                attribute(DokumentAttribute.TITEL, "titel"),
+                attribute(DokumentAttribute.BETREFF, "subject"),
+                attribute(DokumentAttribute.HINWEIS, "note"),
+                attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
+                attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
+                attribute(ErledigungAttribute.BEZUG_EINGANGSDOKUMENT, "incoming-id"),
+                attribute(DokumentAttribute.DATUM, LocalDate.of(2025, 1, 2)),
+                attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
+                attribute(ErledigungAttribute.ANLAGEN_BESCHREIBUNG, "enclosures"),
+                new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));
+    }
+
+    private static FabasoftAttribute attribute(final DokumentAttribute attribute, final Object value) {
+        return new FabasoftAttribute(attribute.getType(), attribute.getReference(), null, value);
+    }
+
+    private static FabasoftAttribute attribute(final ErledigungAttribute attribute, final Object value) {
+        return new FabasoftAttribute(attribute.getType(), attribute.getReference(), null, value);
+    }
+}

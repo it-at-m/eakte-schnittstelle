@@ -4,10 +4,25 @@ components:
       type: object
       required:
         - name
+        - titel
+        - originalMedium
+        - status
+        - bearbeitungsstatus
+        - zugriffsdefinition
+        - organisationseinheit
+        - weitereEigenschaften
       properties:
+        id:
+          type: string
+        akteId:
+          type: string
+        titel:
+          type: string
         name:
           type: string
         betreff:
+          type: string
+        hinweis:
           type: string
         geschaeftsgangvermerk:
           type: string

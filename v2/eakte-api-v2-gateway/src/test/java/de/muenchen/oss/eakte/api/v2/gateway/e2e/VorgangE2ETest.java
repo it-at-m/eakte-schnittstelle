@@ -38,7 +38,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
             mockMvc.perform(get("/api/v2/vorgaenge")
                     .header("Authorization", "Bearer %s".formatted(USER_IMPERSONATE))
                     .header("EAkte-Login-Name", "login")
-                    .header("EAkte-Rolle", "role")
+                    .header("EAkte-Stelle", "Sachbearbeitung")
                     .header("EAkte-Organisationseinheit", "ou")
                     .queryParam("limit", "123")
                     .queryParam("bedingungen", "where query")
@@ -47,9 +47,10 @@ class VorgangE2ETest extends VorgangE2eSupport {
                     .andExpect(jsonPath("$.anzahl").value(1))
                     .andExpect(jsonPath("$.elemente[0].id").value("COO.1.2.3"))
                     .andExpect(jsonPath("$.elemente[0].akteId").value("file-id"))
-                    .andExpect(jsonPath("$.elemente[0].name").value("short-name"))
-                    .andExpect(jsonPath("$.elemente[0].langname").value("procedure-name"))
+                    .andExpect(jsonPath("$.elemente[0].name").value("name"))
+                    .andExpect(jsonPath("$.elemente[0].titel").value("titel"))
                     .andExpect(jsonPath("$.elemente[0].betreff").value("subject"))
+                    .andExpect(jsonPath("$.elemente[0].hinweis").value("note"))
                     .andExpect(jsonPath("$.elemente[0].geschaeftsgangvermerk").value("remark"))
                     .andExpect(jsonPath("$.elemente[0].originalMedium").value("elektronisch"))
                     .andExpect(jsonPath("$.elemente[0].status").value("In Bearbeitung"))
@@ -115,14 +116,15 @@ class VorgangE2ETest extends VorgangE2eSupport {
             mockMvc.perform(get("/api/v2/vorgaenge/COO.1.2.3")
                     .header("Authorization", "Bearer %s".formatted(USER_IMPERSONATE))
                     .header("EAkte-Login-Name", "login")
-                    .header("EAkte-Rolle", "role")
+                    .header("EAkte-Stelle", "Sachbearbeitung")
                     .header("EAkte-Organisationseinheit", "ou")
                     .queryParam("eigenschaften", "custom.attribute"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").value("COO.1.2.3"))
-                    .andExpect(jsonPath("$.name").value("short-name"))
-                    .andExpect(jsonPath("$.langname").value("procedure-name"))
+                    .andExpect(jsonPath("$.name").value("name"))
+                    .andExpect(jsonPath("$.titel").value("titel"))
                     .andExpect(jsonPath("$.betreff").value("subject"))
+                    .andExpect(jsonPath("$.hinweis").value("note"))
                     .andExpect(jsonPath("$.geschaeftsgangvermerk").value("remark"))
                     .andExpect(jsonPath("$.originalMedium").value("elektronisch"))
                     .andExpect(jsonPath("$.status").value("In Bearbeitung"))
@@ -149,6 +151,36 @@ class VorgangE2ETest extends VorgangE2eSupport {
         @Test
         void givenNoAuthentication_thenRejectRequest() throws Exception {
             mockMvc.perform(get("/api/v2/vorgaenge/COO.1.2.3"))
+                    .andExpect(status().isUnauthorized());
+        }
+    }
+
+    @Nested
+    class SearchVorgaengeBelowAkte {
+        @Test
+        void givenAuthenticatedRequest_thenReturnVorgaengeAndForwardSoapRequest() throws Exception {
+            stubAkteVorgaengeResponse();
+
+            mockMvc.perform(get("/api/v2/akten/COO.1.2.3/vorgaenge")
+                    .header("Authorization", "Bearer %s".formatted(USER_IMPERSONATE))
+                    .header("EAkte-Login-Name", "login")
+                    .header("EAkte-Stelle", "Sachbearbeitung")
+                    .header("EAkte-Organisationseinheit", "ou")
+                    .queryParam("limit", "123")
+                    .queryParam("bedingungen", "where query")
+                    .queryParam("eigenschaften", "custom.attribute"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.anzahl").value(1))
+                    .andExpect(jsonPath("$.elemente[0].id").value("COO.1.2.3"))
+                    .andExpect(jsonPath("$.elemente[0].akteId").value("file-id"))
+                    .andExpect(jsonPath("$.elemente[0].hinweis").value("note"));
+
+            verifySearchRequest(".COOELAK@1.1001:referrednumber = 'COO.1.2.3'", "custom.attribute", true);
+        }
+
+        @Test
+        void givenNoAuthentication_thenRejectRequest() throws Exception {
+            mockMvc.perform(get("/api/v2/akten/COO.1.2.3/vorgaenge"))
                     .andExpect(status().isUnauthorized());
         }
     }
