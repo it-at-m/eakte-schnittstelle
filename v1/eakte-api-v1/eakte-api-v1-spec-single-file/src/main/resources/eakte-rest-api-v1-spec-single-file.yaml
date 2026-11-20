@@ -38,7 +38,6 @@ tags:
   - name: /reAssignObject
   - name: /readDocumentObjectsMetaData
   - name: /readProcedureObjectsMetaData
-  - name: /readSubjectAreaObjectsMetaData
   - name: /revokeDepositObjects
   - name: /searchObjNames
   - name: /setSignatureObjects
@@ -1127,39 +1126,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ReadDocumentObjectMetaDataResponseDTO'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '500':
-          $ref: '#/components/responses/500'
-      security:
-        - basicAuthSecurityDefintion: []
-  /readSubjectAreaObjectsMetaData/{objaddress}:
-    get:
-      tags:
-        - /readSubjectAreaObjectsMetaData
-      summary: Liste aller Akten einer Betreffseinheit mit Metadaten auslesen
-      description: |
-        Stornierte Objekte können nicht ausgelesen werden, 
-        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.<br>
-        Über die optionalen Parameter können Akten zur Anzeige gemäß der gewählten Kriterien ausgewählt werden.
-      operationId: ReadSubjectAreaObjectsMetaData
-      parameters:
-        - $ref: '#/components/parameters/x_anwendung'
-        - $ref: '#/components/parameters/userlogin'
-        - $ref: '#/components/parameters/joboe'
-        - $ref: '#/components/parameters/jobposition'
-        - $ref: '#/components/parameters/propdocstate'
-        - $ref: '#/components/parameters/propbostate'
-        - $ref: '#/components/parameters/objaddress'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ReadSubjectAreaObjectsMetaDataResponseDTO'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -3560,14 +3526,6 @@ components:
           type: array
           description: Liste der Dokumente mit Metadaten eines Vorgangs auslesen
           example: BusinessObjectType
-          items:
-            $ref: '#/components/schemas/BusinessObjectReference'
-    ReadSubjectAreaObjectsMetaDataResponseDTO:
-      type: object
-      properties:
-        businessobjecttype:
-          type: array
-          description: Liste der Sachakten mit Metadaten
           items:
             $ref: '#/components/schemas/BusinessObjectReference'
     filetype:
