@@ -18,7 +18,9 @@ public class GetAddresseeRouteBuilder extends DmsRouteBuilder {
         .consumes(MediaType.APPLICATION_JSON_VALUE)
         .produces(MediaType.APPLICATION_JSON_VALUE)
         .params(RestOperationDefinitionFactory.createAuthentificationHeader())
-        .responseMessages(RestOperationDefinitionFactory.createBaseResponseMsgDefinition())
+        .responseMessages(RestOperationDefinitionFactory.createBaseResponseMsgDefinition(
+                GetAddresseeResponseDTO.class
+        ))
         .to(RouteConstants.DIRECT_GET_ADDRESSEE);
   }
 }
