@@ -2,6 +2,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftTestFixtures;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.DokumentAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.EingangsdokumentAttribute;
@@ -18,7 +19,7 @@ class FabasoftEingangsdokumentMapperTest {
     private final FabasoftAttributeMapper attributeMapper = new FabasoftAttributeMapperImpl();
     private final FabasoftEingangsdokumentMapper mapper = new FabasoftEingangsdokumentMapper(
             attributeMapper,
-            new FabasoftDokumentMapper(attributeMapper));
+            FabasoftTestFixtures.dokumentMapper());
 
     @Test
     void givenResultObject_thenMapEingangsdokument() {
@@ -33,7 +34,7 @@ class FabasoftEingangsdokumentMapperTest {
         assertEquals("name", mapped.getName());
         assertEquals("subject", mapped.getBetreff());
         assertEquals("letter", mapped.getDokumententyp());
-        assertEquals("access", mapped.getZugriffsdefinition());
+        assertEquals(FabasoftTestFixtures.ACCESS_DEFINITION_TEXT, mapped.getZugriffsdefinition());
         assertEquals("ou", mapped.getOrganisationseinheit());
         assertEquals("external-reference", mapped.getFremdesGeschaeftszeichen());
         assertEquals(LocalDate.of(2025, 1, 2), mapped.getDatum());
@@ -57,7 +58,7 @@ class FabasoftEingangsdokumentMapperTest {
                 attribute(DokumentAttribute.HINWEIS, "note"),
                 attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
                 attribute(DokumentAttribute.DATUM, LocalDate.of(2025, 1, 2)),
-                attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
+                attribute(DokumentAttribute.ZUGRIFFSDEFINITION, FabasoftTestFixtures.ACCESS_DEFINITION_ID),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(EingangsdokumentAttribute.FREMDES_GESCHAEFTSZEICHEN, "external-reference"),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));

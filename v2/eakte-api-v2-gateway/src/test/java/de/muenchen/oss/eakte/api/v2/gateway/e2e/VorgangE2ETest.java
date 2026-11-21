@@ -3,7 +3,9 @@ package de.muenchen.oss.eakte.api.v2.gateway.e2e;
 import static de.muenchen.oss.eakte.api.v2.gateway.TestConstants.SPRING_TEST_PROFILE;
 import static de.muenchen.oss.eakte.api.v2.gateway.TestSecurityConfiguration.USER;
 import static de.muenchen.oss.eakte.api.v2.gateway.TestSecurityConfiguration.USER_IMPERSONATE;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -53,7 +55,8 @@ class VorgangE2ETest extends VorgangE2eSupport {
                     .andExpect(jsonPath("$.elemente[0].originalMedium").value("elektronisch"))
                     .andExpect(jsonPath("$.elemente[0].status").value("In Bearbeitung"))
                     .andExpect(jsonPath("$.elemente[0].bearbeitungsstatus").value("processing"))
-                    .andExpect(jsonPath("$.elemente[0].zugriffsdefinition").value("acl"))
+                    .andExpect(jsonPath("$.elemente[0].zugriffsdefinition")
+                            .value("Standard Zugriffsdefinition für Dokumente"))
                     .andExpect(jsonPath("$.elemente[0].organisationseinheit").value("ou"))
                     .andExpect(jsonPath("$.elemente[0].weitereEigenschaften[?(@.reference=='custom.attribute')].value")
                             .value("custom-value"));
@@ -126,7 +129,8 @@ class VorgangE2ETest extends VorgangE2eSupport {
                     .andExpect(jsonPath("$.originalMedium").value("elektronisch"))
                     .andExpect(jsonPath("$.status").value("In Bearbeitung"))
                     .andExpect(jsonPath("$.bearbeitungsstatus").value("processing"))
-                    .andExpect(jsonPath("$.zugriffsdefinition").value("acl"))
+                    .andExpect(jsonPath("$.zugriffsdefinition")
+                            .value("Standard Zugriffsdefinition für Dokumente"))
                     .andExpect(jsonPath("$.organisationseinheit").value("ou"))
                     .andExpect(jsonPath("$.weitereEigenschaften[?(@.reference=='custom.attribute')].value")
                             .value("custom-value"));
@@ -178,6 +182,65 @@ class VorgangE2ETest extends VorgangE2eSupport {
         void givenNoAuthentication_thenRejectRequest() throws Exception {
             mockMvc.perform(get("/api/v2/akten/COO.1.2.3/vorgaenge"))
                     .andExpect(status().isUnauthorized());
+        }
+    }
+
+    @Nested
+    class CreateVorgang {
+        @Test
+        void givenAuthenticatedRequest_thenCreateVorgangAndReturnId() throws Exception {
+            stubCreateVorgangResponse();
+
+            mockMvc.perform(post("/api/v2/akten/akte-id/vorgaenge")
+                    .header("Authorization", "Bearer %s".formatted(USER_IMPERSONATE))
+                    .header("EAkte-Login-Name", "login")
+                    .header("EAkte-Stelle", "Sachbearbeitung")
+                    .header("EAkte-Organisationseinheit", "ou")
+                    .contentType(APPLICATION_JSON)
+                    .content("""
+                            {
+                              "titel": "titel",
+                              "betreff": "subject",
+                              "vorlagenId": "template-id",
+                              "originalMedium": "papier",
+                              "laufwegErzeugen": true,
+                              "geschaeftsgangvermerk": "remark",
+                              "zugriffsdefinition": "Standard Zugriffsdefinition für Dokumente"
+                            }
+                            """))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.id").value("COO.1.2.3"));
+
+            verifyCreateVorgangRequest("akte-id", "name", "subject", "template-id", true);
+        }
+
+        @Test
+        void givenNoAuthentication_thenRejectRequest() throws Exception {
+            mockMvc.perform(post("/api/v2/akten/akte-id/vorgaenge")
+                    .contentType(APPLICATION_JSON)
+                    .content("{\"titel\":\"titel\",\"betreff\":\"subject\"}"))
+                    .andExpect(status().isForbidden());
+        }
+
+        @Test
+        void givenFabasoftFailure_thenReturnServerError() throws Exception {
+            stubSoapFailure();
+
+            mockMvc.perform(post("/api/v2/akten/akte-id/vorgaenge")
+                    .header("Authorization", "Bearer %s".formatted(USER))
+                    .contentType(APPLICATION_JSON)
+                    .content("""
+                            {
+                              "titel": "name",
+                              "betreff": "subject",
+                              "vorlagenId": "template-id",
+                              "originalMedium": "papier",
+                              "laufwegErzeugen": true,
+                              "geschaeftsgangvermerk": "remark",
+                              "zugriffsdefinition": "Standard Zugriffsdefinition für Dokumente"
+                            }
+                            """))
+                    .andExpect(status().isInternalServerError());
         }
     }
 

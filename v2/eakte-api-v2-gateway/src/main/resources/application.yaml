@@ -78,3 +78,58 @@ info:
     description: "@project.description@"
   build:
     java.version: "@java.version@"
+
+fabasoft:
+  zugriffsdefinitionen:
+    - text: Standard Zugriffsdefinition für Dokumente
+      id: COO.1.1001.1.182601
+    - text: Änderbar innerhalb der Hierarchie
+      id: COO.1.1001.1.182602
+    - text: Vertraulich innerhalb der Hierarchie
+      id: COO.1.1001.1.182603
+    - text: Lesbar innerhalb der Hierarchie
+      id: COO.1.1001.1.182604
+    - text: Änderbar innerhalb der Organisation
+      id: COO.1.1001.1.182605
+    - text: Lesbar innerhalb der Organisation
+      id: COO.1.1001.1.182606
+    - text: Zugriffsdefinition für Projekte
+      id: COO.1.1001.1.221805
+    - text: Zugriffsdefinition für Web-Inhalte
+      id: COO.1.1001.1.242774
+    - text: Zugriffsdefinition für Arbeitsbereich
+      id: COO.15.1001.1.45012
+    - text: Zugriffsdefinition für den individuellen Zugriff
+      id: COO.15.1001.1.45504
+    - text: Zugriffsdefinition für den hierarchischen Zugriff
+      id: COO.15.1001.1.45513
+    - text: Zugriffsdefinition für den loyalen Zugriff
+      id: COO.15.1001.1.45514
+    - text: Zugriffsdefinition zur Vorgangsbearbeitung
+      id: COO.15.1001.1.100514
+    - text: Persönlich
+      id: COO.15.1400.1.101003
+    - text: Persönliche Objekte (Obsolet)
+      id: COO.15.1400.1.101006
+    - text: Eigener Mandant
+      id: COO.15.1400.1.101007
+    - text: Personalangelegenheiten
+      id: COO.15.1400.1.101008
+    - text: Eigene Organisationseinheit
+      id: COO.15.1400.1.101203
+    - text: Eigene Organisationseinheit und Vorgesetzte (ohne Zentralregistratur)
+      id: COO.15.1400.1.101204
+    - text: Eigene Organisationseinheit und Vorgesetzte
+      id: COO.15.1400.1.101205
+    - text: Eigene Organisationseinheit und Linienorganisation
+      id: COO.15.1400.1.102550
+    - text: Persönlich und Vorgesetzte
+      id: COO.15.1400.1.102565
+    - text: Aktengebunden
+      id: COO.15.1400.1.102705
+    - text: Persönlich (LHM)
+      id: COO.15.1700.1.284812
+    - text: Aktengebundenes (LHM)
+      id: COO.15.1700.1.284813
+    - text: Eigene Organisationseinheit (LHM)
+      id: COO.15.1700.1.284814

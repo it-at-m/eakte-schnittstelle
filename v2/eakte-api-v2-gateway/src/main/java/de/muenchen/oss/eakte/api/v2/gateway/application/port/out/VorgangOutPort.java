@@ -1,5 +1,6 @@
 package de.muenchen.oss.eakte.api.v2.gateway.application.port.out;
 
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
@@ -18,4 +19,6 @@ public interface VorgangOutPort {
     Optional<VorgangResponse> get(@NotNull RequestContext context, @NotBlank String vorgangId, Set<String> attributes);
 
     List<VorgangResponse> searchBellowAkte(@NotNull RequestContext context, @NotBlank String akteId, @NotNull @Valid SearchRequest request);
+
+    String createAkteVorgang(@NotNull RequestContext requestContext, @NotNull @Valid CreateVorgangRequest vorgang);
 }

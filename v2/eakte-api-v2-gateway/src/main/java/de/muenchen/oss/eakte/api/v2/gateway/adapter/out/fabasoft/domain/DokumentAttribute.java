@@ -16,7 +16,7 @@ public enum DokumentAttribute {
     HINWEIS("DEPRECONFIG@15.1001:fileaddsubj", AttributeType.STRING),
     DOKUMENTENTYP("COOELAK@1.1001:subfiletype.name", AttributeType.STRING),
     DATUM("COOELAK@1.1001:delivery", AttributeType.DATE),
-    ZUGRIFFSDEFINITION("FSCFOLIO@1.1001:objaccdef.name", AttributeType.STRING),
+    ZUGRIFFSDEFINITION("FSCFOLIO@1.1001:objaccdef", AttributeType.STRING),
     ORGANISATIONSEINHEIT("COOSYSTEM@1.1:objowngroup.name", AttributeType.STRING);
 
     private final String reference;

@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import de.muenchen.oss.eakte.api.v2.gateway.EAkteApiV2Gateway;
 import de.muenchen.oss.eakte.api.v2.gateway.TestSecurityConfiguration;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftTestFixtures;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,8 @@ class InternesDokumentE2ETest extends InternesDokumentE2eSupport {
                     .andExpect(jsonPath("$.elemente[0].titel").value("titel"))
                     .andExpect(jsonPath("$.elemente[0].betreff").value("subject"))
                     .andExpect(jsonPath("$.elemente[0].hinweis").value("internal note"))
-                    .andExpect(jsonPath("$.elemente[0].zugriffsdefinition").value("acl"))
+                    .andExpect(jsonPath("$.elemente[0].zugriffsdefinition")
+                            .value(FabasoftTestFixtures.ACCESS_DEFINITION_TEXT))
                     .andExpect(jsonPath("$.elemente[0].organisationseinheit").value("ou"))
                     .andExpect(jsonPath("$.elemente[0].datum").value("2025-01-02"))
                     .andExpect(jsonPath("$.elemente[0].dokumententyp").value("letter"))

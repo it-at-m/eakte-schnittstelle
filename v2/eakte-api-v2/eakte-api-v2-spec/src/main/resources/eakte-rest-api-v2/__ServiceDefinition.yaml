@@ -28,8 +28,8 @@ security:
   - bearerAuth: []
 
 tags:
-  - name: Akte #TODO: Akte oder Sachakte?
-    description: SubjectAreaFile
+  - name: Akte
+    description: File (Sachakte)
   - name: Vorgang
     description: Procedure
   - name: Dokument

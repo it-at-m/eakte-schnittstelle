@@ -8,10 +8,12 @@ import static org.mockito.Mockito.when;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.DfvOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.VorgangOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper.DfvHelper;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Stelle;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangMedium;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +30,8 @@ class VorgangUseCaseTest {
     private static final RequestContext CONTEXT = new RequestContext("user", "ou", Stelle.SACHBEARBEITUNG);
     private static final String VORGANG_ID = "vorgang-id";
     private static final String AKTE_ID = "akte-id";
+    private static final CreateVorgangRequest CREATE_REQUEST = new CreateVorgangRequest(
+            "akte-id", "name", "subject", "template-id", VorgangMedium.ELEKTRONISCH, true, "remark", "acl");
     private static final Set<String> DFV_ATTRIBUTES = Set.of("dfv.one");
     private static final Set<String> EXPLICIT_ATTRIBUTES = Set.of("explicit");
 
@@ -109,6 +113,20 @@ class VorgangUseCaseTest {
             assertEquals(expected, result);
             verify(vorgangOutPort).get(CONTEXT, VORGANG_ID, EXPLICIT_ATTRIBUTES);
             verifyNoInteractions(dfvOutPort);
+        }
+    }
+
+    @Nested
+    class Create {
+        @Test
+        void givenCreateRequest_thenDelegateAndReturnVorgangId() {
+            when(vorgangOutPort.createAkteVorgang(CONTEXT, CREATE_REQUEST)).thenReturn(VORGANG_ID);
+
+            final String result = useCase.createAkteVorgang(CONTEXT, CREATE_REQUEST);
+
+            assertEquals(VORGANG_ID, result);
+            verify(vorgangOutPort).createAkteVorgang(CONTEXT, CREATE_REQUEST);
+            verifyNoInteractions(dfvHelper, dfvOutPort);
         }
     }
 

@@ -1,6 +1,8 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.CreateVorgang;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import java.util.Collection;
 import java.util.List;
@@ -14,4 +16,6 @@ interface VorgangMapper {
     Vorgang fromDomain(VorgangResponse response);
 
     List<Vorgang> fromDomain(Collection<VorgangResponse> responses);
+
+    CreateVorgangRequest toDomain(String aktenId, CreateVorgang createVorgang);
 }
