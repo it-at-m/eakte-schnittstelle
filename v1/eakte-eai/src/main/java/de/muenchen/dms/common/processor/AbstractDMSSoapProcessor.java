@@ -161,7 +161,7 @@ public abstract class AbstractDMSSoapProcessor implements Processor {
     return attachemntType;
   }
 
-  protected ArrayOfLHMBAI151700GIAttachmentType createLHMBAI151700GIAttachmentsForCOAITI(
+  protected ArrayOfLHMBAI151700GIAttachmentType createLHMBAI151700GIAttachmentsWithFilesubj(
       final List<Attachment> files, final List<List<String>> filesubj) {
     ArrayOfLHMBAI151700GIAttachmentType attachemntType = null;
     if (!files.isEmpty()) {
