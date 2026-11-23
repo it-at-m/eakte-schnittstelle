@@ -101,11 +101,11 @@ and the property name in the V2 API is given.
 
 ## Schriftstück (ContentObject)
 
-| Reference                           |     | Label                | V1             | V2         |
-| ----------------------------------- | --- | -------------------- | -------------- | ---------- |
-| COOELAK@1.1001:referrednumber       | RW  | Dokument             | referrednumber | dokumentId |
-| COOSYSTEM@1.1:objname               | RW  | Name                 | fileName       | name       |
-| COOSYSTEM@1.1:content.contextension | R   | Datei -> Dateiendung | fileExtention  |            |
-| COOSYSTEM@1.1:content.contcontent   | RW  | Datei -> Inhalt      | fileContent    |            |
-| COOSYSTEM@1.1:content.contsize      | R   | Datei -> Größe       | fileContsize   |            |
-| COOELAK@1.1001:filesubj             | RW  | Betreff              | filesubj       | betreff    |
+| Reference                           |     | Label                | V1             | V2                  |
+| ----------------------------------- | --- | -------------------- | -------------- | ------------------- |
+| COOELAK@1.1001:referrednumber       | RW  | Dokument             | referrednumber | dokumentId          |
+| COOSYSTEM@1.1:objname               | RW  | Name                 | fileName       | name                |
+| COOSYSTEM@1.1:content.contextension | R   | Datei -> Dateiendung | fileExtention  | dateiEndung         |
+| COOSYSTEM@1.1:content.contcontent   | RW  | Datei -> Inhalt      | fileContent    | (separate Endpoint) |
+| COOSYSTEM@1.1:content.contsize      | R   | Datei -> Größe       | fileContsize   | dateiGroesse        |
+| COOELAK@1.1001:filesubj             | RW  | Betreff              | filesubj       | betreff             |

@@ -40,6 +40,8 @@ tags:
     description: Outgoing (ehem. Ausgang) (Sub-Klasse von Dokument)
   - name: Internes Dokument
     description: Internal (Sub-Klasse von Dokument)
+  - name: Schriftstueck
+    description: ContentObject
   - name: Benutzer
     description: User
 
@@ -72,6 +74,11 @@ paths:
     $ref: 'InterneDokumente.yaml'
   '/api/v2/interne-dokumente/{dokumentId}':
     $ref: 'InternesDokument.yaml'
+  # Schriftstück
+  '/api/v2/dokumente/{dokumentId}/schriftstuecke':
+    $ref: 'DokumentSchriftstuecke.yaml'
+  '/api/v2/schriftstuecke/{schriftstueckId}':
+    $ref: 'Schriftstueck.yaml'
   # Benutzer
   '/api/v2/benutzer/ich':
     $ref: 'Benutzer.yaml'
