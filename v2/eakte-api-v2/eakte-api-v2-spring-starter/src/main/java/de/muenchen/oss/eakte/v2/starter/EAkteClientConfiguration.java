@@ -89,6 +89,11 @@ public class EAkteClientConfiguration {
     }
 
     @Bean
+    protected SchriftstueckApi eakteSchriftstueckApi(final ApiClient apiClient) {
+        return new SchriftstueckApi(apiClient);
+    }
+
+    @Bean
     protected BenutzerApi eakteBenutzerApi(final ApiClient apiClient) {
         return new BenutzerApi(apiClient);
     }

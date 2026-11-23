@@ -15,6 +15,7 @@ public enum FabasoftObjectType {
     EINGANGSDOKUMENT("COOELAK@1.1001:Incoming", null),
     ERLEDIGUNG("COOELAK@1.1001:Outgoing", null),
     INTERNES_DOKUMENT("COOELAK@1.1001:InternalFile", null),
+    SCHRIFTSTUECK("COOSYSTEM@1.1:ContentObject", null),
     // FabasoftAttribute objects
     ZUGRIFFSDEFINITION("FSCFOLIO@1.1001:AccessDefinition", null);
 
