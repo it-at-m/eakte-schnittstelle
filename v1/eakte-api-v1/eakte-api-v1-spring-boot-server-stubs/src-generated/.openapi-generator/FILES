@@ -36,6 +36,7 @@ src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/controlle
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/controllers/SubjectAreasApi.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/controllers/UserFormsDataApi.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/AddAddresseeRequestDTO.java
+src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/AddresseeReferenz.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/ArrayOfint.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/ArrayOfstring.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/AttachmentType.java
@@ -64,6 +65,7 @@ src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/Cre
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/CreateSubjectAreaUnitAnfrageDTO.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/DmsErrorResponse.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/DmsObjektResponse.java
+src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/GetAddresseeResponseDTO.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/MetadataReferenz.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/Objektreferenz.java
 src/main/java/de/muenchen/itm/eakte/schnittstelle/rest_v1/server_stubs/model/ReAssignObjectDTO.java

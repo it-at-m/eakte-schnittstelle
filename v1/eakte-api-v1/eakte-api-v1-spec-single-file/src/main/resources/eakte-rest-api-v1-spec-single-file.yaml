@@ -168,8 +168,12 @@ paths:
         - $ref: '#/components/parameters/jobposition'
         - $ref: '#/components/parameters/objaddress'
       responses:
-        '204':
-          $ref: '#/components/responses/204'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAddresseeResponseDTO'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -2087,6 +2091,44 @@ components:
           type: string
           description: E-Fax
           example: 498524885
+    AddresseeReferenz:
+      type: object
+      properties:
+        addrdate:
+          type: string
+          format: date-time
+        addrtransmedia:
+          type: string
+        addrOrgName:
+          type: string
+        addrtitle:
+          type: string
+        addrfirstname:
+          type: string
+        addrname:
+          type: string
+        addrstreet:
+          type: string
+        addrstreetnumber:
+          type: string
+        addrzipcode:
+          type: string
+        addrcity:
+          type: string
+        addrcountry:
+          type: string
+        addremail:
+          type: string
+        addradditional5:
+          type: string
+    GetAddresseeResponseDTO:
+      type: object
+      properties:
+        addressees:
+          type: array
+          description: Liste aller Addressaten auslesen
+          items:
+            $ref: '#/components/schemas/AddresseeReferenz'
     Objektreferenz:
       type: object
       properties:

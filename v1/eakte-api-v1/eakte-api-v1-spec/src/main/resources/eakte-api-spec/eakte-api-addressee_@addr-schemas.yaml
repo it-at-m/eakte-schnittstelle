@@ -1,0 +1,11 @@
+components:
+  schemas:
+
+    GetAddresseeResponseDTO:
+      type: object
+      properties:
+        addressees:
+          type: array
+          description: Liste aller Addressaten auslesen
+          items:
+            $ref: 'eakte-api--global-schemas.yaml#/components/schemas/AddresseeReferenz'

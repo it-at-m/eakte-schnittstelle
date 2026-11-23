@@ -6,6 +6,7 @@
 package de.muenchen.itm.eakte.schnittstelle.rest_v1.server_stubs.controllers;
 
 import de.muenchen.itm.eakte.schnittstelle.rest_v1.server_stubs.model.DmsErrorResponse;
+import de.muenchen.itm.eakte.schnittstelle.rest_v1.server_stubs.model.GetAddresseeResponseDTO;
 import org.springframework.lang.Nullable;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -55,7 +56,7 @@ public interface AddresseeApi {
      * @param xAnwendung **Aufrufende Fachanwendung**  Für jeden Aufruf soll ersichtlich sein,  welche Fachanwendung den Aufruf getätigt hat.  Dies soll es ermöglichen, Requests und Responses den entsprechenden Fachverfahren zuzuordnen.  Für diesen Zweck wird sowohl im Request,  als auch im Response ein Parameter „businessapp“ angegeben.  Dieser Parameter ist optional und kann mit einem Namen befüllt werden.  Sofern der Aufruf einen Wert enthält, wird dieser auch im Response zurückgegeben.  Somit ist ein nachträgliches Filtern von Aufrufen möglich.  (optional)
      * @param joboe COO-Adresse der zu verwendenden **Organisationseinheit** des angemeldeten Nutzers.&lt;br&gt; &lt;br&gt; Ohne Angabe der joboe und jobposition  wird die eingestellte Standardrolle und OE des Nutzers in der eAkte verwendet.&lt;br&gt; Wenn eine bestimmte jobposition angegeben wird, unter der dieser Aufruf ausgeführt werden soll  muss auch die entsprechende joboe des Nutzers mit angegeben werden.  Das kann z.B. notwendig sein, wenn bestimmte Funktionen nur durch Schriftgutverwalter oder Registratur ausgeführt werden dürfen.&lt;br&gt; Über die OE wird der Mandant zugeordnet und entsprechend die Berechtigungen geprüft.&lt;br&gt; Hinweis:&lt;br&gt; Die COO-Adresse für die joboe muss im Fachverfahren in einer Konfigurationsdatei hintelegt werden, da sie nicht per Schnittstelle ausgelesen werden kann und sich ggf. ändern kann.  Meistens ist die joboe innerhalb eines Fachbereichs für alle Benutzer gleich, so dass sie bei Änderungen einfach zu verwalten ist.  (optional)
      * @param jobposition Referenz der Stelle (**Rolle des Nutzers** in der eAkte). * Schriftgutverwaltung - DocumentManager * Sachbearbeitung - OfficialInCharge * Fachadministration - OpAdm * Registratur - Official * Sekretariat - Secretary * Leitung - Head * Archivar - Registrar * Vorlagenadministrator - TemplateAdministrator * Vorlagenverwaltung - TemplateManager  Es dürfen ausschließlich die o.g. genannten Stellen der LHM verwendet werden.&lt;br&gt; Bitte verwenden Sie die englische Bezeichnung.  Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt!  (optional)
-     * @return Objekt wurde erfolgreich aktualisiert. (status code 204)
+     * @return OK (status code 200)
      *         or Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten. (status code 400)
      *         or Falscher oder fehlender technischer Nutzer. (status code 401)
      *         or Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten. (status code 500)
@@ -65,7 +66,9 @@ public interface AddresseeApi {
         summary = "Auslesen der Freitextadressaten bei Dokumenten oder Vorgängen",
         tags = { "/addressee" },
         responses = {
-            @ApiResponse(responseCode = "204", description = "Objekt wurde erfolgreich aktualisiert."),
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GetAddresseeResponseDTO.class))
+            }),
             @ApiResponse(responseCode = "400", description = "Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = DmsErrorResponse.class))
             }),
@@ -81,7 +84,7 @@ public interface AddresseeApi {
         value = AddresseeApi.PATH_GET_ADDRESSEE,
         produces = { "application/json" }
     )
-    default ResponseEntity<Void> getAddressee(
+    default ResponseEntity<GetAddresseeResponseDTO> getAddressee(
         @NotNull @Parameter(name = "userlogin", description = "**Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)<br> Log-in-Name des Benutzerobjekts ", required = true, in = ParameterIn.HEADER) @RequestHeader(value = "userlogin", required = true) String userlogin,
         @Parameter(name = "objaddress", description = "Objekt-ID (COO-Adresse) des Objekts", required = true, in = ParameterIn.PATH) @PathVariable("objaddress") String objaddress,
         @Parameter(name = "x-anwendung", description = "**Aufrufende Fachanwendung**  Für jeden Aufruf soll ersichtlich sein,  welche Fachanwendung den Aufruf getätigt hat.  Dies soll es ermöglichen, Requests und Responses den entsprechenden Fachverfahren zuzuordnen.  Für diesen Zweck wird sowohl im Request,  als auch im Response ein Parameter „businessapp“ angegeben.  Dieser Parameter ist optional und kann mit einem Namen befüllt werden.  Sofern der Aufruf einen Wert enthält, wird dieser auch im Response zurückgegeben.  Somit ist ein nachträgliches Filtern von Aufrufen möglich. ", in = ParameterIn.HEADER) @RequestHeader(value = "x-anwendung", required = false) Optional<String> xAnwendung,
@@ -91,6 +94,11 @@ public interface AddresseeApi {
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"addressees\" : [ { \"addrOrgName\" : \"addrOrgName\", \"addrname\" : \"addrname\", \"addrdate\" : \"2000-01-23T04:56:07.000+00:00\", \"addrstreetnumber\" : \"addrstreetnumber\", \"addrcity\" : \"addrcity\", \"addrfirstname\" : \"addrfirstname\", \"addrtitle\" : \"addrtitle\", \"addrzipcode\" : \"addrzipcode\", \"addrtransmedia\" : \"addrtransmedia\", \"addradditional5\" : \"addradditional5\", \"addrstreet\" : \"addrstreet\", \"addrcountry\" : \"addrcountry\", \"addremail\" : \"addremail\" }, { \"addrOrgName\" : \"addrOrgName\", \"addrname\" : \"addrname\", \"addrdate\" : \"2000-01-23T04:56:07.000+00:00\", \"addrstreetnumber\" : \"addrstreetnumber\", \"addrcity\" : \"addrcity\", \"addrfirstname\" : \"addrfirstname\", \"addrtitle\" : \"addrtitle\", \"addrzipcode\" : \"addrzipcode\", \"addrtransmedia\" : \"addrtransmedia\", \"addradditional5\" : \"addradditional5\", \"addrstreet\" : \"addrstreet\", \"addrcountry\" : \"addrcountry\", \"addremail\" : \"addremail\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
                     String exampleString = "{ \"fehlerQuelle\" : \"INTERN\", \"text\" : \"text\", \"status\" : 0 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
