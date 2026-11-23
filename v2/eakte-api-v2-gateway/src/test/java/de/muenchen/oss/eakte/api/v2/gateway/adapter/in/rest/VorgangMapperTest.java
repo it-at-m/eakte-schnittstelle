@@ -66,7 +66,7 @@ class VorgangMapperTest {
                 .titel("titel")
                 .betreff("subject")
                 .hinweis("hinweis")
-                .vorlagenId("template-id")
+                .dfvId("dfv-id")
                 .originalMedium(CreateVorgang.OriginalMediumEnum.PAPIER)
                 .zugriffsdefinition("acl");
 
@@ -75,7 +75,7 @@ class VorgangMapperTest {
         assertEquals("akte-id", result.akteId());
         assertEquals("titel", result.titel());
         assertEquals("subject", result.betreff());
-        assertEquals("template-id", result.vorlagenId());
+        assertEquals("dfv-id", result.dfvId());
         assertEquals(VorgangMedium.PAPIER, result.originalMedium());
         assertEquals("hinweis", result.hinweis());
         assertEquals("acl", result.zugriffsdefinition());

@@ -35,7 +35,7 @@ class VorgangUseCaseTest {
             .titel("name")
             .betreff("subject")
             .hinweis("note")
-            .vorlagenId("template-id")
+            .dfvId("dfv-id")
             .originalMedium(VorgangMedium.ELEKTRONISCH)
             .zugriffsdefinition("acl")
             .build();

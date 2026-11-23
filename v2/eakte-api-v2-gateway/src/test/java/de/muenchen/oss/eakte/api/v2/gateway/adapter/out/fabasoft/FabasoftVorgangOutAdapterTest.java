@@ -136,12 +136,12 @@ class FabasoftVorgangOutAdapterTest {
                 .titel("name")
                 .betreff("subject")
                 .hinweis("note")
-                .vorlagenId("template-id")
+                .dfvId("dfv-id")
                 .originalMedium(VorgangMedium.PAPIER)
                 .zugriffsdefinition(FabasoftTestFixtures.ACCESS_DEFINITION_TEXT)
                 .build();
         final SubFileRequest subFileRequest = new SubFileRequest(
-                FabasoftObjectType.VORGANG, "akte-id", "name", "template-id", "subject");
+                FabasoftObjectType.VORGANG, "akte-id", "name", "dfv-id", "subject");
         final List<FabasoftAttribute> attributes = List.of(
                 new FabasoftAttribute(AttributeType.ENUM, VorgangAttribute.ORIGINAL_MEDIUM.getReference(), null, BigInteger.valueOf(2)),
                 new FabasoftAttribute(AttributeType.OBJECT, VorgangAttribute.ZUGRIFFSDEFINITION.getReference(), null,

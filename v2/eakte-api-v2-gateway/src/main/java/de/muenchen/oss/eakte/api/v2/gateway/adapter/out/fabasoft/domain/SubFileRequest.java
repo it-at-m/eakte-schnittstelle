@@ -4,6 +4,6 @@ public record SubFileRequest(
         FabasoftObjectType type,
         String referredId,
         String titel,
-        String vorlagenId,
+        String dfvId,
         String betreff) {
 }

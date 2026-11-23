@@ -200,7 +200,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
                               "titel": "titel",
                               "betreff": "subject",
                               "hinweis": "note",
-                              "vorlagenId": "template-id",
+                              "dfvId": "dfv-id",
                               "originalMedium": "papier",
                               "zugriffsdefinition": "Standard Zugriffsdefinition für Dokumente"
                             }
@@ -208,7 +208,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").value("COO.1.2.3"));
 
-            verifyCreateVorgangRequest("akte-id", "titel", "subject", "template-id", true);
+            verifyCreateVorgangRequest("akte-id", "titel", "subject", "dfv-id", true);
         }
 
         @Test
@@ -231,7 +231,7 @@ class VorgangE2ETest extends VorgangE2eSupport {
                               "titel": "name",
                               "betreff": "subject",
                               "hinweis": "note",
-                              "vorlagenId": "template-id",
+                              "dfvId": "dfv-id",
                               "originalMedium": "papier",
                               "zugriffsdefinition": "Standard Zugriffsdefinition für Dokumente"
                             }

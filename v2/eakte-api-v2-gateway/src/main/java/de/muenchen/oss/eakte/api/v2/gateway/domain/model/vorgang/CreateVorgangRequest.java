@@ -9,7 +9,7 @@ public record CreateVorgangRequest(
         @NotBlank String titel,
         String betreff,
         String hinweis,
-        String vorlagenId,
+        String dfvId,
         VorgangMedium originalMedium,
         String zugriffsdefinition
 // TODO dfv

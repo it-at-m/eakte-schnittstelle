@@ -69,7 +69,7 @@ components:
         - $ref: "./Vorgaenge_Datentypen.yaml#/components/schemas/BaseVorgang"
       # TODO required
       properties:
-        vorlagenId:
+        dfvId:
           type: string
         # TODO DfV attributes
 

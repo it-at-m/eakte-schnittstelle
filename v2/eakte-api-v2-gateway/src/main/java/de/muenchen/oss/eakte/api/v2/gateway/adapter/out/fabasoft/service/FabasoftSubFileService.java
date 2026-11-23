@@ -26,7 +26,7 @@ public class FabasoftSubFileService {
         requestType.setReferrednumber(request.referredId());
         requestType.setObjmlname(request.titel());
         requestType.getFilesubj().addAll(List.of(request.betreff().split("\n")));
-        requestType.setCreatedfromdefinition(request.vorlagenId());
+        requestType.setCreatedfromdefinition(request.dfvId());
         requestType.setIncharge(new InchargeType());
         log.debug("#createSubFile for {}", request);
         final CreateSubFileResponseType response = requestHandler.handleRequest("createSubFile", requestContext,
