@@ -51,7 +51,6 @@ class VorgangE2ETest extends VorgangE2eSupport {
                     .andExpect(jsonPath("$.elemente[0].titel").value("titel"))
                     .andExpect(jsonPath("$.elemente[0].betreff").value("subject"))
                     .andExpect(jsonPath("$.elemente[0].hinweis").value("note"))
-                    .andExpect(jsonPath("$.elemente[0].geschaeftsgangvermerk").value("remark"))
                     .andExpect(jsonPath("$.elemente[0].originalMedium").value("elektronisch"))
                     .andExpect(jsonPath("$.elemente[0].status").value("In Bearbeitung"))
                     .andExpect(jsonPath("$.elemente[0].bearbeitungsstatus").value("processing"))
@@ -125,7 +124,6 @@ class VorgangE2ETest extends VorgangE2eSupport {
                     .andExpect(jsonPath("$.titel").value("titel"))
                     .andExpect(jsonPath("$.betreff").value("subject"))
                     .andExpect(jsonPath("$.hinweis").value("note"))
-                    .andExpect(jsonPath("$.geschaeftsgangvermerk").value("remark"))
                     .andExpect(jsonPath("$.originalMedium").value("elektronisch"))
                     .andExpect(jsonPath("$.status").value("In Bearbeitung"))
                     .andExpect(jsonPath("$.bearbeitungsstatus").value("processing"))
@@ -201,17 +199,16 @@ class VorgangE2ETest extends VorgangE2eSupport {
                             {
                               "titel": "titel",
                               "betreff": "subject",
+                              "hinweis": "note",
                               "vorlagenId": "template-id",
                               "originalMedium": "papier",
-                              "laufwegErzeugen": true,
-                              "geschaeftsgangvermerk": "remark",
                               "zugriffsdefinition": "Standard Zugriffsdefinition für Dokumente"
                             }
                             """))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").value("COO.1.2.3"));
 
-            verifyCreateVorgangRequest("akte-id", "name", "subject", "template-id", true);
+            verifyCreateVorgangRequest("akte-id", "titel", "subject", "template-id", true);
         }
 
         @Test
@@ -233,10 +230,9 @@ class VorgangE2ETest extends VorgangE2eSupport {
                             {
                               "titel": "name",
                               "betreff": "subject",
+                              "hinweis": "note",
                               "vorlagenId": "template-id",
                               "originalMedium": "papier",
-                              "laufwegErzeugen": true,
-                              "geschaeftsgangvermerk": "remark",
                               "zugriffsdefinition": "Standard Zugriffsdefinition für Dokumente"
                             }
                             """))

@@ -5,7 +5,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.Fabasoft
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.SubFileRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.VorgangAttribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.CreateVorgangRequest;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangMedium;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangStatus;
@@ -29,7 +29,7 @@ public abstract class FabasoftVorgangMapper {
         this.defaultAttributeMapper = defaultAttributeMapper;
     }
 
-    @Mapping(source = "aktenId", target = "referredId")
+    @Mapping(source = "akteId", target = "referredId")
     @Mapping(target = "type", constant = "VORGANG")
     public abstract SubFileRequest fromDomain(CreateVorgangRequest request);
 
@@ -39,15 +39,14 @@ public abstract class FabasoftVorgangMapper {
             attributeList.add(new FabasoftAttribute(AttributeType.ENUM, VorgangAttribute.ORIGINAL_MEDIUM.getReference(), null,
                     mapOriginalMedium(request.originalMedium())));
         }
-        if (request.geschaeftsgangvermerk() != null) {
-            attributeList.add(
-                    new FabasoftAttribute(AttributeType.STRING, VorgangAttribute.GESCHAEFTSGANGVERMERK.getReference(), null, request.geschaeftsgangvermerk()));
-        }
         if (request.zugriffsdefinition() != null) {
             final String zugriffsdefinitionId = defaultAttributeMapper.zugriffsdefinitionToId(request.zugriffsdefinition());
             attributeList.add(new FabasoftAttribute(AttributeType.OBJECT, VorgangAttribute.ZUGRIFFSDEFINITION.getReference(), null, zugriffsdefinitionId));
         }
-        // TODO laufweg
+        if (request.hinweis() != null) {
+            attributeList.add(
+                    new FabasoftAttribute(AttributeType.STRING, VorgangAttribute.HINWEIS.getReference(), null, request.hinweis()));
+        }
         // TODO dfv
         return attributeList;
     }
@@ -60,13 +59,11 @@ public abstract class FabasoftVorgangMapper {
         final Map<String, List<Object>> referenceValueMap = attributeMapper.toReferenceValueMap(result.attributes());
         return VorgangResponse.builder()
                 .id(result.coo())
-                .akteId(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.PARENT_ID.getReference(), String.class).orElse(null))
+                .akteId(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.AKTE_ID.getReference(), String.class).orElse(null))
                 .name(result.name())
                 .titel(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.TITEL.getReference(), String.class).orElseThrow())
                 .betreff(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.BETREFF.getReference(), String.class).orElse(null))
                 .hinweis(attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.HINWEIS.getReference(), String.class).orElse(null))
-                .geschaeftsgangvermerk(
-                        attributeMapper.getTypedSingle(referenceValueMap, VorgangAttribute.GESCHAEFTSGANGVERMERK.getReference(), String.class).orElse(null))
                 .originalMedium(mapMedium(referenceValueMap))
                 .status(mapStatus(referenceValueMap))
                 .bearbeitungsstatus(

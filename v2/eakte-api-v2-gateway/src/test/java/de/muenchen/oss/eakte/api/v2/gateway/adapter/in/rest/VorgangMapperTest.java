@@ -1,10 +1,9 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.CreateVorgangRequest;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangMedium;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangStatus;
@@ -25,7 +24,6 @@ class VorgangMapperTest {
                 .titel("titel")
                 .name("name")
                 .betreff("subject")
-                .geschaeftsgangvermerk("remark")
                 .originalMedium(VorgangMedium.PAPIER)
                 .status(VorgangStatus.ABGESCHLOSSEN)
                 .bearbeitungsstatus("processing")
@@ -41,7 +39,6 @@ class VorgangMapperTest {
         assertEquals("name", result.getName());
         assertEquals("titel", result.getTitel());
         assertEquals("subject", result.getBetreff());
-        assertEquals("remark", result.getGeschaeftsgangvermerk());
         assertEquals(Vorgang.OriginalMediumEnum.PAPIER, result.getOriginalMedium());
         assertEquals(Vorgang.StatusEnum.ABGESCHLOSSEN, result.getStatus());
         assertEquals("processing", result.getBearbeitungsstatus());
@@ -68,21 +65,19 @@ class VorgangMapperTest {
         final CreateVorgang createVorgang = new CreateVorgang()
                 .titel("titel")
                 .betreff("subject")
+                .hinweis("hinweis")
                 .vorlagenId("template-id")
                 .originalMedium(CreateVorgang.OriginalMediumEnum.PAPIER)
-                .laufwegErzeugen(true)
-                .geschaeftsgangvermerk("remark")
                 .zugriffsdefinition("acl");
 
         final CreateVorgangRequest result = mapper.toDomain("akte-id", createVorgang);
 
-        assertEquals("akte-id", result.aktenId());
+        assertEquals("akte-id", result.akteId());
         assertEquals("titel", result.titel());
         assertEquals("subject", result.betreff());
         assertEquals("template-id", result.vorlagenId());
         assertEquals(VorgangMedium.PAPIER, result.originalMedium());
-        assertTrue(result.laufwegErzeugen());
-        assertEquals("remark", result.geschaeftsgangvermerk());
+        assertEquals("hinweis", result.hinweis());
         assertEquals("acl", result.zugriffsdefinition());
     }
 

@@ -22,7 +22,7 @@ class FabasoftVorgangMapperTest {
     @Test
     void givenResultObject_thenMapVorgang() {
         final ResultObject result = new ResultObject("name", "coo", List.of(
-                attribute(VorgangAttribute.PARENT_ID, "akte"),
+                attribute(VorgangAttribute.AKTE_ID, "akte"),
                 attribute(VorgangAttribute.TITEL, "titel"),
                 attribute(VorgangAttribute.BETREFF, "subject"),
                 attribute(VorgangAttribute.HINWEIS, "note"),
@@ -31,7 +31,6 @@ class FabasoftVorgangMapperTest {
                 attribute(VorgangAttribute.ZUGRIFFSDEFINITION, FabasoftTestFixtures.ACCESS_DEFINITION_ID),
                 attribute(VorgangAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(VorgangAttribute.ORIGINAL_MEDIUM, BigInteger.valueOf(2)),
-                attribute(VorgangAttribute.GESCHAEFTSGANGVERMERK, "remark"),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));
 
         final VorgangResponse mapped = mapper.toDomain(result);
@@ -42,7 +41,6 @@ class FabasoftVorgangMapperTest {
         assertEquals("titel", mapped.titel());
         assertEquals("subject", mapped.betreff());
         assertEquals("note", mapped.hinweis());
-        assertEquals("remark", mapped.geschaeftsgangvermerk());
         assertEquals(VorgangMedium.PAPIER, mapped.originalMedium());
         assertEquals(VorgangStatus.ABGESCHLOSSEN, mapped.status());
         assertEquals("processing", mapped.bearbeitungsstatus());

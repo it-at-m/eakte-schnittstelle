@@ -16,9 +16,9 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.Fabasoft
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftAttributeService;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftSearchService;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftSubFileService;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangMedium;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
 import java.math.BigInteger;
@@ -131,16 +131,22 @@ class FabasoftVorgangOutAdapterTest {
 
     @Test
     void givenCreateVorgangRequest_thenCreateSubFileAndSetAttributes() {
-        final CreateVorgangRequest request = new CreateVorgangRequest(
-                "akte-id", "name", "subject", "template-id", VorgangMedium.PAPIER, false, "remark",
-                FabasoftTestFixtures.ACCESS_DEFINITION_TEXT);
+        final CreateVorgangRequest request = CreateVorgangRequest.builder()
+                .akteId("akte-id")
+                .titel("name")
+                .betreff("subject")
+                .hinweis("note")
+                .vorlagenId("template-id")
+                .originalMedium(VorgangMedium.PAPIER)
+                .zugriffsdefinition(FabasoftTestFixtures.ACCESS_DEFINITION_TEXT)
+                .build();
         final SubFileRequest subFileRequest = new SubFileRequest(
                 FabasoftObjectType.VORGANG, "akte-id", "name", "template-id", "subject");
         final List<FabasoftAttribute> attributes = List.of(
                 new FabasoftAttribute(AttributeType.ENUM, VorgangAttribute.ORIGINAL_MEDIUM.getReference(), null, BigInteger.valueOf(2)),
-                new FabasoftAttribute(AttributeType.STRING, VorgangAttribute.GESCHAEFTSGANGVERMERK.getReference(), null, "remark"),
                 new FabasoftAttribute(AttributeType.OBJECT, VorgangAttribute.ZUGRIFFSDEFINITION.getReference(), null,
-                        FabasoftTestFixtures.ACCESS_DEFINITION_ID));
+                        FabasoftTestFixtures.ACCESS_DEFINITION_ID),
+                new FabasoftAttribute(AttributeType.STRING, VorgangAttribute.HINWEIS.getReference(), null, "note"));
         when(subFileService.createSubFile(CONTEXT, subFileRequest)).thenReturn(VORGANG_ID);
 
         final String actual = adapter().createAkteVorgang(CONTEXT, request);

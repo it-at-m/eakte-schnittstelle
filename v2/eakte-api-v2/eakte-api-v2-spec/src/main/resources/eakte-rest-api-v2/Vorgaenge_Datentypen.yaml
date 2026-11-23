@@ -11,20 +11,12 @@ components:
         - organisationseinheit
         - weitereEigenschaften
       properties:
-        id:
-          type: string
-        akteId:
-          type: string
         titel:
           type: string
         betreff:
           type: string
         hinweis:
           type: string
-        geschaeftsgangvermerk:
-          type: string
-          description: Geschäftsgangvermerk für Prozessverantwortlichen
-          example: Warte auf Rückmeldung
         originalMedium:
           type: string
           enum:
@@ -33,6 +25,7 @@ components:
             - "papier"
         zugriffsdefinition:
           type: string
+          example: "Eigene Organisationseinheit"
 
     Vorgang:
       type: object
@@ -78,9 +71,6 @@ components:
       properties:
         vorlagenId:
           type: string
-        laufwegErzeugen:
-          type: boolean
-          default: false
         # TODO DfV attributes
 
     CreateVorgangResponse:

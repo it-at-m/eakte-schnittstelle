@@ -43,12 +43,13 @@ abstract class VorgangE2eSupport extends FabasoftE2eSupport {
                         .withBody(setPropertiesResponse())));
     }
 
-    protected void verifyCreateVorgangRequest(final String aktenId, final String name, final String betreff,
+    protected void verifyCreateVorgangRequest(final String akteId, final String name, final String betreff,
             final String vorlagenId, final boolean impersonate) {
         RequestPatternBuilder pattern = com.github.tomakehurst.wiremock.client.WireMock
                 .postRequestedFor(
                         com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo("/"))
-                .withRequestBody(com.github.tomakehurst.wiremock.client.WireMock.containing(aktenId))
+                .withHeader("SOAPAction", com.github.tomakehurst.wiremock.client.WireMock.containing("SOAPCreateSubFile"))
+                .withRequestBody(com.github.tomakehurst.wiremock.client.WireMock.containing(akteId))
                 .withRequestBody(com.github.tomakehurst.wiremock.client.WireMock.containing(name))
                 .withRequestBody(com.github.tomakehurst.wiremock.client.WireMock.containing(betreff))
                 .withRequestBody(com.github.tomakehurst.wiremock.client.WireMock.containing(vorlagenId));
@@ -59,6 +60,13 @@ abstract class VorgangE2eSupport extends FabasoftE2eSupport {
                     .withQueryParam("gx", com.github.tomakehurst.wiremock.client.WireMock.equalTo("ou"));
         }
         wireMock.verify(pattern);
+        wireMock.verify(com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor(
+                com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo("/"))
+                .withHeader("SOAPAction", com.github.tomakehurst.wiremock.client.WireMock.containing("SOAPGenericSetProperties"))
+                .withRequestBody(com.github.tomakehurst.wiremock.client.WireMock.matching(
+                        "(?s).*<(?:\\w+:)?OBJECT\\s+[^>]*reference=\"FSCFOLIO@1\\.1001:objaccdef\"[^>]*>COO\\.1\\.1001\\.1\\.182601</(?:\\w+:)?OBJECT>.*"))
+                .withRequestBody(com.github.tomakehurst.wiremock.client.WireMock.matching(
+                        "(?s).*<(?:\\w+:)?STRING\\s+[^>]*reference=\"DEPRECONFIG@15\\.1001:procsubject\"[^>]*>note</(?:\\w+:)?STRING>.*")));
     }
 
     protected void stubDfVAndVorgangResponse() {
@@ -83,7 +91,6 @@ abstract class VorgangE2eSupport extends FabasoftE2eSupport {
                         <urn:OBJECT urn:reference="FSCFOLIO@1.1001:objaccdef" urn:index="1">COO.1.1001.1.182601</urn:OBJECT>
                         <urn:STRING urn:reference="COOSYSTEM@1.1:objowngroup.name" urn:index="1">ou</urn:STRING>
                         <urn:ENUM urn:reference="COOELAK@1.1001:filetype" urn:index="1">1</urn:ENUM>
-                        <urn:STRING urn:reference="COOELAK@1.1001:inchargeremark" urn:index="1">remark</urn:STRING>
                         <urn:STRING urn:reference="custom.attribute" urn:index="1">custom-value</urn:STRING>
                       </urn:attrlist>
                     </urn:object>

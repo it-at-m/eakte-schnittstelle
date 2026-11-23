@@ -11,9 +11,9 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.Fabasof
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftSubFileService;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.VorgangOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.helper.AttributeHelper;
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
 import java.util.List;
 import java.util.Optional;

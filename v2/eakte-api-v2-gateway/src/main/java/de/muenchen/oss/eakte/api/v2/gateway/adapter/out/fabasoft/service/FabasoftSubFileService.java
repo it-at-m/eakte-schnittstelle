@@ -2,6 +2,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service;
 
 import com.fabasoft.editions.schemas.gov.createsubfile.CreateSubFileRequestType;
 import com.fabasoft.editions.schemas.gov.createsubfile.CreateSubFileResponseType;
+import com.fabasoft.editions.schemas.gov.createsubfile.InchargeType;
 import com.fabasoft.schemas.websvc.fscgovxml_1_1001_defaultwebservicedefinition.FSCGOVXML11001DefaultWebServiceDefinitionSoap;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftRequestHandler;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.SubFileRequest;
@@ -26,6 +27,7 @@ public class FabasoftSubFileService {
         requestType.setObjmlname(request.titel());
         requestType.getFilesubj().addAll(List.of(request.betreff().split("\n")));
         requestType.setCreatedfromdefinition(request.vorlagenId());
+        requestType.setIncharge(new InchargeType());
         log.debug("#createSubFile for {}", request);
         final CreateSubFileResponseType response = requestHandler.handleRequest("createSubFile", requestContext,
                 () -> soapClient.soapCreateSubFile(requestType, null));

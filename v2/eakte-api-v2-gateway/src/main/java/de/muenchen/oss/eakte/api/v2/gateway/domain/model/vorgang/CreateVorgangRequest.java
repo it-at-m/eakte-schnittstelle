@@ -1,16 +1,16 @@
-package de.muenchen.oss.eakte.api.v2.gateway.domain.model;
+package de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang;
 
-import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangMedium;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 
+@Builder
 public record CreateVorgangRequest(
-        @NotBlank String aktenId,
+        @NotBlank String akteId,
         @NotBlank String titel,
         String betreff,
+        String hinweis,
         String vorlagenId,
         VorgangMedium originalMedium,
-        boolean laufwegErzeugen,
-        String geschaeftsgangvermerk,
         String zugriffsdefinition
 // TODO dfv
 ) {
