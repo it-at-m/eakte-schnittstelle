@@ -5,6 +5,14 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.Fabasoft
 
 abstract class VorgangE2eSupport extends FabasoftE2eSupport {
     public static final String DFV_ATTRIBUTE = "custom.dfv.attribute";
+    private static final String TRANSACTION_HEADER = """
+            <soapenv:Header>
+              <tx:cootx xmlns:tx="http://schemas.fabasoft.com/websvc/FSCGOVXML_1_1001_DefaultWebServiceDefinition/">
+                <tx:transaction>test-transaction</tx:transaction>
+                <tx:commit>false</tx:commit>
+              </tx:cootx>
+            </soapenv:Header>
+            """;
     private static final String FULL_REFERENCE = "EGOVTEMPLATE@15.1001:availabledefinitions[0].EGOVTEMPLATE@15.1001:"
             + "availabledefinitions[0].EGOVTEMPLATE@15.1001:definitionuseform."
             + "FSCUSERFORMS@1.1001:releasecategory.COOTC@1.1001:categoryattributes."
@@ -41,6 +49,19 @@ abstract class VorgangE2eSupport extends FabasoftE2eSupport {
                         .withStatus(200)
                         .withHeader("Content-Type", "text/xml; charset=utf-8")
                         .withBody(setPropertiesResponse())));
+        wireMock.stubFor(com.github.tomakehurst.wiremock.client.WireMock.post(
+                com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo("/"))
+                .withHeader("SOAPAction", com.github.tomakehurst.wiremock.client.WireMock.containing("SOAPCommit"))
+                .willReturn(com.github.tomakehurst.wiremock.client.WireMock.aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "text/xml; charset=utf-8")
+                        .withBody("""
+                                <?xml version="1.0" encoding="UTF-8"?>
+                                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                                        xmlns:urn="http://schemas.fabasoft.com/websvc/FSCGOVXML_1_1001_DefaultWebServiceDefinition/">
+                                  <soapenv:Body><urn:SOAPCommitResponse/></soapenv:Body>
+                                </soapenv:Envelope>
+                                """)));
     }
 
     protected void verifyCreateVorgangRequest(final String akteId, final String name, final String betreff,
@@ -128,6 +149,7 @@ abstract class VorgangE2eSupport extends FabasoftE2eSupport {
                 <?xml version="1.0" encoding="UTF-8"?>
                 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
                         xmlns:urn="urn:schemas-editions-fabasoft-com:gov:createsubfile">
+                  %s
                   <soapenv:Body>
                     <urn:CreateSubFileResponse>
                       <urn:subfile>
@@ -136,7 +158,7 @@ abstract class VorgangE2eSupport extends FabasoftE2eSupport {
                     </urn:CreateSubFileResponse>
                   </soapenv:Body>
                 </soapenv:Envelope>
-                """;
+                """.formatted(TRANSACTION_HEADER);
     }
 
     private String setPropertiesResponse() {
@@ -144,11 +166,12 @@ abstract class VorgangE2eSupport extends FabasoftE2eSupport {
                 <?xml version="1.0" encoding="UTF-8"?>
                 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
                         xmlns:urn="urn:schemas-fabasoft-com:universal">
+                  %s
                   <soapenv:Body>
                     <urn:response/>
                   </soapenv:Body>
                 </soapenv:Envelope>
-                """;
+                """.formatted(TRANSACTION_HEADER);
     }
 
 }

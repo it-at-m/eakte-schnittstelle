@@ -2,13 +2,16 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.fabasoft.schemas.websvc.fscgovxml_1_1001_defaultwebservicedefinition.FSCGOVXML11001DefaultWebServiceDefinitionSoap;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftObjectType;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftTransaction;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.SubFileRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.VorgangAttribute;
@@ -16,6 +19,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.Fabasoft
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftAttributeService;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftSearchService;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftSubFileService;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftTransactionService;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.CreateVorgangRequest;
@@ -53,11 +57,17 @@ class FabasoftVorgangOutAdapterTest {
     @Mock
     private FabasoftSearchService searchService;
 
+    @Mock
+    private FSCGOVXML11001DefaultWebServiceDefinitionSoap soapClient;
+
     @Captor
     private ArgumentCaptor<SearchRequest> requestCaptor;
 
     @Captor
     private ArgumentCaptor<Set<String>> attributesCaptor;
+
+    @Captor
+    private ArgumentCaptor<FabasoftTransaction> transactionCaptor;
 
     @Test
     void givenSearchRequest_thenSearchWithDefaultAttributesAndMapResults() {
@@ -147,13 +157,14 @@ class FabasoftVorgangOutAdapterTest {
                 new FabasoftAttribute(AttributeType.OBJECT, VorgangAttribute.ZUGRIFFSDEFINITION.getReference(), null,
                         FabasoftTestFixtures.ACCESS_DEFINITION_ID),
                 new FabasoftAttribute(AttributeType.STRING, VorgangAttribute.HINWEIS.getReference(), null, "note"));
-        when(subFileService.createSubFile(CONTEXT, subFileRequest)).thenReturn(VORGANG_ID);
+        when(subFileService.createSubFile(eq(CONTEXT), any(FabasoftTransaction.class), eq(subFileRequest))).thenReturn(VORGANG_ID);
 
         final String actual = adapter().createAkteVorgang(CONTEXT, request);
 
         assertEquals(VORGANG_ID, actual);
-        verify(subFileService).createSubFile(CONTEXT, subFileRequest);
-        verify(attributeService).setAttributes(CONTEXT, VORGANG_ID, attributes);
+        verify(subFileService).createSubFile(eq(CONTEXT), transactionCaptor.capture(), eq(subFileRequest));
+        verify(attributeService).setAttributes(CONTEXT, transactionCaptor.getValue(), VORGANG_ID, attributes);
+        verify(soapClient).soapCommit(transactionCaptor.getValue().getHolder());
     }
 
     @Test
@@ -177,7 +188,9 @@ class FabasoftVorgangOutAdapterTest {
     }
 
     private FabasoftVorgangOutAdapter adapter() {
-        return new FabasoftVorgangOutAdapter(searchService, subFileService, attributeService, vorgangMapper);
+        final FabasoftTransactionService transactionService = new FabasoftTransactionService(soapClient,
+                new FabasoftRequestHandler(new RequestContextProvider()));
+        return new FabasoftVorgangOutAdapter(searchService, subFileService, transactionService, attributeService, vorgangMapper);
     }
 
 }

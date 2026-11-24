@@ -1,6 +1,7 @@
-package de.muenchen.oss.eakte.api.v2.gateway.e2e;
+package de.muenchen.oss.eakte.api.v2.gateway;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -13,25 +14,34 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.wiremock.spring.ConfigureWireMock;
 import org.wiremock.spring.EnableWireMock;
 import org.wiremock.spring.InjectWireMock;
+import org.wiremock.spring.WireMockConfigurationCustomizer;
 
-@EnableWireMock(@ConfigureWireMock(baseUrlProperties = "fabasoft.url"))
-abstract class AbstractWireMockE2eTest {
+@EnableWireMock(@ConfigureWireMock(baseUrlProperties = "fabasoft.url", configurationCustomizers = AbstractWireMockTest.WireMockHttpConfiguration.class))
+public abstract class AbstractWireMockTest {
 
     @InjectWireMock
     protected WireMockServer wireMock;
 
     @BeforeEach
-    void setUp() {
+    protected void setUp() {
         wireMock.resetAll();
     }
 
     @DynamicPropertySource
-    static void registerProperties(final DynamicPropertyRegistry registry) {
+    protected static void registerProperties(final DynamicPropertyRegistry registry) {
         final String keystoreLocation = createTestKeystore();
         registry.add("fabasoft.keystore-location", () -> keystoreLocation);
         registry.add("fabasoft.keystore-password", () -> "changeit");
         registry.add("fabasoft.connect-timeout", () -> "1s");
         registry.add("fabasoft.read-timeout", () -> "5s");
+    }
+
+    public static class WireMockHttpConfiguration implements WireMockConfigurationCustomizer {
+        @Override
+        public void customize(final WireMockConfiguration configuration, final ConfigureWireMock annotation) {
+            // Jetty cannot upgrade the chunked SOAP request to cleartext HTTP/2.
+            configuration.http2PlainDisabled(true);
+        }
     }
 
     private static String createTestKeystore() {
