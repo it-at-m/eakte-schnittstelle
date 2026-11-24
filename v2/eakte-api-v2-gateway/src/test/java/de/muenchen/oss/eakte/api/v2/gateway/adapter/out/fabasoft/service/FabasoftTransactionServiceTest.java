@@ -13,6 +13,7 @@ import com.fabasoft.schemas.websvc.fscgovxml_1_1001_defaultwebservicedefinition.
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftRequestHandler;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.RequestContextProvider;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftTransaction;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.DmsAbortException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.DmsException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import java.util.concurrent.atomic.AtomicReference;
@@ -67,18 +68,22 @@ class FabasoftTransactionServiceTest {
     }
 
     @Test
-    void givenAbortFailure_thenSuppressItOnOriginalTaskFailure() {
+    void givenAbortFailure_thenThrowDmsAbortExceptionWithTransactionIdAndOriginalCause() {
         final RuntimeException failure = new RuntimeException("task failed");
         final RuntimeException abortFailure = new RuntimeException("abort failed");
+        final String transactionId = "transaction-123";
+        final AtomicReference<FabasoftTransaction> transaction = new AtomicReference<>();
         doThrow(abortFailure).when(soapClient).soapAbort(any());
 
-        final RuntimeException thrown = assertThrows(RuntimeException.class, () -> service.execute(CONTEXT, current -> {
+        final DmsAbortException thrown = assertThrows(DmsAbortException.class, () -> service.execute(CONTEXT, current -> {
+            current.getHolder().value.setTransaction(transactionId);
+            transaction.set(current);
             throw failure;
         }));
 
-        assertSame(failure, thrown);
-        assertEquals(1, thrown.getSuppressed().length);
-        assertSame(abortFailure, thrown.getSuppressed()[0].getCause());
+        assertEquals("Aborting transaction failed: %s".formatted(transactionId), thrown.getMessage());
+        assertSame(failure, thrown.getCause());
+        verify(soapClient).soapAbort(transaction.get().getHolder());
         verify(soapClient, never()).soapCommit(any());
     }
 

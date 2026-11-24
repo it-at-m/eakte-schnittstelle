@@ -3,6 +3,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service;
 import com.fabasoft.schemas.websvc.fscgovxml_1_1001_defaultwebservicedefinition.FSCGOVXML11001DefaultWebServiceDefinitionSoap;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftRequestHandler;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftTransaction;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.DmsAbortException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,9 @@ public class FabasoftTransactionService {
                 this.abort(context, transaction);
             } catch (final RuntimeException abortException) {
                 log.warn("Aborting transaction failed");
-                exception.addSuppressed(abortException);
+                throw new DmsAbortException(
+                        transaction.getHolder().value.getTransaction(),
+                        exception);
             }
             throw exception;
         }
