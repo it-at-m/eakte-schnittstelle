@@ -37,25 +37,25 @@ and the property name in the V2 API is given.
 
 ## Vorgang (Procedure)
 
-| Reference                                  | Label                                            | V1   | V1              | V2                    |
-| ------------------------------------------ | ------------------------------------------------ | ---- | --------------- | --------------------- |
-| COOELAK@1.1001:referrednumber              | Akte                                             | RW   | referrednumber  | akteId                |
-| COOELAK@1.1001:objmlname.langstring        | Titel                                            | RW   | shortname       | titel                 |
-| COOSYSTEM@1.1:objname                      | Name (Übersicht)                                 | R    | objname         | name                  |
-| COOELAK@1.1001:filesubj                    | Betreff                                          | RW   | filesubj        | betreff               |
-| DEPRECONFIG@15.1001:procsubject            | Hinweis                                          | RW   | -               | hinweis               |
-| FSCTERM@1.1001:objterms.name               | Schlagworte                                      | RW   | objterms        | -                     |
-| DEPRECONFIG@15.1001:fileruntimefrom        |                                                  | RW   | fileruntimefrom | -                     |
-| DEPRECONFIG@15.1001:fileruntimetill        |                                                  | RW   | fileruntimetill | -                     |
-| COOELAK@1.1001:inchargeremark              | Geschäftsgangvermerk für Prozessverantwortlichen | RW   | procremark      | geschaeftsgangvermerk |
-| COOELAK@1.1001:filetype                    | Original                                         | RW   | filetype        | originalMedium        |
-| FSCFOLIO@1.1001:objdocstate                | Status                                           | R    | objdocstate     | status                |
-| FSCFOLIO@1.1001:bostate.name               | Bearbeitungsstatus                               | R    | bostate         | bearbeitungsstatus    |
-| FSCFOLIO@1.1001:objaccdef.name             | Zugriffsdefinition                               | RW   | accdef          | zugriffsdefinition    |
-| COOSYSTEM@1.1:objowngroup.name             | Organisationseinheit                             | R    | objowngroup     | organisationseinheit  |
-| COOEALK@1.1001:attachments                 | (untergeordnete Dokumente)                       | R(W) | giobjecttype    | -                     |
-| EGOVTEMPLATE@15.1001:createdfromdefinition | Definition für Verfahren                         | W    | definition      | dfvId                 |
-|                                            | (DfV Daten)                                      | W    | userformsdata   | weitereEigenschaften  |
+| Reference                                  | Label                                            | V1   | V1              | V2                   |
+| ------------------------------------------ | ------------------------------------------------ | ---- | --------------- | -------------------- |
+| COOELAK@1.1001:referrednumber              | Akte                                             | RW   | referrednumber  | akteId               |
+| COOELAK@1.1001:objmlname.langstring        | Titel                                            | RW   | shortname       | titel                |
+| COOSYSTEM@1.1:objname                      | Name (Übersicht)                                 | R    | objname         | name                 |
+| COOELAK@1.1001:filesubj                    | Betreff                                          | RW   | filesubj        | betreff              |
+| DEPRECONFIG@15.1001:procsubject            | Hinweis                                          | RW   | -               | hinweis              |
+| FSCTERM@1.1001:objterms.name               | Schlagworte                                      | RW   | objterms        | -                    |
+| DEPRECONFIG@15.1001:fileruntimefrom        |                                                  | RW   | fileruntimefrom | -                    |
+| DEPRECONFIG@15.1001:fileruntimetill        |                                                  | RW   | fileruntimetill | -                    |
+| COOELAK@1.1001:inchargeremark              | Geschäftsgangvermerk für Prozessverantwortlichen | RW   | procremark      | -                    |
+| COOELAK@1.1001:filetype                    | Original                                         | RW   | filetype        | originalMedium       |
+| FSCFOLIO@1.1001:objdocstate                | Status                                           | R    | objdocstate     | status               |
+| FSCFOLIO@1.1001:bostate.name               | Bearbeitungsstatus                               | R    | bostate         | bearbeitungsstatus   |
+| FSCFOLIO@1.1001:objaccdef.name             | Zugriffsdefinition                               | RW   | accdef          | zugriffsdefinition   |
+| COOSYSTEM@1.1:objowngroup.name             | Organisationseinheit                             | R    | objowngroup     | organisationseinheit |
+| COOEALK@1.1001:attachments                 | (untergeordnete Dokumente)                       | R(W) | giobjecttype    | -                    |
+| EGOVTEMPLATE@15.1001:createdfromdefinition | Definition für Verfahren                         | W    | definition      | dfvId                |
+|                                            | (DfV Daten)                                      | W    | userformsdata   | weitereEigenschaften |
 
 ## Dokument (Incoming / Outgoing / Internal)
 

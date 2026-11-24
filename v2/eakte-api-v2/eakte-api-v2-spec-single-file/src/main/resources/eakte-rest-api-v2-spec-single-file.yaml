@@ -16,7 +16,7 @@ security:
   - bearerAuth: []
 tags:
   - name: Akte
-    description: SubjectAreaFile
+    description: File (Sachakte)
   - name: Vorgang
     description: Procedure
   - name: Dokument
@@ -110,6 +110,51 @@ paths:
               operationId: GetVorgang
               parameters:
                 vorgangsId: $response.body#/parent.id
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - Vorgang
+      summary: Vorgang unter Akte erstellen
+      operationId: CreateVorgang
+      parameters:
+        - in: path
+          name: akteId
+          schema:
+            type: string
+          required: true
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVorgang'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateVorgangResponse'
         '400':
           description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
           content:
@@ -825,22 +870,9 @@ components:
           type: string
         dmsErrorReference:
           type: string
-    Vorgang:
+    BaseVorgang:
       type: object
-      description: |
-        Repräsentation eines Vorgangs.\
-        Aufgrund der Konfigurierbarkeit der Attribute (verfahrensabhängige Metadaten, siehe
-        Fabasoft eGov-Suite "Definition von Verfahren") werden diese in einer dynamisch 
-        aufgebauten Liste geführt und nichts als Felder in einer fixen (JSON-) Datenstruktur.
-        \
-        Um die innerhalb einer bestimmten Betreffseinheit verfügbaren Custom-Attribute auf
-        Vorgangsebene sowie die Standard-Attribute des Vorgangs zu erfahren, kann über den Endpunkt
-        '/v2/Attribute' eine Abfrage (GET-Methode) getätigt werden (s. Spezifikation dieses
-        Endpunktes, in diesem Fall die Verwendung des Filters 'Schriftgutebene=Vorgang').
       required:
-        - id
-        - akteId
-        - name
         - titel
         - originalMedium
         - status
@@ -849,28 +881,40 @@ components:
         - organisationseinheit
         - weitereEigenschaften
       properties:
-        id:
-          type: string
-        akteId:
-          type: string
         titel:
-          type: string
-        name:
           type: string
         betreff:
           type: string
         hinweis:
           type: string
-        geschaeftsgangvermerk:
-          type: string
-          description: Geschäftsgangvermerk für Prozessverantwortlichen
-          example: Warte auf Rückmeldung
         originalMedium:
           type: string
           enum:
             - elektronisch
             - hybrid
             - papier
+        zugriffsdefinition:
+          type: string
+          example: Eigene Organisationseinheit
+    Vorgang:
+      type: object
+      required:
+        - id
+        - name
+        - status
+        - bearbeitungsstatus
+        - organisationseinheit
+        - eigenschaftenMap
+        - eigenschaftenListe
+      allOf:
+        - $ref: '#/components/schemas/BaseVorgang'
+      properties:
+        id:
+          type: string
+        akteId:
+          type: string
+        name:
+          type: string
         status:
           type: string
           enum:
@@ -880,8 +924,6 @@ components:
             - Storniert
             - Archiviert
         bearbeitungsstatus:
-          type: string
-        zugriffsdefinition:
           type: string
         organisationseinheit:
           type: string
@@ -899,6 +941,20 @@ components:
           description: Liste von Vorgängen
           items:
             $ref: '#/components/schemas/Vorgang'
+    CreateVorgang:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseVorgang'
+      properties:
+        dfvId:
+          type: string
+    CreateVorgangResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
     DokumentBase:
       type: object
       required:

@@ -2,6 +2,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftTestFixtures;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.DokumentAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ErledigungAttribute;
@@ -18,7 +19,7 @@ class FabasoftErledigungMapperTest {
     private final FabasoftAttributeMapper attributeMapper = new FabasoftAttributeMapperImpl();
     private final FabasoftErledigungMapper mapper = new FabasoftErledigungMapper(
             attributeMapper,
-            new FabasoftDokumentMapper(attributeMapper));
+            FabasoftTestFixtures.dokumentMapper());
 
     @Test
     void givenResultObject_thenMapErledigung() {
@@ -33,7 +34,7 @@ class FabasoftErledigungMapperTest {
         assertEquals("name", mapped.getName());
         assertEquals("subject", mapped.getBetreff());
         assertEquals("note", mapped.getHinweis());
-        assertEquals("access", mapped.getZugriffsdefinition());
+        assertEquals(FabasoftTestFixtures.ACCESS_DEFINITION_TEXT, mapped.getZugriffsdefinition());
         assertEquals("ou", mapped.getOrganisationseinheit());
         assertEquals("incoming-id", mapped.getBezugEingangsdokument());
         assertEquals("letter", mapped.getDokumententyp());
@@ -56,7 +57,7 @@ class FabasoftErledigungMapperTest {
                 attribute(DokumentAttribute.TITEL, "titel"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
                 attribute(DokumentAttribute.HINWEIS, "note"),
-                attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
+                attribute(DokumentAttribute.ZUGRIFFSDEFINITION, FabasoftTestFixtures.ACCESS_DEFINITION_ID),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(ErledigungAttribute.BEZUG_EINGANGSDOKUMENT, "incoming-id"),
                 attribute(DokumentAttribute.DATUM, LocalDate.of(2025, 1, 2)),

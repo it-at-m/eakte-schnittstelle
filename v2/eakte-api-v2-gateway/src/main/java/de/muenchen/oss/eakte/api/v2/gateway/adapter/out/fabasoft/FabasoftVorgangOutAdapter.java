@@ -1,14 +1,19 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft;
 
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.SubFileRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.VorgangAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftVorgangMapper;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftAttributeService;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftSearchService;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftSubFileService;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.VorgangOutPort;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.helper.AttributeHelper;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +28,8 @@ public class FabasoftVorgangOutAdapter implements VorgangOutPort {
     private static final String PARENT_QUERY = ".COOELAK@1.1001:referrednumber = '%s'";
 
     private final FabasoftSearchService searchService;
+    private final FabasoftSubFileService subFileService;
+    private final FabasoftAttributeService attributeService;
     private final FabasoftVorgangMapper vorgangMapper;
 
     @Override
@@ -47,6 +54,18 @@ public class FabasoftVorgangOutAdapter implements VorgangOutPort {
                 .concatQuery(vorgangParentQuery);
         final List<ResultObject> result = searchService.searchObject(context, FabasoftObjectType.VORGANG, enrichedRequest);
         return vorgangMapper.toDomain(result);
+    }
+
+    @Override
+    public String createAkteVorgang(final RequestContext requestContext, final CreateVorgangRequest vorgang) {
+        // map und validate request
+        final SubFileRequest subFileRequest = vorgangMapper.fromDomain(vorgang);
+        final List<FabasoftAttribute> separateAttributes = vorgangMapper.toAttributeList(vorgang);
+        // make calls
+        // TODO transaction
+        final String vorgangsId = subFileService.createSubFile(requestContext, subFileRequest);
+        attributeService.setAttributes(requestContext, vorgangsId, separateAttributes);
+        return vorgangsId;
     }
 
     public static String getParentQuery(final String id) {

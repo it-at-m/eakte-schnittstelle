@@ -48,7 +48,7 @@ class EingangsdokumentE2ETest extends EingangsdokumentE2eSupport {
                     .andExpect(jsonPath("$.elemente[0].name").value("name"))
                     .andExpect(jsonPath("$.elemente[0].titel").value("titel"))
                     .andExpect(jsonPath("$.elemente[0].betreff").value("subject"))
-                    .andExpect(jsonPath("$.elemente[0].zugriffsdefinition").value("acl"))
+                    .andExpect(jsonPath("$.elemente[0].zugriffsdefinition").value("Standard Zugriffsdefinition für Dokumente"))
                     .andExpect(jsonPath("$.elemente[0].organisationseinheit").value("ou"))
                     .andExpect(jsonPath("$.elemente[0].dokumententyp").value("letter"))
                     .andExpect(jsonPath("$.elemente[0].fremdesGeschaeftszeichen").value("external-reference"))
