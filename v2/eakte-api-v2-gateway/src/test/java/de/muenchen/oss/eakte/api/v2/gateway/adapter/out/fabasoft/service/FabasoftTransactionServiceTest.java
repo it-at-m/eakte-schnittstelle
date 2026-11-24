@@ -2,6 +2,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -68,7 +69,7 @@ class FabasoftTransactionServiceTest {
     }
 
     @Test
-    void givenAbortFailure_thenThrowDmsAbortExceptionWithTransactionIdAndOriginalCause() {
+    void givenAbortFailure_thenThrowDmsAbortExceptionWithBothCauses() {
         final RuntimeException failure = new RuntimeException("task failed");
         final RuntimeException abortFailure = new RuntimeException("abort failed");
         final String transactionId = "transaction-123";
@@ -82,7 +83,10 @@ class FabasoftTransactionServiceTest {
         }));
 
         assertEquals("Aborting transaction failed: %s".formatted(transactionId), thrown.getMessage());
-        assertSame(failure, thrown.getCause());
+        assertSame(failure, thrown.getOriginalCause());
+        assertInstanceOf(DmsException.class, thrown.getAbortCause());
+        assertSame(thrown.getAbortCause(), thrown.getCause());
+        assertSame(abortFailure, thrown.getAbortCause().getCause());
         verify(soapClient).soapAbort(transaction.get().getHolder());
         verify(soapClient, never()).soapCommit(any());
     }

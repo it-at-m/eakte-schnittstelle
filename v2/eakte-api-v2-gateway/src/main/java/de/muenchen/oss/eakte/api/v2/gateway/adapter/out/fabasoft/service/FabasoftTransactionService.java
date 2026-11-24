@@ -18,6 +18,17 @@ public class FabasoftTransactionService {
     private final FSCGOVXML11001DefaultWebServiceDefinitionSoap soapClient;
     private final FabasoftRequestHandler requestHandler;
 
+    /**
+     * Executes a task in a transaction, committing on success and aborting on failure.
+     * If the abort succeeds, the original task exception is rethrown.
+     *
+     * @param context The request context for commit and abort calls.
+     * @param task The task to execute with the transaction.
+     * @param <T> The task result type.
+     * @return The task result after a successful commit.
+     * @throws DmsAbortException If the task fails and the transaction cannot be aborted.
+     * @throws RuntimeException The original task exception, if abort succeeds.
+     */
     public <T> T execute(final RequestContext context, final Function<FabasoftTransaction, T> task) {
         final FabasoftTransaction transaction = new FabasoftTransaction();
         final T result;
@@ -30,7 +41,7 @@ public class FabasoftTransactionService {
                 log.warn("Aborting transaction failed");
                 throw new DmsAbortException(
                         transaction.getHolder().value.getTransaction(),
-                        exception);
+                        abortException, exception);
             }
             throw exception;
         }
