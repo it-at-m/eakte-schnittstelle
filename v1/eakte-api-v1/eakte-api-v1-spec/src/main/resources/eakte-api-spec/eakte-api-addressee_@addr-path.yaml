@@ -10,8 +10,12 @@ get:
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/jobposition'
     - $ref: 'eakte-api--parameters.yaml#/components/parameters/objaddress'
   responses:
-    '204':
-      $ref: 'eakte-api--default-responses.yaml#/components/responses/204'
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'eakte-api-addressee_@addr-schemas.yaml#/components/schemas/GetAddresseeResponseDTO'
     '400':
       $ref: 'eakte-api--default-responses.yaml#/components/responses/400'
     '401':

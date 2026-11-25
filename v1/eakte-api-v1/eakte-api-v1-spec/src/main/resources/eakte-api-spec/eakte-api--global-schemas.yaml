@@ -215,6 +215,37 @@ components:
         - objname: Beispielname
           objaddress: COO.2150.9151.1.1206000
 
+    AddresseeReferenz:
+      type: object
+      properties:
+        addrdate:
+          type: string
+          format: date-time
+        addrtransmedia:
+          type: string
+        addrOrgName:
+          type: string
+        addrtitle:
+          type: string
+        addrfirstname:
+          type: string
+        addrname:
+          type: string
+        addrstreet:
+          type: string
+        addrstreetnumber:
+          type: string
+        addrzipcode:
+          type: string
+        addrcity:
+          type: string
+        addrcountry:
+          type: string
+        addremail:
+          type: string
+        addradditional5:
+          type: string
+
     UserFormsReferenz:
       description: |
         Referenz der Verfahrenseigenschaft und der entsprechende Wert.<br>
