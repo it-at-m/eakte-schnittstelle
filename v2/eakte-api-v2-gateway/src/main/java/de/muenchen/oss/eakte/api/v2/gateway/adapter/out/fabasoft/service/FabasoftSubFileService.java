@@ -5,6 +5,7 @@ import com.fabasoft.editions.schemas.gov.createsubfile.CreateSubFileResponseType
 import com.fabasoft.editions.schemas.gov.createsubfile.InchargeType;
 import com.fabasoft.schemas.websvc.fscgovxml_1_1001_defaultwebservicedefinition.FSCGOVXML11001DefaultWebServiceDefinitionSoap;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftRequestHandler;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftTransaction;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.SubFileRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.DmsException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
@@ -20,7 +21,7 @@ public class FabasoftSubFileService {
     private final FSCGOVXML11001DefaultWebServiceDefinitionSoap soapClient;
     private final FabasoftRequestHandler requestHandler;
 
-    public String createSubFile(final RequestContext requestContext, final SubFileRequest request) {
+    public String createSubFile(final RequestContext requestContext, final FabasoftTransaction transaction, final SubFileRequest request) {
         final CreateSubFileRequestType requestType = new CreateSubFileRequestType();
         requestType.setObjclass(request.type().getCoo());
         requestType.setReferrednumber(request.referredId());
@@ -30,7 +31,7 @@ public class FabasoftSubFileService {
         requestType.setIncharge(new InchargeType());
         log.debug("#createSubFile for {}", request);
         final CreateSubFileResponseType response = requestHandler.handleRequest("createSubFile", requestContext,
-                () -> soapClient.soapCreateSubFile(requestType, null));
+                () -> soapClient.soapCreateSubFile(requestType, transaction != null ? transaction.getHolder() : null));
         if (response != null && response.getSubfile() != null) {
             final String objectId = response.getSubfile().getObjaddress();
             log.info("#createSubFile created {} {}", request.type().getFabasoftReference(), objectId);

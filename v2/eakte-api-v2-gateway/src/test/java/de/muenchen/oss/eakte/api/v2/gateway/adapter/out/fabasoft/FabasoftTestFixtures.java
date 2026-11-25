@@ -6,11 +6,14 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.Fabasoft
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftDokumentMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftVorgangMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftVorgangMapperImpl;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import java.util.List;
 
 public final class FabasoftTestFixtures {
     public static final String ACCESS_DEFINITION_TEXT = "Standard Zugriffsdefinition für Dokumente";
     public static final String ACCESS_DEFINITION_ID = "COO.1.1001.1.182601";
+    public static final RequestContext REQUEST_CONTEXT = new RequestContext("user", null, null);
+    public static final String OBJECT_ID = "COO.1.2.3";
 
     private FabasoftTestFixtures() {
     }
