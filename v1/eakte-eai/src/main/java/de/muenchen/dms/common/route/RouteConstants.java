@@ -195,6 +195,14 @@ public final class RouteConstants {
   public static final String DIRECT_READ_PROCEDURE = DIRECT_PREFIX + ROUTE_ID_READ_PROCEDURE;
 
   /***************************************************************************************************
+   * ReadProcedureObjectsMetaData
+   **************************************************************************************************/
+
+  public static final String ROUTE_ID_READ_PROCEDURE_OBJECTS_META_DATA = "ReadProcedureObjectsMetaData";
+
+  public static final String DIRECT_READ_PROCEDURE_OBJECTS_META_DATA = DIRECT_PREFIX + ROUTE_ID_READ_PROCEDURE_OBJECTS_META_DATA;
+
+  /***************************************************************************************************
    * UpdateProcedure
    **************************************************************************************************/
 
