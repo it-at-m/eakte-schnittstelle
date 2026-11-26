@@ -55,6 +55,9 @@ public class CreateIncomingBasisAnfrageDTO {
   @Valid
   private List<@Valid UserFormsReferenz> userformsdata = new ArrayList<>();
 
+  @Valid
+  private List<List<String>> documentFilesubj = new ArrayList<>();
+
   public CreateIncomingBasisAnfrageDTO shortname(String shortname) {
     this.shortname = Optional.ofNullable(shortname);
     return this;
@@ -315,6 +318,35 @@ public class CreateIncomingBasisAnfrageDTO {
     this.userformsdata = userformsdata;
   }
 
+  public CreateIncomingBasisAnfrageDTO documentFilesubj(List<List<String>> documentFilesubj) {
+    this.documentFilesubj = documentFilesubj;
+    return this;
+  }
+
+  public CreateIncomingBasisAnfrageDTO addDocumentFilesubjItem(List<String> documentFilesubjItem) {
+    if (this.documentFilesubj == null) {
+      this.documentFilesubj = new ArrayList<>();
+    }
+    this.documentFilesubj.add(documentFilesubjItem);
+    return this;
+  }
+
+  /**
+   * Betreffs der mitgesendeten Dokumente. Pro Dokument gibt es einen Eintrag in dieser Liste. Die Reihenfolge entspricht der Reihenfolge der Dokumente
+   * @return documentFilesubj
+   */
+  @Valid 
+  @Schema(name = "documentFilesubj", example = "[[\"Betreff1 - Schriftstück1\",\"Betreff2 - Schriftstück1\"],[\"Betreff1 - Schriftstück2\"]]", description = "Betreffs der mitgesendeten Dokumente. Pro Dokument gibt es einen Eintrag in dieser Liste. Die Reihenfolge entspricht der Reihenfolge der Dokumente", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("documentFilesubj")
+  public List<List<String>> getDocumentFilesubj() {
+    return documentFilesubj;
+  }
+
+  @JsonProperty("documentFilesubj")
+  public void setDocumentFilesubj(List<List<String>> documentFilesubj) {
+    this.documentFilesubj = documentFilesubj;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -335,12 +367,13 @@ public class CreateIncomingBasisAnfrageDTO {
         Objects.equals(this.documentremarks, createIncomingBasisAnfrageDTO.documentremarks) &&
         Objects.equals(this.incattachments, createIncomingBasisAnfrageDTO.incattachments) &&
         Objects.equals(this.definition, createIncomingBasisAnfrageDTO.definition) &&
-        Objects.equals(this.userformsdata, createIncomingBasisAnfrageDTO.userformsdata);
+        Objects.equals(this.userformsdata, createIncomingBasisAnfrageDTO.userformsdata) &&
+        Objects.equals(this.documentFilesubj, createIncomingBasisAnfrageDTO.documentFilesubj);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(shortname, filesubj, objterms, accdef, referrednumber, useou, delivery, foreignnr, documentremarks, incattachments, definition, userformsdata);
+    return Objects.hash(shortname, filesubj, objterms, accdef, referrednumber, useou, delivery, foreignnr, documentremarks, incattachments, definition, userformsdata, documentFilesubj);
   }
 
   @Override
@@ -359,6 +392,7 @@ public class CreateIncomingBasisAnfrageDTO {
     sb.append("    incattachments: ").append(toIndentedString(incattachments)).append("\n");
     sb.append("    definition: ").append(toIndentedString(definition)).append("\n");
     sb.append("    userformsdata: ").append(toIndentedString(userformsdata)).append("\n");
+    sb.append("    documentFilesubj: ").append(toIndentedString(documentFilesubj)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -396,6 +430,7 @@ public class CreateIncomingBasisAnfrageDTO {
       this.instance.setIncattachments(value.incattachments);
       this.instance.setDefinition(value.definition);
       this.instance.setUserformsdata(value.userformsdata);
+      this.instance.setDocumentFilesubj(value.documentFilesubj);
       return this;
     }
 
@@ -456,6 +491,11 @@ public class CreateIncomingBasisAnfrageDTO {
     
     public CreateIncomingBasisAnfrageDTO.Builder userformsdata(List<UserFormsReferenz> userformsdata) {
       this.instance.userformsdata(userformsdata);
+      return this;
+    }
+    
+    public CreateIncomingBasisAnfrageDTO.Builder documentFilesubj(List<List<String>> documentFilesubj) {
+      this.instance.documentFilesubj(documentFilesubj);
       return this;
     }
     
