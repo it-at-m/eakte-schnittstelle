@@ -11,5 +11,5 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 public interface DokumentInPort {
-    List<DokumentResponse> searchBellowVorgang(@NotNull RequestContext context, @NotBlank String vorgangsId, @NotNull @Valid SearchRequest request);
+    List<DokumentResponse> searchBellowVorgang(@NotNull RequestContext context, @NotBlank String vorgangId, @NotNull @Valid SearchRequest request);
 }

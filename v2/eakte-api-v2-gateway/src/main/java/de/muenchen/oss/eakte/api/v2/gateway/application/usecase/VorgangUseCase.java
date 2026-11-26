@@ -7,8 +7,8 @@ import de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper.DfvHelper
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -29,8 +29,19 @@ public class VorgangUseCase implements VorgangInPort {
     }
 
     @Override
-    public Optional<VorgangResponse> get(final RequestContext context, final String vorgangsId, final Set<String> attributes) {
+    public Optional<VorgangResponse> get(final RequestContext context, final String vorgangId, final Set<String> attributes) {
         final Set<String> updatedAttrs = attributes.isEmpty() ? dfvOutPort.loadDfVAttributes(context, ObjectType.VORGANG) : attributes;
-        return vorgangOutPort.get(context, vorgangsId, updatedAttrs);
+        return vorgangOutPort.get(context, vorgangId, updatedAttrs);
+    }
+
+    @Override
+    public List<VorgangResponse> searchBellowAkte(final RequestContext context, final String akteId, final SearchRequest request) {
+        final SearchRequest enrichedRequest = dfvHelper.enrichWithDfv(context, ObjectType.VORGANG, request);
+        return vorgangOutPort.searchBellowAkte(context, akteId, enrichedRequest);
+    }
+
+    @Override
+    public String createAkteVorgang(final RequestContext requestContext, final CreateVorgangRequest vorgang) {
+        return vorgangOutPort.createAkteVorgang(requestContext, vorgang);
     }
 }

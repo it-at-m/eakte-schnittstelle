@@ -19,8 +19,17 @@ const vitepressConfig = defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: "Home", link: "/" },
-      { text: "DMS", link: "/dms" },
+      {
+        text: "Home",
+        link: "/",
+      },
+      {
+        text: "DMS",
+        items: [
+          { text: "Index", link: "/dms" },
+          { text: "Attributes", link: "/dms-attributes" },
+        ],
+      },
       {
         text: "V1",
         items: [
@@ -41,17 +50,15 @@ const vitepressConfig = defineConfig({
       {
         text: "DMS",
         link: "/dms",
+        items: [{ text: "DMS Attributes", link: "/dms-attributes" }],
       },
       {
         text: "V1",
         link: "/v1/",
-        items: [
-          { text: "Use Cases", link: "/v1/usecases" },
-          { text: "Swagger-UI", link: "/v1/swagger-ui" },
-        ],
+        items: [{ text: "Swagger-UI", link: "/v1/swagger-ui" }],
       },
       {
-        text: "V2",
+        text: "V2 (WIP)",
         link: "/v2/",
         items: [
           { text: "Swagger-UI", link: "/v2/swagger-ui" },

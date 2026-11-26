@@ -5,12 +5,12 @@ get:
   operationId: GetErledigung
   parameters:
     - in: path
-      name: erledigungsId
+      name: erledigungId
       schema:
         type: string
       required: true
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
-    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Rolle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
     - $ref: '_SucheDatentypen.yaml#/components/parameters/Eigenschaften'
   responses:

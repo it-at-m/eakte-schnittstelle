@@ -12,11 +12,12 @@
   </parent>
 
   <artifactId>eakte-api-v2-spring-boot-server-stubs</artifactId>
+  <name>eakte-api-v2-spring-boot-server-stubs</name>
 
   <properties>
     <java.version>21</java.version>
 
-    <spring-boot.version>4.1.0</spring-boot.version>
+    <spring-boot.version>4.1.2</spring-boot.version>
     <jackson-databind-nullable.version>0.2.11</jackson-databind-nullable.version>
     <swagger-annotation.version>2.2.55</swagger-annotation.version>
 

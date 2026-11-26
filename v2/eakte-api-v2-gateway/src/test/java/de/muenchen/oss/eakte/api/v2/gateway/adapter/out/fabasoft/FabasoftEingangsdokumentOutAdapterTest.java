@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.DokumentAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.EingangsdokumentAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftAttribute;
@@ -12,7 +13,6 @@ import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.Fabasoft
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftAttributeMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftAttributeMapperImpl;
-import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftDokumentMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftEingangsdokumentMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftSearchService;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
@@ -43,7 +43,7 @@ class FabasoftEingangsdokumentOutAdapterTest {
     private final FabasoftAttributeMapper attributeMapper = new FabasoftAttributeMapperImpl();
     private final FabasoftEingangsdokumentMapper eingangsdokumentMapper = new FabasoftEingangsdokumentMapper(
             attributeMapper,
-            new FabasoftDokumentMapper(attributeMapper));
+            FabasoftTestFixtures.dokumentMapper());
 
     @Mock
     private FabasoftSearchService searchService;
@@ -101,18 +101,18 @@ class FabasoftEingangsdokumentOutAdapterTest {
     }
 
     private static ResultObject resultWithRequiredAttributes() {
-        return new ResultObject("long name", EINGANGSDOKUMENT_ID, List.of(
+        return new ResultObject("name", EINGANGSDOKUMENT_ID, List.of(
                 attribute(DokumentAttribute.KLASSE, "COOELAK@1.1001:Incoming"),
-                attribute(DokumentAttribute.PARENT_ID, "parent"),
-                attribute(DokumentAttribute.PARENT_TYPE, "DEPRECONFIG@15.1001:Procedure"),
-                attribute(DokumentAttribute.NAME, "name"),
+                attribute(DokumentAttribute.VORGANG_ID, "vorgang"),
+                attribute(DokumentAttribute.TITEL, "titel"),
                 attribute(DokumentAttribute.BETREFF, "subject"),
+                attribute(DokumentAttribute.HINWEIS, "note"),
+                attribute(DokumentAttribute.DOKUMENTENTYP, "letter"),
+                attribute(DokumentAttribute.DATUM, LocalDate.of(2025, 1, 2)),
                 attribute(DokumentAttribute.ZUGRIFFSDEFINITION, "access"),
                 attribute(DokumentAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(EingangsdokumentAttribute.FREMDES_GESCHAEFTSZEICHEN, "external-reference"),
-                attribute(EingangsdokumentAttribute.EINGANGSDATUM, LocalDate.of(2025, 1, 2)),
-                attribute(EingangsdokumentAttribute.HINWEIS, "note"),
-                new FabasoftAttribute(EingangsdokumentAttribute.HINWEIS.getType(), "custom.attribute", null, "value")));
+                new FabasoftAttribute(AttributeType.STRING, "custom.attribute", null, "value")));
     }
 
     private static FabasoftAttribute attribute(final DokumentAttribute attribute, final Object value) {

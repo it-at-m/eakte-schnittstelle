@@ -5,7 +5,7 @@ get:
   operationId: SearchInterneDokumente
   parameters:
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
-    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Rolle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
     - $ref: '_SucheDatentypen.yaml#/components/parameters/Limit'
     - $ref: '_SucheDatentypen.yaml#/components/parameters/Bedingungen'

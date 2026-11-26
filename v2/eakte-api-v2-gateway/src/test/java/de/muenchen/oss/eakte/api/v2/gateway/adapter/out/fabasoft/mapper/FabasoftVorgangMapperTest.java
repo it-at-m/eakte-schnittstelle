@@ -2,6 +2,7 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.FabasoftTestFixtures;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.AttributeType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
@@ -16,20 +17,20 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class FabasoftVorgangMapperTest {
-    private final FabasoftVorgangMapper mapper = new FabasoftVorgangMapper(new FabasoftAttributeMapperImpl());
+    private final FabasoftVorgangMapper mapper = FabasoftTestFixtures.vorgangMapper();
 
     @Test
     void givenResultObject_thenMapVorgang() {
-        final ResultObject result = new ResultObject("long name", "coo", List.of(
-                attribute(VorgangAttribute.PARENT_ID, "akte"),
-                attribute(VorgangAttribute.NAME, "name"),
+        final ResultObject result = new ResultObject("name", "coo", List.of(
+                attribute(VorgangAttribute.AKTE_ID, "akte"),
+                attribute(VorgangAttribute.TITEL, "titel"),
                 attribute(VorgangAttribute.BETREFF, "subject"),
+                attribute(VorgangAttribute.HINWEIS, "note"),
                 attribute(VorgangAttribute.STATUS, BigInteger.valueOf(30)),
                 attribute(VorgangAttribute.BEARBEITUNGSSTATUS, "processing"),
-                attribute(VorgangAttribute.ZUGRIFFSDEFINITION, "access"),
+                attribute(VorgangAttribute.ZUGRIFFSDEFINITION, FabasoftTestFixtures.ACCESS_DEFINITION_ID),
                 attribute(VorgangAttribute.ORGANISATIONSEINHEIT, "ou"),
                 attribute(VorgangAttribute.ORIGINAL_MEDIUM, BigInteger.valueOf(2)),
-                attribute(VorgangAttribute.GESCHAEFTSGANGVERMERK, "remark"),
                 new FabasoftAttribute(AttributeType.STRING, "custom", null, "value")));
 
         final VorgangResponse mapped = mapper.toDomain(result);
@@ -37,13 +38,13 @@ class FabasoftVorgangMapperTest {
         assertEquals("coo", mapped.id());
         assertEquals("akte", mapped.akteId());
         assertEquals("name", mapped.name());
-        assertEquals("long name", mapped.langname());
+        assertEquals("titel", mapped.titel());
         assertEquals("subject", mapped.betreff());
-        assertEquals("remark", mapped.geschaeftsgangvermerk());
+        assertEquals("note", mapped.hinweis());
         assertEquals(VorgangMedium.PAPIER, mapped.originalMedium());
         assertEquals(VorgangStatus.ABGESCHLOSSEN, mapped.status());
         assertEquals("processing", mapped.bearbeitungsstatus());
-        assertEquals("access", mapped.zugriffsdefinition());
+        assertEquals(FabasoftTestFixtures.ACCESS_DEFINITION_TEXT, mapped.zugriffsdefinition());
         assertEquals("ou", mapped.organisationseinheit());
         assertEquals(List.of(new Attribute("custom", "value")), mapped.weitereEigenschaften());
     }
@@ -69,7 +70,7 @@ class FabasoftVorgangMapperTest {
 
     private static ResultObject resultWithRequiredAttributes() {
         return new ResultObject("name", "id", List.of(
-                attribute(VorgangAttribute.NAME, "name"),
+                attribute(VorgangAttribute.TITEL, "titel"),
                 attribute(VorgangAttribute.STATUS, BigInteger.TEN),
                 attribute(VorgangAttribute.BEARBEITUNGSSTATUS, "processing"),
                 attribute(VorgangAttribute.ORGANISATIONSEINHEIT, "ou"),

@@ -3,11 +3,19 @@ components:
     DokumentBase:
       type: object
       required:
-        - name
+        - titel
       properties:
-        name:
+        vorgangId:
+          type: string
+        titel:
           type: string
         betreff:
+          type: string
+        hinweis:
+          type: string
+        dokumententyp:
+          type: string
+        datum:
           type: string
         zugriffsdefinition:
           type: string
@@ -21,19 +29,17 @@ components:
       required:
         - klasse
         - id
-        - langname
+        - name
       properties:
         klasse:
           type: string
           enum:
-            - Eingang
+            - Eingangsdokument
             - Erledigung
-            - Intern
+            - Internes Dokument
         id:
           type: string
-        parent:
-          $ref: '#/components/schemas/ParentReference'
-        langname:
+        name:
           type: string
         weitereEigenschaften:
           type: array
@@ -50,18 +56,3 @@ components:
           description: Liste von Dokumenten
           items:
             $ref: '#/components/schemas/Dokument'
-
-    ParentReference:
-      type: object
-      required:
-        - type
-        - id
-      properties:
-        type:
-          type: string
-          enum:
-            - Vorgang
-            - Postkorb
-            - Arbeitsvorrat
-        id:
-          type: string
