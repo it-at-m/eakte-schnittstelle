@@ -49,6 +49,8 @@ paths:
   # Akte
   '/api/v2/aktenplaneintraege/{aktenplaneintragId}/akten':
     $ref: 'AktenplaneintragAkten.yaml'
+  '/api/v2/akten/{aktenid}':
+    $ref: 'Akten.yaml'
   # Vorgang
   '/api/v2/akten/{akteId}/vorgaenge':
     $ref: 'AkteVorgaenge.yaml'
