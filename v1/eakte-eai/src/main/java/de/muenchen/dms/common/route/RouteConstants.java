@@ -264,16 +264,6 @@ public final class RouteConstants {
       DIRECT_PREFIX + ROUTE_ID_READ_SUBJECT_AREA_OBJECT;
 
   /***************************************************************************************************
-   * ReadSubjectAreaObjectsMetadata
-   **************************************************************************************************/
-
-  public static final String ROUTE_ID_READ_SUBJECT_AREA_OBJECTS_METADATA = "ReadSubjectAreaObjectsMetadata";
-
-  public static final String DIRECT_READ_SUBJECT_AREA_OBJECTS_METADATA =
-          DIRECT_PREFIX + ROUTE_ID_READ_SUBJECT_AREA_OBJECTS_METADATA;
-
-
-  /***************************************************************************************************
    * ReadDocumentObject
    **************************************************************************************************/
 
