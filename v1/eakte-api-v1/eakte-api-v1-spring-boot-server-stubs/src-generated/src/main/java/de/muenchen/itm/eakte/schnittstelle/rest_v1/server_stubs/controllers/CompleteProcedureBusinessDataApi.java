@@ -50,7 +50,7 @@ public interface CompleteProcedureBusinessDataApi {
 
     String PATH_CREATE_COMPLETE_PROCEDURE_BUSINESS_DATA = "/completeProcedureBusinessData";
     /**
-     * POST /completeProcedureBusinessData : Anlegen eines kompletten Vorgangs mit Dokument und Schriftstücken bzw. Ergänzung einzelner Schriftstücke beim Vorgang
+     * POST /completeProcedureBusinessData : Dieser Endpunkt ist deprecated und soll nicht weiter verwendet werden! Anlegen eines kompletten Vorgangs mit Dokument und Schriftstücken bzw. Ergänzung einzelner Schriftstücke beim Vorgang.
      * Sobald eine Sachakte über die Fachdaten gefunden wurde,  (über die Parameter businessterm und businessvalue), wird folgendermaßen vorgegangen:  * Eingangsparameter Vorgangstitel (shortnameprocedure):&lt;br&gt; Das System überprüft ob in der gefundenen Akte  bereits ein Vorgang mit dem Titel existiert.   - Vorgang existiert bereits&lt;br&gt; Das Dokument wird in dem Vorgang abgelegt   - Vorgang existiert noch nicht&lt;br&gt; Ein neuer Vorgang mit dem übergebenen Titel wird angelegt und das Dokument in dem Vorgang abgelegt.  * Eingangsparameter Dokumenttitel (shortnamedocument):&lt;br&gt; Das System überprüft, ob in dem gefundenen Vorgang  bereits ein Eingangsdokument mit dem Titel existiert.   - Eingangsdokument existiert bereits&lt;br&gt; Navigieren in das Eingangsdokument   - Eingangsdokument existiert noch nicht&lt;br&gt; Ein neues Eingangsdokument mit dem übergebenen Titel wird angelegt &amp;  * Das Schriftstück wird im entsprechenden Eingangsdokument abgelegt. 
      *
      * @param userlogin **Benutzer-Login** (Benutzer-Kontext für den SOAP-Aufruf)&lt;br&gt; Log-in-Name des Benutzerobjekts  (required)
@@ -63,11 +63,14 @@ public interface CompleteProcedureBusinessDataApi {
      *         or Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten. (status code 400)
      *         or Falscher oder fehlender technischer Nutzer. (status code 401)
      *         or Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten. (status code 500)
+     * @deprecated
      */
+    @Deprecated
     @Operation(
         operationId = "createCompleteProcedureBusinessData",
-        summary = "Anlegen eines kompletten Vorgangs mit Dokument und Schriftstücken bzw. Ergänzung einzelner Schriftstücke beim Vorgang",
+        summary = "Dieser Endpunkt ist deprecated und soll nicht weiter verwendet werden! Anlegen eines kompletten Vorgangs mit Dokument und Schriftstücken bzw. Ergänzung einzelner Schriftstücke beim Vorgang.",
         description = "Sobald eine Sachakte über die Fachdaten gefunden wurde,  (über die Parameter businessterm und businessvalue), wird folgendermaßen vorgegangen:  * Eingangsparameter Vorgangstitel (shortnameprocedure):<br> Das System überprüft ob in der gefundenen Akte  bereits ein Vorgang mit dem Titel existiert.   - Vorgang existiert bereits<br> Das Dokument wird in dem Vorgang abgelegt   - Vorgang existiert noch nicht<br> Ein neuer Vorgang mit dem übergebenen Titel wird angelegt und das Dokument in dem Vorgang abgelegt.  * Eingangsparameter Dokumenttitel (shortnamedocument):<br> Das System überprüft, ob in dem gefundenen Vorgang  bereits ein Eingangsdokument mit dem Titel existiert.   - Eingangsdokument existiert bereits<br> Navigieren in das Eingangsdokument   - Eingangsdokument existiert noch nicht<br> Ein neues Eingangsdokument mit dem übergebenen Titel wird angelegt &  * Das Schriftstück wird im entsprechenden Eingangsdokument abgelegt. ",
+        deprecated = true,
         tags = { "/completeProcedureBusinessData" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
