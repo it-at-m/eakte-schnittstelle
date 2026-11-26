@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: eAkte API Specification
   description: REST-API for the LHM eAkte Service
-  version: 1.2.8
+  version: 1.3.0
   contact:
     name: Competence Center eAkte
     url: https://it-at-m.github.io/eakte-api
@@ -38,7 +38,6 @@ tags:
   - name: /reAssignObject
   - name: /readDocumentObjectsMetaData
   - name: /readProcedureObjectsMetaData
-  - name: /readSubjectAreaObjectsMetaData
   - name: /revokeDepositObjects
   - name: /searchObjNames
   - name: /setSignatureObjects
@@ -1128,39 +1127,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ReadDocumentObjectMetaDataResponseDTO'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '500':
-          $ref: '#/components/responses/500'
-      security:
-        - basicAuthSecurityDefintion: []
-  /readSubjectAreaObjectsMetaData/{objaddress}:
-    get:
-      tags:
-        - /readSubjectAreaObjectsMetaData
-      summary: Liste aller Akten einer Betreffseinheit mit Metadaten auslesen
-      description: |
-        Stornierte Objekte können nicht ausgelesen werden, 
-        d.h. Objekte mit dem Status „Storniert“ [FSCFOLIO@1.1001:objdocstate=Storniert] werden gefiltert und nicht zurückgegeben.<br>
-        Über die optionalen Parameter können Akten zur Anzeige gemäß der gewählten Kriterien ausgewählt werden.
-      operationId: ReadSubjectAreaObjectsMetaData
-      parameters:
-        - $ref: '#/components/parameters/x_anwendung'
-        - $ref: '#/components/parameters/userlogin'
-        - $ref: '#/components/parameters/joboe'
-        - $ref: '#/components/parameters/jobposition'
-        - $ref: '#/components/parameters/propdocstate'
-        - $ref: '#/components/parameters/propbostate'
-        - $ref: '#/components/parameters/objaddress'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ReadSubjectAreaObjectsMetaDataResponseDTO'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -2987,6 +2953,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UserFormsReferenz'
+        documentFilesubj:
+          type: array
+          description: Betreffs der mitgesendeten Dokumente. Pro Dokument gibt es einen Eintrag in dieser Liste. Die Reihenfolge entspricht der Reihenfolge der Dokumente
+          items:
+            type: array
+            description: Alle Betreffs eines einzelnen Dokuments
+            items:
+              type: string
+              description: Ein einzelner Betreff-Text des Dokuments
+          example:
+            - - Betreff1 - Schriftstück1
+              - Betreff2 - Schriftstück1
+            - - Betreff1 - Schriftstück2
     CreateIncomingRequestBodyDTO:
       required:
         - params
@@ -3273,14 +3252,18 @@ components:
           example: COO.1.2302.1.8
         filesubj:
           type: array
-          description: Betreff für die Datei
+          description: Betreffs der mitgesendeten Dokumente. Pro Dokument gibt es einen Eintrag in dieser Liste. Die Reihenfolge entspricht der Reihenfolge der Dokumente
           items:
             type: array
-            description: Betreff für die Datei
+            description: Alle Betreffs eines einzelnen Dokuments
             items:
               type: string
-              description: Betreff für die Datei
-      description: Parameter, die den Postkorb beschreiben
+              description: Ein einzelner Betreff-Text des Dokuments
+          example:
+            - - Betreff1 - Schriftstück1
+              - Betreff2 - Schriftstück1
+            - - Betreff1 - Schriftstück2
+      description: Parameter, die den Eingang von Schriftstücken in den Postkorb beschreiben
     CreateObjectAndImportToInboxRequestDTO:
       required:
         - params
@@ -3561,14 +3544,6 @@ components:
           type: array
           description: Liste der Dokumente mit Metadaten eines Vorgangs auslesen
           example: BusinessObjectType
-          items:
-            $ref: '#/components/schemas/BusinessObjectReference'
-    ReadSubjectAreaObjectsMetaDataResponseDTO:
-      type: object
-      properties:
-        businessobjecttype:
-          type: array
-          description: Liste der Sachakten mit Metadaten
           items:
             $ref: '#/components/schemas/BusinessObjectReference'
     filetype:

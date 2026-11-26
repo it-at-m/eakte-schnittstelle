@@ -19,10 +19,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Parameter, die den Postkorb beschreiben
+ * Parameter, die den Eingang von Schriftstücken in den Postkorb beschreiben
  */
 
-@Schema(name = "CreateObjectAndImportToInboxDTO", description = "Parameter, die den Postkorb beschreiben")
+@Schema(name = "CreateObjectAndImportToInboxDTO", description = "Parameter, die den Eingang von Schriftstücken in den Postkorb beschreiben")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.21.0")
 public class CreateObjectAndImportToInboxDTO {
 
@@ -77,11 +77,11 @@ public class CreateObjectAndImportToInboxDTO {
   }
 
   /**
-   * Betreff für die Datei
+   * Betreffs der mitgesendeten Dokumente. Pro Dokument gibt es einen Eintrag in dieser Liste. Die Reihenfolge entspricht der Reihenfolge der Dokumente
    * @return filesubj
    */
   @Valid 
-  @Schema(name = "filesubj", description = "Betreff für die Datei", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "filesubj", example = "[[\"Betreff1 - Schriftstück1\",\"Betreff2 - Schriftstück1\"],[\"Betreff1 - Schriftstück2\"]]", description = "Betreffs der mitgesendeten Dokumente. Pro Dokument gibt es einen Eintrag in dieser Liste. Die Reihenfolge entspricht der Reihenfolge der Dokumente", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("filesubj")
   public List<List<String>> getFilesubj() {
     return filesubj;

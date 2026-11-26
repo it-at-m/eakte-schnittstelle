@@ -3,7 +3,7 @@ openapi: 3.0.1
 info:
   title: eAkte API Specification
   description: REST-API for the LHM eAkte Service
-  version: '1.2.8'
+  version: '1.3.0'
 
   contact:
     name: Competence Center eAkte
@@ -41,7 +41,6 @@ tags:
   - name: /reAssignObject
   - name: /readDocumentObjectsMetaData
   - name: /readProcedureObjectsMetaData
-  - name: /readSubjectAreaObjectsMetaData
   - name: /revokeDepositObjects
   - name: /searchObjNames
   - name: /setSignatureObjects
@@ -142,9 +141,6 @@ paths:
 
   '/readProcedureObjectsMetaData/{objaddress}':
     $ref: 'eakte-api-readProcedureObjectsMetaData_@addr-path.yaml'
-
-  '/readSubjectAreaObjectsMetaData/{objaddress}':
-    $ref: 'eakte-api-readSubjectAreaObjectsMetaData_@addr-path.yaml'
 
   '/procedures':
     $ref: 'eakte-api-procedures-path.yaml'

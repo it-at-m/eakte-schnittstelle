@@ -1,0 +1,41 @@
+get:
+  tags:
+    - Schriftstueck
+  summary: Schriftstueck lesen
+  operationId: GetSchriftstueck
+  parameters:
+    - in: path
+      name: schriftstueckId
+      schema:
+        type: string
+      required: true
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: './Schriftstueck_Datentypen.yaml#/components/schemas/Schriftstueck'
+    '404':
+      description: Schriftstueck konnte nicht gefunden werden.
+    '400':
+      description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+      content:
+        application/json:
+          schema:
+            $ref: '_GlobaleDatentypen.yaml#/components/schemas/ErrorResponse'
+    '401':
+      description: Falsche oder fehlende Anmeldeinformationen.
+      content:
+        application/json:
+          schema:
+            $ref: '_GlobaleDatentypen.yaml#/components/schemas/ErrorResponse'
+    '500':
+      description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+      content:
+        application/json:
+          schema:
+            $ref: '_GlobaleDatentypen.yaml#/components/schemas/ErrorResponse'

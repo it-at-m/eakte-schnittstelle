@@ -1,5 +1,6 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
+import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.BadInputException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.DmsResponseException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.DmsTimeoutException;
 import jakarta.validation.ConstraintViolation;
@@ -32,8 +33,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({ DmsTimeoutException.class })
-    public ErrorResponse handleDmsException(final DmsTimeoutException ex) {
+    public ErrorResponse handleDmsTimeoutException(final DmsTimeoutException ex) {
         return ErrorResponse.builder(ex, ProblemDetail.forStatusAndDetail(HttpStatus.GATEWAY_TIMEOUT, ex.getMessage())).build();
+    }
+
+    @ExceptionHandler({ BadInputException.class })
+    public ErrorResponse handleBadInputException(final BadInputException ex) {
+        return ErrorResponse.builder(ex, ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage())).build();
     }
 
     @ExceptionHandler({ ConstraintViolationException.class })

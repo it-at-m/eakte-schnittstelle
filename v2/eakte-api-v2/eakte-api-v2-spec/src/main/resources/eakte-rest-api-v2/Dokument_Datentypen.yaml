@@ -1,45 +1,47 @@
 components:
   schemas:
-    Dokument:
+    DokumentBase:
       type: object
       required:
-        - klasse
-        - id
-        - parent
-        - name
-        - langname
-        - zugriffsdefinition
-        - organisationseinheit
-        - eigenschaftenMap
-        - eigenschaftenListe
+        - titel
       properties:
-        klasse:
+        vorgangId:
           type: string
-          enum:
-            - Eingang
-            - Erledigung
-            - Intern
-        id:
-          type: string
-        parent:
-          $ref: './Dokument_Datentypen.yaml#/components/schemas/ParentReference'
-        name:
-          type: string
-        langname:
+        titel:
           type: string
         betreff:
           type: string
-        # TODO
-        # anlagenBeschreibung:
-        #   type: string
+        hinweis:
+          type: string
+        dokumententyp:
+          type: string
+        datum:
+          type: string
         zugriffsdefinition:
           type: string
         organisationseinheit:
           type: string
-        eigenschaftenMap:
-          type: object
-          additionalProperties: true
-        eigenschaftenListe:
+
+    Dokument:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/DokumentBase'
+      required:
+        - klasse
+        - id
+        - name
+      properties:
+        klasse:
+          type: string
+          enum:
+            - Eingangsdokument
+            - Erledigung
+            - Internes Dokument
+        id:
+          type: string
+        name:
+          type: string
+        weitereEigenschaften:
           type: array
           items:
             $ref: '_SucheDatentypen.yaml#/components/schemas/EigenschaftEintrag'
@@ -53,19 +55,4 @@ components:
           type: array
           description: Liste von Dokumenten
           items:
-            $ref: 'Dokument_Datentypen.yaml#/components/schemas/Dokument'
-
-    ParentReference:
-      type: object
-      required:
-        - type
-        - id
-      properties:
-        type:
-          type: string
-          enum:
-            - Vorgang
-            - Postkorb
-            - Arbeitsvorrat
-        id:
-          type: string
+            $ref: '#/components/schemas/Dokument'

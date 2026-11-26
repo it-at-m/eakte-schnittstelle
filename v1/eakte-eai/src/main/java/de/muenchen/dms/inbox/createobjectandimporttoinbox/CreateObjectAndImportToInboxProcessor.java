@@ -17,7 +17,7 @@ public class CreateObjectAndImportToInboxProcessor extends AbstractDMSSoapProces
     final List<List<String>> filesubj = dto.getFilesubj();
 
     final ArrayOfLHMBAI151700GIAttachmentType lhmbai151700GIAttachment =
-        createLHMBAI151700GIAttachmentsForCOAITI(createAttachments(exchange), filesubj);
+        createLHMBAI151700GIAttachmentsWithFilesubj(createAttachments(exchange), filesubj);
 
     final CreateObjectAndImportToInboxGI parameters =
         createObjectAndImportToInbox(

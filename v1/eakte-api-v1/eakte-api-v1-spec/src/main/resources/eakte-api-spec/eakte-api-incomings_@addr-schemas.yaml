@@ -162,6 +162,18 @@ components:
           type: array
           items:
             $ref: 'eakte-api--global-schemas.yaml#/components/schemas/UserFormsReferenz'
+        documentFilesubj:
+          type: array
+          description: Betreffs der mitgesendeten Dokumente. Pro Dokument gibt es einen Eintrag in dieser Liste. Die Reihenfolge entspricht der Reihenfolge der Dokumente
+          items:
+            type: array
+            description: Alle Betreffs eines einzelnen Dokuments
+            items:
+              type: string
+              description: Ein einzelner Betreff-Text des Dokuments
+          example:
+            - ["Betreff1 - Schriftstück1", "Betreff2 - Schriftstück1"]
+            - ["Betreff1 - Schriftstück2"]
 
     UpdateIncomingAnfrageDTO:
       type: object

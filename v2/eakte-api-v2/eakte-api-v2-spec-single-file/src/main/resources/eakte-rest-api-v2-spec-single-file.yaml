@@ -15,11 +15,164 @@ servers:
 security:
   - bearerAuth: []
 tags:
+  - name: Akte
+    description: File (Sachakte)
   - name: Vorgang
     description: Procedure
   - name: Dokument
-    description: Parent-Klasse von Eingang (Incoming) / Erledigung (Outgoing) / Internes Dokument (Internal)
+    description: Parent-Klasse von Eingangsdokument (Incoming) / Erledigung (Outgoing) / Internes Dokument (Internal)
+  - name: Eingangsdokument
+    description: Incoming (Sub-Klasse von Dokument)
+  - name: Erledigung
+    description: Outgoing (ehem. Ausgang) (Sub-Klasse von Dokument)
+  - name: Internes Dokument
+    description: Internal (Sub-Klasse von Dokument)
+  - name: Schriftstueck
+    description: ContentObject
+  - name: Benutzer
+    description: User
 paths:
+  /api/v2/aktenplaneintraege/{aktenplaneintragId}/akten:
+    get:
+      tags:
+        - Akte
+      summary: Akten eines Aktenplaneintrags
+      operationId: SearchAktenplaneintragAkten
+      parameters:
+        - in: path
+          name: aktenplaneintragId
+          schema:
+            type: string
+          required: true
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Bedingungen'
+        - $ref: '#/components/parameters/Eigenschaften'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AkteListeResponse'
+          links:
+            GetAkte:
+              operationId: GetAkte
+              parameters:
+                aktenId: $response.body#/parent.id
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v2/akten/{akteId}/vorgaenge:
+    get:
+      tags:
+        - Vorgang
+      summary: Vorgänge einer Akte
+      operationId: SearchAkteVorgeange
+      parameters:
+        - in: path
+          name: akteId
+          schema:
+            type: string
+          required: true
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Bedingungen'
+        - $ref: '#/components/parameters/Eigenschaften'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VorgangListeResponse'
+          links:
+            GetVorgang:
+              operationId: GetVorgang
+              parameters:
+                vorgangsId: $response.body#/parent.id
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - Vorgang
+      summary: Vorgang unter Akte erstellen
+      operationId: CreateVorgang
+      parameters:
+        - in: path
+          name: akteId
+          schema:
+            type: string
+          required: true
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVorgang'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateVorgangResponse'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /api/v2/vorgaenge:
     get:
       tags:
@@ -32,7 +185,7 @@ paths:
       operationId: SearchVorgaenge
       parameters:
         - $ref: '#/components/parameters/LoginName'
-        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Stelle'
         - $ref: '#/components/parameters/Organisationseinheit'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Bedingungen'
@@ -62,7 +215,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /api/v2/vorgaenge/{vorgangsId}:
+  /api/v2/vorgaenge/{vorgangId}:
     get:
       tags:
         - Vorgang
@@ -70,12 +223,12 @@ paths:
       operationId: GetVorgang
       parameters:
         - in: path
-          name: vorgangsId
+          name: vorgangId
           schema:
             type: string
           required: true
         - $ref: '#/components/parameters/LoginName'
-        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Stelle'
         - $ref: '#/components/parameters/Organisationseinheit'
         - $ref: '#/components/parameters/Eigenschaften'
       responses:
@@ -89,7 +242,7 @@ paths:
             GetDokumente:
               operationId: SearchVorgangsDokumente
               parameters:
-                vorgangsId: $response.body#/id
+                vorgangId: $response.body#/id
         '400':
           description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
           content:
@@ -110,20 +263,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /api/v2/vorgaenge/{vorgangsId}/dokumente:
+  /api/v2/vorgaenge/{vorgangId}/dokumente:
     get:
       tags:
-        - Vorgang
+        - Dokument
       summary: Dokumente eines Vorgangs
       operationId: SearchVorgangsDokumente
       parameters:
         - in: path
-          name: vorgangsId
+          name: vorgangId
           schema:
             type: string
           required: true
         - $ref: '#/components/parameters/LoginName'
-        - $ref: '#/components/parameters/Rolle'
+        - $ref: '#/components/parameters/Stelle'
         - $ref: '#/components/parameters/Organisationseinheit'
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Bedingungen'
@@ -139,7 +292,7 @@ paths:
             GetVorgang:
               operationId: GetVorgang
               parameters:
-                vorgangsId: $response.body#/parent.id
+                vorgangId: $response.body#/parent.id
         '400':
           description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
           content:
@@ -152,6 +305,368 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v2/eingangsdokumente:
+    get:
+      tags:
+        - Eingangsdokument
+      summary: Eingangsdokumente suchen
+      operationId: SearchEingangsdokumente
+      parameters:
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Bedingungen'
+        - $ref: '#/components/parameters/Eigenschaften'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EingangsdokumentListeResponse'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v2/eingangsdokumente/{eingangsdokumentId}:
+    get:
+      tags:
+        - Eingangsdokument
+      summary: Eingangsdokument lesen
+      operationId: GetEingangsdokument
+      parameters:
+        - in: path
+          name: eingangsdokumentId
+          schema:
+            type: string
+          required: true
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/Eigenschaften'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Eingangsdokument'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Eingangsdokument konnte nicht gefunden werden.
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v2/erledigungen:
+    get:
+      tags:
+        - Erledigung
+      summary: Erledigungen suchen
+      operationId: SearchErledigung
+      parameters:
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Bedingungen'
+        - $ref: '#/components/parameters/Eigenschaften'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErledigungListeResponse'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v2/erledigungen/{erledigungId}:
+    get:
+      tags:
+        - Erledigung
+      summary: Erledigung lesen
+      operationId: GetErledigung
+      parameters:
+        - in: path
+          name: erledigungId
+          schema:
+            type: string
+          required: true
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/Eigenschaften'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erledigung'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Erledigung konnte nicht gefunden werden.
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v2/interne-dokumente:
+    get:
+      tags:
+        - Internes Dokument
+      summary: Interne Dokumente suchen
+      operationId: SearchInterneDokumente
+      parameters:
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Bedingungen'
+        - $ref: '#/components/parameters/Eigenschaften'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternesDokumentListeResponse'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v2/interne-dokumente/{dokumentId}:
+    get:
+      tags:
+        - Internes Dokument
+      summary: Internes Dokument lesen
+      operationId: GetInternesDokument
+      parameters:
+        - in: path
+          name: dokumentId
+          schema:
+            type: string
+          required: true
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/Eigenschaften'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternesDokument'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Internes Dokument konnte nicht gefunden werden.
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v2/dokumente/{dokumentId}/schriftstuecke:
+    get:
+      tags:
+        - Schriftstueck
+      summary: Schriftstuecke eines Dokuments
+      operationId: SearchDokumentSchriftstuecke
+      parameters:
+        - in: path
+          name: dokumentId
+          schema:
+            type: string
+          required: true
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Bedingungen'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchriftstueckListeResponse'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v2/schriftstuecke/{schriftstueckId}:
+    get:
+      tags:
+        - Schriftstueck
+      summary: Schriftstueck lesen
+      operationId: GetSchriftstueck
+      parameters:
+        - in: path
+          name: schriftstueckId
+          schema:
+            type: string
+          required: true
+        - $ref: '#/components/parameters/LoginName'
+        - $ref: '#/components/parameters/Stelle'
+        - $ref: '#/components/parameters/Organisationseinheit'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schriftstueck'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Schriftstueck konnte nicht gefunden werden.
+        '500':
+          description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/v2/benutzer/ich:
+    get:
+      tags:
+        - Benutzer
+      summary: Eigenen Benutzer lesen
+      operationId: GetBenutzerIch
+      parameters:
+        - $ref: '#/components/parameters/LoginName'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Benutzer'
+        '400':
+          description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Falsche oder fehlende Anmeldeinformationen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Benutzer konnte nicht gefunden werden.
         '500':
           description: Ein unerwarteter Fehler innerhalb der EAI ist aufgetreten.
           content:
@@ -175,24 +690,18 @@ components:
       schema:
         type: string
       example: max.mustermann
-    Rolle:
-      name: EAkte-Rolle
+    Stelle:
+      name: EAkte-Stelle
       in: header
       description: |
         Referenz der Rolle (**Rolle des Nutzers** in der eAkte).
-        * Sachbearbeitung - OfficialInCharge
-        * Registratur - Official
-        * Sekretariat - Secretary
-        * Leitung - Head
-        * Fachadministration - OpAdm
-        * Schriftgutverwaltung - DocumentManager
 
         Es dürfen ausschließlich die Rollen genannt werden, 
         die bei der LHM genutzt werden.\
         Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt!
       required: false
       schema:
-        type: string
+        $ref: '#/components/schemas/Stelle'
       example: DocumentManager
     Organisationseinheit:
       name: EAkte-Organisationseinheit
@@ -261,6 +770,19 @@ components:
         items:
           type: string
   schemas:
+    Stelle:
+      type: string
+      enum:
+        - Sachbearbeitung
+        - Sekretariat
+        - Leitung
+        - Registratur
+        - Schriftgutverwaltung
+        - Vorlagenverwaltung
+        - Vorlagenadministration
+        - Fachadministration
+        - OE-Administration
+        - Mitarbeit
     AnzahlListenElemente:
       type: integer
       description: |
@@ -276,82 +798,59 @@ components:
           type: string
         value:
           type: object
-    Vorgang:
+    Akte:
       type: object
       description: |
-        Repräsentation eines Vorgangs.\
+        Repräsentation einer Akte.\
         Aufgrund der Konfigurierbarkeit der Attribute (verfahrensabhängige Metadaten, siehe
         Fabasoft eGov-Suite "Definition von Verfahren") werden diese in einer dynamisch 
         aufgebauten Liste geführt und nichts als Felder in einer fixen (JSON-) Datenstruktur.
         \
         Um die innerhalb einer bestimmten Betreffseinheit verfügbaren Custom-Attribute auf
-        Vorgangsebene sowie die Standard-Attribute des Vorgangs zu erfahren, kann über den Endpunkt
+        Vorgangsebene sowie die Standard-Attribute der Akte zu erfahren, kann über den Endpunkt
         '/v2/Attribute' eine Abfrage (GET-Methode) getätigt werden (s. Spezifikation dieses
-        Endpunktes, in diesem Fall die Verwendung des Filters 'Schriftgutebene=Vorgang').
+        Endpunktes, in diesem Fall die Verwendung des Filters 'Schriftgutebene=Akte').
       required:
         - id
-        - sachakteId
+        - aktenplaneintragId
+        - titel
         - name
-        - langname
-        - originalMedium
-        - status
-        - bearbeitungsstatus
+        - betreff
         - zugriffsdefinition
-        - organisationseinheit
-        - eigenschaftenMap
-        - eigenschaftenListe
+        - zugriffsdefinitionVorgang
+        - dfvId
+        - weitereEigenschaften
       properties:
         id:
           type: string
-        sachakteId:
+        aktenplaneintragId:
+          type: string
+        titel:
           type: string
         name:
           type: string
-        langname:
-          type: string
         betreff:
-          type: string
-        geschaeftsgangvermerk:
-          type: string
-          description: Geschäftsgangvermerk für Prozessverantwortlichen
-          example: Warte auf Rückmeldung
-        originalMedium:
-          type: string
-          enum:
-            - elektronisch
-            - hybrid
-            - papier
-        status:
-          type: string
-          enum:
-            - In Bearbeitung
-            - Suspendiert
-            - Abgeschlossen
-            - Storniert
-            - Archiviert
-        bearbeitungsstatus:
           type: string
         zugriffsdefinition:
           type: string
-        organisationseinheit:
+        zugriffsdefinitionVorgang:
           type: string
-        eigenschaftenMap:
-          type: object
-          additionalProperties: true
-        eigenschaftenListe:
+        dfvId:
+          type: string
+        weitereEigenschaften:
           type: array
           items:
             $ref: '#/components/schemas/EigenschaftEintrag'
-    VorgangListeResponse:
+    AkteListeResponse:
       type: object
       properties:
         anzahl:
           $ref: '#/components/schemas/AnzahlListenElemente'
         elemente:
           type: array
-          description: Liste von Vorgängen
+          description: Liste von Akten
           items:
-            $ref: '#/components/schemas/Vorgang'
+            $ref: '#/components/schemas/Akte'
     ErrorResponse:
       type: object
       description: |
@@ -371,57 +870,132 @@ components:
           type: string
         dmsErrorReference:
           type: string
-    ParentReference:
+    BaseVorgang:
       type: object
       required:
-        - type
-        - id
+        - titel
+        - originalMedium
+        - status
+        - bearbeitungsstatus
+        - zugriffsdefinition
+        - organisationseinheit
+        - weitereEigenschaften
       properties:
-        type:
+        titel:
+          type: string
+        betreff:
+          type: string
+        hinweis:
+          type: string
+        originalMedium:
           type: string
           enum:
-            - Vorgang
-            - Postkorb
-            - Arbeitsvorrat
-        id:
+            - elektronisch
+            - hybrid
+            - papier
+        zugriffsdefinition:
           type: string
-    Dokument:
+          example: Eigene Organisationseinheit
+    Vorgang:
       type: object
       required:
-        - klasse
         - id
-        - parent
         - name
-        - langname
-        - zugriffsdefinition
+        - status
+        - bearbeitungsstatus
         - organisationseinheit
         - eigenschaftenMap
         - eigenschaftenListe
+      allOf:
+        - $ref: '#/components/schemas/BaseVorgang'
       properties:
-        klasse:
-          type: string
-          enum:
-            - Eingang
-            - Erledigung
-            - Intern
         id:
           type: string
-        parent:
-          $ref: '#/components/schemas/ParentReference'
+        akteId:
+          type: string
         name:
           type: string
-        langname:
+        status:
+          type: string
+          enum:
+            - In Bearbeitung
+            - Suspendiert
+            - Abgeschlossen
+            - Storniert
+            - Archiviert
+        bearbeitungsstatus:
+          type: string
+        organisationseinheit:
+          type: string
+        weitereEigenschaften:
+          type: array
+          items:
+            $ref: '#/components/schemas/EigenschaftEintrag'
+    VorgangListeResponse:
+      type: object
+      properties:
+        anzahl:
+          $ref: '#/components/schemas/AnzahlListenElemente'
+        elemente:
+          type: array
+          description: Liste von Vorgängen
+          items:
+            $ref: '#/components/schemas/Vorgang'
+    CreateVorgang:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/BaseVorgang'
+      properties:
+        dfvId:
+          type: string
+    CreateVorgangResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+    DokumentBase:
+      type: object
+      required:
+        - titel
+      properties:
+        vorgangId:
+          type: string
+        titel:
           type: string
         betreff:
+          type: string
+        hinweis:
+          type: string
+        dokumententyp:
+          type: string
+        datum:
           type: string
         zugriffsdefinition:
           type: string
         organisationseinheit:
           type: string
-        eigenschaftenMap:
-          type: object
-          additionalProperties: true
-        eigenschaftenListe:
+    Dokument:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/DokumentBase'
+      required:
+        - klasse
+        - id
+        - name
+      properties:
+        klasse:
+          type: string
+          enum:
+            - Eingangsdokument
+            - Erledigung
+            - Internes Dokument
+        id:
+          type: string
+        name:
+          type: string
+        weitereEigenschaften:
           type: array
           items:
             $ref: '#/components/schemas/EigenschaftEintrag'
@@ -435,3 +1009,121 @@ components:
           description: Liste von Dokumenten
           items:
             $ref: '#/components/schemas/Dokument'
+    Eingangsdokument:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Dokument'
+      properties:
+        fremdesGeschaeftszeichen:
+          type: string
+    EingangsdokumentListeResponse:
+      type: object
+      properties:
+        anzahl:
+          $ref: '#/components/schemas/AnzahlListenElemente'
+        elemente:
+          type: array
+          description: Liste von Eingängen
+          items:
+            $ref: '#/components/schemas/Eingangsdokument'
+    Erledigung:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Dokument'
+      properties:
+        bezugEingangsdokument:
+          type: string
+        anlagenBeschreibung:
+          type: string
+    ErledigungListeResponse:
+      type: object
+      properties:
+        anzahl:
+          $ref: '#/components/schemas/AnzahlListenElemente'
+        elemente:
+          type: array
+          description: Liste von Erledigungen
+          items:
+            $ref: '#/components/schemas/Erledigung'
+    InternesDokument:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Dokument'
+      properties:
+        anlagenBeschreibung:
+          type: string
+    InternesDokumentListeResponse:
+      type: object
+      properties:
+        anzahl:
+          $ref: '#/components/schemas/AnzahlListenElemente'
+        elemente:
+          type: array
+          description: Liste von Internen Dokumenten
+          items:
+            $ref: '#/components/schemas/InternesDokument'
+    Schriftstueck:
+      type: object
+      required:
+        - id
+        - dokumentId
+        - name
+      properties:
+        id:
+          type: string
+        dokumentId:
+          type: string
+        name:
+          type: string
+        betreff:
+          type: string
+        dateiEndung:
+          type: string
+        dateiGroesse:
+          type: integer
+    SchriftstueckListeResponse:
+      type: object
+      properties:
+        anzahl:
+          $ref: '#/components/schemas/AnzahlListenElemente'
+        elemente:
+          type: array
+          description: Liste von Vorgängen
+          items:
+            $ref: '#/components/schemas/Schriftstueck'
+    Reference:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    BenutzerRolle:
+      type: object
+      properties:
+        mandant:
+          type: string
+        organisationseinheit:
+          $ref: '#/components/schemas/Reference'
+        stelle:
+          $ref: '#/components/schemas/Stelle'
+        default:
+          type: boolean
+    Benutzer:
+      type: object
+      required:
+        - id
+        - username
+        - rollen
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        rollen:
+          type: array
+          items:
+            $ref: '#/components/schemas/BenutzerRolle'

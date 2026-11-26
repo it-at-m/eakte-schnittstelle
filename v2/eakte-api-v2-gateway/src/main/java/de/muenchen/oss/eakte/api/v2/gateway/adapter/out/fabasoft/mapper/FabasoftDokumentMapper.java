@@ -1,0 +1,69 @@
+package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper;
+
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.DokumentAttribute;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftObjectType;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentKlasse;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentResponse;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+@Component
+@RequiredArgsConstructor
+public class FabasoftDokumentMapper {
+    private final FabasoftAttributeMapper attributeMapper;
+    private final DefaultAttributeMapper defaultAttributeMapper;
+
+    public List<DokumentResponse> toDomain(final List<ResultObject> results) {
+        return results.stream().map(this::toDomain).toList();
+    }
+
+    public DokumentResponse toDomain(final ResultObject result) {
+        final Map<String, List<Object>> referenceValueMap = attributeMapper.toReferenceValueMap(result.attributes());
+        final DokumentResponse.DokumentResponseBuilder<?, ?> builder = DokumentResponse.builder();
+        this.mapDokumentFields(builder, result, referenceValueMap, DokumentAttribute.getReferences());
+        return builder.build();
+    }
+
+    protected void mapDokumentFields(
+            final DokumentResponse.DokumentResponseBuilder<?, ?> builder,
+            final ResultObject result,
+            final Map<String, List<Object>> referenceValueMap,
+            final Set<String> attributes) {
+        builder
+                .id(result.coo())
+                .klasse(this.mapKlasse(referenceValueMap))
+                .vorgangId(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.VORGANG_ID.getReference(), String.class).orElse(null))
+                .name(result.name())
+                .titel(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.TITEL.getReference(), String.class).orElseThrow())
+                .betreff(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.BETREFF.getReference(), String.class).orElse(null))
+                .hinweis(attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.HINWEIS.getReference(), String.class).orElse(null))
+                .dokumententyp(
+                        attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.DOKUMENTENTYP.getReference(), String.class).orElse(null))
+                .datum(
+                        attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.DATUM.getReference(), LocalDate.class).orElse(null))
+                .zugriffsdefinition(
+                        defaultAttributeMapper.zugriffsdefinitionToText(
+                                attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ZUGRIFFSDEFINITION.getReference(), String.class)
+                                        .orElseThrow()))
+                .organisationseinheit(
+                        attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.ORGANISATIONSEINHEIT.getReference(), String.class).orElseThrow())
+                .weitereEigenschaften(attributeMapper.toDomain(result.attributes(), attributes));
+    }
+
+    protected DokumentKlasse mapKlasse(final Map<String, List<Object>> referenceValueMap) {
+        final String referenceStr = attributeMapper.getTypedSingle(referenceValueMap, DokumentAttribute.KLASSE.getReference(), String.class).orElse(null);
+        final FabasoftObjectType fabasoftType = FabasoftObjectType.fromFabasoftReference(referenceStr);
+        return switch (fabasoftType) {
+        case EINGANGSDOKUMENT -> DokumentKlasse.EINGANGSDOKUMENT;
+        case ERLEDIGUNG -> DokumentKlasse.ERLEDIGUNG;
+        case INTERNES_DOKUMENT -> DokumentKlasse.INTERNES_DOKUMENT;
+        case null, default -> throw new IllegalStateException("Unexpected value: " + referenceStr);
+        };
+    }
+}

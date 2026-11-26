@@ -8,6 +8,7 @@ import de.muenchen.dms.common.model.DMSContainer;
 import de.muenchen.dms.common.model.UserFormsReferenz;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.OffsetDateTime;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.Builder;
@@ -34,7 +35,8 @@ public class CreateIncomingBasisAnfrageDTO extends DMSContainer {
       String objterms,
       OffsetDateTime delivery,
       String definition,
-      List<UserFormsReferenz> userformsdata) {
+      List<UserFormsReferenz> userformsdata,
+      List<List<String>> documentFilesubj) {
     super(shortname, filesubj, objterms, accdef);
     this.referrednumber = referrednumber;
     this.useou = useou;
@@ -44,6 +46,7 @@ public class CreateIncomingBasisAnfrageDTO extends DMSContainer {
     this.incattachments = incattachments;
     this.definition = definition;
     this.userformsdata = userformsdata;
+    this.documentFilesubj = documentFilesubj;
   }
 
   @Schema(
@@ -91,6 +94,12 @@ public class CreateIncomingBasisAnfrageDTO extends DMSContainer {
 
   @Schema private List<UserFormsReferenz> userformsdata;
 
+  @Schema(
+          requiredMode = Schema.RequiredMode.NOT_REQUIRED,
+          description = "Betreff für die einzelnen Schriftstuecke"
+  )
+  private List<List<String>> documentFilesubj;
+
   public static CreateIncomingBasisAnfrageDTO sample() {
     return CreateIncomingBasisAnfrageDTO.builder()
         .objterms("Firma XY; Anträge; Anträge 2016")
@@ -105,6 +114,7 @@ public class CreateIncomingBasisAnfrageDTO extends DMSContainer {
         .incattachments("Bebauungsplan")
         .definition("COO.1.2301.1.1042432")
         .userformsdata(null)
+        .documentFilesubj(List.of(Collections.singletonList("Beispiel: Betreff")))
         .build();
   }
 }

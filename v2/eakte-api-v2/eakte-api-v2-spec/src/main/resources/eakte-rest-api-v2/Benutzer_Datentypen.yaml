@@ -1,0 +1,29 @@
+components:
+  schemas:
+    Benutzer:
+      type: object
+      required:
+        - id
+        - username
+        - rollen
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        rollen:
+          type: array
+          items:
+            $ref: "#/components/schemas/BenutzerRolle"
+
+    BenutzerRolle:
+      type: object
+      properties:
+        mandant:
+          type: string
+        organisationseinheit:
+          $ref: "./_GlobaleDatentypen.yaml#/components/schemas/Reference"
+        stelle:
+          $ref: "./_GlobaleDatentypen.yaml#/components/schemas/Stelle"
+        default:
+          type: boolean

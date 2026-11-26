@@ -1,0 +1,28 @@
+package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain;
+
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Getter
+public enum VorgangAttribute {
+    AKTE_ID("COOELAK@1.1001:referrednumber", AttributeType.OBJECT),
+    TITEL("COOELAK@1.1001:objmlname.langstring", AttributeType.STRING),
+    BETREFF("COOELAK@1.1001:filesubj", AttributeType.STRING),
+    HINWEIS("DEPRECONFIG@15.1001:procsubject", AttributeType.STRING),
+    STATUS("FSCFOLIO@1.1001:objdocstate", AttributeType.ENUM),
+    BEARBEITUNGSSTATUS("FSCFOLIO@1.1001:bostate.name", AttributeType.STRING),
+    ZUGRIFFSDEFINITION("FSCFOLIO@1.1001:objaccdef", AttributeType.OBJECT),
+    ORGANISATIONSEINHEIT("COOSYSTEM@1.1:objowngroup.name", AttributeType.STRING),
+    ORIGINAL_MEDIUM("COOELAK@1.1001:filetype", AttributeType.ENUM);
+
+    private final String reference;
+    private final AttributeType type;
+
+    public static Set<String> getReferences() {
+        return Arrays.stream(values()).map(VorgangAttribute::getReference).collect(Collectors.toSet());
+    }
+}

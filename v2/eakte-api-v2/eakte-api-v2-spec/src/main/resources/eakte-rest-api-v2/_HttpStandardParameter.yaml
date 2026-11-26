@@ -26,22 +26,16 @@ components:
         type: string
       example: COO.1.2300.1.847
 
-    Rolle:
-      name: EAkte-Rolle
+    Stelle:
+      name: EAkte-Stelle
       in: header
       description: |
         Referenz der Rolle (**Rolle des Nutzers** in der eAkte).
-        * Sachbearbeitung - OfficialInCharge
-        * Registratur - Official
-        * Sekretariat - Secretary
-        * Leitung - Head
-        * Fachadministration - OpAdm
-        * Schriftgutverwaltung - DocumentManager
         
         Es dürfen ausschließlich die Rollen genannt werden, 
         die bei der LHM genutzt werden.\
         Die Rolle Fachadministrator ist bei Schnittstellen nicht erlaubt!
       required: false
       schema:
-        type: string
+        $ref: "./_GlobaleDatentypen.yaml#/components/schemas/Stelle"
       example: DocumentManager

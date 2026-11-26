@@ -1,16 +1,16 @@
 get:
   tags:
-    - Vorgang
+    - Dokument
   summary: Dokumente eines Vorgangs
   operationId: SearchVorgangsDokumente
   parameters:
     - in: path
-      name: vorgangsId
+      name: vorgangId
       schema:
         type: string
       required: true
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/LoginName'
-    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Rolle'
+    - $ref: '_HttpStandardParameter.yaml#/components/parameters/Stelle'
     - $ref: '_HttpStandardParameter.yaml#/components/parameters/Organisationseinheit'
     - $ref: '_SucheDatentypen.yaml#/components/parameters/Limit'
     - $ref: '_SucheDatentypen.yaml#/components/parameters/Bedingungen'
@@ -26,7 +26,7 @@ get:
         GetVorgang:
           operationId: GetVorgang
           parameters:
-            vorgangsId: '$response.body#/parent.id'
+            vorgangId: '$response.body#/parent.id'
     '400':
       description: Aufruf ans DMS ist gescheitert. Im Body sind Details enthalten.
       content:
