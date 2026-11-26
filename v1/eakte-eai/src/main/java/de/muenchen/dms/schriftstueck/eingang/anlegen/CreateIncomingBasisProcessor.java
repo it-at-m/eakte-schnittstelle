@@ -11,76 +11,85 @@ import de.muenchen.dms.common.mapper.FieldValueMappingService;
 import de.muenchen.dms.common.processor.AbstractDMSSoapProcessor;
 import de.muenchen.dms.common.util.JacksonData;
 import de.muenchen.dms.common.util.Umwandlungen;
+
 import javax.xml.datatype.DatatypeConfigurationException;
+
 import org.apache.camel.Exchange;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class CreateIncomingBasisProcessor extends AbstractDMSSoapProcessor {
 
-  private final FieldValueMappingService mappingService;
+    private final FieldValueMappingService mappingService;
 
-  public CreateIncomingBasisProcessor(FieldValueMappingService mappingService) {
-      this.mappingService = mappingService;
-  }
+    public CreateIncomingBasisProcessor(FieldValueMappingService mappingService) {
+        this.mappingService = mappingService;
+    }
 
 
     @Override
-  public void process(Exchange exchange) throws Exception {
-    CreateIncomingBasisAnfrageDTO dto = getMessageBody(exchange);
+    public void process(Exchange exchange) throws Exception {
+        CreateIncomingBasisAnfrageDTO dto = getMessageBody(exchange);
 
-    ArrayOfLHMBAI151700GIUserFormsType userFormsType =
-        Umwandlungen.wandleUserFormsGIZuUserFormsReferenz(dto.getUserformsdata());
+        final List<List<String>> documentFilesubj = dto.getDocumentFilesubj();
 
-    final ArrayOfLHMBAI151700GIAttachmentType lhmbai151700GIAttachments =
-        createLHMBAI151700GIAttachments((createAttachments(exchange)));
+        ArrayOfLHMBAI151700GIUserFormsType userFormsType =
+            Umwandlungen.wandleUserFormsGIZuUserFormsReferenz(dto.getUserformsdata());
 
-    final CreateIncomingGI parameters =
-        createIncomingGI(
-            dto,
-            getNutzer(exchange),
-            getOrganisationseinheit(exchange),
-            getRolle(exchange),
-            getAnwendung(exchange),
-            lhmbai151700GIAttachments,
-            userFormsType);
-    setParameters(exchange, parameters, CreateIncomingGI.class);
-  }
+        final ArrayOfLHMBAI151700GIAttachmentType lhmbai151700GIAttachments =
+            createLHMBAI151700GIAttachmentsWithFilesubj((createAttachments(exchange)), documentFilesubj);
 
-  private CreateIncomingBasisAnfrageDTO getMessageBody(Exchange exchange) {
-    return exchange.getIn().getBody(CreateIncomingBasisAnfrageDTO.class);
-  }
 
-  private CreateIncomingGI createIncomingGI(
-      final CreateIncomingBasisAnfrageDTO anfrage,
-      final String nutzer,
-      final String organisationseinheit,
-      final String rolle,
-      final String anwendung,
-      final ArrayOfLHMBAI151700GIAttachmentType lhmbai151700GIAttachments,
-      final ArrayOfLHMBAI151700GIUserFormsType userFormsType)
-      throws DatatypeConfigurationException {
-    String mappedAccdef = mappingService.map(
-            "accdef", anfrage.getAccdef()
-    );
-    final CreateIncomingGI createIncomingGI = objectFactory.createCreateIncomingGI();
-    createIncomingGI.setUserlogin(nutzer);
-    createIncomingGI.setReferrednumber(anfrage.getReferrednumber());
-    createIncomingGI.setUseou(anfrage.getUseou());
-    createIncomingGI.setDelivery(JacksonData.toXMLGregorianCalendar(anfrage.getDelivery()));
-    createIncomingGI.setBusinessapp(anwendung);
-    createIncomingGI.setShortname(anfrage.getShortname());
-    createIncomingGI.setFilesubj(anfrage.getFilesubj());
-    createIncomingGI.setAccdef(mappedAccdef);
-    createIncomingGI.setForeignnr(anfrage.getForeignnr());
-    createIncomingGI.setDocumentremarks(anfrage.getDocumentremarks());
-    createIncomingGI.setIncattachments(anfrage.getIncattachments());
-    createIncomingGI.setObjterms(anfrage.getObjterms());
-    createIncomingGI.setGiattachmenttype(lhmbai151700GIAttachments);
-    createIncomingGI.setDefinition(anfrage.getDefinition());
-    createIncomingGI.setUserformsdata(userFormsType);
-    createIncomingGI.setJoboe(organisationseinheit);
-    createIncomingGI.setJobposition(rolle);
-    return createIncomingGI;
-  }
+        final CreateIncomingGI parameters =
+            createIncomingGI(
+                dto,
+                getNutzer(exchange),
+                getOrganisationseinheit(exchange),
+                getRolle(exchange),
+                getAnwendung(exchange),
+                lhmbai151700GIAttachments,
+                userFormsType);
+        setParameters(exchange, parameters, CreateIncomingGI.class);
+    }
+
+    private CreateIncomingBasisAnfrageDTO getMessageBody(Exchange exchange) {
+        return exchange.getIn().getBody(CreateIncomingBasisAnfrageDTO.class);
+    }
+
+    private CreateIncomingGI createIncomingGI(
+            final CreateIncomingBasisAnfrageDTO anfrage,
+            final String nutzer,
+            final String organisationseinheit,
+            final String rolle,
+            final String anwendung,
+            final ArrayOfLHMBAI151700GIAttachmentType lhmbai151700GIAttachments,
+            final ArrayOfLHMBAI151700GIUserFormsType userFormsType)
+            throws DatatypeConfigurationException {
+
+        String mappedAccdef = mappingService.map(
+                "accdef", anfrage.getAccdef());
+
+        final CreateIncomingGI createIncomingGI = objectFactory.createCreateIncomingGI();
+
+        createIncomingGI.setUserlogin(nutzer);
+        createIncomingGI.setReferrednumber(anfrage.getReferrednumber());
+        createIncomingGI.setUseou(anfrage.getUseou());
+        createIncomingGI.setDelivery(JacksonData.toXMLGregorianCalendar(anfrage.getDelivery()));
+        createIncomingGI.setBusinessapp(anwendung);
+        createIncomingGI.setShortname(anfrage.getShortname());
+        createIncomingGI.setFilesubj(anfrage.getFilesubj());
+        createIncomingGI.setAccdef(mappedAccdef);
+        createIncomingGI.setForeignnr(anfrage.getForeignnr());
+        createIncomingGI.setDocumentremarks(anfrage.getDocumentremarks());
+        createIncomingGI.setIncattachments(anfrage.getIncattachments());
+        createIncomingGI.setObjterms(anfrage.getObjterms());
+        createIncomingGI.setGiattachmenttype(lhmbai151700GIAttachments);
+        createIncomingGI.setDefinition(anfrage.getDefinition());
+        createIncomingGI.setUserformsdata(userFormsType);
+        createIncomingGI.setJoboe(organisationseinheit);
+        createIncomingGI.setJobposition(rolle);
+        return createIncomingGI;
+    }
 }

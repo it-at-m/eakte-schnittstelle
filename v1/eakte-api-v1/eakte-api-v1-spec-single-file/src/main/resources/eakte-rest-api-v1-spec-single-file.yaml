@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: eAkte API Specification
   description: REST-API for the LHM eAkte Service
-  version: 1.2.8
+  version: 1.3.0
   contact:
     name: Competence Center eAkte
     url: https://it-at-m.github.io/eakte-api
@@ -2952,6 +2952,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UserFormsReferenz'
+        documentFilesubj:
+          type: array
+          description: Betreffs der mitgesendeten Dokumente. Pro Dokument gibt es einen Eintrag in dieser Liste. Die Reihenfolge entspricht der Reihenfolge der Dokumente
+          items:
+            type: array
+            description: Alle Betreffs eines einzelnen Dokuments
+            items:
+              type: string
+              description: Ein einzelner Betreff-Text des Dokuments
+          example:
+            - - Betreff1 - Schriftstück1
+              - Betreff2 - Schriftstück1
+            - - Betreff1 - Schriftstück2
     CreateIncomingRequestBodyDTO:
       required:
         - params
@@ -3238,14 +3251,18 @@ components:
           example: COO.1.2302.1.8
         filesubj:
           type: array
-          description: Betreff für die Datei
+          description: Betreffs der mitgesendeten Dokumente. Pro Dokument gibt es einen Eintrag in dieser Liste. Die Reihenfolge entspricht der Reihenfolge der Dokumente
           items:
             type: array
-            description: Betreff für die Datei
+            description: Alle Betreffs eines einzelnen Dokuments
             items:
               type: string
-              description: Betreff für die Datei
-      description: Parameter, die den Postkorb beschreiben
+              description: Ein einzelner Betreff-Text des Dokuments
+          example:
+            - - Betreff1 - Schriftstück1
+              - Betreff2 - Schriftstück1
+            - - Betreff1 - Schriftstück2
+      description: Parameter, die den Eingang von Schriftstücken in den Postkorb beschreiben
     CreateObjectAndImportToInboxRequestDTO:
       required:
         - params
