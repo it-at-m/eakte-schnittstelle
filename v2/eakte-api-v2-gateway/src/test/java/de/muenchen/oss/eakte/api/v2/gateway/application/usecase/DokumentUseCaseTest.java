@@ -9,6 +9,7 @@ import de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper.DfvHelper
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Stelle;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.dokument.DokumentResponse;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +22,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class DokumentUseCaseTest {
-    private static final RequestContext CONTEXT = new RequestContext("user", "ou", "role");
+    private static final RequestContext CONTEXT = new RequestContext("user", "ou", Stelle.SACHBEARBEITUNG);
     private static final String VORGANG_ID = "vorgang-id";
 
     @Mock

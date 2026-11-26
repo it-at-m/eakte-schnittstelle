@@ -1,7 +1,6 @@
 meta {
   name: SOAPCreateObjecteGov
   type: http
-  seq: 1
 }
 
 post {
@@ -16,5 +15,20 @@ headers {
 }
 
 body:xml {
-  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><CreateObjectRequest><objclass>string</objclass><context>string</context><container>string</container><name>string</name><data></data><objclass>string</objclass><context>string</context><container>string</container><name>string</name><data></data></CreateObjectRequest></soap:Body></soap:Envelope>
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Body>
+          <CreateObjectRequest>
+              <objclass>string</objclass>
+              <context>string</context>
+              <container>string</container>
+              <name>string</name>
+              <data></data>
+              <objclass>string</objclass>
+              <context>string</context>
+              <container>string</container>
+              <name>string</name>
+              <data></data>
+          </CreateObjectRequest>
+      </soap:Body>
+  </soap:Envelope>
 }

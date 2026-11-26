@@ -9,10 +9,13 @@ import static de.muenchen.oss.eakte.api.v2.gateway.TestSecurityConfiguration.USE
 
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder;
+import de.muenchen.oss.eakte.api.v2.gateway.AbstractWireMockTest;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftStelle;
 
-abstract class FabasoftE2eSupport extends AbstractWireMockE2eTest {
+abstract class FabasoftE2eSupport extends AbstractWireMockTest {
     private static final String SOAP_CONTENT_TYPE = "text/xml; charset=utf-8";
     private static final String SOAP_SEARCH_ACTION = "http://schemas.fabasoft.com/object/FSCBAI_1_1001_SOAPSearch";
+    protected static final String DOKUMENTENTYP_REFERENCE = "COOELAK@1.1001:subfiletype.name";
 
     protected void stubSoapFailure() {
         wireMock.stubFor(post(urlPathEqualTo("/"))
@@ -30,7 +33,7 @@ abstract class FabasoftE2eSupport extends AbstractWireMockE2eTest {
         if (impersonate) {
             pattern = pattern
                     .withHeader("X-FSC-Authenticated-User", equalTo("login"))
-                    .withQueryParam("px", equalTo("role"))
+                    .withQueryParam("px", equalTo(FabasoftStelle.SACHBEARBEITUNG.getId()))
                     .withQueryParam("gx", equalTo("ou"));
         } else {
             pattern = pattern

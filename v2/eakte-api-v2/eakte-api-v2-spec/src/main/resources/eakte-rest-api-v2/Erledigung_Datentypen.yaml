@@ -5,9 +5,7 @@ components:
       allOf:
         - $ref: 'Dokument_Datentypen.yaml#/components/schemas/Dokument'
       properties:
-        bezugEingang:
-          type: string
-        dokumententypId:
+        bezugEingangsdokument:
           type: string
         anlagenBeschreibung:
          type: string

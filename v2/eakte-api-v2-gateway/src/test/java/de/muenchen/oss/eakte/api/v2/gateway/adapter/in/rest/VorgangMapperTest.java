@@ -3,9 +3,11 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Attribute;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.CreateVorgangRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangMedium;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangStatus;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.CreateVorgang;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Vorgang;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -19,10 +21,9 @@ class VorgangMapperTest {
         final VorgangResponse response = VorgangResponse.builder()
                 .id("id")
                 .akteId("akte")
+                .titel("titel")
                 .name("name")
-                .langname("long name")
                 .betreff("subject")
-                .geschaeftsgangvermerk("remark")
                 .originalMedium(VorgangMedium.PAPIER)
                 .status(VorgangStatus.ABGESCHLOSSEN)
                 .bearbeitungsstatus("processing")
@@ -36,9 +37,8 @@ class VorgangMapperTest {
         assertEquals("id", result.getId());
         assertEquals("akte", result.getAkteId());
         assertEquals("name", result.getName());
-        assertEquals("long name", result.getLangname());
+        assertEquals("titel", result.getTitel());
         assertEquals("subject", result.getBetreff());
-        assertEquals("remark", result.getGeschaeftsgangvermerk());
         assertEquals(Vorgang.OriginalMediumEnum.PAPIER, result.getOriginalMedium());
         assertEquals(Vorgang.StatusEnum.ABGESCHLOSSEN, result.getStatus());
         assertEquals("processing", result.getBearbeitungsstatus());
@@ -52,12 +52,33 @@ class VorgangMapperTest {
         final VorgangResponse response = VorgangResponse.builder()
                 .id("id")
                 .name("name")
-                .langname("long name")
+                .titel("long name")
                 .build();
 
         final List<Vorgang> result = mapper.fromDomain(List.of(response));
 
         assertEquals(List.of("id"), result.stream().map(Vorgang::getId).toList());
+    }
+
+    @Test
+    void givenCreateVorgang_thenMapAllFields() {
+        final CreateVorgang createVorgang = new CreateVorgang()
+                .titel("titel")
+                .betreff("subject")
+                .hinweis("hinweis")
+                .dfvId("dfv-id")
+                .originalMedium(CreateVorgang.OriginalMediumEnum.PAPIER)
+                .zugriffsdefinition("acl");
+
+        final CreateVorgangRequest result = mapper.toDomain("akte-id", createVorgang);
+
+        assertEquals("akte-id", result.akteId());
+        assertEquals("titel", result.titel());
+        assertEquals("subject", result.betreff());
+        assertEquals("dfv-id", result.dfvId());
+        assertEquals(VorgangMedium.PAPIER, result.originalMedium());
+        assertEquals("hinweis", result.hinweis());
+        assertEquals("acl", result.zugriffsdefinition());
     }
 
     private static VorgangMapper mapper() {

@@ -1,7 +1,6 @@
 meta {
   name: SOAPFinalizeObject
   type: http
-  seq: 5
 }
 
 post {
@@ -16,5 +15,18 @@ headers {
 }
 
 body:xml {
-  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><FinalizeObjectRequest><object><objaddress>string</objaddress><objaddress>string</objaddress></object><object><objaddress>string</objaddress><objaddress>string</objaddress></object></FinalizeObjectRequest></soap:Body></soap:Envelope>
+  <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+      <soap:Body>
+          <FinalizeObjectRequest>
+              <object>
+                  <objaddress>string</objaddress>
+                  <objaddress>string</objaddress>
+              </object>
+              <object>
+                  <objaddress>string</objaddress>
+                  <objaddress>string</objaddress>
+              </object>
+          </FinalizeObjectRequest>
+      </soap:Body>
+  </soap:Envelope>
 }

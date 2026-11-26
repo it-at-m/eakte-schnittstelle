@@ -11,6 +11,9 @@ import de.muenchen.oss.eakte.api.v2.gateway.application.usecase.helper.DfvHelper
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.ObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.Stelle;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.CreateVorgangRequest;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangMedium;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
 import java.util.List;
 import java.util.Optional;
@@ -24,8 +27,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class VorgangUseCaseTest {
-    private static final RequestContext CONTEXT = new RequestContext("user", "ou", "role");
+    private static final RequestContext CONTEXT = new RequestContext("user", "ou", Stelle.SACHBEARBEITUNG);
     private static final String VORGANG_ID = "vorgang-id";
+    private static final String AKTE_ID = "akte-id";
+    private static final CreateVorgangRequest CREATE_REQUEST = CreateVorgangRequest.builder()
+            .akteId("akte-id")
+            .titel("name")
+            .betreff("subject")
+            .hinweis("note")
+            .dfvId("dfv-id")
+            .originalMedium(VorgangMedium.ELEKTRONISCH)
+            .zugriffsdefinition("acl")
+            .build();
     private static final Set<String> DFV_ATTRIBUTES = Set.of("dfv.one");
     private static final Set<String> EXPLICIT_ATTRIBUTES = Set.of("explicit");
 
@@ -64,6 +77,24 @@ class VorgangUseCaseTest {
     }
 
     @Nested
+    class SearchBellowAkte {
+        @Test
+        void givenSearchRequest_thenDelegateEnrichedRequestAndReturnResults() {
+            final SearchRequest request = requestWithAttributes(EXPLICIT_ATTRIBUTES);
+            final SearchRequest enrichedRequest = requestWithAttributes(DFV_ATTRIBUTES);
+            final List<VorgangResponse> expected = List.of(VorgangResponse.builder().id(VORGANG_ID).build());
+            when(dfvHelper.enrichWithDfv(CONTEXT, ObjectType.VORGANG, request)).thenReturn(enrichedRequest);
+            when(vorgangOutPort.searchBellowAkte(CONTEXT, AKTE_ID, enrichedRequest)).thenReturn(expected);
+
+            final List<VorgangResponse> result = useCase.searchBellowAkte(CONTEXT, AKTE_ID, request);
+
+            assertEquals(expected, result);
+            verify(dfvHelper).enrichWithDfv(CONTEXT, ObjectType.VORGANG, request);
+            verify(vorgangOutPort).searchBellowAkte(CONTEXT, AKTE_ID, enrichedRequest);
+        }
+    }
+
+    @Nested
     class Get {
         @Test
         void givenEmptyAttributes_thenLoadVorgangDfvAttributesAndReturnResult() {
@@ -89,6 +120,20 @@ class VorgangUseCaseTest {
             assertEquals(expected, result);
             verify(vorgangOutPort).get(CONTEXT, VORGANG_ID, EXPLICIT_ATTRIBUTES);
             verifyNoInteractions(dfvOutPort);
+        }
+    }
+
+    @Nested
+    class Create {
+        @Test
+        void givenCreateRequest_thenDelegateAndReturnVorgangId() {
+            when(vorgangOutPort.createAkteVorgang(CONTEXT, CREATE_REQUEST)).thenReturn(VORGANG_ID);
+
+            final String result = useCase.createAkteVorgang(CONTEXT, CREATE_REQUEST);
+
+            assertEquals(VORGANG_ID, result);
+            verify(vorgangOutPort).createAkteVorgang(CONTEXT, CREATE_REQUEST);
+            verifyNoInteractions(dfvHelper, dfvOutPort);
         }
     }
 

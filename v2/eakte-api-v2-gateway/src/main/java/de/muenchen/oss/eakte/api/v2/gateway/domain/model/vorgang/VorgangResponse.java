@@ -8,10 +8,10 @@ import lombok.Builder;
 public record VorgangResponse(
         String id,
         String akteId,
+        String titel,
         String name,
-        String langname,
         String betreff,
-        String geschaeftsgangvermerk,
+        String hinweis,
         VorgangMedium originalMedium,
         VorgangStatus status,
         String bearbeitungsstatus,
