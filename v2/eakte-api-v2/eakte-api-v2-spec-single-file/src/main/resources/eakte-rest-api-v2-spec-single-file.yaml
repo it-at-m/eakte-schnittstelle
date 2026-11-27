@@ -80,7 +80,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /api/v2/akten/{aktenid}:
+  /api/v2/akten/{aktenId}:
     get:
       tags:
         - Akte
@@ -88,7 +88,7 @@ paths:
       operationId: GetAkte
       parameters:
         - in: path
-          name: aktenid
+          name: aktenId
           schema:
             type: string
           required: true

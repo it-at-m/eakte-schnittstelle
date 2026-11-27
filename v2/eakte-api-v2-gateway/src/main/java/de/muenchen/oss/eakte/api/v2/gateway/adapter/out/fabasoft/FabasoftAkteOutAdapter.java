@@ -3,13 +3,19 @@ package de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.AkteAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.FabasoftObjectType;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.ResultObject;
+import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.domain.VorgangAttribute;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.mapper.FabasoftAkteMapper;
 import de.muenchen.oss.eakte.api.v2.gateway.adapter.out.fabasoft.service.FabasoftSearchService;
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.out.AkteOutPort;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.helper.AttributeHelper;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.akte.AkteResponse;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -30,6 +36,13 @@ public class FabasoftAkteOutAdapter implements AkteOutPort {
                 .concatQuery(akteParentQuery);
         final List<ResultObject> result = searchService.searchObject(context, FabasoftObjectType.AKTE, enrichedRequest);
         return akteMapper.toDomain(result);
+    }
+
+    @Override
+    public Optional<AkteResponse> get(final RequestContext context, final String aktenId, final Set<String> attributes) {
+        final Set<String> attributesWithDefault = AttributeHelper.combineAttributes(attributes, AkteAttribute.getReferences());
+        final Optional<ResultObject> result = searchService.getObject(context, FabasoftObjectType.AKTE, aktenId, attributesWithDefault);
+        return result.map(akteMapper::toDomain);
     }
 
     public static String getParentQuery(final String id) {

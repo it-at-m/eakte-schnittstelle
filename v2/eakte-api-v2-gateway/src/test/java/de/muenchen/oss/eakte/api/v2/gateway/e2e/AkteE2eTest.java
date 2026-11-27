@@ -1,6 +1,7 @@
 package de.muenchen.oss.eakte.api.v2.gateway.e2e;
 
 import static de.muenchen.oss.eakte.api.v2.gateway.TestConstants.SPRING_TEST_PROFILE;
+import static de.muenchen.oss.eakte.api.v2.gateway.TestSecurityConfiguration.USER;
 import static de.muenchen.oss.eakte.api.v2.gateway.TestSecurityConfiguration.USER_IMPERSONATE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -51,6 +52,50 @@ public class AkteE2eTest extends AkteE2eSupport {
         @Test
         void givenNoAuthentication_thenRejectRequest() throws Exception {
             mockMvc.perform(get("/api/v2/aktenplaneintraege/COO.1.2.3/akten"))
+                    .andExpect(status().isUnauthorized());
+        }
+    }
+
+    @Nested
+    class GetAkte {
+        @Test
+        //TODO: fix test givenAuthenticatedRequest_thenReturnAkteAndForwardSoapRequest()
+        void givenAuthenticatedRequest_thenReturnAkteAndForwardSoapRequest() throws Exception {
+            stubGetAkteResponse();
+
+            mockMvc.perform(get("/api/v2/akten/COO.1.2.3")
+                            .header("Authorization", "Bearer %s".formatted(USER_IMPERSONATE))
+                            .header("EAkte-Login-Name", "login")
+                            .header("EAkte-Rolle", "role")
+                            .header("EAkte-Organisationseinheit", "ou")
+                            .queryParam("eigenschaften", "custom.attribute"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.id").value("COO.1.2.3"))
+                    .andExpect(jsonPath("$.aktenplaneintragId").value("subjectArea-id"))
+                    .andExpect(jsonPath("$.name").value("name"))
+                    .andExpect(jsonPath("$.titel").value("titel"))
+                    .andExpect(jsonPath("$.betreff").value("subject"))
+                    .andExpect(jsonPath("$.zugriffsdefinition").value("acl"))
+                    .andExpect(jsonPath("$.zugriffsdefinitionVorgang").value("acl-procedure"))
+                    .andExpect(jsonPath("$.weitereEigenschaften[?(@.reference=='custom.attribute')].value")
+                            .value("custom-value"));
+
+            verifySearchRequest("COOSYSTEM@1.1:objaddress", "custom.attribute", true);
+        }
+
+        @Test
+        void givenUnknownAktenId_thenReturnNotFound() throws Exception {
+            stubGetAkteNotFoundResponse();
+
+            mockMvc.perform(get("/api/v2/akten/COO.1.2.3")
+                            .header("Authorization", "Bearer %s".formatted(USER))
+                            .queryParam("eigenschaften", "custom.attribute"))
+                    .andExpect(status().isNotFound());
+        }
+
+        @Test
+        void givenNoAuthentication_thenRejectRequest() throws Exception {
+            mockMvc.perform(get("/api/v2/akten/COO.1.2.3"))
                     .andExpect(status().isUnauthorized());
         }
     }

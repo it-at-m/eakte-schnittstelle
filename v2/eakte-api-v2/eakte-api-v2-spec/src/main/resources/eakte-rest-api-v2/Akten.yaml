@@ -5,7 +5,7 @@ get:
   operationId: GetAkte
   parameters:
     - in: path
-      name: aktenid
+      name: aktenId
       schema:
         type: string
       required: true

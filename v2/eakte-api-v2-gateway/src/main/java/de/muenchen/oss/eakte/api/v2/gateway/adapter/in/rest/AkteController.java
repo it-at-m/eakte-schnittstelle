@@ -1,11 +1,14 @@
 package de.muenchen.oss.eakte.api.v2.gateway.adapter.in.rest;
 
 import de.muenchen.oss.eakte.api.v2.gateway.application.port.in.AkteInPort;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.exception.ResourceNotFoundException;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.helper.RequestContextFactory;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.RequestContext;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.SearchRequest;
 import de.muenchen.oss.eakte.api.v2.gateway.domain.model.akte.AkteResponse;
+import de.muenchen.oss.eakte.api.v2.gateway.domain.model.vorgang.VorgangResponse;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.controllers.AkteApi;
+import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Akte;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.AkteListeResponse;
 import de.muenchen.oss.eakte.schnittstelle.rest_v2.server_stubs.model.Stelle;
 import jakarta.servlet.http.HttpServletRequest;
@@ -52,5 +55,24 @@ public class AkteController implements AkteApi {
                 .elemente(akteMapper.fromDomain(result))
                 .build();
         return ResponseEntity.of(Optional.of(response));
+    }
+
+    @Override
+    public ResponseEntity<Akte> getAkte(
+            final String aktenId,
+            @Nullable final String eakteLoginName,
+            @Nullable final Stelle eakteStelle,
+            @Nullable final String eakteOrganisationseinheit,
+            final List<String> eigenschaften,
+            final HttpServletRequest servletRequest) {
+        final RequestContext requestContext = requestContextFactory.create(
+                eakteLoginName,
+                eakteOrganisationseinheit,
+                commonMapper.toDomain(eakteStelle));
+        final AkteResponse result = akteInPort.get(requestContext,
+                        aktenId,
+                        eigenschaften != null ? new HashSet<>(eigenschaften) : Set.of())
+                .orElseThrow(ResourceNotFoundException::new);
+        return ResponseEntity.of(Optional.of(akteMapper.fromDomain(result)));
     }
 }

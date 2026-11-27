@@ -6,6 +6,15 @@ public class AkteE2eSupport extends FabasoftE2eSupport {
         stubSearchRequestContaining(".ELAKGOV@1.1001:apentry", akteResponse());
     }
 
+    protected void stubGetAkteResponse() {
+        stubSearchRequestContaining("COOSYSTEM@1.1:objaddress", akteResponse());
+    }
+
+    protected void stubGetAkteNotFoundResponse() {
+        stubSearchRequestContaining("COOSYSTEM@1.1:objaddress", emptySearchResponse());
+    }
+
+
     private String akteResponse() {
         return soapEnvelope("""
                 <urn:SOAPSearchResponse>
@@ -23,6 +32,14 @@ public class AkteE2eSupport extends FabasoftE2eSupport {
                       </urn:attrlist>
                     </urn:object>
                   </urn:queryresult>
+                </urn:SOAPSearchResponse>
+                """);
+    }
+
+    private String emptySearchResponse() {
+        return soapEnvelope("""
+                <urn:SOAPSearchResponse>
+                  <urn:queryresult/>
                 </urn:SOAPSearchResponse>
                 """);
     }
